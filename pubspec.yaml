@@ -1,0 +1,41 @@
+name: poc
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  flutter_riverpod: ^1.0.4
+  flutter_svg: ^1.1.0
+  google_fonts: ^3.0.1
+  dots_indicator: ^2.1.0
+  country_code_picker: ^2.0.2
+  pin_code_fields: ^7.4.0
+  carousel_slider: ^4.1.1
+  widget_size: ^0.0.2
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/logo/
+    - assets/icons/
+    - assets/images/
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/constants/
+  filename: assets.dart
+  
