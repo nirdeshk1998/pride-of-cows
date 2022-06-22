@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:poc/assets.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/widgets/buttons.dart';
 
 class TermsConditionsWidget extends StatelessWidget {
@@ -23,7 +23,7 @@ class TermsConditionsWidget extends StatelessWidget {
           height: 20,
           width: 20,
           padding: const EdgeInsets.symmetric(vertical: 2),
-          svg: checkState ? Assets.iconsCheckboxChecked : Assets.iconsCheckboxUnchecked,
+          svg: checkState ? Assets.assetsIconsCheckboxChecked : Assets.assetsIconsCheckboxUnchecked,
           onPressed: onCheckPressed,
         ),
         const SizedBox.square(dimension: 5),

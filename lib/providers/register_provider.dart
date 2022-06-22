@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/screens/home/home_screen.dart';
 import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/utils/utils.dart';
 

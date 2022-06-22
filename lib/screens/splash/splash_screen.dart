@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/assets.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/providers/splash_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -24,7 +24,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         alignment: Alignment.center,
         children: [
           Image.asset(
-            Assets.imagesSplashBg,
+            Assets.assetsImagesSplashBg,
             fit: BoxFit.cover,
             width: double.maxFinite,
             height: double.maxFinite,
@@ -32,7 +32,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           Align(
             alignment: const Alignment(0, -0.2),
             child: Image.asset(
-              Assets.logoPocLogo,
+              Assets.assetsLogoPocLogo,
               height: 192,
               fit: BoxFit.fitHeight,
             ),

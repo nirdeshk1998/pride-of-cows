@@ -89,7 +89,7 @@ class PrimaryTextButton extends StatelessWidget {
       minSize: 0,
       child: Text(
         title.toUpperCase(),
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xff193b61),
           fontSize: 12,
           fontWeight: FontWeight.w700,

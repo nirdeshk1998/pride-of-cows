@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:poc/assets.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/providers/onboarding_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -26,7 +26,7 @@ class OnBoardingScreen extends ConsumerWidget {
           children: [
             Center(
               child: Image.asset(
-                Assets.logoPocLogo,
+                Assets.assetsLogoPocLogo,
                 height: 60,
                 fit: BoxFit.fitHeight,
               ),
@@ -40,17 +40,17 @@ class OnBoardingScreen extends ConsumerWidget {
                 pageSnapping: true,
                 children: [
                   buildOnBoardingColumn(
-                    svg: Assets.imagesOb1,
+                    svg: Assets.assetsImagesOb1,
                     title: 'Shop the Best Dairy\nProducts',
                     subtitle: 'Lorem ipsum has been the industry\'s standard dummy text ever since the 1500s.',
                   ),
                   buildOnBoardingColumn(
-                    svg: Assets.imagesOb2,
+                    svg: Assets.assetsImagesOb2,
                     title: 'Get Deliveries as per Your\nSchedule',
                     subtitle: 'Lorem ipsum has been the industry\'s standard dummy text ever since the 1500s.',
                   ),
                   buildOnBoardingColumn(
-                    svg: Assets.imagesOb3,
+                    svg: Assets.assetsImagesOb3,
                     title: 'Quick Delivery',
                     subtitle: 'Lorem ipsum has been the industry\'s standard dummy text ever since the 1500s.',
                   ),

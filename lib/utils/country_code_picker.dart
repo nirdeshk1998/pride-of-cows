@@ -7,7 +7,7 @@ import 'package:country_code_picker/selection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:poc/assets.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -199,7 +199,7 @@ class CountryCodePickerState extends State<CountryCodePicker> {
             const SizedBox.square(dimension: 10),
             if (widget.showDropDownButton)
               SvgPicture.asset(
-                Assets.iconsChevronDown,
+                Assets.assetsIconsChevronDown,
                 color: Palette.textColor,
                 width: 7,
                 height: 3,
