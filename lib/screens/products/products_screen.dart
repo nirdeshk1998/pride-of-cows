@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/indicators.dart';
 
 class ProductsScreen extends ConsumerWidget {
@@ -15,6 +16,7 @@ class ProductsScreen extends ConsumerWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
+        const PrimaryAppBar(showSearch: false),
         const SizedBox.square(dimension: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -117,7 +119,7 @@ class ProductsScreen extends ConsumerWidget {
                 ),
               ),
               SizedBox(
-                height: 1046,
+                height: 2000,
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: List.generate(
@@ -132,6 +134,7 @@ class ProductsScreen extends ConsumerWidget {
                         childAspectRatio: 157 / 194,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
+                        mainAxisExtent: 200,
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return Container(

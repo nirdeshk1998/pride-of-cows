@@ -1,6 +1,6 @@
 name: poc
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -19,8 +19,6 @@ dependencies:
   carousel_slider: ^4.1.1
   widget_size: ^0.0.2
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -33,9 +31,29 @@ flutter:
     - assets/logo/
     - assets/icons/
     - assets/images/
+  #   - assets/fonts/lato/
+  #   - assets/fonts/suranna/
+
+  # fonts:
+  #   - family: Lato
+  #     fonts:
+  #       - asset: assets\fonts\lato\Lato-Thin.ttf
+  #         weight: 100
+  #       - asset: assets\fonts\lato\Lato-Light.ttf
+  #         weight: 300
+  #       - asset: assets\fonts\lato\Lato-Regular.ttf
+  #         weight: 400
+  #       - asset: assets\fonts\lato\Lato-Bold.ttf
+  #         weight: 700
+  #       - asset: assets\fonts\lato\Lato-Black.ttf
+  #         weight: 900
+
+  #   - family: Suranna
+  #     fonts:
+  #       - asset: assets\fonts\suranna\Suranna-Regular.ttf
+  #         weight: 400
 
 flutter_assets:
   assets_path: assets/
   output_path: lib/constants/
   filename: assets.dart
-  

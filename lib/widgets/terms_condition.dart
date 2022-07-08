@@ -20,8 +20,7 @@ class TermsConditionsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PrimaryIconButton(
-          height: 20,
-          width: 20,
+          size: 20,
           padding: const EdgeInsets.symmetric(vertical: 2),
           svg: checkState ? Assets.assetsIconsCheckboxChecked : Assets.assetsIconsCheckboxUnchecked,
           onPressed: onCheckPressed,

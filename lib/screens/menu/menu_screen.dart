@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/styles/text_styles.dart';
-import 'package:poc/widgets/indicators.dart';
+import 'package:poc/widgets/appbar.dart';
+import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -15,226 +16,421 @@ class MenuScreen extends ConsumerWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        const SizedBox.square(dimension: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        const PrimaryAppBar(showSearch: false),
+        Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+            color: Palette.surfaceBackgroundColor,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                height: 38,
-                child: Text('Products', style: TextStyles.header),
+              const SizedBox.square(dimension: 10),
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                horizontalTitleGap: 10,
+                minLeadingWidth: 0,
+                minVerticalPadding: 0,
+                leading: const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmIh7V-Sq7K48WnUqtu18enb2Mnm_3fwnDJg&usqp=CAU',
+                  ),
+                ),
+                title: TextView(
+                  'Hi, John!',
+                  textType: TextType.header2,
+                  color: Palette.textColor,
+                  height: 1,
+                ),
+                subtitle: TextView(
+                  '9876543210',
+                  textType: TextType.regular,
+                  color: Palette.textColor,
+                  size: TextSize.subHeader,
+                ),
               ),
               const SizedBox.square(dimension: 10),
-              Row(
-                children: [
-                  CupertinoButton(
-                    minSize: 0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    child: Row(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: SvgPicture.asset(Assets.assetsIconsFilter),
+                        _profileTile(
+                          text: '₹900',
+                          title: 'Wallet balance',
+                          icon: Assets.assetsIconsWallet,
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
-                          "FILTER",
-                          style: TextStyle(
-                            color: Color(0xff9b9b9b),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.72,
-                          ),
+                        const SizedBox.square(dimension: 10),
+                        _profileTile(
+                          text: '₹3000',
+                          title: 'Monthly bill',
+                          icon: Assets.assetsIconsBill,
+                          gradColors: [
+                            const Color(0xffbeefff),
+                            const Color(0xff93e5ff),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  CupertinoButton(
-                    minSize: 0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    child: Row(
+                    const SizedBox.square(dimension: 10),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: SvgPicture.asset(Assets.assetsIconsSort),
+                        _profileTile(
+                          text: '2',
+                          title: 'Upcoming deliveries',
+                          icon: Assets.assetsIconsCart2,
+                          gradColors: [
+                            const Color(0xff8ed5ff),
+                            const Color(0xffc2e8ff),
+                          ],
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
-                          "SORT",
-                          style: TextStyle(
-                            color: Color(0xff9b9b9b),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.72,
-                          ),
+                        const SizedBox.square(dimension: 10),
+                        _profileTile(
+                          text: '5',
+                          title: 'Pending notifications',
+                          icon: Assets.assetsIconsBell,
+                          gradColors: [
+                            const Color(0xffffe0bb),
+                            const Color(0xfff0cb9e),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        DefaultTabController(
-          length: 6,
-          initialIndex: 0,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-                child: TabBar(
-                  isScrollable: true,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorPadding: EdgeInsets.zero,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 12.5),
-                  padding: const EdgeInsets.symmetric(horizontal: 7.5),
-                  indicator: CircleTabIndicator(color: Palette.primaryColor, radius: 2.5),
-                  // labelStyle: ,
-                  labelColor: Palette.primaryColor,
-                  unselectedLabelColor: const Color(0xff658395),
-                  indicatorWeight: 0,
-                  labelStyle: const TextStyle(
-                    fontSize: 16,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.normal,
-                    height: 1.5,
-                  ),
-                  tabs: const [
-                    Tab(text: 'Milk'),
-                    Tab(text: 'Cheese'),
-                    Tab(text: 'Ghee'),
-                    Tab(text: 'Curd'),
-                    Tab(text: 'Butter'),
-                    Tab(text: 'Combinations'),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 1046,
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    6,
-                    (index) => GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: 20,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 157 / 194,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: const Color(0xffe1eaf4),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: Image.network(
-                                  'https://i.pinimg.com/564x/d8/3c/fc/d83cfc0043cde21c8735110b13f443fe.jpg',
-                                  height: double.maxFinite,
-                                  width: double.maxFinite,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              const SizedBox.square(dimension: 10),
-                              const Text(
-                                'Milk',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Palette.textColor,
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              const Text(
-                                '1 litre',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Palette.hintColor,
-                                  fontSize: 14,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              const SizedBox.square(dimension: 10),
-                              Row(
-                                children: [
-                                  // Figma Flutter Generator 120Widget - TEXT
-                                  const Text(
-                                    '₹120',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Palette.textColor,
-                                      fontSize: 16,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox.square(dimension: 5),
-                                  const Text(
-                                    '₹150',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Palette.surfaceColor,
-                                      fontSize: 14,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationThickness: 2,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Material(
-                                    color: Palette.disabledColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 24,
-                                        width: 24,
-                                        decoration: const BoxDecoration(),
-                                        child: const Icon(
-                                          CupertinoIcons.arrow_right,
-                                          color: Palette.primaryColor,
-                                          size: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+              const SizedBox.square(dimension: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PrimaryButton(
+                    title: 'pay your monthly bill',
+                    icon: Assets.assetsIconsArrowRight2,
+                    width: 260,
+                    onPressed: () {},
                   ),
-                ),
+                ],
               ),
+              const SizedBox.square(dimension: 20),
+            ],
+          ),
+        ),
+        const SizedBox.square(dimension: 20),
+        menuListSection(
+          title: 'Order Details',
+          children: [
+            menuListTile(
+              title: 'Orders',
+              onTap: () {},
+              icon: Assets.assetsIconsCartRound,
+            ),
+            menuListTile(
+              title: 'Vacation Mode',
+              onTap: () {},
+              icon: Assets.assetsIconsCalenderRound,
+            ),
+          ],
+        ),
+        menuListSection(
+          title: 'Personal Information',
+          children: [
+            menuListTile(
+              title: 'My Profile',
+              onTap: () {},
+              icon: Assets.assetsIconsProfileRound,
+            ),
+            menuListTile(
+              title: 'My Address Book',
+              onTap: () {},
+              icon: Assets.assetsIconsAddressRound,
+            ),
+          ],
+        ),
+        menuListSection(
+          title: 'Referrals and Credits',
+          children: [
+            menuListTile(
+              title: 'My Wallet',
+              onTap: () {},
+              icon: Assets.assetsIconsWalletRound,
+            ),
+            menuListTile(
+              title: 'Rewards',
+              onTap: () {},
+              icon: Assets.assetsIconsRewardRound,
+            ),
+            menuListTile(
+              title: 'Loyalty Program',
+              onTap: () {},
+              icon: Assets.assetsIconsLoyaltyRound,
+            ),
+            menuListTile(
+              title: 'Refer and Earn',
+              onTap: () {},
+              icon: Assets.assetsIconsReferRound,
+            ),
+            menuListTile(
+              title: 'Gift Card',
+              onTap: () {},
+              icon: Assets.assetsIconsGiftRound,
+            ),
+          ],
+        ),
+        menuListSection(
+          title: 'Help and Support',
+          children: [
+            menuListTile(
+              title: 'FAQs and Links',
+              onTap: () {},
+              icon: Assets.assetsIconsFaqRound,
+            ),
+            menuListTile(
+              title: 'Raise a Ticket',
+              onTap: () {},
+              icon: Assets.assetsIconsTicketRound,
+            ),
+            menuListTile(
+              title: 'Contact Us',
+              onTap: () {},
+              icon: Assets.assetsIconsContactUsRound,
+            ),
+          ],
+        ),
+        menuListSection(
+          title: 'Learn more',
+          bPadding: 10,
+          children: [
+            menuListTile(
+              title: 'About Us',
+              onTap: () {},
+              icon: Assets.assetsIconsAboutUsRound,
+            ),
+            menuListTile(
+              title: 'Lifestyle',
+              onTap: () {},
+              icon: Assets.assetsIconsLifestyleRound,
+            ),
+            menuListTile(
+              title: 'Recipes',
+              onTap: () {},
+              icon: Assets.assetsIconsRecipeRound,
+            ),
+          ],
+        ),
+        menuListTileButton(icon: Assets.assetsIconsShare2, title: 'Share App'),
+        menuListTileButton(icon: Assets.assetsIconsStar2, title: 'Rate App'),
+        const SizedBox.square(dimension: 20),
+        Center(
+          child: PrimaryButton(
+            title: 'log out',
+            colorFill: false,
+            onPressed: () {},
+          ),
+        ),
+        const SizedBox.square(dimension: 20),
+        Container(
+          color: Palette.surfaceBackgroundColor,
+          child: Column(
+            children: [
+              const SizedBox.square(dimension: 20),
+              const TextView(
+                'APP VERSION 1.1.2',
+                size: TextSize.regularSmall,
+                letterSpacing: 0.6,
+                color: Palette.lightPrimaryTextColor,
+                fontWeight: FontWeight.bold,
+              ),
+              const SizedBox.square(dimension: 10),
+              PrimaryTextButton(
+                title: 'Update App',
+                size: 14.0,
+                isUpperCase: false,
+                showUnderline: true,
+                onPressed: () {},
+              ),
+              const SizedBox.square(dimension: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PrimaryIconButton(
+                    size: 30,
+                    svg: Assets.assetsIconsInstagram,
+                    onPressed: () {},
+                  ),
+                  const SizedBox.square(dimension: 20),
+                  PrimaryIconButton(
+                    size: 30,
+                    svg: Assets.assetsIconsFb,
+                    onPressed: () {},
+                  ),
+                  const SizedBox.square(dimension: 20),
+                  PrimaryIconButton(
+                    size: 30,
+                    svg: Assets.assetsIconsTwitter,
+                    onPressed: () {},
+                  ),
+                  const SizedBox.square(dimension: 20),
+                  PrimaryIconButton(
+                    size: 30,
+                    svg: Assets.assetsIconsYoutube,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              const SizedBox.square(dimension: 90),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  CupertinoButton menuListTileButton({
+    required final String title,
+    required final String icon,
+  }) {
+    return CupertinoButton(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+      minSize: 0,
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: 18,
+            child: SvgPicture.asset(
+              icon,
+              color: Palette.goldenIconColor,
+            ),
+          ),
+          const SizedBox.square(dimension: 5),
+          TextView(
+            title,
+            color: Palette.primaryColor,
+            decoration: TextDecoration.underline,
+          ),
+        ],
+      ),
+      onPressed: () {},
+    );
+  }
+
+  Column menuListSection({
+    required final List<Widget> children,
+    required final String title,
+    final double? bPadding,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: TextView(
+            title,
+            color: Palette.lightTextColor,
+            height: 1,
+          ),
+        ),
+        const SizedBox.square(dimension: 10),
+        Column(
+          children: children,
+        ),
+        const SizedBox.square(dimension: 10),
+        const Divider(
+          height: 1,
+          thickness: 1,
+          color: Palette.surfaceColor,
+          indent: 20,
+          endIndent: 20,
+        ),
+        SizedBox.square(dimension: bPadding ?? 20),
+      ],
+    );
+  }
+
+  InkWell menuListTile({
+    required final VoidCallback onTap,
+    required final String title,
+    required final String icon,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6),
+        child: Row(
+          children: [
+            SizedBox.square(
+              dimension: 25,
+              child: SvgPicture.asset(
+                icon,
+              ),
+            ),
+            const SizedBox.square(dimension: 8),
+            TextView(
+              title,
+              color: Palette.textColor,
+              size: TextSize.menuTitle,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Expanded _profileTile({
+    List<Color>? gradColors,
+    required String icon,
+    required String text,
+    required String title,
+  }) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: gradColors ??
+                [
+                  const Color(0xffffe3ca),
+                  const Color(0xfff8b8a4),
+                ],
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox.square(
+                  dimension: 24,
+                  child: SvgPicture.asset(icon),
+                ),
+                const SizedBox.square(dimension: 5),
+                TextView(
+                  text,
+                  color: Palette.textColor,
+                  textType: TextType.header2,
+                  height: 1.35,
+                  boxHeight: 28,
+                ),
+              ],
+            ),
+            TextView(
+              title,
+              color: Palette.hintColor,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

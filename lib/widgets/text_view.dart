@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class TextType {
+  static TextStyle regular = TextStyle(
+    fontSize: TextSize.regular,
+    fontFamily: GoogleFonts.lato().fontFamily,
+  );
+
+  static TextStyle titleStyled = TextStyle(
+    fontFamily: GoogleFonts.suranna().fontFamily,
+    fontSize: TextSize.title,
+    height: 1,
+  );
+
+  static const TextStyle header = TextStyle(
+    fontSize: TextSize.header,
+  );
+
+  static TextStyle header2 = TextStyle(
+    fontFamily: GoogleFonts.suranna().fontFamily,
+    fontSize: TextSize.header2,
+    height: 1,
+  );
+
+  static TextStyle primaryButton = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.primaryButton,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle primaryTextButton = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.primaryButton,
+    height: 1,
+  );
+}
+
+class TextSize {
+  static const double regularSmall = 12;
+  static const double regular = 14;
+  static const double subHeader = 16;
+  static const double title = 20;
+  static const double header = 32;
+  static const double header2 = 24;
+  static const double appbarTitle = 20;
+  static const double primaryButton = 12;
+  static const double menuTitle = 16;
+}
+
+// class TextWeight {
+//   static const FontWeight regular = normal;
+//   static const FontWeight header = bold;
+//   static const FontWeight appbarTitle = medium;
+
+//   static const FontWeight thin = FontWeight.w100;
+//   static const FontWeight extraLight = FontWeight.w200;
+//   static const FontWeight light = FontWeight.w300;
+//   static const FontWeight normal = FontWeight.w400;
+//   static const FontWeight medium = FontWeight.w500;
+//   static const FontWeight semiBold = FontWeight.w600;
+//   static const FontWeight bold = FontWeight.w700;
+//   static const FontWeight extraBold = FontWeight.w800;
+//   static const FontWeight black = FontWeight.w900;
+// }
+
+class TextView extends StatelessWidget {
+  final String? text;
+  final Color? color, bgColor;
+  final TextStyle? textType;
+  final double? size, letterSpacing, height, boxHeight;
+  final FontWeight? fontWeight;
+  final TextAlign? textAlign;
+  final TextDecoration? decoration;
+
+  const TextView(
+    this.text, {
+    Key? key,
+    this.color,
+    this.size,
+    this.fontWeight,
+    this.textType,
+    this.letterSpacing,
+    this.height,
+    this.textAlign,
+    this.boxHeight,
+    this.bgColor,
+    this.decoration,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: bgColor,
+      height: boxHeight,
+      child: DefaultTextStyle(
+        style: textType ?? TextType.regular,
+        child: Text(
+          '$text',
+          textAlign: textAlign,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: size,
+            color: color,
+            fontWeight: fontWeight,
+            letterSpacing: letterSpacing,
+            height: height,
+            decoration: decoration,
+          ),
+        ),
+      ),
+    );
+  }
+}

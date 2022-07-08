@@ -3,221 +3,297 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/widgets/appbar.dart';
+import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox.square(dimension: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    final rProvider = ref.read(cartProvider);
+    final wProvider = ref.watch(cartProvider);
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const PrimaryAppBar(showSearch: false),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(
-                      height: 38,
-                      child: Text('Your Cart', style: TextStyles.header),
-                    ),
-                    const SizedBox.square(dimension: 3),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 14.0),
-                      child: Text(
-                        "(17 items)",
-                        style: TextStyle(
-                          color: Palette.textColor,
-                          fontSize: 14,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 38,
+                          child: Text('Your Cart', style: TextStyles.header),
                         ),
-                      ),
+                        const SizedBox.square(dimension: 3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 14.0),
+                          child: Text(
+                            "(17 items)",
+                            style: TextStyle(
+                              color: Palette.textColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox.square(dimension: 10),
-                SizedBox(
-                  height: 500,
-                  child: ListView.builder(
-                      itemBuilder: (context, index) => ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 5,
-                            padding: EdgeInsets.zero,
-                            separatorBuilder: (_, index) => const SizedBox(height: 20),
-                            itemBuilder: (context, index) => SizedBox(
-                              width: 325,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 5, top: 5),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: SizedBox.square(
-                                            dimension: 100,
-                                            child: Image.network(
-                                                'https://i.pinimg.com/564x/6f/e5/00/6fe50068243ce3b57b127d8aff26a3e1.jpg'),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox.square(dimension: 10),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            const SizedBox.square(dimension: 10),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: const [
-                                                Text(
-                                                  'Milk x 2',
-                                                  style: TextStyle(
-                                                    color: Color(0xff2b2b2b),
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "₹200 ",
-                                                  textAlign: TextAlign.right,
-                                                  style: TextStyle(
-                                                    color: Color(0xff2b2b2b),
-                                                    fontSize: 16,
-                                                    fontFamily: "Lato",
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox.square(dimension: 5),
-                                            const Text(
-                                              "2 litres",
-                                              style: TextStyle(
-                                                color: Color(0xff7f7f7f),
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            const SizedBox.square(dimension: 15),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox.square(
-                                                  dimension: 16,
-                                                  child: SvgPicture.asset(
-                                                    Assets.assetsIconsCalendar,
-                                                    color: Palette.hintColor,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 3),
-                                                const Text(
-                                                  "Ordered on:",
-                                                  style: TextStyle(
-                                                    color: Palette.hintColor,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 5),
-                                                const Text(
-                                                  "30-10-21",
-                                                  style: TextStyle(
-                                                    color: Palette.textColor,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox.square(dimension: 20),
-                                    ],
+                    const SizedBox.square(dimension: 10),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 5,
+                      padding: EdgeInsets.zero,
+                      separatorBuilder: (_, index) => const SizedBox(height: 20),
+                      itemBuilder: (context, index) => Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5, top: 5),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: SizedBox.square(
+                                    dimension: 100,
+                                    child: Image.network(
+                                      'https://i.pinimg.com/564x/6f/e5/00/6fe50068243ce3b57b127d8aff26a3e1.jpg',
+                                    ),
                                   ),
-                                  const SizedBox.square(dimension: 10),
-                                  const Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                    color: Palette.surfaceColor,
-                                    indent: 10,
-                                    endIndent: 18,
-                                  ),
-                                  const SizedBox.square(dimension: 5),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10.0, right: 18),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                ),
+                              ),
+                              const SizedBox.square(dimension: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
-                                          "Rate:",
-                                          style: TextStyle(
-                                            color: Color(0xff7f7f7f),
-                                            fontSize: 16,
-                                          ),
+                                        TextView(
+                                          'Curd',
+                                          textType: TextType.titleStyled,
+                                          color: Palette.textColor,
+                                          height: 1,
                                         ),
-                                        const SizedBox.square(dimension: 5),
-                                        SvgPicture.asset(Assets.assetsIconsStar),
-                                        const SizedBox.square(dimension: 5),
-                                        SvgPicture.asset(Assets.assetsIconsStar),
-                                        const SizedBox.square(dimension: 5),
-                                        SvgPicture.asset(Assets.assetsIconsStar),
-                                        const SizedBox.square(dimension: 5),
-                                        SvgPicture.asset(Assets.assetsIconsStar),
-                                        const SizedBox.square(dimension: 5),
-                                        SvgPicture.asset(Assets.assetsIconsStar),
+                                        const SizedBox(width: 5),
+                                        TextView(
+                                          '(500 grams)',
+                                          textType: TextType.regular,
+                                          color: Palette.textColor,
+                                          height: 1.1,
+                                        ),
                                         const Spacer(),
-                                        CupertinoButton(
-                                          padding: EdgeInsets.zero,
-                                          minSize: 0,
-                                          child: Row(
-                                            children: [
-                                              const Text(
-                                                "REORDER",
-                                                textAlign: TextAlign.right,
-                                                style: TextStyle(
-                                                  color: Color(0xff193b61),
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  letterSpacing: 0.72,
-                                                ),
-                                              ),
-                                              const SizedBox.square(dimension: 5),
-                                              SizedBox.square(
-                                                dimension: 18,
-                                                child: SvgPicture.asset(Assets.assetsIconsRepeat),
-                                              ),
-                                            ],
-                                          ),
+                                        PrimaryIconButton(
+                                          svg: Assets.assetsIconsDelete,
+                                          size: 16,
                                           onPressed: () {},
                                         ),
                                       ],
                                     ),
-                                  )
-                                ],
+                                    TextView(
+                                      '₹50',
+                                      textType: TextType.regular,
+                                      color: Palette.lightTextColor,
+                                      height: 1.1,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox.square(
+                                          dimension: 16,
+                                          child: SvgPicture.asset(
+                                            Assets.assetsIconsClock,
+                                            color: Palette.lightTextColor,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 3),
+                                        const TextView(
+                                          "Delivery plan:",
+                                          color: Palette.lightTextColor,
+                                          height: 1.1,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        const TextView(
+                                          "Alternate",
+                                          color: Palette.textColor,
+                                          height: 1.1,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox.square(
+                                          dimension: 16,
+                                          child: SvgPicture.asset(
+                                            Assets.assetsIconsCalender2,
+                                            color: Palette.lightTextColor,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 3),
+                                        const TextView(
+                                          "Start:",
+                                          color: Palette.lightTextColor,
+                                          height: 1.1,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        const TextView(
+                                          "08-11-21",
+                                          color: Palette.textColor,
+                                          height: 1.1,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        PrimaryIconButton(
+                                          svg: Assets.assetsIconsPencil,
+                                          size: 16,
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox.square(
+                                          dimension: 16,
+                                          child: SvgPicture.asset(
+                                            Assets.assetsIconsCalender2,
+                                            color: Palette.lightTextColor,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 3),
+                                        const TextView(
+                                          "End:",
+                                          color: Palette.lightTextColor,
+                                          height: 1.1,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        const TextView(
+                                          "07-01-22",
+                                          color: Palette.textColor,
+                                          height: 1.1,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        PrimaryIconButton(
+                                          svg: Assets.assetsIconsPencil,
+                                          size: 16,
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox.square(dimension: 5),
+                                    Row(
+                                      children: [
+                                        PrimaryIconButton(
+                                          svg: Assets.assetsIconsMinus,
+                                          size: 16,
+                                          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                                          onPressed: rProvider.onItemMinus,
+                                        ),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 3,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Palette.outlineColor),
+                                            borderRadius: BorderRadius.circular(100),
+                                          ),
+                                          child: TextView(
+                                            wProvider.itemCount,
+                                            color: Palette.textColor,
+                                            height: 1,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        PrimaryIconButton(
+                                          svg: Assets.assetsIconsPlus,
+                                          size: 16,
+                                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                          onPressed: rProvider.onItemPlus,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )),
+                            ],
+                          ),
+                          const SizedBox.square(dimension: 10),
+                          const Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Palette.backgroundColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        Container(
+          color: Palette.backgroundColor,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextView(
+                    'You Pay:',
+                    textType: TextType.header2,
+                    color: Palette.textColor,
+                  ),
+                  TextView(
+                    '₹1800',
+                    textType: TextType.header2,
+                    color: Palette.textColor,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              PrimaryButton(
+                title: 'checkout',
+                isExpanded: true,
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
