@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poc/styles/colors.dart';
 
 class TextType {
   static TextStyle regular = TextStyle(
@@ -13,8 +14,10 @@ class TextType {
     height: 1,
   );
 
-  static const TextStyle header = TextStyle(
+  static TextStyle header = TextStyle(
+    fontFamily: GoogleFonts.suranna().fontFamily,
     fontSize: TextSize.header,
+    height: 1.4,
   );
 
   static TextStyle header2 = TextStyle(
@@ -23,11 +26,26 @@ class TextType {
     height: 1,
   );
 
+  static TextStyle title = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.subHeader,
+    fontWeight: FontWeight.bold,
+    height: 1,
+  );
+
+  static TextStyle subtitle = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.subHeader,
+    fontWeight: FontWeight.normal,
+    height: 1,
+  );
+
   static TextStyle primaryButton = TextStyle(
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.primaryButton,
     fontWeight: FontWeight.bold,
   );
+
   static TextStyle primaryTextButton = TextStyle(
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.primaryButton,
@@ -100,7 +118,7 @@ class TextView extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: size,
-            color: color,
+            color: color ?? Palette.primaryColor,
             fontWeight: fontWeight,
             letterSpacing: letterSpacing,
             height: height,

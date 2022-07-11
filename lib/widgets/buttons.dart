@@ -1,10 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/text_view.dart';
+
+class PrimaryOutlineButton extends StatelessWidget {
+  const PrimaryOutlineButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: MaterialButton(
+        onPressed: () {},
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(),
+        ),
+        child: TextView(
+          'text'.toUpperCase(),
+        ),
+      ),
+    );
+  }
+}
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -48,7 +65,11 @@ class PrimaryButton extends StatelessWidget {
             title.toUpperCase(),
             textAlign: TextAlign.center,
             textType: TextType.primaryButton,
-            color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+            color: colorFill == false
+                ? Palette.primaryColor
+                : onPressed == null
+                    ? Palette.onDisabledColor
+                    : Palette.onPrimaryColor,
           ),
           if (icon != null) const SizedBox.square(dimension: 10),
           if (icon != null)

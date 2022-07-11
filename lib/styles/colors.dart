@@ -4,6 +4,8 @@ class Palette {
   static const primaryColor = Color(0xFF193B61);
   static const onPrimaryColor = Color(0xFFf2f2f2);
 
+  static const lightColor = Color(0xFFFFFFFF);
+
   static const backgroundColor = Color(0xFFFAFAFA);
   static const outlineColor = Color(0xFFE1EAF4);
 

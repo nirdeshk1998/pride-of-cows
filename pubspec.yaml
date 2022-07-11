@@ -17,6 +17,7 @@ dependencies:
   country_code_picker: ^2.0.2
   pin_code_fields: ^7.4.0
   carousel_slider: ^4.1.1
+  card_swiper : ^2.0.1
   widget_size: ^0.0.2
 
 dev_dependencies:
