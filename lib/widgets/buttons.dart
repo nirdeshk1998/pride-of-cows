@@ -5,19 +5,29 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class PrimaryOutlineButton extends StatelessWidget {
-  const PrimaryOutlineButton({Key? key}) : super(key: key);
+  final String title;
+  final VoidCallback onPressed;
+
+  const PrimaryOutlineButton({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: MaterialButton(
-        onPressed: () {},
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(),
-        ),
-        child: TextView(
-          'text'.toUpperCase(),
-        ),
+    return MaterialButton(
+      onPressed: onPressed,
+      padding: const EdgeInsets.all(10.0),
+      minWidth: 0,
+      height: 36,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Palette.outlineColor),
+      ),
+      child: TextView(
+        title.toUpperCase(),
+        textType: TextType.primaryButton,
       ),
     );
   }

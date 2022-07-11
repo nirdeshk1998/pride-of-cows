@@ -100,7 +100,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                   const TextSpan(
                     children: [
                       TextSpan(
-                        text: 'A glassful of magic, each 1 litre bottle contains nothing but milk which is full of lov... ',
+                        text: 'A glassful of magic, each 1 litre bottle contains nothing but milk which is full of love... ',
                       ),
                       TextSpan(
                         text: 'Read more',
@@ -118,7 +118,56 @@ class ProductDetailsScreen extends ConsumerWidget {
                   textType: TextType.subtitle,
                   color: Palette.hintColor,
                 ),
-                const PrimaryOutlineButton(),
+                const SizedBox.square(dimension: 5),
+                Wrap(
+                  direction: Axis.horizontal,
+                  children: wProvider.deliveryPlans
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: PrimaryOutlineButton(
+                            title: e,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (builder) => Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          TextView(
+                                            'Milk',
+                                            textType: TextType.subtitle,
+                                            boxHeight: 20,
+                                          ),
+                                          const SizedBox.square(dimension: 5),
+                                          TextView(
+                                            '(1 litre -  ₹100)',
+                                            textType: TextType.subtitle,
+                                            color: Palette.hintColor,
+                                            boxHeight: 20,
+                                          ),
+                                          const Spacer(),
+                                          TextView(
+                                            '₹100',
+                                            textType: TextType.title,
+                                            boxHeight: 20,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
               ],
             ),
           ),
