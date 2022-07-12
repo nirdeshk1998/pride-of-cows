@@ -5,19 +5,29 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class PrimaryOutlineButton extends StatelessWidget {
-  const PrimaryOutlineButton({Key? key}) : super(key: key);
+  final String title;
+  final VoidCallback onPressed;
+
+  const PrimaryOutlineButton({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: MaterialButton(
-        onPressed: () {},
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(),
-        ),
-        child: TextView(
-          'text'.toUpperCase(),
-        ),
+    return MaterialButton(
+      onPressed: onPressed,
+      padding: const EdgeInsets.all(10.0),
+      minWidth: 0,
+      height: 36,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Palette.outlineColor),
+      ),
+      child: TextView(
+        title.toUpperCase(),
+        textType: TextType.primaryButton,
       ),
     );
   }
@@ -30,6 +40,7 @@ class PrimaryButton extends StatelessWidget {
   final double? iconSize, width;
   final bool? isExpanded;
   final bool? colorFill;
+  final bool? isRounded;
 
   const PrimaryButton({
     Key? key,
@@ -40,15 +51,18 @@ class PrimaryButton extends StatelessWidget {
     this.iconSize,
     this.width,
     this.colorFill,
+    this.isRounded,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onPressed,
-      shape: StadiumBorder(
-        side: BorderSide(color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor),
-      ),
+      shape: isRounded == false
+          ? null
+          : StadiumBorder(
+              side: BorderSide(color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor),
+            ),
       color: colorFill == false ? null : Palette.primaryColor,
       textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
@@ -89,6 +103,7 @@ class PrimaryIconButton extends StatelessWidget {
   final String svg;
   final double? size;
   final EdgeInsets? padding;
+  final Color? color;
 
   const PrimaryIconButton({
     Key? key,
@@ -96,6 +111,7 @@ class PrimaryIconButton extends StatelessWidget {
     required this.svg,
     this.padding,
     this.size,
+    this.color,
   }) : super(key: key);
 
   @override

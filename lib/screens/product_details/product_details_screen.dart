@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -100,7 +101,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                   const TextSpan(
                     children: [
                       TextSpan(
-                        text: 'A glassful of magic, each 1 litre bottle contains nothing but milk which is full of lov... ',
+                        text: 'A glassful of magic, each 1 litre bottle contains nothing but milk which is full of love... ',
                       ),
                       TextSpan(
                         text: 'Read more',
@@ -118,7 +119,85 @@ class ProductDetailsScreen extends ConsumerWidget {
                   textType: TextType.subtitle,
                   color: Palette.hintColor,
                 ),
-                const PrimaryOutlineButton(),
+                const SizedBox.square(dimension: 5),
+                Wrap(
+                  direction: Axis.horizontal,
+                  children: wProvider.deliveryPlans
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: PrimaryOutlineButton(
+                            title: e,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                builder: (builder) => Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          TextView(
+                                            'Milk',
+                                            textType: TextType.subtitle,
+                                            boxHeight: 20,
+                                          ),
+                                          const SizedBox.square(dimension: 5),
+                                          TextView(
+                                            '(1 litre -  ₹100)',
+                                            textType: TextType.subtitle,
+                                            color: Palette.hintColor,
+                                            boxHeight: 20,
+                                          ),
+                                          const Spacer(),
+                                          TextView(
+                                            '₹100',
+                                            textType: TextType.title,
+                                            boxHeight: 20,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox.square(dimension: 20),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          TextView(
+                                            'Delivery Plan:',
+                                            textType: TextType.subtitle,
+                                            color: Palette.hintColor,
+                                          ),
+                                          const Spacer(),
+                                          TextView(
+                                            'Alternate',
+                                            textType: TextType.subtitle,
+                                            color: Palette.primaryColor,
+                                          ),
+                                          const SizedBox.square(dimension: 10),
+                                          PrimaryIconButton(
+                                            svg: Assets.assetsIconsEditPencil,
+                                            size: 22,
+                                            onPressed: () {},
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
               ],
             ),
           ),

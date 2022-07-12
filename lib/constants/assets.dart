@@ -9,6 +9,10 @@ class Assets {
   /// assets/icons/address_round.svg
   static const String assetsIconsAddressRound = "assets/icons/address_round.svg";
 
+  /// Assets for assetsIconsAmbica
+  /// assets/icons/ambica.apk
+  static const String assetsIconsAmbica = "assets/icons/ambica.apk";
+
   /// Assets for assetsIconsArrowLeft
   /// assets/icons/arrow_left.svg
   static const String assetsIconsArrowLeft = "assets/icons/arrow_left.svg";
@@ -88,6 +92,10 @@ class Assets {
   /// Assets for assetsIconsDelete
   /// assets/icons/delete.svg
   static const String assetsIconsDelete = "assets/icons/delete.svg";
+
+  /// Assets for assetsIconsEditPencil
+  /// assets/icons/edit_pencil.svg
+  static const String assetsIconsEditPencil = "assets/icons/edit_pencil.svg";
 
   /// Assets for assetsIconsFaqRound
   /// assets/icons/faq_round.svg

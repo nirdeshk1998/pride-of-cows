@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/main/main_screen.dart';
-import 'package:poc/screens/product_details/product_details.dart';
+// import 'package:poc/screens/product_details/product_details.dart';
 import 'package:poc/screens/splash/splash_screen.dart';
 import 'package:poc/styles/colors.dart';
 
