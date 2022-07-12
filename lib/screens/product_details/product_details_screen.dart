@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
@@ -9,6 +10,7 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/calender_picker.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
@@ -114,11 +116,6 @@ class ProductDetailsScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox.square(dimension: 16),
-                PrimaryButton(
-                  title: 'title',
-                  onPressed: () {},
-                  isRounded: false,
-                ),
                 TextView(
                   'Delivery plan:',
                   textType: TextType.subtitle,
@@ -152,6 +149,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                           TextView(
                                             'Milk',
                                             textType: TextType.subtitle,
+                                            color: Palette.textColor,
                                             boxHeight: 20,
                                           ),
                                           const SizedBox.square(dimension: 5),
@@ -165,6 +163,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                           TextView(
                                             '₹100',
                                             textType: TextType.title,
+                                            color: Palette.textColor,
                                             boxHeight: 20,
                                           ),
                                         ],
@@ -183,7 +182,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                           TextView(
                                             'Alternate',
                                             textType: TextType.subtitle,
-                                            color: Palette.primaryColor,
+                                            color: Palette.textColor,
                                           ),
                                           const SizedBox.square(dimension: 10),
                                           PrimaryIconButton(
@@ -192,6 +191,42 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             onPressed: () {},
                                           ),
                                         ],
+                                      ),
+                                      const SizedBox.square(dimension: 20),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          TextView(
+                                            'Select start date:',
+                                            textType: TextType.subtitle,
+                                            color: Palette.hintColor,
+                                          ),
+                                          const Spacer(),
+                                          TextView(
+                                            'Dec 2021',
+                                            textType: TextType.subtitle,
+                                            color: Palette.textColor,
+                                          ),
+                                          const SizedBox.square(dimension: 5),
+                                          PrimaryIconButton(
+                                            svg: Assets.assetsIconsChevLeft,
+                                            size: 22,
+                                            onPressed: () {},
+                                          ),
+                                          const SizedBox.square(dimension: 5),
+                                          PrimaryIconButton(
+                                            svg: Assets.assetsIconsChevRight,
+                                            size: 22,
+                                            onPressed: () {},
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 200,
+                                        child: CalendarCarousel(
+                                          childAspectRatio: 335 / 183,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -203,6 +238,43 @@ class ProductDetailsScreen extends ConsumerWidget {
                       )
                       .toList(),
                 ),
+                PrimaryCalendarDatePicker(
+                  initialCalendarMode: DatePickerMode.day,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(DateTime.now().year + 1),
+                  onDateChanged: (i) {},
+                ),
+                // PrimaryButton(
+                //   title: 'title',
+                //   onPressed: () {
+                //     // showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate);
+                //     CalendarDatePicker(
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime.now(),
+                //       lastDate: DateTime.now(),
+                //       onDateChanged: (i) {},
+                //     );
+                //   },
+                // ),
+                // SizedBox(
+                //   height: 200,
+                //   child: CalendarCarousel(
+                //     childAspectRatio: 335 / 183,
+                //     daysTextStyle: TextType.calender,
+                //     weekendTextStyle: TextType.calender,
+                //     prevDaysTextStyle: TextType.calender.copyWith(
+                //       color: Palette.lightIconColor,
+                //     ),
+                //     nextDaysTextStyle: TextType.calender.copyWith(
+                //       color: Palette.lightIconColor,
+                //     ),
+                //     weekdayTextStyle: TextType.calender.copyWith(
+                //       color: Palette.lightTextColor,
+                //       fontWeight: FontWeight.normal,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

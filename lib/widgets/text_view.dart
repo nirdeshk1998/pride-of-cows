@@ -3,6 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/styles/colors.dart';
 
 class TextType {
+  static TextStyle calender = TextStyle(
+    fontSize: TextSize.regularSmall,
+    fontWeight: FontWeight.bold,
+    color: Palette.textColor,
+    fontFamily: GoogleFonts.lato().fontFamily,
+  );
+
   static TextStyle regular = TextStyle(
     fontSize: TextSize.regular,
     fontFamily: GoogleFonts.lato().fontFamily,

@@ -73,6 +73,14 @@ class Assets {
   /// assets/icons/checkbox_unchecked.svg
   static const String assetsIconsCheckboxUnchecked = "assets/icons/checkbox_unchecked.svg";
 
+  /// Assets for assetsIconsChevLeft
+  /// assets/icons/chev_left.svg
+  static const String assetsIconsChevLeft = "assets/icons/chev_left.svg";
+
+  /// Assets for assetsIconsChevRight
+  /// assets/icons/chev_right.svg
+  static const String assetsIconsChevRight = "assets/icons/chev_right.svg";
+
   /// Assets for assetsIconsChevronDown
   /// assets/icons/chevron_down.svg
   static const String assetsIconsChevronDown = "assets/icons/chevron_down.svg";
