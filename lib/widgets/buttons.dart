@@ -40,6 +40,7 @@ class PrimaryButton extends StatelessWidget {
   final double? iconSize, width;
   final bool? isExpanded;
   final bool? colorFill;
+  final bool? isRounded;
 
   const PrimaryButton({
     Key? key,
@@ -50,15 +51,18 @@ class PrimaryButton extends StatelessWidget {
     this.iconSize,
     this.width,
     this.colorFill,
+    this.isRounded,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onPressed,
-      shape: StadiumBorder(
-        side: BorderSide(color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor),
-      ),
+      shape: isRounded == false
+          ? null
+          : StadiumBorder(
+              side: BorderSide(color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor),
+            ),
       color: colorFill == false ? null : Palette.primaryColor,
       textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
@@ -99,6 +103,7 @@ class PrimaryIconButton extends StatelessWidget {
   final String svg;
   final double? size;
   final EdgeInsets? padding;
+  final Color? color;
 
   const PrimaryIconButton({
     Key? key,
@@ -106,6 +111,7 @@ class PrimaryIconButton extends StatelessWidget {
     required this.svg,
     this.padding,
     this.size,
+    this.color,
   }) : super(key: key);
 
   @override

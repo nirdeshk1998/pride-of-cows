@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -130,6 +131,11 @@ class ProductDetailsScreen extends ConsumerWidget {
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
                                 builder: (builder) => Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: Column(
@@ -157,7 +163,31 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             boxHeight: 20,
                                           ),
                                         ],
-                                      )
+                                      ),
+                                      const SizedBox.square(dimension: 20),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          TextView(
+                                            'Delivery Plan:',
+                                            textType: TextType.subtitle,
+                                            color: Palette.hintColor,
+                                          ),
+                                          const Spacer(),
+                                          TextView(
+                                            'Alternate',
+                                            textType: TextType.subtitle,
+                                            color: Palette.primaryColor,
+                                          ),
+                                          const SizedBox.square(dimension: 10),
+                                          PrimaryIconButton(
+                                            svg: Assets.assetsIconsEditPencil,
+                                            size: 22,
+                                            onPressed: () {},
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
