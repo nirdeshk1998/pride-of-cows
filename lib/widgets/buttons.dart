@@ -59,9 +59,11 @@ class PrimaryButton extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       shape: isRounded == false
-          ? null
+          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))
           : StadiumBorder(
-              side: BorderSide(color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor),
+              side: BorderSide(
+                color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+              ),
             ),
       color: colorFill == false ? null : Palette.primaryColor,
       textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,

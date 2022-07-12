@@ -114,6 +114,11 @@ class ProductDetailsScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox.square(dimension: 16),
+                PrimaryButton(
+                  title: 'title',
+                  onPressed: () {},
+                  isRounded: false,
+                ),
                 TextView(
                   'Delivery plan:',
                   textType: TextType.subtitle,
