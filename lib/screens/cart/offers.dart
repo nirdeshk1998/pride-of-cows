@@ -48,7 +48,7 @@ class CartOffers extends ConsumerWidget {
                             height: 55,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                suffix: Container(
+                                suffixIcon: Container(
                                   height: 55.5,
                                   width: 130,
                                   child: TextButton(
