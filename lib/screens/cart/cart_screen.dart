@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/cart/cart_summary.dart';
 import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -288,7 +289,9 @@ class CartScreen extends ConsumerWidget {
               PrimaryButton(
                 title: 'checkout',
                 isExpanded: true,
-                onPressed: () {},
+                onPressed: () {
+Navigator.push(context,MaterialPageRoute(builder: (context)=>CartSummary()));
+                },
               ),
             ],
           ),
