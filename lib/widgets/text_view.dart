@@ -69,6 +69,7 @@ class TextSize {
   static const double header2 = 24;
   static const double appbarTitle = 20;
   static const double primaryButton = 12;
+  static const double textButton = 14;
   static const double menuTitle = 16;
 }
 

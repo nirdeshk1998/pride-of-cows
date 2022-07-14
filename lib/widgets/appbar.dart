@@ -149,7 +149,10 @@ class PrimaryAppBar extends StatelessWidget {
 class SecondaryAppBar extends StatelessWidget {
   const SecondaryAppBar({
     Key? key,
+    this.showRightButton,
   }) : super(key: key);
+
+  final bool? showRightButton;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +169,7 @@ class SecondaryAppBar extends StatelessWidget {
             children: [
               const SizedBox.square(dimension: 9.5),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pop(context),
                 splashRadius: 24,
                 iconSize: 24,
                 color: Palette.primaryColor,
@@ -175,15 +178,16 @@ class SecondaryAppBar extends StatelessWidget {
                 constraints: const BoxConstraints(),
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () {},
-                splashRadius: 24,
-                iconSize: 24,
-                color: Palette.primaryColor,
-                icon: SvgPicture.asset(Assets.assetsIconsShare3),
-                padding: const EdgeInsets.all(10.5),
-                constraints: const BoxConstraints(),
-              ),
+              if (showRightButton != false)
+                IconButton(
+                  onPressed: () {},
+                  splashRadius: 24,
+                  iconSize: 24,
+                  color: Palette.primaryColor,
+                  icon: SvgPicture.asset(Assets.assetsIconsShare3),
+                  padding: const EdgeInsets.all(10.5),
+                  constraints: const BoxConstraints(),
+                ),
               const SizedBox.square(dimension: 9.5),
             ],
           ),

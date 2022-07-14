@@ -8,7 +8,6 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
 
-
 class CartOffers extends ConsumerWidget {
   const CartOffers({Key? key}) : super(key: key);
 
@@ -20,11 +19,11 @@ class CartOffers extends ConsumerWidget {
         child: Container(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -35,54 +34,46 @@ class CartOffers extends ConsumerWidget {
                             "Apply Coupan",
                             style: TextStyles.header,
                           ),
-                          Icon(Icons.clear),
+                          const Icon(Icons.clear),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width / 1.12,
                             height: 55,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                suffixIcon: Container(
+                                suffixIcon: SizedBox(
                                   height: 55.5,
                                   width: 130,
                                   child: TextButton(
                                     onPressed: () {},
-                                    child: Text(
+                                    child: const Text(
                                       "Apply",
                                       style: TextStyle(color: Colors.black),
                                     ),
                                     style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                side: BorderSide(
-                                                    color:
-                                                        Colors.transparent))),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color(0xFFF2F2F2))),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(30),
+                                            side: const BorderSide(color: Colors.transparent))),
+                                        backgroundColor: MaterialStateProperty.all(const Color(0xFFF2F2F2))),
                                   ),
                                 ),
-                                contentPadding:
-                                    EdgeInsets.only(left: 20, bottom: 37),
+                                contentPadding: const EdgeInsets.only(left: 20, bottom: 37),
                                 labelText: "Enter Promo Code",
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.grey,
                                   ),
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.grey,
                                   ),
                                   borderRadius: BorderRadius.circular(40),
@@ -92,112 +83,90 @@ class CartOffers extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 1,
                       ),
                       Text(
                         "Available Offers",
                         style: TextStyles.header,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
                         child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemCount: 3,
-                            itemBuilder: (BuildContext, index) {
-                              return Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("NEWFOUNDLOVE",
-                                            style: TextStyle(
-                                                color: Color(0xff193B61),
-                                                fontSize: 18,
-                                                fontFamily:
-                                                    GoogleFonts.suranna()
-                                                        .fontFamily,
-                                                letterSpacing: 1)),
-                                       InkWell(
-                                         onTap: (){
-                                           Navigator.push(context,MaterialPageRoute(builder: (context)=>CartSummary()));
-                                         },
-                                         child:Text(
-                                           "APPLY OFFERS",
-                                           style: TextStyle(
-                                               color: Color(0xff193B61),
-                                               fontSize: 17),
-                                         ),
-                                       ),
-
-                                      ],
-                                    ),
-                                    Divider(
-                                      thickness: 1,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          child: Image(
-                                              image: AssetImage(
-                                                  "assets/images/paneer.png")),
+                            itemBuilder: (_, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("NEWFOUNDLOVE",
+                                          style: TextStyle(
+                                              color: const Color(0xff193B61),
+                                              fontSize: 18,
+                                              fontFamily: GoogleFonts.suranna().fontFamily,
+                                              letterSpacing: 1)),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const CartSummary()));
+                                        },
+                                        child: const Text(
+                                          "APPLY OFFERS",
+                                          style: TextStyle(color: Color(0xff193B61), fontSize: 17),
                                         ),
-                                        SizedBox(
-                                          width: 20,
+                                      ),
+                                    ],
+                                  ),
+                                  const Divider(
+                                    thickness: 1,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox.square(
+                                        dimension: 100,
+                                        child: Image(image: AssetImage("assets/images/paneer.png")),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width - 180,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '\u{20B9}${"500"} Discount',
+                                              style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 20),
+                                            ),
+                                            const Text(
+                                              "Get 5 off upto \u{20B9}${"500"} on your first purchase.",
+                                              style: TextStyle(fontSize: 17),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              180,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '\u{20B9}${"500"} Discount',
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                        GoogleFonts.suranna()
-                                                            .fontFamily,
-                                                    fontSize: 20),
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                  "Get 5 off upto \u{20B9}${"500"} on your first purchase.",
-                                                  style:
-                                                      TextStyle(fontSize: 17),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Valid on orders with items worth \u{20B9}${"159"} or more.",
-                                      style: TextStyle(fontSize: 17,color: Colors.grey),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Valid on orders with items worth \u{20B9}${"159"} or more.",
+                                    style: const TextStyle(fontSize: 17, color: Colors.grey),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
                               );
                             }),
                       ),

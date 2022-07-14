@@ -72,6 +72,9 @@ class PrimaryButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
       minWidth: isExpanded == true ? double.maxFinite : width,
       elevation: 0,
+      disabledElevation: 0,
+      hoverElevation: 0,
+      focusElevation: 0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

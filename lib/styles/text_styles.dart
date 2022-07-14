@@ -20,7 +20,7 @@ class TextStyles {
     fontWeight: FontWeight.normal,
     height: 1.4,
   );
-  static TextStyle subheader=TextStyle(
+  static TextStyle subheader = TextStyle(
     color: Palette.textColor,
     fontFamily: GoogleFonts.suranna().fontFamily,
     fontSize: 18,
