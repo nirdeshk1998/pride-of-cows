@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/product_details/product_details_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -211,7 +212,12 @@ class ProductsScreen extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(5),
                                     clipBehavior: Clip.antiAlias,
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (builder) => const ProductDetailsScreen()),
+                                        );
+                                      },
                                       child: Container(
                                         height: 24,
                                         width: 24,

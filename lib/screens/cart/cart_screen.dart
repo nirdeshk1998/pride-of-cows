@@ -9,6 +9,7 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class CartScreen extends ConsumerWidget {
@@ -212,38 +213,8 @@ class CartScreen extends ConsumerWidget {
                                       ],
                                     ),
                                     SizedBox.square(dimension: 5),
-                                    Row(
-                                      children: [
-                                        PrimaryIconButton(
-                                          svg: Assets.assetsIconsMinus,
-                                          size: 16,
-                                          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
-                                          onPressed: rProvider.onItemMinus,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 3,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Palette.outlineColor),
-                                            borderRadius: BorderRadius.circular(100),
-                                          ),
-                                          child: TextView(
-                                            wProvider.itemCount,
-                                            color: Palette.textColor,
-                                            height: 1,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        PrimaryIconButton(
-                                          svg: Assets.assetsIconsPlus,
-                                          size: 16,
-                                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                          onPressed: rProvider.onItemPlus,
-                                        ),
-                                      ],
+                                    PrimaryCounterWidget(
+                                      onCounterChanged: (i) {},
                                     ),
                                   ],
                                 ),
@@ -290,7 +261,7 @@ class CartScreen extends ConsumerWidget {
                 title: 'checkout',
                 isExpanded: true,
                 onPressed: () {
-Navigator.push(context,MaterialPageRoute(builder: (context)=>CartSummary()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CartSummary()));
                 },
               ),
             ],
