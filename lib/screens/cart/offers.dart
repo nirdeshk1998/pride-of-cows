@@ -8,6 +8,7 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
 
+
 class CartOffers extends ConsumerWidget {
   const CartOffers({Key? key}) : super(key: key);
 

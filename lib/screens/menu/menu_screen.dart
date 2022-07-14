@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -141,7 +142,9 @@ class MenuScreen extends ConsumerWidget {
           children: [
             menuListTile(
               title: 'My Profile',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>MyProfile()));
+              },
               icon: Assets.assetsIconsProfileRound,
             ),
             menuListTile(
