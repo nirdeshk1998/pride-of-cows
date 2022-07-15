@@ -51,6 +51,7 @@ class TextType {
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.primaryButton,
     fontWeight: FontWeight.bold,
+    height: 1,
   );
 
   static TextStyle primaryTextButton = TextStyle(

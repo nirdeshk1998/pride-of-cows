@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/main/main_screen.dart';
+import 'package:poc/screens/main/providers/main_provider.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/calender_picker.dart';
@@ -29,30 +32,29 @@ class ProductDetailsScreen extends ConsumerWidget {
         children: [
           const SecondaryAppBar(),
           const SizedBox.square(dimension: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextView(
-                  'Milk',
-                  color: Palette.textColor,
-                  textType: TextType.header,
-                  boxHeight: 32,
-                ),
-                const Spacer(),
-                TextView(
-                  '1 litre - ₹ 100',
-                  color: Palette.textColor,
-                  textType: TextType.header2,
-                  size: TextSize.title,
-                  height: 2.1,
-                  boxHeight: TextSize.header,
-                ),
-              ],
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Dimensions.defaultPadding.width,
+              TextView(
+                'Milk',
+                color: Palette.textColor,
+                textType: TextType.header,
+                boxHeight: TextSize.header,
+              ),
+              const Spacer(),
+              TextView(
+                '1 litre - ₹ 100',
+                color: Palette.textColor,
+                textType: TextType.header2,
+                size: TextSize.title,
+                height: 1.8,
+                boxHeight: TextSize.header,
+              ),
+              Dimensions.defaultPadding.width,
+            ],
           ),
-          const SizedBox.square(dimension: 10),
+          Dimensions.defaultPadding.height,
           CarouselSlider.builder(
             itemCount: 3,
             options: CarouselOptions(
@@ -136,6 +138,16 @@ class ProductDetailsScreen extends ConsumerWidget {
                 //   ),
                 // ),
                 const SizedBox.square(dimension: 5),
+                // PrimaryCalendarDatePicker(
+                //   label: 'Select end date',
+                //   onMonthPressed: () {},
+                //   isVisible: true,
+                //   initialCalendarMode: DatePickerMode.day,
+                //   initialDate: DateTime.now(),
+                //   firstDate: DateTime.now(),
+                //   lastDate: DateTime(DateTime.now().year + 1),
+                //   onDateChanged: (i) {},
+                // ),
 
                 Wrap(
                   direction: Axis.horizontal,
@@ -153,178 +165,155 @@ class ProductDetailsScreen extends ConsumerWidget {
                                     top: Radius.circular(20),
                                   ),
                                 ),
-                                builder: (builder) => Column(
-                                  children: [
-                                    Expanded(
-                                      child: ListView(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                builder: (builder) {
+                                  int totalItemCount = 1;
+                                  bool startDateVisibilty = false;
+                                  bool endDateVisibilty = false;
+
+                                  return StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return Column(
                                         children: [
+                                          Expanded(
+                                            child: ListView(
+                                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                              children: [
+                                                Dimensions.defaultPadding.height,
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    TextView(
+                                                      'Milk',
+                                                      textType: TextType.subtitle,
+                                                      color: Palette.textColor,
+                                                      boxHeight: 20,
+                                                    ),
+                                                    const SizedBox.square(dimension: 5),
+                                                    TextView(
+                                                      '(1 litre -  ₹100)',
+                                                      textType: TextType.subtitle,
+                                                      color: Palette.hintColor,
+                                                      boxHeight: 20,
+                                                    ),
+                                                    const Spacer(),
+                                                    TextView(
+                                                      '₹100',
+                                                      textType: TextType.title,
+                                                      color: Palette.textColor,
+                                                      boxHeight: 20,
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox.square(dimension: 20),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    TextView(
+                                                      'Delivery Plan:',
+                                                      textType: TextType.subtitle,
+                                                      color: Palette.hintColor,
+                                                    ),
+                                                    const Spacer(),
+                                                    TextView(
+                                                      'Alternate',
+                                                      textType: TextType.subtitle,
+                                                      color: Palette.textColor,
+                                                    ),
+                                                    const SizedBox.square(dimension: 10),
+                                                    PrimaryIconButton(
+                                                      svg: Assets.assetsIconsEditPencil,
+                                                      size: 22,
+                                                      onPressed: () {},
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox.square(dimension: 8),
+                                                PrimaryCalendarDatePicker(
+                                                  label: 'Select start date',
+                                                  onMonthPressed: () {
+                                                    setState(() {
+                                                      startDateVisibilty = !startDateVisibilty;
+                                                    });
+                                                  },
+                                                  isVisible: startDateVisibilty,
+                                                  initialCalendarMode: DatePickerMode.day,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(DateTime.now().year + 1),
+                                                  onDateChanged: (i) {},
+                                                ),
+                                                PrimaryCalendarDatePicker(
+                                                  label: 'Select end date',
+                                                  onMonthPressed: () {
+                                                    setState(() {
+                                                      endDateVisibilty = !endDateVisibilty;
+                                                    });
+                                                  },
+                                                  isVisible: endDateVisibilty,
+                                                  initialCalendarMode: DatePickerMode.day,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(DateTime.now().year + 1),
+                                                  onDateChanged: (i) {},
+                                                ),
+                                                const SizedBox.square(dimension: 6),
+                                                Row(
+                                                  children: [
+                                                    TextView(
+                                                      'Quantity of items/day:',
+                                                      textType: TextType.subtitle,
+                                                      color: Palette.hintColor,
+                                                    ),
+                                                    const Spacer(),
+                                                    PrimaryCounterWidget(
+                                                      onCounterChanged: (i) {
+                                                        setState(() {
+                                                          totalItemCount = i;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 20),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                            child: Row(
+                                              children: [
+                                                TextView(
+                                                  'Total quantity of items:',
+                                                  textType: TextType.subtitle,
+                                                  color: Palette.hintColor,
+                                                ),
+                                                const Spacer(),
+                                                TextView(
+                                                  totalItemCount.toString(),
+                                                  textType: TextType.title,
+                                                  color: Palette.textColor,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                           Dimensions.defaultPadding.height,
-
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              TextView(
-                                                'Milk',
-                                                textType: TextType.subtitle,
-                                                color: Palette.textColor,
-                                                boxHeight: 20,
-                                              ),
-                                              const SizedBox.square(dimension: 5),
-                                              TextView(
-                                                '(1 litre -  ₹100)',
-                                                textType: TextType.subtitle,
-                                                color: Palette.hintColor,
-                                                boxHeight: 20,
-                                              ),
-                                              const Spacer(),
-                                              TextView(
-                                                '₹100',
-                                                textType: TextType.title,
-                                                color: Palette.textColor,
-                                                boxHeight: 20,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox.square(dimension: 20),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              TextView(
-                                                'Delivery Plan:',
-                                                textType: TextType.subtitle,
-                                                color: Palette.hintColor,
-                                              ),
-                                              const Spacer(),
-                                              TextView(
-                                                'Alternate',
-                                                textType: TextType.subtitle,
-                                                color: Palette.textColor,
-                                              ),
-                                              const SizedBox.square(dimension: 10),
-                                              PrimaryIconButton(
-                                                svg: Assets.assetsIconsEditPencil,
-                                                size: 22,
-                                                onPressed: () {},
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox.square(dimension: 8),
-                                          StatefulBuilder(
-                                            builder: (context, setState) => PrimaryCalendarDatePicker(
-                                              label: 'Select start date',
-                                              onDatePressed: () {
-                                                wProvider.onStartDatePressed();
-                                                setState(() {});
+                                          Center(
+                                            child: PrimaryButton(
+                                              title: 'add to cart',
+                                              onPressed: () async {
+                                                ref.read(mainProvider).onMenuTapped(Navigation.cart.index);
+                                                Utils.pushAndRemoveUntil(context, const MainScreen());
                                               },
-                                              isVisible: wProvider.startDateVisibilty,
-                                              initialCalendarMode: DatePickerMode.day,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(DateTime.now().year + 1),
-                                              onDateChanged: (i) {},
                                             ),
                                           ),
-                                          StatefulBuilder(
-                                            builder: (context, setState) => PrimaryCalendarDatePicker(
-                                              label: 'Select end date',
-                                              onDatePressed: () {
-                                                wProvider.onEndDatePressed();
-                                                setState(() {});
-                                              },
-                                              isVisible: wProvider.endDateVisibilty,
-                                              initialCalendarMode: DatePickerMode.day,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(DateTime.now().year + 1),
-                                              onDateChanged: (i) {},
-                                            ),
-                                          ),
-                                          const SizedBox.square(dimension: 6),
-                                          Row(
-                                            children: [
-                                              TextView(
-                                                'Quantity of items/day:',
-                                                textType: TextType.subtitle,
-                                                color: Palette.hintColor,
-                                              ),
-                                              const Spacer(),
-                                              PrimaryCounterWidget(
-                                                onCounterChanged: rProvider.onCounterChanged,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20),
-
-                                          // Row(
-                                          //   mainAxisAlignment: MainAxisAlignment.center,
-                                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                                          //   children: [
-                                          //     TextView(
-                                          //       'Select start date:',
-                                          //       textType: TextType.subtitle,
-                                          //       color: Palette.hintColor,
-                                          //     ),
-                                          //     const Spacer(),
-                                          //     TextView(
-                                          //       'Dec 2021',
-                                          //       textType: TextType.subtitle,
-                                          //       color: Palette.textColor,
-                                          //     ),
-                                          //     const SizedBox.square(dimension: 5),
-                                          //     PrimaryIconButton(
-                                          //       svg: Assets.assetsIconsChevLeft,
-                                          //       size: 22,
-                                          //       onPressed: () {},
-                                          //     ),
-                                          //     const SizedBox.square(dimension: 5),
-                                          //     PrimaryIconButton(
-                                          //       svg: Assets.assetsIconsChevRight,
-                                          //       size: 22,
-                                          //       onPressed: () {},
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                          // SizedBox(
-                                          //   height: 200,
-                                          //   child: CalendarCarousel(
-                                          //     childAspectRatio: 335 / 183,
-                                          //   ),
-                                          // ),
+                                          Dimensions.defaultPadding.height,
                                         ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                      child: StatefulBuilder(
-                                        builder: (context, setState) => Row(
-                                          children: [
-                                            TextView(
-                                              'Total quantity of items:',
-                                              textType: TextType.subtitle,
-                                              color: Palette.hintColor,
-                                            ),
-                                            const Spacer(),
-                                            TextView(
-                                              wProvider.totalCounter.toString(),
-                                              textType: TextType.title,
-                                              color: Palette.textColor,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Dimensions.defaultPadding.height,
-                                    Center(
-                                      child: PrimaryButton(
-                                        title: 'next',
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),

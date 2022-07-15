@@ -18,28 +18,4 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
         'once',
         'custom',
       ];
-
-  bool _startDateVisibilty = false;
-  bool _endDateVisibilty = false;
-
-  int _totalCounter = 1;
-
-  bool get startDateVisibilty => _startDateVisibilty;
-  bool get endDateVisibilty => _endDateVisibilty;
-  int get totalCounter => _totalCounter;
-
-  void onStartDatePressed() {
-    _startDateVisibilty = !_startDateVisibilty;
-    // notifyListeners();
-  }
-
-  void onEndDatePressed() {
-    _endDateVisibilty = !_endDateVisibilty;
-    // notifyListeners();
-  }
-
-  void onCounterChanged(int i) {
-    _totalCounter = i;
-    notifyListeners();
-  }
 }

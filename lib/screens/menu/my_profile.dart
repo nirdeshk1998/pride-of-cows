@@ -45,7 +45,7 @@ class MyProfile extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SecondaryAppBar(showRightButton: false),
+            const SecondaryAppBar(),
             const SizedBox(height: Dimensions.defaultPadding),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),

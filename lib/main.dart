@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
-      home: const SplashScreen(),
+      home: const MainScreen(),
     );
   }
 }

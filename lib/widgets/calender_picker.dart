@@ -89,7 +89,7 @@ class PrimaryCalendarDatePicker extends StatefulWidget {
     this.selectableDayPredicate,
     required this.label,
     required this.isVisible,
-    required this.onDatePressed,
+    required this.onMonthPressed,
   })  : initialDate = DateUtils.dateOnly(initialDate),
         firstDate = DateUtils.dateOnly(firstDate),
         lastDate = DateUtils.dateOnly(lastDate),
@@ -113,7 +113,7 @@ class PrimaryCalendarDatePicker extends StatefulWidget {
     );
   }
 
-  final VoidCallback onDatePressed;
+  final VoidCallback onMonthPressed;
 
   /// The initially selected [DateTime] that the picker should display.
   final DateTime initialDate;
@@ -310,7 +310,7 @@ class _PrimaryCalendarDatePickerState extends State<PrimaryCalendarDatePicker> {
             // Toggle the day/year mode.
             _handleModeChanged(_mode == DatePickerMode.day ? DatePickerMode.year : DatePickerMode.day);
           },
-          onDatePressed: widget.onDatePressed,
+          onDatePressed: widget.onMonthPressed,
         ),
       ],
     );
