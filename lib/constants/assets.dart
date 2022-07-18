@@ -1,6 +1,6 @@
 class Assets {
   Assets._();
-  
+
   /// Assets for assetsIconsAboutUsRound
   /// assets/icons/about_us_round.svg
   static const String assetsIconsAboutUsRound = "assets/icons/about_us_round.svg";
@@ -20,6 +20,10 @@ class Assets {
   /// Assets for assetsIconsArrowRight2
   /// assets/icons/arrow_right2.svg
   static const String assetsIconsArrowRight2 = "assets/icons/arrow_right2.svg";
+
+  /// Assets for assetsIconsArrowDownSolid
+  /// assets/icons/arrow_down_solid.svg
+  static const String assetsIconsArrowDownSolid = "assets/icons/arrow_down_solid.svg";
 
   /// Assets for assetsIconsBack
   /// assets/icons/back.svg
@@ -101,9 +105,9 @@ class Assets {
   /// assets/icons/delete.svg
   static const String assetsIconsDelete = "assets/icons/delete.svg";
 
-  /// Assets for assetsIconsDiscount
-  /// assets/icons/discount.png
-  static const String assetsIconsDiscount = "assets/icons/discount.png";
+  /// Assets for assetsIconsDeliverHere
+  /// assets/icons/deliver_here.svg
+  static const String assetsIconsDeliverHere = "assets/icons/deliver_here.svg";
 
   /// Assets for assetsIconsEditPencil
   /// assets/icons/edit_pencil.svg
@@ -165,13 +169,17 @@ class Assets {
   /// assets/icons/pencil.svg
   static const String assetsIconsPencil = "assets/icons/pencil.svg";
 
-  /// Assets for assetsIconsPhone
-  /// assets/icons/phone.svg
-  static const String assetsIconsPhone = "assets/icons/phone.svg";
+  /// Assets for assetsIconsPen2
+  /// assets/icons/pen2.svg
+  static const String assetsIconsPen2 = "assets/icons/pen2.svg";
 
   /// Assets for assetsIconsPin
   /// assets/icons/pin.svg
   static const String assetsIconsPin = "assets/icons/pin.svg";
+
+  /// Assets for assetsIconsPin2
+  /// assets/icons/pin2.svg
+  static const String assetsIconsPin2 = "assets/icons/pin2.svg";
 
   /// Assets for assetsIconsPlay
   /// assets/icons/play.svg

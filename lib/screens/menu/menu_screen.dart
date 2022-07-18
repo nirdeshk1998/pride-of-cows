@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/menu/address/my_address_book.dart';
 import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
@@ -151,7 +152,9 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'My Address Book',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>MyAddressBook()));
+              },
               icon: Assets.assetsIconsAddressRound,
             ),
           ],

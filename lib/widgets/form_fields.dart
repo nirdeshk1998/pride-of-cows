@@ -7,12 +7,14 @@ import 'package:poc/styles/widget_styles.dart';
 
 class PrimaryTextFormField extends StatelessWidget {
   final String? label;
+  final String? hint;
   final TextEditingController? controller;
 
   const PrimaryTextFormField({
     Key? key,
     this.label,
     this.controller,
+    this.hint,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class PrimaryTextFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
         labelText: '$label',
+        hintText: hint!=null?'$hint':"",
         prefixIconConstraints: const BoxConstraints(),
         labelStyle: TextStyle(
           color: Palette.hintColor,
