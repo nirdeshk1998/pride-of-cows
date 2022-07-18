@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/menu/my_profile.dart';
+import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
@@ -132,7 +134,7 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'Vacation Mode',
-              onTap: () {},
+              onTap: () => Utils.push(context, const VacationModeScreen()),
               icon: Assets.assetsIconsCalenderRound,
             ),
           ],
@@ -143,7 +145,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: 'My Profile',
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>MyProfile()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MyProfile()));
               },
               icon: Assets.assetsIconsProfileRound,
             ),

@@ -59,6 +59,20 @@ class TextType {
     fontSize: TextSize.primaryButton,
     height: 1,
   );
+
+  static TextStyle isLabel = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.hint,
+    height: 1,
+    color: Palette.hintColor,
+  );
+
+  static TextStyle isNotLabel = TextStyle(
+    fontFamily: GoogleFonts.lato().fontFamily,
+    fontSize: TextSize.regular,
+    height: 1,
+    color: Palette.hintColor,
+  );
 }
 
 class TextSize {
@@ -72,6 +86,7 @@ class TextSize {
   static const double primaryButton = 12;
   static const double textButton = 14;
   static const double menuTitle = 16;
+  static const double hint = 16;
 }
 
 // class TextWeight {
@@ -98,6 +113,7 @@ class TextView extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
   final TextDecoration? decoration;
+  final int? maxLines;
 
   const TextView(
     this.text, {
@@ -112,6 +128,7 @@ class TextView extends StatelessWidget {
     this.boxHeight,
     this.bgColor,
     this.decoration,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -124,6 +141,7 @@ class TextView extends StatelessWidget {
         child: Text(
           '$text',
           textAlign: textAlign,
+          maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: size,

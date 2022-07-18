@@ -125,6 +125,10 @@ class Assets {
   /// assets/icons/gift_round.svg
   static const String assetsIconsGiftRound = "assets/icons/gift_round.svg";
 
+  /// Assets for assetsIconsHamburger
+  /// assets/icons/hamburger.svg
+  static const String assetsIconsHamburger = "assets/icons/hamburger.svg";
+
   /// Assets for assetsIconsHome
   /// assets/icons/home.svg
   static const String assetsIconsHome = "assets/icons/home.svg";
