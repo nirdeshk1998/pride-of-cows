@@ -28,6 +28,8 @@ class Palette {
   static const goldenIconColor = Color(0xFFD2AB68);
 
   static const surfaceBackgroundColor = Color(0xFFEAF7FE);
+
+  static const successColor = Color(0xFF6FCF97);
 }
 
 class MaterialPalette {

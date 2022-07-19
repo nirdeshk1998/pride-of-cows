@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Utils {
-  static void push(context, widget) {
-    Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
+  static Future<void> push(context, widget) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
   }
 
-  static void pushReplacement(context, widget) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder) => widget));
+  static void pop(context) {
+    Navigator.pop(context);
   }
 
-  static void pushAndRemoveUntil(context, widget) {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
+  static Future<void> pushReplacement(context, widget) async {
+    await Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder) => widget));
+  }
+
+  static Future<void> pushAndRemoveUntil(context, widget) async {
+    await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 }
