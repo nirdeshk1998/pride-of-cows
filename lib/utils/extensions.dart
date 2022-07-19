@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-extension Margin on double {
-  SizedBox get height => SizedBox(height: this);
-  SizedBox get width => SizedBox(width: this);
+extension Margin on num {
+  SizedBox get height => SizedBox(height: toDouble());
+  SizedBox get width => SizedBox(width: toDouble());
 }

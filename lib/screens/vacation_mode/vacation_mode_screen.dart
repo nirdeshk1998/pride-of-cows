@@ -8,6 +8,7 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
+import 'package:poc/widgets/label_container.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class VacationModeScreen extends ConsumerWidget {
@@ -58,48 +59,70 @@ class VacationModeScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                // Focus(
-                //   onFocusChange: (value) {
-                //     print(value);
-                //   },
-                //   child: Stack(
-                //     alignment: Alignment.topLeft,
-                //     children: [
-                //       Container(
-                //         height: 50,
-                //         width: double.maxFinite,
-                //         margin: const EdgeInsets.only(top: 8),
-                //         decoration: BoxDecoration(
-                //           border: Border.all(),
-                //           borderRadius: BorderRadius.circular(100),
-                //         ),
-                //         child: Row(
-                //           children: [
-                //             SizedBox.square(
-                //               dimension: Dimensions.fieldIcon,
-                //               child: SvgPicture.asset(Assets.assetsIconsCalender2),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //       Container(
-                //         color: Palette.lightColor,
-                //         padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                //         margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                //         child: TextView(
-                //           'Starts*',
-                //           textType: TextType.isLabel,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                Dimensions.defaultPadding.height,
+                _labelField(label: 'Starts*', hint: 'Select start date'),
+                30.0.height,
+                _labelField(label: 'Ends', hint: 'Select end date (optional)'),
                 Dimensions.defaultPadding.height,
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Stack _labelField({required String label, String? hint}) {
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: [
+        Container(
+          height: 50,
+          width: double.maxFinite,
+          margin: const EdgeInsets.only(top: 6),
+          decoration: BoxDecoration(
+            border: Border.all(color: Palette.surfaceColor),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: CupertinoButton(
+            onPressed: () {},
+            padding: EdgeInsets.zero,
+            minSize: 0,
+            child: Row(
+              children: [
+                Dimensions.defaultPadding.width,
+                SizedBox.square(
+                  dimension: Dimensions.fieldIcon,
+                  child: SvgPicture.asset(Assets.assetsIconsCalender2),
+                ),
+                10.width,
+                SizedBox.square(
+                  dimension: 12,
+                  child: SvgPicture.asset(Assets.assetsIconsChevronDownThin),
+                ),
+                12.width,
+                TextView(
+                  hint,
+                  textType: TextType.hint,
+                  color: Palette.hintColor,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 3.0),
+          margin: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Material(
+            color: Palette.lightColor,
+            child: TextView(
+              label,
+              textType: TextType.label,
+              color: Palette.hintColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

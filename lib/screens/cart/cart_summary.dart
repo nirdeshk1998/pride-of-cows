@@ -75,85 +75,81 @@ class CartSummary extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        Container(
-                          child: Visibility(
-                              child: ListView.builder(
-                                  itemCount: 3,
-                                  shrinkWrap: true,
-                                  physics: const ScrollPhysics(),
-                                  itemBuilder: (BuildContext, index) {
-                                    return Container(
-                                      child: Column(
+                        Visibility(
+                            child: ListView.builder(
+                                itemCount: 3,
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 100,
-                                                height: 100,
-                                                child: Row(
-                                                  children: [
-                                                    const Image(
-                                                      image: AssetImage("assets/images/ghee.png"),
-                                                      fit: BoxFit.fitHeight,
-                                                    ),
-                                                  ],
+                                          SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: Row(
+                                              children: const [
+                                                Image(
+                                                  image: AssetImage("assets/images/ghee.png"),
+                                                  fit: BoxFit.fitHeight,
                                                 ),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                  left: 10,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Ghee (250 grams)",
-                                                      style: TextStyles.subheader,
-                                                    ),
-                                                    Text('\u{20B9}${"50"}', style: TextStyles.hint),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
-                                                        const Text("Alternate"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const Text("Delivery: ", style: TextStyle(color: Colors.grey)),
-                                                        const Text("10-09-2022"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const Text("Quantity: ", style: TextStyle(color: Colors.grey)),
-                                                        const Text("1"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Ghee (250 grams)",
+                                                  style: TextStyles.subheader,
+                                                ),
+                                                Text('\u{20B9}${"50"}', style: TextStyles.hint),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: const [
+                                                    Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("Alternate"),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: const [
+                                                    Text("Delivery: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("10-09-2022"),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: const [
+                                                    Text("Quantity: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("1"),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    );
-                                  })),
-                        ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                    ],
+                                  );
+                                })),
                         const Divider(
                           thickness: 1,
                         ),
@@ -162,9 +158,9 @@ class CartSummary extends ConsumerWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Subtotal"),
-                            const Text('\u{20B9}${"1800"}'),
+                          children: const [
+                            Text("Subtotal"),
+                            Text('\u{20B9}${"1800"}'),
                           ],
                         ),
                         Row(
@@ -202,8 +198,8 @@ class CartSummary extends ConsumerWidget {
                           height: 10,
                         ),
                         Row(
-                          children: [
-                            const Text("Offers"),
+                          children: const [
+                            Text("Offers"),
                           ],
                         ),
                         const SizedBox(
@@ -213,14 +209,12 @@ class CartSummary extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              children: [
-                                Container(
-                                  child: const Image(image: AssetImage("assets/icons/discount.png")),
-                                ),
-                                const SizedBox(
+                              children: const [
+                                Image(image: AssetImage("assets/icons/discount.png")),
+                                SizedBox(
                                   width: 3,
                                 ),
-                                const Text("Select a promo code"),
+                                Text("Select a promo code"),
                               ],
                             ),
                             Row(
@@ -272,12 +266,12 @@ class CartSummary extends ConsumerWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               "CHOOSE ADDRESS",
                               style: TextStyle(color: Color(0xff193B61), fontSize: 14),
                             ),
-                            const Text(
+                            Text(
                               "PAYMENT",
                               style: TextStyle(color: Colors.grey),
                             ),
@@ -369,8 +363,8 @@ class CartSummary extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           "Phone Number: 9876432134",
                           style: TextStyle(fontSize: 15),
                         ),
@@ -380,14 +374,12 @@ class CartSummary extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    child: PrimaryButton(
-                      onPressed: () {},
-                      title: "Request a new address",
-                      isRounded: true,
-                      width: 20,
-                      colorFill: false,
-                    ),
+                  PrimaryButton(
+                    onPressed: () {},
+                    title: "Request a new address",
+                    isRounded: true,
+                    width: 20,
+                    colorFill: false,
                   ),
                   const SizedBox(
                     height: 20,

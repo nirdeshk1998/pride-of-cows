@@ -6,20 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/providers/login_provider.dart';
-import 'package:poc/screens/cart/cart_screen.dart';
-import 'package:poc/screens/cart/offers.dart';
-import 'package:poc/screens/cart/rating_page.dart';
-import 'package:poc/screens/menu/menu_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/styles/widget_styles.dart';
-import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
-import 'package:poc/widgets/primary_dropdown_form_field.dart';
-import 'package:poc/widgets/terms_condition.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class EditAddress extends ConsumerWidget {
@@ -31,8 +23,8 @@ class EditAddress extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SecondaryAppBar(showRightButton: false),
-            SizedBox(
+            const SecondaryAppBar(),
+            const SizedBox(
               height: 20,
             ),
             Padding(
@@ -52,8 +44,8 @@ class EditAddress extends ConsumerWidget {
                       Stack(
                         children: [
                           Container(
-                              child: Image(
-                            image: AssetImage("assets/images/maps.png"),
+                              child: const Image(
+                            image: const AssetImage("assets/images/maps.png"),
                           )),
                           Positioned(
                             bottom: 100,
@@ -74,11 +66,11 @@ class EditAddress extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -95,8 +87,7 @@ class EditAddress extends ConsumerWidget {
                           ],
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero,
-                            constraints:
-                            const BoxConstraints(maxHeight: 50, minWidth: 50),
+                            constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
                             labelText: 'Phone number*',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(left: 15, right: 5),
@@ -111,8 +102,7 @@ class EditAddress extends ConsumerWidget {
                                 ),
                                 flagWidth: 20,
                                 showDropDownButton: true,
-                                flagDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4)),
+                                flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
                               ),
                             ),
                             prefixIconConstraints: const BoxConstraints(),
@@ -147,8 +137,7 @@ class EditAddress extends ConsumerWidget {
                           ],
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero,
-                            constraints:
-                            const BoxConstraints(maxHeight: 50, minWidth: 50),
+                            constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
                             labelText: 'Alternate phone number',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(left: 15, right: 5),
@@ -163,8 +152,7 @@ class EditAddress extends ConsumerWidget {
                                 ),
                                 flagWidth: 20,
                                 showDropDownButton: true,
-                                flagDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4)),
+                                flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
                               ),
                             ),
                             prefixIconConstraints: const BoxConstraints(),
@@ -189,113 +177,127 @@ class EditAddress extends ConsumerWidget {
                             focusedBorder: WidgetStyle.activeInputBorder,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         const PrimaryTextFormField(
                           label: 'Pin Code',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         const PrimaryTextFormField(
                           label: 'Address*',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         const PrimaryTextFormField(
                           label: 'Landmark',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         const PrimaryTextFormField(
                           label: 'City',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         const PrimaryTextFormField(
                           label: 'State',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        TextView("Save Address as",color: Palette.hintColor,),
+                        const TextView(
+                          "Save Address as",
+                          color: Palette.hintColor,
+                        ),
                         Row(
                           children: [
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(
-                                      value: false, groupValue: true, onChanged: (value) {}),
-                                  Text("Home"),
+                                  Radio(value: false, groupValue: true, onChanged: (value) {}),
+                                  const Text("Home"),
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(
-                                      value: false, groupValue: true, onChanged: (value) {}),
-                                  Text("Work"),
+                                  Radio(value: false, groupValue: true, onChanged: (value) {}),
+                                  const Text("Work"),
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(
-                                      value: true, groupValue: true, onChanged: (value) {}),
-                                  Text("Other"),
+                                  Radio(value: true, groupValue: true, onChanged: (value) {}),
+                                  const Text("Other"),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         TextFormField(
-                          decoration: InputDecoration(
-                            hintText: "Address"
-                          ),
+                          decoration: const InputDecoration(hintText: "Address"),
                         ),
                         Row(
                           children: [
-                            Checkbox(value: true, onChanged:(value){},activeColor: Colors.white,checkColor: Colors.black,),
-                            TextView("Use as my default",color: Palette.hintColor,),
+                            Checkbox(
+                              value: true,
+                              onChanged: (value) {},
+                              activeColor: Colors.white,
+                              checkColor: Colors.black,
+                            ),
+                            const TextView(
+                              "Use as my default",
+                              color: Palette.hintColor,
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            PrimaryButton(title: "SAVE & REQUEST CHANGE",onPressed: (){},),
+                            PrimaryButton(
+                              title: "SAVE & REQUEST CHANGE",
+                              onPressed: () {},
+                            ),
                           ],
                         ),
-SizedBox(
-  height: 10,
-),
-                        Text("Pride of Cows team will review your request to change this address and implement it at the earliest.",style: TextStyle(fontSize: 17),),
-                        SizedBox(
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Pride of Cows team will review your request to change this address and implement it at the earliest.",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
-                          children: [
-
-                          ],
+                          children: [],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            PrimaryButton(title: "DISCARD CHANGES",onPressed: (){},colorFill: false,),
+                            PrimaryButton(
+                              title: "DISCARD CHANGES",
+                              onPressed: () {},
+                              colorFill: false,
+                            ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
