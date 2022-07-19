@@ -60,18 +60,16 @@ class TextType {
     height: 1,
   );
 
-  static TextStyle isLabel = TextStyle(
+  static TextStyle hint = TextStyle(
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.hint,
     height: 1,
-    color: Palette.hintColor,
   );
 
-  static TextStyle isNotLabel = TextStyle(
+  static TextStyle label = TextStyle(
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.regular,
     height: 1,
-    color: Palette.hintColor,
   );
 }
 

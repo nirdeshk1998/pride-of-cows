@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/providers/login_provider.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/offers.dart';
 import 'package:poc/screens/cart/rating_page.dart';
@@ -17,12 +18,17 @@ import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
+import 'package:poc/widgets/primary_dropdown_form_field.dart';
+import 'package:poc/widgets/terms_condition.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class MyProfile extends ConsumerWidget {
   const MyProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final rProvider = ref.read(loginProvider);
+    final wProvider = ref.watch(loginProvider);
     bool addressSelect = true;
     //   var genderList = [
     // "Male","Female","Others"
@@ -46,54 +52,29 @@ class MyProfile extends ConsumerWidget {
         child: Column(
           children: [
             const SecondaryAppBar(),
-            const SizedBox(height: Dimensions.defaultPadding),
+            const SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      Text('My Profile', style: TextStyles.header),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   const PrimaryTextFormField(
                     label: 'First Name*',
-                  ),
-                  Container(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "First Name*",
-                        labelStyle: const TextStyle(fontSize: 20),
-                        hintText: "Enter Here",
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                      ),
-                    ),
+                    hint: 'Enter Here',
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Last Name*",
-                      labelStyle: const TextStyle(fontSize: 20),
-                      hintText: "Enter Here",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                    ),
+                  const PrimaryTextFormField(
+                    label: 'Last Name*',
+                    hint: 'Enter Here',
                   ),
                   const SizedBox(
                     height: 20,
@@ -148,49 +129,80 @@ class MyProfile extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  // Container(
-                  //   child: DropdownButtonFormField(
-                  //     hint: Text("Gender*"),
-                  //     onChanged: (value) {},
-                  //     items: genderList,
-                  //     decoration: const InputDecoration(
-                  //       enabledBorder: OutlineInputBorder(
-                  //           borderRadius:
-                  //               BorderRadius.all(Radius.circular(40)),
-                  //           borderSide:
-                  //               BorderSide(color: Colors.grey, width: 1)),
-                  //       focusedBorder: OutlineInputBorder(
-                  //           borderRadius:
-                  //               BorderRadius.all(Radius.circular(40)),
-                  //           borderSide:
-                  //               BorderSide(color: Colors.grey, width: 1)),
-                  //     ),
-                  //   ),
-                  // ),
+                  const PrimaryDropdownFormField(
+                    label: 'Gender*',
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Email Id*",
-                        labelStyle: const TextStyle(fontSize: 20),
-                        hintText: "Enter Here",
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
+                  const PrimaryTextFormField(
+                    label: 'Email Id*',
+                    hint: 'Enter Here',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
+                      hintText: 'Date of birth',
+                      prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 5),
+                          child: Container(
+                            width: 50,
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(Assets.assetsIconsCalender2),
+                                const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ),
+                          )),
+                      prefixIconConstraints: const BoxConstraints(),
+                      labelStyle: TextStyle(
+                        color: Palette.hintColor,
+                        fontFamily: GoogleFonts.lato().fontFamily,
+                        fontSize: 16,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1.5,
                       ),
+                      floatingLabelStyle: TextStyle(
+                        color: Palette.hintColor,
+                        fontFamily: GoogleFonts.lato().fontFamily,
+                        fontSize: 18,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.normal,
+                        height: 1.5,
+                      ),
+                      border: WidgetStyle.inputBorder,
+                      enabledBorder: WidgetStyle.inputBorder,
+                      focusedBorder: WidgetStyle.activeInputBorder,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const TextView(
+                        "Email me with news and offers",
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                  const PrimaryButton(title: "SAVE"),
                 ],
               ),
             ),

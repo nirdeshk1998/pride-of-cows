@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -212,7 +211,7 @@ class CartScreen extends ConsumerWidget {
                                         ),
                                       ],
                                     ),
-                                    SizedBox.square(dimension: 5),
+                                    const SizedBox.square(dimension: 5),
                                     PrimaryCounterWidget(
                                       onCounterChanged: (i) {},
                                     ),
@@ -261,7 +260,7 @@ class CartScreen extends ConsumerWidget {
                 title: 'checkout',
                 isExpanded: true,
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CartSummary()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CartSummary()));
                 },
               ),
             ],

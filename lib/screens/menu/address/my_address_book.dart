@@ -1,26 +1,14 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/providers/login_provider.dart';
-import 'package:poc/screens/cart/cart_screen.dart';
-import 'package:poc/screens/cart/offers.dart';
-import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/screens/menu/address/address_information.dart';
-import 'package:poc/screens/menu/menu_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
-import 'package:poc/styles/widget_styles.dart';
-import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
-import 'package:poc/widgets/form_fields.dart';
-import 'package:poc/widgets/primary_dropdown_form_field.dart';
-import 'package:poc/widgets/terms_condition.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class MyAddressBook extends ConsumerWidget {
@@ -36,8 +24,8 @@ class MyAddressBook extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SecondaryAppBar(showRightButton: false),
-            SizedBox(
+            const SecondaryAppBar(),
+            const SizedBox(
               height: 20,
             ),
             Padding(
@@ -50,12 +38,12 @@ class MyAddressBook extends ConsumerWidget {
                       Text('My Address Book', style: TextStyles.header),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
-                      Icon(Icons.add,color:Color(0xff193b61)),
+                      const Icon(Icons.add, color: Color(0xff193b61)),
                       PrimaryTextButton(
                         title: 'Add a new address',
                         isUpperCase: true,
@@ -64,13 +52,13 @@ class MyAddressBook extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height:20,
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
-                    child:GestureDetector(
-                      onTap: (){
-Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation()));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddressInfromation()));
                       },
                       child: Card(
                         elevation: 0,
@@ -89,17 +77,25 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation(
                                 Container(
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Assets.assetsIconsPen2,width: 20,height: 20,),
-                                      SizedBox(
+                                      SvgPicture.asset(
+                                        Assets.assetsIconsPen2,
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
                                         width: 15,
                                       ),
-                                      SvgPicture.asset(Assets.assetsIconsDelete,width: 20,height: 20,),
+                                      SvgPicture.asset(
+                                        Assets.assetsIconsDelete,
+                                        width: 20,
+                                        height: 20,
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 1,
                             ),
                             const Text(
@@ -109,7 +105,6 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation(
                             const SizedBox(
                               height: 10,
                             ),
-
                             const Text(
                               "2118,Thornidge Syracuse, Opposite Starbucks, Bandra East, Mumbai-356241,Maharasthra",
                               style: TextStyle(fontSize: 17),
@@ -121,34 +116,30 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation(
                               "Phone number: 9876543210, 0123456789",
                               style: TextStyle(fontSize: 17),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 1,
                             ),
                             const TextView("Default Address"),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                           ],
                         ),
-
                       ),
                     ),
                   ),
-
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
                     child: GestureDetector(
-                      onTap: (){
-
-                      },
-                      child:Card(
+                      onTap: () {},
+                      child: Card(
                         elevation: 0,
-                        child:  Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -163,20 +154,31 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation(
                                 Container(
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Assets.assetsIconsPen2,width: 20,height: 20,),
-                                      SizedBox(
+                                      SvgPicture.asset(
+                                        Assets.assetsIconsPen2,
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
                                         width: 15,
                                       ),
-                                      SvgPicture.asset(Assets.assetsIconsDelete,width: 20,height: 20,),
+                                      SvgPicture.asset(
+                                        Assets.assetsIconsDelete,
+                                        width: 20,
+                                        height: 20,
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 1,
                             ),
-                            const TextView("Akshay Das",size: 17,),
+                            const TextView(
+                              "Akshay Das",
+                              size: 17,
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
@@ -191,17 +193,18 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>AddressInfromation(
                               "Phone number: 9876543210, 0123456789",
                               style: TextStyle(fontSize: 17),
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 1,
                             ),
-                            const TextView("Verification Pending",size: 16,),
+                            const TextView(
+                              "Verification Pending",
+                              size: 16,
+                            ),
                           ],
                         ),
                       ),
-
                     ),
                   ),
-
                 ],
               ),
             ),
