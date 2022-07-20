@@ -55,12 +55,14 @@ class EditAddress extends ConsumerWidget {
                           Positioned(
                             bottom: 125,
                             left: 170,
-                            child: SvgPicture.asset(Assets.assetsIconsDeliverHere),
+                            child:
+                                SvgPicture.asset(Assets.assetsIconsDeliverHere),
                           ),
                           Positioned(
                             bottom: 119,
                             left: 210,
-                            child: SvgPicture.asset(Assets.assetsIconsArrowDownSolid),
+                            child: SvgPicture.asset(
+                                Assets.assetsIconsArrowDownSolid),
                           ),
                         ],
                       ),
@@ -87,10 +89,12 @@ class EditAddress extends ConsumerWidget {
                           ],
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
+                            constraints: const BoxConstraints(
+                                maxHeight: 50, minWidth: 50),
                             labelText: 'Phone number*',
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.only(left: 15, right: 5),
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 5),
                               child: CountryCodePicker(
                                 initialSelection: 'in',
                                 textStyle: TextStyle(
@@ -102,7 +106,8 @@ class EditAddress extends ConsumerWidget {
                                 ),
                                 flagWidth: 20,
                                 showDropDownButton: true,
-                                flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
+                                flagDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4)),
                               ),
                             ),
                             prefixIconConstraints: const BoxConstraints(),
@@ -137,10 +142,12 @@ class EditAddress extends ConsumerWidget {
                           ],
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
+                            constraints: const BoxConstraints(
+                                maxHeight: 50, minWidth: 50),
                             labelText: 'Alternate phone number',
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.only(left: 15, right: 5),
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 5),
                               child: CountryCodePicker(
                                 initialSelection: 'in',
                                 textStyle: TextStyle(
@@ -152,7 +159,8 @@ class EditAddress extends ConsumerWidget {
                                 ),
                                 flagWidth: 20,
                                 showDropDownButton: true,
-                                flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
+                                flagDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4)),
                               ),
                             ),
                             prefixIconConstraints: const BoxConstraints(),
@@ -219,7 +227,10 @@ class EditAddress extends ConsumerWidget {
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(value: false, groupValue: true, onChanged: (value) {}),
+                                  Radio(
+                                      value: false,
+                                      groupValue: true,
+                                      onChanged: (value) {}),
                                   const Text("Home"),
                                 ],
                               ),
@@ -230,7 +241,10 @@ class EditAddress extends ConsumerWidget {
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(value: false, groupValue: true, onChanged: (value) {}),
+                                  Radio(
+                                      value: false,
+                                      groupValue: true,
+                                      onChanged: (value) {}),
                                   const Text("Work"),
                                 ],
                               ),
@@ -241,7 +255,10 @@ class EditAddress extends ConsumerWidget {
                             Container(
                               child: Row(
                                 children: [
-                                  Radio(value: true, groupValue: true, onChanged: (value) {}),
+                                  Radio(
+                                      value: true,
+                                      groupValue: true,
+                                      onChanged: (value) {}),
                                   const Text("Other"),
                                 ],
                               ),
@@ -249,7 +266,8 @@ class EditAddress extends ConsumerWidget {
                           ],
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(hintText: "Address"),
+                          decoration:
+                              const InputDecoration(hintText: "Address"),
                         ),
                         Row(
                           children: [
@@ -270,7 +288,54 @@ class EditAddress extends ConsumerWidget {
                           children: [
                             PrimaryButton(
                               title: "SAVE & REQUEST CHANGE",
-                              onPressed: () {},
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext index) {
+                                      // return AlertDialog(
+                                      //   title: Text("Request for updating address sent!",style: TextStyles.header,),
+                                      // );
+                                      return Dialog(
+                                        child: Container(
+                                          height: 300,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Request for updating \n       address sent!",
+                                                style: TextStyles.header,
+                                              ),
+                                              Divider(
+                                                thickness: 1,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 18, right: 18),
+                                                child: Text(
+                                                  "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
+                                                  style:
+                                                      TextStyle(fontSize: 17),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  PrimaryButton(title: "OKAY, I UNDERSTAND",colorFill: true,onPressed: (){},)
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
                             ),
                           ],
                         ),
