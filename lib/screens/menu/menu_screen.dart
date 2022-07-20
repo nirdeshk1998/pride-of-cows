@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/menu/address/my_address_book.dart';
 import 'package:poc/screens/menu/my_profile.dart';
+import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/utils.dart';
@@ -153,7 +154,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: 'My Address Book',
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>MyAddressBook()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MyAddressBook()));
               },
               icon: Assets.assetsIconsAddressRound,
             ),
@@ -164,7 +165,7 @@ class MenuScreen extends ConsumerWidget {
           children: [
             menuListTile(
               title: 'My Wallet',
-              onTap: () {},
+              onTap: () => Utils.push(context, const MyWalletScreen()),
               icon: Assets.assetsIconsWalletRound,
             ),
             menuListTile(
@@ -250,7 +251,7 @@ class MenuScreen extends ConsumerWidget {
                 'APP VERSION 1.1.2',
                 size: TextSize.regularSmall,
                 letterSpacing: 0.6,
-                color: Palette.lightPrimaryTextColor,
+                color: Palette.lightTextColor2,
                 fontWeight: FontWeight.bold,
               ),
               const SizedBox.square(dimension: 10),

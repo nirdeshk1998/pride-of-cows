@@ -317,7 +317,7 @@ class HomeScreen extends ConsumerWidget {
                         )
                       ],
                     ),
-                    RewardProgressBar(),
+                    const RewardProgressBar(),
                   ],
                 ),
               ),

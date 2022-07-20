@@ -145,6 +145,8 @@ class PrimaryTextButton extends StatelessWidget {
   final bool? isUpperCase, showUnderline;
   final Color? color;
   final double? size;
+  final FontWeight? weight;
+  final EdgeInsets? padding;
 
   const PrimaryTextButton({
     Key? key,
@@ -154,13 +156,15 @@ class PrimaryTextButton extends StatelessWidget {
     this.showUnderline,
     this.color,
     this.size,
+    this.weight,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPressed,
-      padding: EdgeInsets.zero,
+      padding: padding ?? EdgeInsets.zero,
       minSize: 0,
       child: TextView(
         isUpperCase == false ? title : title.toUpperCase(),
@@ -168,6 +172,7 @@ class PrimaryTextButton extends StatelessWidget {
         size: size,
         decoration: showUnderline == true ? TextDecoration.underline : null,
         textType: TextType.primaryTextButton,
+        fontWeight: weight,
       ),
     );
   }

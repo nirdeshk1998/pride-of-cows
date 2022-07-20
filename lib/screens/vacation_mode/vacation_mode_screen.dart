@@ -7,7 +7,9 @@ import 'package:poc/screens/vacation_mode/providers/vacation_mode_provider.dart'
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
+import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/label_container.dart';
 import 'package:poc/widgets/text_view.dart';
 
@@ -60,9 +62,35 @@ class VacationModeScreen extends ConsumerWidget {
                   ],
                 ),
                 Dimensions.defaultPadding.height,
-                _labelField(label: 'Starts*', hint: 'Select start date'),
+                _labelField(
+                  label: 'Starts*',
+                  hint: 'Select start date',
+                  value: '31-01-01',
+                  onPressed: () {},
+                ),
                 30.0.height,
-                _labelField(label: 'Ends', hint: 'Select end date (optional)'),
+                _labelField(
+                  label: 'Ends',
+                  hint: 'Select end date (optional)',
+                  onPressed: () {},
+                ),
+                30.0.height,
+                Center(
+                  child: PrimaryButton(
+                    title: 'save changes',
+                    width: 180,
+                    onPressed: () {},
+                  ),
+                ),
+                Dimensions.defaultPadding.height,
+                Center(
+                  child: PrimaryButton(
+                    title: 'cancel',
+                    width: 180,
+                    colorFill: false,
+                    onPressed: () => Utils.pop(context),
+                  ),
+                ),
                 Dimensions.defaultPadding.height,
               ],
             ),
@@ -72,7 +100,12 @@ class VacationModeScreen extends ConsumerWidget {
     );
   }
 
-  Stack _labelField({required String label, String? hint}) {
+  Stack _labelField({
+    required String label,
+    String? hint,
+    String? value,
+    VoidCallback? onPressed,
+  }) {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
@@ -85,7 +118,7 @@ class VacationModeScreen extends ConsumerWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           child: CupertinoButton(
-            onPressed: () {},
+            onPressed: onPressed,
             padding: EdgeInsets.zero,
             minSize: 0,
             child: Row(
@@ -101,11 +134,18 @@ class VacationModeScreen extends ConsumerWidget {
                   child: SvgPicture.asset(Assets.assetsIconsChevronDownThin),
                 ),
                 12.width,
-                TextView(
-                  hint,
-                  textType: TextType.hint,
-                  color: Palette.hintColor,
-                ),
+                if (value == null)
+                  TextView(
+                    hint,
+                    textType: TextType.hint,
+                    color: Palette.hintColor,
+                  )
+                else
+                  TextView(
+                    value,
+                    textType: TextType.hint,
+                    color: Palette.textColor,
+                  ),
               ],
             ),
           ),
