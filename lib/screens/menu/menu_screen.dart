@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
-import 'package:poc/screens/loyalty/loyalty_screen.dart';
+import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/menu/address/my_address_book.dart';
 import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
@@ -177,7 +177,7 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'Loyalty Program',
-              onTap: () => Utils.push(context, const LoyaltyScreen()),
+              onTap: () => Utils.push(context, const LoyaltyProgramScreen()),
               icon: Assets.assetsIconsLoyaltyRound,
             ),
             menuListTile(
