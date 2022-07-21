@@ -73,7 +73,9 @@ class PrimaryButton extends StatelessWidget {
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))
           : StadiumBorder(
               side: BorderSide(
-                color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+                color: colorFill == false
+                    ? Palette.primaryColor
+                    : Palette.onPrimaryColor,
                 width: 1,
               ),
             ),
@@ -81,7 +83,8 @@ class PrimaryButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40),
       height: 50,
       color: colorFill == false ? null : Palette.primaryColor,
-      textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+      textColor:
+          colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
       disabledTextColor: Palette.onDisabledColor,
       minWidth: isExpanded == true ? double.maxFinite : width,
@@ -184,6 +187,125 @@ class PrimaryTextButton extends StatelessWidget {
         decoration: showUnderline == true ? TextDecoration.underline : null,
         textType: TextType.primaryTextButton,
         fontWeight: weight,
+      ),
+    );
+  }
+}
+
+class ToogleButton extends StatefulWidget {
+  final double width;
+  final double height;
+
+  final String leftDescription;
+  final String rightDescription;
+
+  final Color toggleColor;
+  final Color toggleBackgroundColor;
+  final Color toggleBorderColor;
+
+  final double _leftToggleAlign = -1;
+  final double _rightToggleAlign = 1;
+
+  final VoidCallback onLeftToggleActive;
+  final VoidCallback onRightToggleActive;
+
+  const ToogleButton(
+      {Key? key,
+      required this.width,
+      required this.height,
+      required this.toggleBackgroundColor,
+      required this.toggleBorderColor,
+      required this.toggleColor,
+      required this.leftDescription,
+      required this.rightDescription,
+      required this.onLeftToggleActive,
+      required this.onRightToggleActive})
+      : super(key: key);
+
+  @override
+  _ToogleButtonState createState() => _ToogleButtonState();
+}
+
+class _ToogleButtonState extends State<ToogleButton> {
+  double _toggleXAlign = -1;
+
+  late Color _leftDescriptionColor;
+  late Color _rightDescriptionColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        border: Border.all(color: widget.toggleBorderColor),
+        color: widget.toggleBackgroundColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(50.0),
+        ),
+      ),
+      child: Stack(
+        children: [
+          AnimatedAlign(
+            alignment: Alignment(_toggleXAlign, 0),
+            duration: Duration(milliseconds: 300),
+            child: Container(
+              width: widget.width * 0.5,
+              height: widget.height,
+              decoration: BoxDecoration(
+                color: widget.toggleColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50.0),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(
+                () {
+                  _toggleXAlign = widget._leftToggleAlign;
+                },
+              );
+              widget.onRightToggleActive();
+            },
+            child: Align(
+              alignment: Alignment(-1, 0),
+              child: Container(
+                width: widget.width * 0.5,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Text(
+                  widget.leftDescription,
+                  style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff193B61)),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(
+                () {
+                  _toggleXAlign = widget._rightToggleAlign;
+                },
+              );
+
+              widget.onLeftToggleActive();
+            },
+            child: Align(
+              alignment: Alignment(1, 0),
+              child: Container(
+                width: widget.width * 0.5,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Text(
+                  widget.rightDescription,
+                  style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff193B61)),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
