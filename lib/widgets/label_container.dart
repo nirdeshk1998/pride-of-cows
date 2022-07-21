@@ -49,7 +49,7 @@ class _PrimaryLabelContainerState extends State<PrimaryLabelContainer> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             transform: _isFocused ? Matrix4.translationValues(0, 0, 0) : Matrix4.translationValues(50, 25, 0),
-            color: Palette.lightColor,
+            color: Palette.scaffoldBackgroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 3.0),
             margin: const EdgeInsets.symmetric(horizontal: 15.0),
             child: TextView(

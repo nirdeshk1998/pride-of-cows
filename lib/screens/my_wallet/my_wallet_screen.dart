@@ -421,7 +421,7 @@ class MyWalletScreen extends ConsumerWidget {
               onPressed: () {},
             ),
           ),
-          30.0.height,
+          40.0.height,
           const Divider(
             height: 1,
             thickness: 1,

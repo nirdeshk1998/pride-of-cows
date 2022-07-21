@@ -7,11 +7,15 @@ import 'package:poc/widgets/text_view.dart';
 class PrimaryOutlineButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
+  final bool? isFilled;
+  final double? letterSpacing;
 
   const PrimaryOutlineButton({
     Key? key,
     required this.title,
     required this.onPressed,
+    this.isFilled,
+    this.letterSpacing,
   }) : super(key: key);
 
   @override
@@ -21,13 +25,20 @@ class PrimaryOutlineButton extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       minWidth: 0,
       height: 36,
+      color: isFilled == true ? Palette.primaryColor : Palette.scaffoldBackgroundColor,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: Palette.outlineColor),
+        side: BorderSide(
+          color: isFilled == true ? Palette.primaryColor : Palette.outlineColor,
+        ),
       ),
       child: TextView(
         title.toUpperCase(),
         textType: TextType.primaryButton,
+        height: 1.2,
+        letterSpacing: letterSpacing,
+        color: isFilled == true ? Palette.onPrimaryColor : Palette.primaryColor,
       ),
     );
   }

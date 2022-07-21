@@ -233,7 +233,7 @@ class SecondaryAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      decoration: const BoxDecoration(color: Palette.lightColor),
+      decoration: const BoxDecoration(color: Palette.scaffoldBackgroundColor),
       child: SizedBox(
         height: kToolbarHeight,
         child: Material(

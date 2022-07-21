@@ -154,7 +154,7 @@ class VacationModeScreen extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 3.0),
           margin: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Material(
-            color: Palette.lightColor,
+            color: Palette.scaffoldBackgroundColor,
             child: TextView(
               label,
               textType: TextType.label,

@@ -337,6 +337,10 @@ class Assets {
   /// assets/images/ghee.png
   static const String assetsImagesGhee = "assets/images/ghee.png";
 
+  /// Assets for assetsImagesGiftCard
+  /// assets/images/gift_card.png
+  static const String assetsImagesGiftCard = "assets/images/gift_card.png";
+
   /// Assets for assetsImagesGreenPower
   /// assets/images/green_power.png
   static const String assetsImagesGreenPower = "assets/images/green_power.png";

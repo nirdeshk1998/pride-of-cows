@@ -12,4 +12,5 @@ class LocalString {
   static const String howItWorksLoyalty2 = '2. Collect Crowns by completing tasks.';
   static const String howItWorksLoyalty3 =
       '3. Redeem collected Crowns by converting them to Promo codes and win exciting rewards.';
+  static const String surpriseWithEcard = 'Surprise your loved ones with an E-card in their email!';
 }
