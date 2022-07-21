@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/menu/rewards/balance.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/styles/widget_styles.dart';
@@ -54,8 +55,13 @@ class Rewards extends ConsumerWidget {
                             toggleColor: Color(0xffE3F6FC),
                             leftDescription: "REWARDS",
                             rightDescription: "HISTORY",
-                            onLeftToggleActive: () {},
-                            onRightToggleActive: () {}),
+                            onLeftToggleActive: () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>Balance()));
+                            },
+                            onRightToggleActive: () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>Rewards()));
+                            }
+                            ),
                       ],
                     ),
                   ]),
@@ -266,9 +272,30 @@ class Rewards extends ConsumerWidget {
                 InkWell(
                   child: Row(
                     children: [
-
+                      Container(
+                        width: 30.0,
+                        height: 30.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                          border: Border.all(
+                            color: Color(0xffD2AB68),
+                            width: 1.0,
+                          ),
+                        ),
+                        child:Center(
+                          child: TextView("i",color: Color(0xffD2AB68),),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      TextView("How it works?",size: 16,decoration: TextDecoration.underline),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
