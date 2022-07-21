@@ -121,17 +121,17 @@ class MyWalletScreen extends ConsumerWidget {
             Dimensions.defaultPadding.height,
             _sheetPoints(
               point: '1',
-              text: LocalString.howItWorks1,
+              text: LocalString.howItWorksWallet1,
             ),
             30.0.height,
             _sheetPoints(
               point: '2',
-              text: LocalString.howItWorks2,
+              text: LocalString.howItWorksWallet2,
             ),
             30.0.height,
             _sheetPoints(
               point: '3',
-              text: LocalString.howItWorks3,
+              text: LocalString.howItWorksWallet3,
             ),
             30.0.height,
             const Divider(

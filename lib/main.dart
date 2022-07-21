@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/screens/loyalty/loyalty_screen.dart';
+import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/splash/splash_screen.dart';
 import 'package:poc/styles/colors.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
-      home: const LoyaltyScreen(),
+      home: const MainScreen(),
     );
   }
 }

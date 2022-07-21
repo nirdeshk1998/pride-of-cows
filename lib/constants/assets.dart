@@ -113,6 +113,10 @@ class Assets {
   /// assets/icons/crown.svg
   static const String assetsIconsCrown = "assets/icons/crown.svg";
 
+  /// Assets for assetsIconsCrown2
+  /// assets/icons/crown2.svg
+  static const String assetsIconsCrown2 = "assets/icons/crown2.svg";
+
   /// Assets for assetsIconsDelete
   /// assets/icons/delete.svg
   static const String assetsIconsDelete = "assets/icons/delete.svg";
@@ -265,6 +269,10 @@ class Assets {
   /// assets/icons/shoppingcart.png
   static const String assetsIconsShoppingcart = "assets/icons/shoppingcart.png";
 
+  /// Assets for assetsIconsSignIn
+  /// assets/icons/sign_in.svg
+  static const String assetsIconsSignIn = "assets/icons/sign_in.svg";
+
   /// Assets for assetsIconsSort
   /// assets/icons/sort.svg
   static const String assetsIconsSort = "assets/icons/sort.svg";
@@ -309,6 +317,10 @@ class Assets {
   /// assets/icons/whatsappiconborder.svg
   static const String assetsIconsWhatsappiconborder = "assets/icons/whatsappiconborder.svg";
 
+  /// Assets for assetsIconsWinRewards
+  /// assets/icons/win_rewards.svg
+  static const String assetsIconsWinRewards = "assets/icons/win_rewards.svg";
+
   /// Assets for assetsIconsYoutube
   /// assets/icons/youtube.svg
   static const String assetsIconsYoutube = "assets/icons/youtube.svg";
@@ -316,6 +328,10 @@ class Assets {
   /// Assets for assetsImagesCircle
   /// assets/images/circle.png
   static const String assetsImagesCircle = "assets/images/circle.png";
+
+  /// Assets for assetsImagesCrown
+  /// assets/images/crown.png
+  static const String assetsImagesCrown = "assets/images/crown.png";
 
   /// Assets for assetsImagesGhee
   /// assets/images/ghee.png
@@ -356,6 +372,14 @@ class Assets {
   /// Assets for assetsImagesPaneer
   /// assets/images/paneer.png
   static const String assetsImagesPaneer = "assets/images/paneer.png";
+
+  /// Assets for assetsImagesRedeemRewards
+  /// assets/images/redeem_rewards.png
+  static const String assetsImagesRedeemRewards = "assets/images/redeem_rewards.png";
+
+  /// Assets for assetsImagesSignIn
+  /// assets/images/sign_in.png
+  static const String assetsImagesSignIn = "assets/images/sign_in.png";
 
   /// Assets for assetsImagesSplashBg
   /// assets/images/splash_bg.png

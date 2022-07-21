@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ import 'package:poc/utils/extensions.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
+import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class LoyaltyScreen extends ConsumerWidget {
@@ -142,14 +144,6 @@ class LoyaltyScreen extends ConsumerWidget {
                           const TextSpan(text: LocalString.loyaltySubtitle),
                           TextSpan(
                             text: 'Rewards',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Utils.bottomSheet(context,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [TextView('WORK IN PROGRESS')],
-                                    ));
-                              },
                             style: TextType.subtitle.apply(
                               color: Palette.primaryColor,
                               decoration: TextDecoration.underline,
@@ -290,11 +284,201 @@ class LoyaltyScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-              )
+              ),
+              40.0.height,
+              const Divider(
+                height: 1,
+                thickness: 1,
+                color: Palette.surfaceColor,
+                indent: Dimensions.defaultPadding,
+                endIndent: Dimensions.defaultPadding,
+              ),
+              5.0.height,
+              _menuListTileButton(
+                title: 'How it works',
+                icon: Assets.assetsIconsInfoRound,
+                horizontal: Dimensions.defaultPadding,
+                onPressed: () => _howItWorksBottomSheet(context),
+              ),
             ],
           ),
         ],
       ),
     );
   }
+
+  Future<Widget?> _howItWorksBottomSheet(BuildContext context) {
+    return Utils.bottomSheet(
+      context,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            10.0.height,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                PrimaryIconButton(
+                  svg: Assets.assetsIconsClose,
+                  onPressed: () => Utils.pop(context),
+                ),
+              ],
+            ),
+            _menuListTileButton(
+              title: 'How it Works',
+              icon: Assets.assetsIconsInfoRound,
+              vertical: 0,
+              iconSize: 18,
+              fontSize: TextSize.subHeader,
+              isBold: true,
+              isUnderline: false,
+              isCenter: true,
+              color: Palette.textColor,
+            ),
+            10.0.height,
+            const Divider(
+              height: 1,
+              thickness: 1,
+              color: Palette.surfaceColor,
+            ),
+            10.0.height,
+            Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(text: LocalString.loyaltySubtitle),
+                  TextSpan(
+                    text: 'Rewards',
+                    style: TextType.subtitle.apply(
+                      color: Palette.primaryColor,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
+              style: TextType.subtitle.apply(
+                color: Palette.textColor,
+                heightFactor: 1.5,
+              ),
+            ),
+            30.0.height,
+            _sheetPoints(
+              icon: Assets.assetsImagesSignIn,
+              text: LocalString.howItWorksLoyalty1,
+            ),
+            30.0.height,
+            _sheetPoints(
+              icon: Assets.assetsImagesCrown,
+              text: LocalString.howItWorksLoyalty2,
+            ),
+            30.0.height,
+            _sheetPoints(
+              icon: Assets.assetsImagesRedeemRewards,
+              text: LocalString.howItWorksLoyalty3,
+            ),
+            Dimensions.defaultPadding.height,
+            const Divider(
+              height: 1,
+              thickness: 1,
+              color: Palette.surfaceColor,
+            ),
+            Dimensions.defaultPadding.height,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                TextView(
+                  '\u2022  ',
+                  color: Palette.hintColor,
+                ),
+                Expanded(
+                  child: TextView(
+                    LocalString.pocCashRbiGuidelines,
+                    color: Palette.hintColor,
+                    maxLines: 3,
+                  ),
+                ),
+              ],
+            ),
+            40.0.height,
+          ],
+        ),
+      ),
+    );
+  }
+
+  CupertinoButton _menuListTileButton({
+    required final String title,
+    required final String icon,
+    final bool? isBold,
+    final VoidCallback? onPressed,
+    final double? horizontal,
+    final double? vertical,
+    final double? iconSize,
+    final double? fontSize,
+    final bool? isUnderline,
+    final bool? isCenter,
+    final Color? color,
+  }) {
+    return CupertinoButton(
+      padding: EdgeInsets.symmetric(
+        vertical: vertical ?? 5,
+        horizontal: horizontal ?? 0,
+      ),
+      minSize: 0,
+      onPressed: onPressed,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox.square(
+            dimension: iconSize ?? 18,
+            child: SvgPicture.asset(
+              icon,
+              color: Palette.goldenIconColor,
+            ),
+          ),
+          const SizedBox.square(dimension: 5),
+          TextView(
+            title,
+            textType: TextType.regular,
+            size: fontSize,
+            color: color ?? Palette.primaryColor,
+            decoration: isUnderline == false ? null : TextDecoration.underline,
+            fontWeight: isBold == true ? FontWeight.bold : FontWeight.normal,
+          ),
+          if (isCenter != true) const Spacer(),
+        ],
+      ),
+    );
+  }
+}
+
+Column _sheetPoints({
+  required final String icon,
+  final String? text,
+}) {
+  return Column(
+    children: [
+      Container(
+          height: 60,
+          width: 60,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: Dimensions.radius10,
+            color: Palette.onPrimaryColor,
+          ),
+          child: Image.asset(icon)),
+      5.0.height,
+      TextView(
+        text,
+        maxLines: 6,
+        height: 1.5,
+        textAlign: TextAlign.center,
+        color: Palette.textColor,
+        size: TextSize.regularLarge,
+      ),
+    ],
+  );
 }
