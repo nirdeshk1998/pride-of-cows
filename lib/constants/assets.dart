@@ -17,6 +17,10 @@ class Assets {
   /// assets/icons/arrow_left.svg
   static const String assetsIconsArrowLeft = "assets/icons/arrow_left.svg";
 
+  /// Assets for assetsIconsArrowLeftLong
+  /// assets/icons/arrow_left_long.svg
+  static const String assetsIconsArrowLeftLong = "assets/icons/arrow_left_long.svg";
+
   /// Assets for assetsIconsArrowRight
   /// assets/icons/arrow_right.svg
   static const String assetsIconsArrowRight = "assets/icons/arrow_right.svg";
@@ -24,6 +28,10 @@ class Assets {
   /// Assets for assetsIconsArrowRight2
   /// assets/icons/arrow_right2.svg
   static const String assetsIconsArrowRight2 = "assets/icons/arrow_right2.svg";
+
+  /// Assets for assetsIconsArrowRightLong
+  /// assets/icons/arrow_right_long.svg
+  static const String assetsIconsArrowRightLong = "assets/icons/arrow_right_long.svg";
 
   /// Assets for assetsIconsBack
   /// assets/icons/back.svg
@@ -105,6 +113,10 @@ class Assets {
   /// assets/icons/crown.svg
   static const String assetsIconsCrown = "assets/icons/crown.svg";
 
+  /// Assets for assetsIconsCrown2
+  /// assets/icons/crown2.svg
+  static const String assetsIconsCrown2 = "assets/icons/crown2.svg";
+
   /// Assets for assetsIconsDelete
   /// assets/icons/delete.svg
   static const String assetsIconsDelete = "assets/icons/delete.svg";
@@ -148,6 +160,10 @@ class Assets {
   /// Assets for assetsIconsIndiaflag
   /// assets/icons/indiaflag.svg
   static const String assetsIconsIndiaflag = "assets/icons/indiaflag.svg";
+
+  /// Assets for assetsIconsInfoRound
+  /// assets/icons/info_round.svg
+  static const String assetsIconsInfoRound = "assets/icons/info_round.svg";
 
   /// Assets for assetsIconsInstagram
   /// assets/icons/instagram.svg
@@ -253,6 +269,10 @@ class Assets {
   /// assets/icons/shoppingcart.png
   static const String assetsIconsShoppingcart = "assets/icons/shoppingcart.png";
 
+  /// Assets for assetsIconsSignIn
+  /// assets/icons/sign_in.svg
+  static const String assetsIconsSignIn = "assets/icons/sign_in.svg";
+
   /// Assets for assetsIconsSort
   /// assets/icons/sort.svg
   static const String assetsIconsSort = "assets/icons/sort.svg";
@@ -297,6 +317,10 @@ class Assets {
   /// assets/icons/whatsappiconborder.svg
   static const String assetsIconsWhatsappiconborder = "assets/icons/whatsappiconborder.svg";
 
+  /// Assets for assetsIconsWinRewards
+  /// assets/icons/win_rewards.svg
+  static const String assetsIconsWinRewards = "assets/icons/win_rewards.svg";
+
   /// Assets for assetsIconsYoutube
   /// assets/icons/youtube.svg
   static const String assetsIconsYoutube = "assets/icons/youtube.svg";
@@ -304,6 +328,10 @@ class Assets {
   /// Assets for assetsImagesCircle
   /// assets/images/circle.png
   static const String assetsImagesCircle = "assets/images/circle.png";
+
+  /// Assets for assetsImagesCrown
+  /// assets/images/crown.png
+  static const String assetsImagesCrown = "assets/images/crown.png";
 
   /// Assets for assetsImagesGhee
   /// assets/images/ghee.png
@@ -345,9 +373,21 @@ class Assets {
   /// assets/images/paneer.png
   static const String assetsImagesPaneer = "assets/images/paneer.png";
 
+  /// Assets for assetsImagesRedeemRewards
+  /// assets/images/redeem_rewards.png
+  static const String assetsImagesRedeemRewards = "assets/images/redeem_rewards.png";
+
+  /// Assets for assetsImagesSignIn
+  /// assets/images/sign_in.png
+  static const String assetsImagesSignIn = "assets/images/sign_in.png";
+
   /// Assets for assetsImagesSplashBg
   /// assets/images/splash_bg.png
   static const String assetsImagesSplashBg = "assets/images/splash_bg.png";
+
+  /// Assets for assetsImagesWalletCard
+  /// assets/images/wallet_card.png
+  static const String assetsImagesWalletCard = "assets/images/wallet_card.png";
 
   /// Assets for assetsImagesWhatsapproundedborder
   /// assets/images/whatsapproundedborder.png

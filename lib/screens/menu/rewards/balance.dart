@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
@@ -52,12 +53,8 @@ class Balance extends ConsumerWidget {
                             toggleColor: Color(0xffE3F6FC),
                             leftDescription: "REWARDS",
                             rightDescription: "HISTORY",
-                            onLeftToggleActive: () {
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>Balance()));
-                            },
-                            onRightToggleActive: () {
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>Rewards()));
-                            }
+                          onLeftToggleActive: () =>Rewards(),
+                          onRightToggleActive: () =>Balance(),
                             ),
                       ],
                     ),
@@ -71,92 +68,125 @@ class Balance extends ConsumerWidget {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: 10,
                   itemBuilder: (_, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(color: Colors.grey,width: 0)
-                          )
-                        ),
-                        child:Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
+                    return GestureDetector(
+                      onTap: () {
+                        print(index.toInt());
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: index != 9
+                                ? BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey, width: 0)))
+                                : BoxDecoration(),
+                            child: Column(
                               children: [
-                                TextView("25-11-21",color: Palette.hintColor,),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    TextView(
+                                      "25-11-21",
+                                      color: Palette.hintColor,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            Assets.assetsIconsCrown,
+                                            height: 30,
+                                            width: 30,
+                                          ),
+                                          TextView(
+                                            "50",
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            size: 18,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          TextView(
+                                            "NEW",
+                                            size: 18,
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          TextView(
+                                            "redeemed",
+                                            size: 18,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    TextView(
+                                      "+100",
+                                      size: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                               ],
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        Assets.assetsIconsCrown,
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      TextView(
-                                        "50",
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        size: 18,
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      TextView(
-                                        "NEW",
-                                        size: 18,
-                                      ),
-                                      TextView(
-                                        "redeemed",
-                                        size: 18,
-                                        color: Colors.black,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                TextView(
-                                  "+100",
-                                  size: 18,
-                                  color: Colors.green,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
-
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
                     );
                   }),
             ),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
-              child:Column(
+              child: Column(
                 children: [
+                  Row(
+
+                    children: [
+                      InkWell(
+                        child: SvgPicture.asset(Assets.assetsIconsArrowLeft),
+                      ),
+                      InkWell(child: TextView("1")),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(child: TextView("2")),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(child: TextView("3")),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(
+                        child: SvgPicture.asset(Assets.assetsIconsArrowRight),
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
                   Divider(
                     thickness: 1,
-                  ),
-                  SizedBox(
-                    height: 10,
                   ),
                   InkWell(
                     child: Row(
@@ -166,20 +196,25 @@ class Balance extends ConsumerWidget {
                           height: 30.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: Color(0xffD2AB68),
                               width: 1.0,
                             ),
                           ),
-                          child:Center(
-                            child: TextView("i",color: Color(0xffD2AB68),),
+                          child: Center(
+                            child: TextView(
+                              "i",
+                              color: Color(0xffD2AB68),
+                            ),
                           ),
                         ),
                         SizedBox(
                           width: 8,
                         ),
-                        TextView("How it works?",size: 16,decoration: TextDecoration.underline),
+                        TextView("How it works?",
+                            size: 16, decoration: TextDecoration.underline),
                       ],
                     ),
                   ),
@@ -188,7 +223,6 @@ class Balance extends ConsumerWidget {
                   ),
                 ],
               ),
-
             ),
           ],
         ),
@@ -196,3 +230,4 @@ class Balance extends ConsumerWidget {
     );
   }
 }
+

@@ -15,6 +15,12 @@ class TextType {
     fontFamily: GoogleFonts.lato().fontFamily,
   );
 
+  static TextStyle regularBold = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: TextSize.regular,
+    fontFamily: GoogleFonts.lato().fontFamily,
+  );
+
   static TextStyle titleStyled = TextStyle(
     fontFamily: GoogleFonts.suranna().fontFamily,
     fontSize: TextSize.title,
@@ -51,6 +57,7 @@ class TextType {
     fontFamily: GoogleFonts.lato().fontFamily,
     fontSize: TextSize.primaryButton,
     fontWeight: FontWeight.bold,
+    letterSpacing: 0.6,
     height: 1,
   );
 
@@ -76,6 +83,7 @@ class TextType {
 class TextSize {
   static const double regularSmall = 12;
   static const double regular = 14;
+  static const double regularLarge = 16;
   static const double subHeader = 16;
   static const double title = 20;
   static const double header = 32;
@@ -143,7 +151,7 @@ class TextView extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: size,
-            color: color ?? Palette.primaryColor,
+            color: color ?? Palette.textColor,
             fontWeight: fontWeight,
             letterSpacing: letterSpacing,
             height: height,

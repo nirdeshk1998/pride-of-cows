@@ -15,8 +15,8 @@ class Palette {
   static const secondaryColor = Color(0xff3c9f77);
 
   static const textColor = Color(0xFF2B2B2B);
-  static const lightPrimaryTextColor = Color(0xFF658395);
   static const lightTextColor = Color(0xFF9B9B9B);
+  static const lightTextColor2 = Color(0xFF658395);
   static const altTextColor = Color(0xFFf2f2f2);
 
   static const hintColor = Color(0xFF808080);
@@ -30,6 +30,7 @@ class Palette {
   static const surfaceBackgroundColor = Color(0xFFEAF7FE);
 
   static const successColor = Color(0xFF6FCF97);
+  static const selectedTabColor = Color(0xFFE3F6FC);
 }
 
 class MaterialPalette {
