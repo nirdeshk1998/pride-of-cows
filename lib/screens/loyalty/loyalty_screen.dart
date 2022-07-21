@@ -12,7 +12,6 @@ import 'package:poc/utils/extensions.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
-import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class LoyaltyScreen extends ConsumerWidget {
