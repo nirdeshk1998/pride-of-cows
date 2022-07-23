@@ -58,7 +58,7 @@ class PrimaryTextFormField extends StatelessWidget {
 class SearchFormField extends StatelessWidget {
   const SearchFormField({
     Key? key,
-    required this.controller,
+    this.controller,
     this.hintText,
   }) : super(key: key);
 
@@ -71,6 +71,7 @@ class SearchFormField extends StatelessWidget {
       controller: controller,
       textCapitalization: TextCapitalization.sentences,
       textInputAction: TextInputAction.search,
+      style: TextType.hint.apply(color: Palette.textColor, heightFactor: 1.2),
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 10.0),
@@ -84,18 +85,22 @@ class SearchFormField extends StatelessWidget {
         ),
         prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
         hintText: hintText,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        hintStyle: TextType.hint.apply(color: Palette.hintColor),
+        contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         constraints: const BoxConstraints(minHeight: 50, maxHeight: 50),
         fillColor: Colors.white,
         filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(100),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(100),
-          borderSide: const BorderSide(color: Palette.outlineColor),
-        ),
+        border: WidgetStyle.inputBorder,
+        enabledBorder: WidgetStyle.inputBorder,
+        focusedBorder: WidgetStyle.activeInputBorder,
+        // border: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(100),
+        //   borderSide: BorderSide.none,
+        // ),
+        // focusedBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(100),
+        //   borderSide: const BorderSide(color: Palette.outlineColor),
+        // ),
       ),
     );
   }

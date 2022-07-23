@@ -212,7 +212,7 @@ class CartScreen extends ConsumerWidget {
                                       ],
                                     ),
                                     const SizedBox.square(dimension: 5),
-                                    PrimaryCounterWidget(
+                                    PrimaryCounter(
                                       onCounterChanged: (i) {},
                                     ),
                                   ],

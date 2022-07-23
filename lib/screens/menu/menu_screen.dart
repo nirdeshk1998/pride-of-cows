@@ -9,6 +9,7 @@ import 'package:poc/screens/menu/address/my_address_book.dart';
 import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
+import 'package:poc/screens/orders/orders_screen.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/utils.dart';
@@ -134,7 +135,7 @@ class MenuScreen extends ConsumerWidget {
           children: [
             menuListTile(
               title: 'Orders',
-              onTap: () {},
+              onTap: () => Utils.push(context, const OrdersScreen()),
               icon: Assets.assetsIconsCartRound,
             ),
             menuListTile(
@@ -174,7 +175,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: 'Rewards',
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>Rewards()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Rewards()));
               },
               icon: Assets.assetsIconsRewardRound,
             ),

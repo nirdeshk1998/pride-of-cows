@@ -267,7 +267,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                                       color: Palette.hintColor,
                                                     ),
                                                     const Spacer(),
-                                                    PrimaryCounterWidget(
+                                                    PrimaryCounter(
                                                       onCounterChanged: (i) {
                                                         setState(() {
                                                           totalItemCount = i;

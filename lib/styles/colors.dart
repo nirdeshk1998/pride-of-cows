@@ -26,6 +26,7 @@ class Palette {
 
   static const lightIconColor = Color(0xFFC0C0C0);
   static const goldenIconColor = Color(0xFFD2AB68);
+  static const orangeIconColor = Color(0xFFDD772F);
 
   static const surfaceBackgroundColor = Color(0xFFEAF7FE);
 

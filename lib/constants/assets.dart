@@ -129,6 +129,10 @@ class Assets {
   /// assets/icons/discount.png
   static const String assetsIconsDiscount = "assets/icons/discount.png";
 
+  /// Assets for assetsIconsDownload
+  /// assets/icons/download.svg
+  static const String assetsIconsDownload = "assets/icons/download.svg";
+
   /// Assets for assetsIconsEditPencil
   /// assets/icons/edit_pencil.svg
   static const String assetsIconsEditPencil = "assets/icons/edit_pencil.svg";
@@ -189,6 +193,10 @@ class Assets {
   /// assets/icons/minus.svg
   static const String assetsIconsMinus = "assets/icons/minus.svg";
 
+  /// Assets for assetsIconsOngoing
+  /// assets/icons/ongoing.svg
+  static const String assetsIconsOngoing = "assets/icons/ongoing.svg";
+
   /// Assets for assetsIconsPen2
   /// assets/icons/pen2.svg
   static const String assetsIconsPen2 = "assets/icons/pen2.svg";
@@ -216,6 +224,10 @@ class Assets {
   /// Assets for assetsIconsPlus
   /// assets/icons/plus.svg
   static const String assetsIconsPlus = "assets/icons/plus.svg";
+
+  /// Assets for assetsIconsProcessing
+  /// assets/icons/processing.svg
+  static const String assetsIconsProcessing = "assets/icons/processing.svg";
 
   /// Assets for assetsIconsProducts
   /// assets/icons/products.svg
@@ -249,6 +261,14 @@ class Assets {
   /// assets/icons/right_arrow.svg
   static const String assetsIconsRightArrow = "assets/icons/right_arrow.svg";
 
+  /// Assets for assetsIconsRoundedIIcon
+  /// assets/icons/rounded_i_icon.svg
+  static const String assetsIconsRoundedIIcon = "assets/icons/rounded_i_icon.svg";
+
+  /// Assets for assetsIconsRupee
+  /// assets/icons/rupee.svg
+  static const String assetsIconsRupee = "assets/icons/rupee.svg";
+
   /// Assets for assetsIconsSearch
   /// assets/icons/search.svg
   static const String assetsIconsSearch = "assets/icons/search.svg";
@@ -264,6 +284,10 @@ class Assets {
   /// Assets for assetsIconsShare3
   /// assets/icons/share3.svg
   static const String assetsIconsShare3 = "assets/icons/share3.svg";
+
+  /// Assets for assetsIconsShippingBox
+  /// assets/icons/shipping_box.svg
+  static const String assetsIconsShippingBox = "assets/icons/shipping_box.svg";
 
   /// Assets for assetsIconsShoppingcart
   /// assets/icons/shoppingcart.png
@@ -360,6 +384,10 @@ class Assets {
   /// Assets for assetsImagesMaps
   /// assets/images/maps.png
   static const String assetsImagesMaps = "assets/images/maps.png";
+
+  /// Assets for assetsImagesMilkProd
+  /// assets/images/milk_prod.png
+  static const String assetsImagesMilkProd = "assets/images/milk_prod.png";
 
   /// Assets for assetsImagesOb1
   /// assets/images/ob1.svg

@@ -73,9 +73,7 @@ class PrimaryButton extends StatelessWidget {
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))
           : StadiumBorder(
               side: BorderSide(
-                color: colorFill == false
-                    ? Palette.primaryColor
-                    : Palette.onPrimaryColor,
+                color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
                 width: 1,
               ),
             ),
@@ -83,8 +81,7 @@ class PrimaryButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40),
       height: 50,
       color: colorFill == false ? null : Palette.primaryColor,
-      textColor:
-          colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+      textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
       disabledTextColor: Palette.onDisabledColor,
       minWidth: isExpanded == true ? double.maxFinite : width,
@@ -100,6 +97,7 @@ class PrimaryButton extends StatelessWidget {
           TextView(
             title.toUpperCase(),
             textAlign: TextAlign.center,
+            height: 1.1,
             textType: TextType.primaryButton,
             color: colorFill == false
                 ? Palette.primaryColor
@@ -158,7 +156,7 @@ class PrimaryTextButton extends StatelessWidget {
   final String title;
   final bool? isUpperCase, showUnderline;
   final Color? color;
-  final double? size;
+  final double? size, height;
   final FontWeight? weight;
   final EdgeInsets? padding;
 
@@ -172,6 +170,7 @@ class PrimaryTextButton extends StatelessWidget {
     this.size,
     this.weight,
     this.padding,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -184,6 +183,7 @@ class PrimaryTextButton extends StatelessWidget {
         isUpperCase == false ? title : title.toUpperCase(),
         color: color ?? const Color(0xff193b61),
         size: size,
+        height: height,
         decoration: showUnderline == true ? TextDecoration.underline : null,
         textType: TextType.primaryTextButton,
         fontWeight: weight,
@@ -277,7 +277,7 @@ class _ToogleButtonState extends State<ToogleButton> {
                 alignment: Alignment.center,
                 child: Text(
                   widget.leftDescription,
-                  style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff193B61)),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
                 ),
               ),
             ),
@@ -300,7 +300,7 @@ class _ToogleButtonState extends State<ToogleButton> {
                 alignment: Alignment.center,
                 child: Text(
                   widget.rightDescription,
-                  style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff193B61)),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
                 ),
               ),
             ),

@@ -4,8 +4,8 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class PrimaryCounterWidget extends StatefulWidget {
-  const PrimaryCounterWidget({
+class PrimaryCounter extends StatefulWidget {
+  const PrimaryCounter({
     Key? key,
     required this.onCounterChanged,
   }) : super(key: key);
@@ -13,10 +13,10 @@ class PrimaryCounterWidget extends StatefulWidget {
   final void Function(int i) onCounterChanged;
 
   @override
-  State<PrimaryCounterWidget> createState() => _PrimaryCounterWidgetState();
+  State<PrimaryCounter> createState() => _PrimaryCounterState();
 }
 
-class _PrimaryCounterWidgetState extends State<PrimaryCounterWidget> {
+class _PrimaryCounterState extends State<PrimaryCounter> {
   int _itemCount = 1;
 
   @override
@@ -31,6 +31,7 @@ class _PrimaryCounterWidgetState extends State<PrimaryCounterWidget> {
           onPressed: onSubtract,
         ),
         Container(
+          height: 25,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(
             horizontal: 12,
@@ -43,6 +44,7 @@ class _PrimaryCounterWidgetState extends State<PrimaryCounterWidget> {
           child: TextView(
             _itemCount.toString(),
             color: Palette.textColor,
+            textType: TextType.regular,
             height: 1,
             textAlign: TextAlign.center,
           ),

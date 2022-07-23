@@ -224,16 +224,18 @@ class SecondaryAppBar extends StatelessWidget {
     Key? key,
     this.sOnPressed,
     this.sIcon,
+    this.color,
   }) : super(key: key);
 
   final VoidCallback? sOnPressed;
   final String? sIcon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      decoration: const BoxDecoration(color: Palette.scaffoldBackgroundColor),
+      decoration: BoxDecoration(color: color ?? Palette.scaffoldBackgroundColor),
       child: SizedBox(
         height: kToolbarHeight,
         child: Material(
