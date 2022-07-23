@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/contact_us/contact_us.dart';
+import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/menu/address/my_address_book.dart';
@@ -203,7 +205,9 @@ class MenuScreen extends ConsumerWidget {
           children: [
             menuListTile(
               title: 'FAQs and Links',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>FaqAndLinks()));
+              },
               icon: Assets.assetsIconsFaqRound,
             ),
             menuListTile(
@@ -213,7 +217,9 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'Contact Us',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>ContactUs()));
+              },
               icon: Assets.assetsIconsContactUsRound,
             ),
           ],

@@ -14,4 +14,10 @@ class LocalString {
       '3. Redeem collected Crowns by converting them to Promo codes and win exciting rewards.';
 
 
+  static const String referEarnSubtitle = 'For every friend who joins using your invitation code, you earn 5 litres milk free, and so does your friend.';
+  static const String howItWorksreferEarn1 = '1. Share your unique Pride of cows code with your loved ones';
+  static const String howItWorksreferEarn2 = '2. Your friend joins and completes a purchase';
+  static const String howItWorksreferEarn3 = '3. You both get 5 litres of fresh milk free!';
+
+
 }

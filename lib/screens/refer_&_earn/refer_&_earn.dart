@@ -126,7 +126,7 @@ class ReferAndEarn extends ConsumerWidget {
             Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(text: LocalString.loyaltySubtitle),
+                  const TextSpan(text: LocalString.referEarnSubtitle),
                   TextSpan(
                     text: 'Rewards',
                     style: TextType.subtitle.apply(
@@ -144,18 +144,18 @@ class ReferAndEarn extends ConsumerWidget {
             ),
             30.0.height,
             _sheetPoints(
-              icon: Assets.assetsImagesSignIn,
-              text: LocalString.howItWorksLoyalty1,
+              icon: Assets.assetsIconsLoveLetter,
+              text: LocalString.howItWorksreferEarn1,
             ),
             30.0.height,
             _sheetPoints(
-              icon: Assets.assetsImagesCrown,
-              text: LocalString.howItWorksLoyalty2,
+              icon: Assets.assetsIconsPersonalInformation,
+              text: LocalString.howItWorksreferEarn2,
             ),
             30.0.height,
             _sheetPoints(
-              icon: Assets.assetsImagesRedeemRewards,
-              text: LocalString.howItWorksLoyalty3,
+              icon: Assets.assetsIconsMilk,
+              text: LocalString.howItWorksreferEarn3,
             ),
             Dimensions.defaultPadding.height,
             const Divider(

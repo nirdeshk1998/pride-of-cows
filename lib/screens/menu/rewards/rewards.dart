@@ -14,10 +14,13 @@ import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class Rewards extends ConsumerWidget {
+
   const Rewards({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool isRewardInfoVisible=true;
+    String pageTitle="Rewards";
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,8 +30,11 @@ class Rewards extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.defaultPadding),
-            child: TextView(
-              'My Wallet',
+            child: isRewardInfoVisible==true?TextView(
+              "Rewards",
+              textType: TextType.header,
+            ):TextView(
+              "My Rewards",
               textType: TextType.header,
             ),
           ),
@@ -59,9 +65,24 @@ class Rewards extends ConsumerWidget {
                         color: Palette.primaryColor,
                       ),
                       tabs: [
-                        Tab(text: 'Wallet'.toUpperCase()),
-                        Tab(text: 'Balance'.toUpperCase()),
+                        Tab(text: 'Rewards'.toUpperCase()),
+                        Tab(text: 'History'.toUpperCase()),
                       ],
+                      onTap: (index){
+                        if(index==0){
+                          isRewardInfoVisible=true;
+                          pageTitle="Rewards";
+                          print(pageTitle);
+                          print(isRewardInfoVisible);
+
+                        }
+                        if(index==1){
+                          isRewardInfoVisible=false;
+                          pageTitle="My Rewards";
+                          print(pageTitle);
+                          print(isRewardInfoVisible);
+                        }
+                      },
                     ),
                   ),
                   15.0.height,
@@ -69,7 +90,7 @@ class Rewards extends ConsumerWidget {
                     child: TabBarView(
                       children: [
                         _RewardTab(context),
-                        _BalanceTab(context),
+                        _HistoryTab(context),
                       ],
                     ),
                   ),
@@ -259,7 +280,7 @@ class Rewards extends ConsumerWidget {
     );
   }
 
-  Widget _BalanceTab(BuildContext context) =>
+  Widget _HistoryTab(BuildContext context) =>
       Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
