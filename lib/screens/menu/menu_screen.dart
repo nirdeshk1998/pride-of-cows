@@ -10,6 +10,7 @@ import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/orders/orders_screen.dart';
+import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/utils.dart';
@@ -186,7 +187,9 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'Refer and Earn',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ReferAndEarn()));
+              },
               icon: Assets.assetsIconsReferRound,
             ),
             menuListTile(
