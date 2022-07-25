@@ -56,7 +56,10 @@ class ContactUs extends ConsumerWidget {
                         width: 5,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.4,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width / 1.4,
                         child: Divider(
                           thickness: 1,
                         ),
@@ -72,7 +75,8 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("+91-9876543210",size: 16,fontWeight: FontWeight.w400,),
+                      TextView("+91-9876543210", size: 16,
+                        fontWeight: FontWeight.w400,),
                     ],
                   ),
                   SizedBox(
@@ -84,7 +88,8 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("022 - 68156815",size: 16,fontWeight: FontWeight.w400,),
+                      TextView("022 - 68156815", size: 16,
+                        fontWeight: FontWeight.w400,),
                     ],
                   ),
                   Row(
@@ -93,7 +98,9 @@ class ContactUs extends ConsumerWidget {
                         width: 25,
                       ),
                       Flexible(
-                        child: TextView("Mon - Sat: 7:30am - 7:30pm; Sun: 7.30am – 3.30pm",size: 16,color: Palette.hintColor,maxLines: 2,),
+                        child: TextView(
+                          "Mon - Sat: 7:30am - 7:30pm; Sun: 7.30am – 3.30pm",
+                          size: 16, color: Palette.hintColor, maxLines: 2,),
                       ),
 
                     ],
@@ -107,7 +114,8 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("bookings@prideofcows.com",size: 16,fontWeight: FontWeight.w400,),
+                      TextView("bookings@prideofcows.com", size: 16,
+                        fontWeight: FontWeight.w400,),
                     ],
                   ),
                   SizedBox(
@@ -119,7 +127,9 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Flexible(child:  TextView("Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",size: 16,fontWeight: FontWeight.w400,maxLines: 2,),),
+                      Flexible(child: TextView(
+                        "Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",
+                        size: 16, fontWeight: FontWeight.w400, maxLines: 2,),),
                     ],
                   ),
                   SizedBox(
@@ -136,7 +146,10 @@ class ContactUs extends ConsumerWidget {
                         width: 5,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 2,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width / 2,
                         child: Divider(
                           thickness: 1,
                         ),
@@ -169,7 +182,9 @@ class ContactUs extends ConsumerWidget {
                           initialSelection: 'in',
                           textStyle: TextStyle(
                             color: Palette.textColor,
-                            fontFamily: GoogleFonts.lato().fontFamily,
+                            fontFamily: GoogleFonts
+                                .lato()
+                                .fontFamily,
                             fontSize: 16,
                             letterSpacing: 0,
                             fontWeight: FontWeight.normal,
@@ -183,7 +198,9 @@ class ContactUs extends ConsumerWidget {
                       prefixIconConstraints: const BoxConstraints(),
                       labelStyle: TextStyle(
                         color: Palette.hintColor,
-                        fontFamily: GoogleFonts.lato().fontFamily,
+                        fontFamily: GoogleFonts
+                            .lato()
+                            .fontFamily,
                         fontSize: 16,
                         letterSpacing: 0,
                         fontWeight: FontWeight.normal,
@@ -191,7 +208,9 @@ class ContactUs extends ConsumerWidget {
                       ),
                       floatingLabelStyle: TextStyle(
                         color: Palette.hintColor,
-                        fontFamily: GoogleFonts.lato().fontFamily,
+                        fontFamily: GoogleFonts
+                            .lato()
+                            .fontFamily,
                         fontSize: 18,
                         letterSpacing: 0,
                         fontWeight: FontWeight.normal,
@@ -213,7 +232,7 @@ class ContactUs extends ConsumerWidget {
                   ),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: "Your Message"
+                        labelText: "Your Message"
                     ),
                   ),
                   SizedBox(
@@ -222,7 +241,8 @@ class ContactUs extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      PrimaryButton(title:"Submit",onPressed: (){},colorFill: true,)
+                      PrimaryButton(
+                        title: "Submit", onPressed: () {}, colorFill: true,)
                     ],
                   ),
                   SizedBox(

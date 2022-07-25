@@ -11,6 +11,7 @@ import 'package:poc/screens/menu/address/my_address_book.dart';
 import 'package:poc/screens/menu/my_profile.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
+import 'package:poc/screens/notification/notification.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
@@ -102,6 +103,9 @@ class MenuScreen extends ConsumerWidget {
                         ),
                         const SizedBox.square(dimension: 10),
                         _profileTile(
+                          onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  Notifications()));
+                          },
                           text: '5',
                           title: 'Pending notifications',
                           icon: Assets.assetsIconsBell,
@@ -410,50 +414,56 @@ class MenuScreen extends ConsumerWidget {
     required String icon,
     required String text,
     required String title,
+    final VoidCallback ? onTap,
+
   }) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: gradColors ??
-                [
-                  const Color(0xffffe3ca),
-                  const Color(0xfff8b8a4),
+      child:InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: gradColors ??
+                  [
+                    const Color(0xffffe3ca),
+                    const Color(0xfff8b8a4),
+                  ],
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox.square(
+                    dimension: 24,
+                    child: SvgPicture.asset(icon),
+                  ),
+                  const SizedBox.square(dimension: 5),
+                  TextView(
+                    text,
+                    color: Palette.textColor,
+                    textType: TextType.header2,
+                    height: 1.35,
+                    boxHeight: 28,
+                  ),
                 ],
+              ),
+              TextView(
+                title,
+                color: Palette.hintColor,
+              ),
+            ],
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox.square(
-                  dimension: 24,
-                  child: SvgPicture.asset(icon),
-                ),
-                const SizedBox.square(dimension: 5),
-                TextView(
-                  text,
-                  color: Palette.textColor,
-                  textType: TextType.header2,
-                  height: 1.35,
-                  boxHeight: 28,
-                ),
-              ],
-            ),
-            TextView(
-              title,
-              color: Palette.hintColor,
-            ),
-          ],
-        ),
       ),
+
     );
   }
 }

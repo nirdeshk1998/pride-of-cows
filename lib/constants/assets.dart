@@ -297,6 +297,10 @@ class Assets {
   /// assets/icons/search.svg
   static const String assetsIconsSearch = "assets/icons/search.svg";
 
+  /// Assets for assetsIconsSettings
+  /// assets/icons/search.svg
+  static const String assetsIconsSettings = "assets/icons/settings.svg";
+
 
 
   /// Assets for assetsIconsSemiRounded
