@@ -96,6 +96,7 @@ class NotificationsSettings extends ConsumerWidget {
                         height: 10,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             child: TextView(
@@ -104,17 +105,20 @@ class NotificationsSettings extends ConsumerWidget {
                                   size: 16,
                                 ),
                           ),
-                          Container(
+                          Transform.scale(
+                            scale: 1.5,
                             child: Switch(
                               onChanged: (value){},
-                              value: true,
+                              value: false,
                               activeColor: Colors.green,
+                              inactiveTrackColor: Color(0xffF2F2F2),
+                              thumbColor: MaterialStateProperty.all(Colors.white),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 3 ,
                       ),
                       Row(
                         children: [
@@ -122,13 +126,102 @@ class NotificationsSettings extends ConsumerWidget {
                             child:Row(
                               children: [
                                 TextView("Turn on to receive all notifications.",color: Palette.hintColor,size: 16,),
-                                PrimaryTextButton(title: "settings",size: 16,showUnderline: true,padding: EdgeInsets.only(top: 2),isUpperCase: false,),
+
                               ],
                             ),
 
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Card(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: TextView(
+                                  "Order and Purchases",
+                                  color: Palette.textColor,
+                                  size: 16,
+                                ),
+                          ),
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Switch(
+                              onChanged: (value){},
+                              value: true,
+                              activeColor: Colors.green,
+                              thumbColor: MaterialStateProperty.all(Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 3 ,
+                      ),
+                          Container(
+                            child:  TextView("Receive updates related to your orders and subscriptions",color: Palette.hintColor,size: 16,maxLines: 2,),
+
+
+
+                          ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Card(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: TextView(
+                                  "Promos and offers",
+                                  color: Palette.textColor,
+                                  size: 16,
+                                ),
+                          ),
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Switch(
+                              onChanged: (value){},
+                              value: false,
+                              activeColor: Colors.green,
+                              inactiveTrackColor: Color(0xffF2F2F2),
+                              thumbColor: MaterialStateProperty.all(Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 3 ,
+                      ),
+                          Container(
+                            child:  TextView("Receive notifications for coupons, promotions and offers.",color: Palette.hintColor,size: 16,maxLines: 2,),
+                          ),
                       SizedBox(
                         height: 10,
                       ),
