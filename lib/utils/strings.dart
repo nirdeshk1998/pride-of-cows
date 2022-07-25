@@ -18,4 +18,7 @@ class LocalString {
       'Surprise your loved ones with an a subscription of their favourite Pride of Cows product!';
 
   static const String editOrderSubtitle = 'Edit delivery dates or quantity of items';
+
+  static const String orderUpdatedSubtitle =
+      'Your order has been successfully updated. The changes will be reflected in your Pride of Cows Calendar and Pride of Cows Wallet in 24 hours.';
 }

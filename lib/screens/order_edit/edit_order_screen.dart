@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -10,6 +11,7 @@ import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/calender_picker.dart';
 import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/text_view.dart';
 
@@ -136,7 +138,68 @@ class EditOrderScreen extends ConsumerWidget {
                                               svg: Assets.assetsIconsPencil,
                                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                               size: 16,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) => Dialog(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment.centerRight,
+                                                            child: PrimaryIconButton(
+                                                              svg: Assets.assetsIconsCrossRound,
+                                                              size: 16,
+                                                              onPressed: () => Utils.pop(context),
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              TextView(
+                                                                'Edit Order',
+                                                                color: Palette.textColor,
+                                                                textType: TextType.header2,
+                                                                height: 1,
+                                                              ),
+                                                              TextView(
+                                                                ' - Select new delivery date',
+                                                                color: Palette.textColor,
+                                                                textType: TextType.regular,
+                                                                height: 1,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          10.0.height,
+                                                          PrimaryCalendarDatePicker(
+                                                            isVisible: true,
+                                                            initialDate: DateTime.now(),
+                                                            firstDate: DateTime.now(),
+                                                            lastDate: DateTime(2060),
+                                                            onDateChanged: (i) {},
+                                                            label: '',
+                                                            onMonthPressed: () {},
+                                                          ),
+                                                          PrimaryButton(
+                                                            title: 'done',
+                                                            onPressed: () {},
+                                                            width: 130,
+                                                          ),
+                                                          Dimensions.defaultPadding.height,
+                                                          PrimaryButton(
+                                                            title: 'cancel',
+                                                            onPressed: () => Utils.pop(context),
+                                                            width: 130,
+                                                            colorFill: false,
+                                                          ),
+                                                          Dimensions.defaultPadding.height,
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           ],
                                         ),
@@ -222,10 +285,10 @@ class EditOrderScreen extends ConsumerWidget {
                       ],
                     ),
                     Dimensions.defaultPadding.height,
-                    const Center(
+                    Center(
                       child: PrimaryButton(
                         title: 'update order',
-                        onPressed: null,
+                        onPressed: () => Utils.push(context, const OrderStatusScreen()),
                         width: 200,
                       ),
                     ),

@@ -74,7 +74,7 @@ class PrimaryButton extends StatelessWidget {
           : StadiumBorder(
               side: BorderSide(
                 color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
-                width: 1,
+                width: colorFill == false ? 1 : 0,
               ),
             ),
       elevation: 0,
@@ -98,6 +98,7 @@ class PrimaryButton extends StatelessWidget {
             title.toUpperCase(),
             textAlign: TextAlign.center,
             height: 1.1,
+            letterSpacing: 1.2,
             textType: TextType.primaryButton,
             color: colorFill == false
                 ? Palette.primaryColor

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/order_cancel/order_cancel_screen.dart';
 import 'package:poc/screens/order_edit/edit_order_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -39,10 +40,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(5),
                           color: Palette.scaffoldBackgroundColor,
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 6,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                         child: TextView(
                           'One-time order',
                           textType: TextType.regularBold,
@@ -53,9 +51,9 @@ class OrderDetailsScreen extends ConsumerWidget {
                     10.0.height,
                     TextView(
                       'Order no.: 407-5916350',
-                      textType: TextType.header,
+                      textType: TextType.header2,
                     ),
-                    5.0.height,
+                    10.0.height,
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       minSize: 0,
@@ -128,7 +126,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                       children: [
                         TextView(
                           'Summary',
-                          textType: TextType.header,
+                          textType: TextType.header2,
                           height: 1,
                           color: Palette.textColor,
                         ),
@@ -364,7 +362,7 @@ class OrderDetailsScreen extends ConsumerWidget {
               Center(
                 child: PrimaryButton(
                   title: 'cancel order',
-                  onPressed: () {},
+                  onPressed: () => Utils.push(context, const OrderCancelScreen()),
                   colorFill: false,
                   width: 200,
                 ),
