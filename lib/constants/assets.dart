@@ -1,6 +1,6 @@
 class Assets {
   Assets._();
-  
+
   /// Assets for assetsIconsAboutUsRound
   /// assets/icons/about_us_round.svg
   static const String assetsIconsAboutUsRound = "assets/icons/about_us_round.svg";
@@ -169,6 +169,10 @@ class Assets {
   /// assets/icons/green_tick.svg
   static const String assetsIconsGreenTick = "assets/icons/green_tick.svg";
 
+  /// Assets for assetsIconsGift
+  /// assets/icons/gift.svg
+  static const String assetsIconsGift = "assets/icons/gift.svg";
+
   /// Assets for assetsIconsHamburger
   /// assets/icons/hamburger.svg
   static const String assetsIconsHamburger = "assets/icons/hamburger.svg";
@@ -197,9 +201,17 @@ class Assets {
   /// assets/icons/line_through.svg
   static const String assetsIconsLineThrough = "assets/icons/line_through.svg";
 
+  /// Assets for assetsIconsLocationGrey
+  /// assets/icons/loyalty_round.svg
+  static const String assetsIconsLocationGrey = "assets/icons/location_grey.png";
+
   /// Assets for assetsIconsLoyaltyRound
   /// assets/icons/loyalty_round.svg
   static const String assetsIconsLoyaltyRound = "assets/icons/loyalty_round.svg";
+
+  /// Assets for assetsIconsLoveLetter
+  /// assets/icons/love_letter.svg
+  static const String assetsIconsLoveLetter = "assets/icons/love_letter.png";
 
   /// Assets for assetsIconsMenu
   /// assets/icons/menu.svg
@@ -213,6 +225,14 @@ class Assets {
   /// assets/icons/ongoing.svg
   static const String assetsIconsOngoing = "assets/icons/ongoing.svg";
 
+  /// Assets for assetsIconsMilk
+  /// assets/icons/milk.svg
+  static const String assetsIconsMilk = "assets/icons/milk.png";
+
+  /// Assets for assetsIconsOffer
+  /// assets/icons/offer.svg
+  static const String assetsIconsOffer = "assets/icons/offer.svg";
+
   /// Assets for assetsIconsPen2
   /// assets/icons/pen2.svg
   static const String assetsIconsPen2 = "assets/icons/pen2.svg";
@@ -221,9 +241,17 @@ class Assets {
   /// assets/icons/pencil.svg
   static const String assetsIconsPencil = "assets/icons/pencil.svg";
 
+  /// Assets for assetsIconsPersonalInformation
+  /// assets/icons/personal_information.svg
+  static const String assetsIconsPersonalInformation = "assets/icons/personal_information.png";
+
   /// Assets for assetsIconsPhone
   /// assets/icons/phone.svg
   static const String assetsIconsPhone = "assets/icons/phone.svg";
+
+  /// Assets for assetsIconsPhoneGrey
+  /// assets/icons/phone.svg
+  static const String assetsIconsPhoneGrey = "assets/icons/phone_grey.svg";
 
   /// Assets for assetsIconsPin
   /// assets/icons/pin.svg
@@ -248,6 +276,10 @@ class Assets {
   /// Assets for assetsIconsProducts
   /// assets/icons/products.svg
   static const String assetsIconsProducts = "assets/icons/products.svg";
+
+  /// Assets for assetsIconsProduct
+  /// assets/icons/product.svg
+  static const String assetsIconsProduct = "assets/icons/product.svg";
 
   /// Assets for assetsIconsProfileRound
   /// assets/icons/profile_round.svg
@@ -288,6 +320,10 @@ class Assets {
   /// Assets for assetsIconsSearch
   /// assets/icons/search.svg
   static const String assetsIconsSearch = "assets/icons/search.svg";
+
+  /// Assets for assetsIconsSettings
+  /// assets/icons/search.svg
+  static const String assetsIconsSettings = "assets/icons/settings.svg";
 
   /// Assets for assetsIconsSemiRounded
   /// assets/icons/semi_rounded.svg
@@ -373,6 +409,10 @@ class Assets {
   /// assets/icons/whatsappiconborder.svg
   static const String assetsIconsWhatsappiconborder = "assets/icons/whatsappiconborder.svg";
 
+  /// Assets for assetsIconsWhatsappIconGrey
+  /// assets/icons/whatsapp_grey.png
+  static const String assetsIconsWhatsappIconGrey = "assets/icons/whatsapp_grey.png";
+
   /// Assets for assetsIconsWinRewards
   /// assets/icons/win_rewards.svg
   static const String assetsIconsWinRewards = "assets/icons/win_rewards.svg";
@@ -444,6 +484,10 @@ class Assets {
   /// Assets for assetsImagesRedeemRewards
   /// assets/images/redeem_rewards.png
   static const String assetsImagesRedeemRewards = "assets/images/redeem_rewards.png";
+
+  /// Assets for assetsImagesRedeemRightArrowHead
+  /// assets/images/right_arrow_head.png
+  static const String assetsImagesRedeemRightArrowHead = "assets/icons/right_arrow_head.svg";
 
   /// Assets for assetsImagesSignIn
   /// assets/images/sign_in.png

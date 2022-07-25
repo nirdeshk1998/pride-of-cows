@@ -21,4 +21,9 @@ class LocalString {
 
   static const String orderUpdatedSubtitle =
       'Your order has been successfully updated. The changes will be reflected in your Pride of Cows Calendar and Pride of Cows Wallet in 24 hours.';
+  static const String referEarnSubtitle =
+      'For every friend who joins using your invitation code, you earn 5 litres milk free, and so does your friend.';
+  static const String howItWorksreferEarn1 = '1. Share your unique Pride of cows code with your loved ones';
+  static const String howItWorksreferEarn2 = '2. Your friend joins and completes a purchase';
+  static const String howItWorksreferEarn3 = '3. You both get 5 litres of fresh milk free!';
 }
