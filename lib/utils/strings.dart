@@ -21,6 +21,11 @@ class LocalString {
 
   static const String orderUpdatedSubtitle =
       'Your order has been successfully updated. The changes will be reflected in your Pride of Cows Calendar and Pride of Cows Wallet in 24 hours.';
+  static const String orderCancelledSubtitle =
+      'The selected items have been successfully cancelled. The amount will be refunded to your Pride of Cows Wallet in 24 hours.';
+  static const String orderCancellationRequestSubtitle =
+      'Within the next 24 hours, our Customer Care team will get in touch with you to fix the issue and make the experience better for you.';
+
   static const String referEarnSubtitle =
       'For every friend who joins using your invitation code, you earn 5 litres milk free, and so does your friend.';
   static const String howItWorksreferEarn1 = '1. Share your unique Pride of cows code with your loved ones';

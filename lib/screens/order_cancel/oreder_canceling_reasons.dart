@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/checkbox.dart';
@@ -43,7 +46,7 @@ class OrderCancellingScreen extends ConsumerWidget {
                 Center(
                   child: PrimaryButton(
                     title: 'cancel item',
-                    onPressed: () {},
+                    onPressed: () => Utils.push(context, const OrderStatusScreen(status: OrderStatus.cancelled)),
                     width: 200,
                   ),
                 ),

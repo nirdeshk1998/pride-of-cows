@@ -7,6 +7,7 @@ import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -16,7 +17,44 @@ import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class EditOrderScreen extends ConsumerWidget {
-  const EditOrderScreen({Key? key}) : super(key: key);
+  const EditOrderScreen({Key? key, required this.orderType}) : super(key: key);
+
+  final OrderType orderType;
+
+  Widget _dateSection(BuildContext context) {
+    return orderType == OrderType.oneTime
+        ? Column(
+            children: [
+              _textTile(
+                icon: Assets.assetsIconsClock,
+                title: 'Delivery Plan:',
+                subtitle: 'Daily',
+                fontSize: TextSize.regular,
+              ),
+              5.0.height,
+              _buttonTextTile(context, title: 'Delivery:', subtitle: '31-12-21'),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buttonTextTile(context, title: 'Delivery Plan:', subtitle: 'Daily'),
+              5.0.height,
+              _buttonTextTile(context, title: 'Start:', subtitle: '30-11-21'),
+              5.0.height,
+              _buttonTextTile(context, title: 'End:', subtitle: '31-12-21'),
+              5.0.height,
+              PrimaryTextButton(
+                title: 'View Calender',
+                onPressed: () {},
+                isUpperCase: false,
+                showUnderline: true,
+                height: 1.2,
+                size: TextSize.regularLarge,
+              ),
+            ],
+          );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -119,91 +157,8 @@ class EditOrderScreen extends ConsumerWidget {
                                           color: Palette.lightTextColor,
                                         ),
                                         5.0.height,
-                                        _textTile(
-                                          icon: Assets.assetsIconsClock,
-                                          title: 'Delivery Plan:',
-                                          subtitle: 'Daily',
-                                          fontSize: TextSize.regular,
-                                        ),
-                                        5.0.height,
-                                        Row(
-                                          children: [
-                                            _textTile(
-                                              icon: Assets.assetsIconsCalender2,
-                                              title: 'Delivery:',
-                                              subtitle: '31-12-21',
-                                              fontSize: TextSize.regular,
-                                            ),
-                                            PrimaryIconButton(
-                                              svg: Assets.assetsIconsPencil,
-                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                              size: 16,
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) => Dialog(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(10.0),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          Align(
-                                                            alignment: Alignment.centerRight,
-                                                            child: PrimaryIconButton(
-                                                              svg: Assets.assetsIconsCrossRound,
-                                                              size: 16,
-                                                              onPressed: () => Utils.pop(context),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              TextView(
-                                                                'Edit Order',
-                                                                color: Palette.textColor,
-                                                                textType: TextType.header2,
-                                                                height: 1,
-                                                              ),
-                                                              TextView(
-                                                                ' - Select new delivery date',
-                                                                color: Palette.textColor,
-                                                                textType: TextType.regular,
-                                                                height: 1,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          10.0.height,
-                                                          PrimaryCalendarDatePicker(
-                                                            isVisible: true,
-                                                            initialDate: DateTime.now(),
-                                                            firstDate: DateTime.now(),
-                                                            lastDate: DateTime(2060),
-                                                            onDateChanged: (i) {},
-                                                            label: '',
-                                                            onMonthPressed: () {},
-                                                          ),
-                                                          PrimaryButton(
-                                                            title: 'done',
-                                                            onPressed: () {},
-                                                            width: 130,
-                                                          ),
-                                                          Dimensions.defaultPadding.height,
-                                                          PrimaryButton(
-                                                            title: 'cancel',
-                                                            onPressed: () => Utils.pop(context),
-                                                            width: 130,
-                                                            colorFill: false,
-                                                          ),
-                                                          Dimensions.defaultPadding.height,
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        5.0.height,
+                                        _dateSection(context),
+                                        10.0.height,
                                         Row(
                                           children: [
                                             PrimaryCounter(onCounterChanged: (i) {}),
@@ -245,6 +200,8 @@ class EditOrderScreen extends ConsumerWidget {
                     _textTile2(title: 'Offers', subtitle: '₹25', color: Palette.lightTextColor),
                     5.0.height,
                     _textTile2(title: 'Taxes', subtitle: '₹50', color: Palette.lightTextColor),
+                    10.0.height,
+                    _textTile2(title: 'No. of days', subtitle: '15'),
                   ],
                 ),
               ),
@@ -270,7 +227,7 @@ class EditOrderScreen extends ConsumerWidget {
                             ),
                             5.0.height,
                             TextView(
-                              'Pre-paid using wallet',
+                              orderType == OrderType.oneTime ? 'Pre-paid using wallet' : '₹1500 billed monthly\nvia wallet',
                               textType: TextType.subtitle,
                               color: Palette.textColor,
                             ),
@@ -288,7 +245,10 @@ class EditOrderScreen extends ConsumerWidget {
                     Center(
                       child: PrimaryButton(
                         title: 'update order',
-                        onPressed: () => Utils.push(context, const OrderStatusScreen()),
+                        onPressed: () => Utils.push(
+                          context,
+                          const OrderStatusScreen(status: OrderStatus.updated),
+                        ),
                         width: 200,
                       ),
                     ),
@@ -308,6 +268,106 @@ class EditOrderScreen extends ConsumerWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Row _buttonTextTile(BuildContext context, {required String title, required String subtitle}) {
+    return Row(
+      children: [
+        _textTile(
+          icon: Assets.assetsIconsCalender2,
+          title: title,
+          subtitle: subtitle,
+          fontSize: TextSize.regular,
+        ),
+        PrimaryIconButton(
+          svg: Assets.assetsIconsPencil,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          size: 16,
+          onPressed: () {
+            _editDialog(context);
+          },
+        ),
+      ],
+    );
+  }
+
+  Future<Widget?> _editDialog(BuildContext context) {
+    return showDialog<Widget>(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(borderRadius: Dimensions.radius10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          TextView(
+                            'Edit Order',
+                            color: Palette.textColor,
+                            textType: TextType.header2,
+                            height: 1,
+                          ),
+                          TextView(
+                            ' - Select new delivery date',
+                            color: Palette.textColor,
+                            textType: TextType.regular,
+                            height: 0.9,
+                          ),
+                        ],
+                      ),
+                      10.0.height,
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Palette.surfaceColor,
+                      ),
+                      Dimensions.defaultPadding.height,
+                      PrimaryCalendarDatePicker(
+                        isVisible: true,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2060),
+                        onDateChanged: (i) {},
+                        label: '',
+                        onMonthPressed: () {},
+                      ),
+                      PrimaryButton(
+                        title: 'done',
+                        onPressed: () {},
+                        width: 130,
+                      ),
+                      Dimensions.defaultPadding.height,
+                      PrimaryButton(
+                        title: 'cancel',
+                        onPressed: () => Utils.pop(context),
+                        width: 130,
+                        colorFill: false,
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: PrimaryIconButton(
+                    svg: Assets.assetsIconsCrossRound,
+                    padding: const EdgeInsets.all(10.0),
+                    size: 16,
+                    onPressed: () => Utils.pop(context),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -338,6 +398,7 @@ class EditOrderScreen extends ConsumerWidget {
     required final String title,
     final String? subtitle,
     final VoidCallback? onPressed,
+    final Color? color,
   }) {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -349,7 +410,7 @@ class EditOrderScreen extends ConsumerWidget {
             dimension: 16.0,
             child: SvgPicture.asset(
               icon,
-              color: Palette.lightIconColor,
+              color: color ?? Palette.lightIconColor,
             ),
           ),
         3.0.width,
@@ -358,7 +419,7 @@ class EditOrderScreen extends ConsumerWidget {
           height: 1.2,
           textType: TextType.hint,
           size: fontSize,
-          color: Palette.lightTextColor,
+          color: color ?? Palette.lightTextColor,
         ),
         5.0.width,
         if (subtitle != null)

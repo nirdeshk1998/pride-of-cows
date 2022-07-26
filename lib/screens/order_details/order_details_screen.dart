@@ -8,13 +8,16 @@ import 'package:poc/screens/order_edit/edit_order_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class OrderDetailsScreen extends ConsumerWidget {
-  const OrderDetailsScreen({Key? key}) : super(key: key);
+  const OrderDetailsScreen({Key? key, required this.orderType}) : super(key: key);
+
+  final OrderType orderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +45,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                         child: TextView(
-                          'One-time order',
+                          orderType == OrderType.oneTime ? 'One-time order' : 'Subscription',
                           textType: TextType.regularBold,
                           color: Palette.primaryColor,
                         ),
@@ -79,12 +82,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                       onPressed: () {},
                     ),
                     Dimensions.defaultPadding.height,
-                    _textTile(icon: Assets.assetsIconsCalender2, title: 'Ordered:', subtitle: '04-11-21'),
+                    _dateSection,
                     6.0.height,
                     _textTile(
                       icon: Assets.assetsIconsPin,
                       title: 'Deliver to:',
                       subtitle: 'Home',
+                      color: Palette.hintColor,
                       onPressed: () {},
                     ),
                     6.0.height,
@@ -210,7 +214,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                                         5.0.height,
                                         _textTile(
                                           icon: Assets.assetsIconsCalender2,
-                                          title: 'Delivery:',
+                                          title: orderType == OrderType.oneTime ? 'Delivery:' : 'Next delivery:',
                                           subtitle: '31-12-21',
                                           fontSize: TextSize.regular,
                                         ),
@@ -231,6 +235,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                                             ),
                                           ],
                                         ),
+                                        5.0.height,
+                                        if (orderType == OrderType.subscription)
+                                          _textTile(
+                                            title: 'Quantity of items delivered:',
+                                            subtitle: '10',
+                                            fontSize: TextSize.regular,
+                                          ),
                                       ],
                                     ),
                                   ),
@@ -314,6 +325,8 @@ class OrderDetailsScreen extends ConsumerWidget {
                     _textTile2(title: 'Offers', subtitle: '₹25', color: Palette.lightTextColor),
                     5.0.height,
                     _textTile2(title: 'Taxes', subtitle: '₹50', color: Palette.lightTextColor),
+                    if (orderType == OrderType.subscription) 10.0.height,
+                    if (orderType == OrderType.subscription) _textTile2(title: 'No. of days', subtitle: '15'),
                   ],
                 ),
               ),
@@ -335,8 +348,9 @@ class OrderDetailsScreen extends ConsumerWidget {
                         ),
                         5.0.height,
                         TextView(
-                          'Pre-paid using wallet',
+                          orderType == OrderType.oneTime ? 'Pre-paid using wallet' : '₹1500 billed monthly\nvia wallet',
                           textType: TextType.subtitle,
+                          height: 1.1,
                           color: Palette.textColor,
                         ),
                       ],
@@ -354,7 +368,7 @@ class OrderDetailsScreen extends ConsumerWidget {
               Center(
                 child: PrimaryButton(
                   title: 'edit order',
-                  onPressed: () => Utils.push(context, const EditOrderScreen()),
+                  onPressed: () => Utils.push(context, EditOrderScreen(orderType: orderType)),
                   width: 200,
                 ),
               ),
@@ -373,6 +387,36 @@ class OrderDetailsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Widget get _dateSection {
+    return orderType == OrderType.oneTime
+        ? _textTile(
+            icon: Assets.assetsIconsCalender2,
+            title: 'Ordered:',
+            subtitle: '04-11-21',
+            fontSize: TextSize.regularLarge,
+            color: Palette.hintColor,
+          )
+        : Column(
+            children: [
+              _textTile(
+                icon: Assets.assetsIconsCalender2,
+                title: 'Start:',
+                subtitle: '04-11-21',
+                fontSize: TextSize.regularLarge,
+                color: Palette.hintColor,
+              ),
+              6.0.height,
+              _textTile(
+                icon: Assets.assetsIconsCalender2,
+                title: 'End:',
+                subtitle: '04-12-21',
+                fontSize: TextSize.regularLarge,
+                color: Palette.hintColor,
+              ),
+            ],
+          );
   }
 
   Row _textTile2({required String title, required String subtitle, Color? color}) {
@@ -401,6 +445,7 @@ class OrderDetailsScreen extends ConsumerWidget {
     required final String title,
     final String? subtitle,
     final VoidCallback? onPressed,
+    final Color? color,
   }) {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -421,7 +466,7 @@ class OrderDetailsScreen extends ConsumerWidget {
           height: 1.2,
           textType: TextType.hint,
           size: fontSize,
-          color: Palette.lightTextColor,
+          color: color ?? Palette.lightTextColor,
         ),
         5.0.width,
         if (subtitle != null)

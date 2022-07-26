@@ -213,26 +213,6 @@ class OrderCancelScreen extends ConsumerWidget {
     );
   }
 
-  Row _textTile2({required String title, required String subtitle, Color? color}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextView(
-          title,
-          textType: TextType.regular,
-          color: color ?? Palette.textColor,
-          height: 1,
-        ),
-        TextView(
-          subtitle,
-          textType: TextType.regular,
-          color: color ?? Palette.textColor,
-          height: 1.1,
-        ),
-      ],
-    );
-  }
-
   Row _textTile({
     final String? icon,
     final double? fontSize,

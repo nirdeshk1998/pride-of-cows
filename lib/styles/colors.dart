@@ -6,7 +6,7 @@ class Palette {
 
   static const scaffoldBackgroundColor = Color(0xFFFFFFFF);
 
-  static const backgroundColor = Color(0xFFFAFAFA);
+  static const backgroundColor = Color(0xFFF7F7F7);
   static const outlineColor = Color(0xFFE1EAF4);
 
   static const surfaceColor = Color(0xFFE5E5E5);

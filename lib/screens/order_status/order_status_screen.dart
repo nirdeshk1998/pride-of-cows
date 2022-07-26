@@ -7,13 +7,42 @@ import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class OrderStatusScreen extends ConsumerWidget {
-  const OrderStatusScreen({Key? key}) : super(key: key);
+  const OrderStatusScreen({Key? key, required this.status}) : super(key: key);
+
+  final OrderStatus status;
+
+  String get orderStatusHeader {
+    switch (status) {
+      case OrderStatus.updated:
+        return 'Order Updated!';
+      case OrderStatus.cancelled:
+        return 'Order Cancelled!';
+      case OrderStatus.cancellationRequest:
+        return 'Cancellation Request Received!';
+      default:
+        return 'Order Updated!';
+    }
+  }
+
+  String get orderStatusSubtitle {
+    switch (status) {
+      case OrderStatus.updated:
+        return LocalString.orderUpdatedSubtitle;
+      case OrderStatus.cancelled:
+        return LocalString.orderCancelledSubtitle;
+      case OrderStatus.cancellationRequest:
+        return LocalString.orderCancellationRequestSubtitle;
+      default:
+        return LocalString.orderUpdatedSubtitle;
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,23 +67,24 @@ class OrderStatusScreen extends ConsumerWidget {
             10.0.height,
             Center(
               child: TextView(
-                'Order Updated!',
+                orderStatusHeader,
                 textAlign: TextAlign.center,
                 textType: TextType.header,
                 height: 1,
+                maxLines: 2,
                 color: Palette.textColor,
               ),
             ),
             10.0.height,
-            const Divider(
+            Divider(
               height: 1,
               thickness: 1,
-              color: Palette.surfaceColor,
+              color: Palette.primaryColor.withOpacity(0.3),
             ),
             10.0.height,
             Center(
               child: TextView(
-                LocalString.orderUpdatedSubtitle,
+                orderStatusSubtitle,
                 textType: TextType.subtitle,
                 maxLines: 5,
                 height: 1.5,

@@ -7,6 +7,7 @@ import 'package:poc/screens/order_details/order_details_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -45,140 +46,145 @@ class OrdersScreen extends ConsumerWidget {
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Palette.backgroundColor,
-                    ),
-                    padding: const EdgeInsets.only(
-                      left: 5,
-                      right: 15,
-                      top: 5,
-                      bottom: 10,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 34.0,
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                              decoration: BoxDecoration(
-                                borderRadius: Dimensions.radius5,
-                                color: Colors.white,
-                              ),
-                              child: TextView(
-                                "Subscription",
-                                textType: TextType.regularBold,
-                                color: Palette.primaryColor,
-                              ),
-                            ),
-                            const Spacer(),
-                            CupertinoButton(
-                              padding: EdgeInsets.zero,
-                              minSize: 0,
-                              onPressed: () => Utils.push(context, const OrderDetailsScreen()),
-                              child: Row(
-                                children: [
-                                  TextView(
-                                    "VIEW DETAILS",
-                                    textType: TextType.regularBold,
-                                    size: TextSize.regularSmall,
-                                    color: Palette.primaryColor,
-                                  ),
-                                  5.0.width,
-                                  SizedBox.square(
-                                    dimension: 10.0,
-                                    child: SvgPicture.asset(
-                                      Assets.assetsIconsArrowRight2,
-                                      color: Palette.primaryColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        10.0.height,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Column(
+                  separatorBuilder: (BuildContext context, int index) => 30.0.height,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Palette.backgroundColor,
+                      ),
+                      padding: const EdgeInsets.only(
+                        left: 5,
+                        right: 15,
+                        top: 5,
+                        bottom: 10,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              _textTile(icon: Assets.assetsIconsCalender2, title: 'Start:', subtitle: '01-11-21'),
-                              5.0.height,
-                              _textTile(icon: Assets.assetsIconsCalender2, title: 'End:', subtitle: '31-12-21'),
-                              5.0.height,
-                              _textTile(icon: Assets.assetsIconsClock, title: 'Delivery Plan:', subtitle: 'Daily'),
-                              5.0.height,
-                              _textTile(icon: Assets.assetsIconsWallet, title: 'Total:', subtitle: '₹1800'),
-                              5.0.height,
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: ClipRRect(
-                                  borderRadius: Dimensions.radius10,
-                                  clipBehavior: Clip.antiAlias,
-                                  child: SizedBox.square(
-                                    dimension: 55,
-                                    child: Image.network(
-                                      'https://www.desasegar.com.my/storage/media/filemanager/beverages/just%20milk%20low%20fat.png',
-                                    ),
-                                  ),
+                              Container(
+                                height: 34.0,
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: Dimensions.radius5,
+                                  color: Colors.white,
+                                ),
+                                child: TextView(
+                                  index.isEven ? 'One-time order' : "Subscription",
+                                  textType: TextType.regularBold,
+                                  color: Palette.primaryColor,
                                 ),
                               ),
-                              10.0.height,
-                              const Divider(
-                                height: 1,
-                                thickness: 1,
-                                color: Palette.surfaceColor,
-                              ),
-                              10.0.height,
-                              Row(
-                                children: [
-                                  TextView(
-                                    'Order no.:',
-                                    textType: TextType.subtitle,
-                                    color: Palette.lightTextColor,
-                                  ),
-                                  5.0.width,
-                                  TextView(
-                                    '407-5916350',
-                                    textType: TextType.subtitle,
-                                    color: Palette.textColor,
-                                  ),
-                                ],
-                              ),
-                              5.0.height,
-                              Row(
-                                children: [
-                                  SizedBox.square(
-                                    dimension: 16,
-                                    child: SvgPicture.asset(Assets.assetsIconsOngoing),
-                                  ),
-                                  5.0.width,
-                                  TextView(
-                                    'Ongoing',
-                                    textType: TextType.subtitle,
-                                    color: Palette.goldenIconColor,
-                                  ),
-                                ],
+                              const Spacer(),
+                              CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                onPressed: () => Utils.push(
+                                  context,
+                                  OrderDetailsScreen(orderType: index.isEven ? OrderType.oneTime : OrderType.subscription),
+                                ),
+                                child: Row(
+                                  children: [
+                                    TextView(
+                                      "VIEW DETAILS",
+                                      textType: TextType.regularBold,
+                                      size: TextSize.regularSmall,
+                                      color: Palette.primaryColor,
+                                    ),
+                                    5.0.width,
+                                    SizedBox.square(
+                                      dimension: 10.0,
+                                      child: SvgPicture.asset(
+                                        Assets.assetsIconsArrowRight2,
+                                        color: Palette.primaryColor,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  separatorBuilder: (BuildContext context, int index) => 30.0.height,
+                          10.0.height,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _textTile(icon: Assets.assetsIconsCalender2, title: 'Start:', subtitle: '01-11-21'),
+                                5.0.height,
+                                _textTile(icon: Assets.assetsIconsCalender2, title: 'End:', subtitle: '31-12-21'),
+                                5.0.height,
+                                _textTile(icon: Assets.assetsIconsClock, title: 'Delivery Plan:', subtitle: 'Daily'),
+                                5.0.height,
+                                _textTile(icon: Assets.assetsIconsWallet, title: 'Total:', subtitle: '₹1800'),
+                                5.0.height,
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ClipRRect(
+                                    borderRadius: Dimensions.radius10,
+                                    clipBehavior: Clip.antiAlias,
+                                    child: SizedBox.square(
+                                      dimension: 55,
+                                      child: Image.network(
+                                        'https://www.desasegar.com.my/storage/media/filemanager/beverages/just%20milk%20low%20fat.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                10.0.height,
+                                const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                  color: Palette.surfaceColor,
+                                ),
+                                10.0.height,
+                                Row(
+                                  children: [
+                                    TextView(
+                                      'Order no.:',
+                                      textType: TextType.subtitle,
+                                      color: Palette.lightTextColor,
+                                    ),
+                                    5.0.width,
+                                    TextView(
+                                      '407-5916350',
+                                      textType: TextType.subtitle,
+                                      color: Palette.textColor,
+                                    ),
+                                  ],
+                                ),
+                                5.0.height,
+                                Row(
+                                  children: [
+                                    SizedBox.square(
+                                      dimension: 16,
+                                      child: SvgPicture.asset(Assets.assetsIconsOngoing),
+                                    ),
+                                    5.0.width,
+                                    TextView(
+                                      'Ongoing',
+                                      textType: TextType.subtitle,
+                                      color: Palette.goldenIconColor,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 Dimensions.defaultPadding.height,
                 Row(
