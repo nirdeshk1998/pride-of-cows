@@ -8,9 +8,10 @@ import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/menu/address/my_address_book.dart';
-import 'package:poc/screens/menu/my_profile.dart';
+import 'package:poc/screens/profile/my_profile.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
+import 'package:poc/screens/notification/providers/notification_settings_provider.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
@@ -26,6 +27,8 @@ class NotificationsSettings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final wProvider = ref.watch(notificationSettingProvider);
+    final rProvider = ref.read(notificationSettingProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -105,15 +108,10 @@ class NotificationsSettings extends ConsumerWidget {
                                   size: 16,
                                 ),
                           ),
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Switch(
-                              onChanged: (value){},
-                              value: false,
-                              activeColor: Colors.green,
-                              inactiveTrackColor: Color(0xffF2F2F2),
-                              thumbColor: MaterialStateProperty.all(Colors.white),
-                            ),
+                          CupertinoSwitch(
+                            activeColor: Palette.successColor,
+                            value: wProvider.notificationSetting,
+                            onChanged: (i) => rProvider.notificationSettingFun(i),
                           ),
                         ],
                       ),
@@ -158,14 +156,10 @@ class NotificationsSettings extends ConsumerWidget {
                                   size: 16,
                                 ),
                           ),
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Switch(
-                              onChanged: (value){},
-                              value: true,
-                              activeColor: Colors.green,
-                              thumbColor: MaterialStateProperty.all(Colors.white),
-                            ),
+                          CupertinoSwitch(
+                            activeColor: Palette.successColor,
+                            value: wProvider.notificationSetting,
+                            onChanged: (i) => rProvider.notificationSettingFun(i),
                           ),
                         ],
                       ),
@@ -204,15 +198,10 @@ class NotificationsSettings extends ConsumerWidget {
                                   size: 16,
                                 ),
                           ),
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Switch(
-                              onChanged: (value){},
-                              value: false,
-                              activeColor: Colors.green,
-                              inactiveTrackColor: Color(0xffF2F2F2),
-                              thumbColor: MaterialStateProperty.all(Colors.white),
-                            ),
+                          CupertinoSwitch(
+                            activeColor: Palette.successColor,
+                            value: wProvider.notificationSetting,
+                            onChanged: (i) => rProvider.notificationSettingFun(i),
                           ),
                         ],
                       ),

@@ -11,7 +11,8 @@ import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
 
 class OnBoardingScreen extends ConsumerWidget {
-  const OnBoardingScreen({
+  const
+  OnBoardingScreen({
     Key? key,
   }) : super(key: key);
 

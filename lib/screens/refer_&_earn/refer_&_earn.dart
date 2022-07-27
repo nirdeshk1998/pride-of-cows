@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -274,8 +275,8 @@ class ReferAndEarn extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextView("Your Referral List",color: Colors.black,size: 20),
-                  TextView("11 referrals",color: Palette.hintColor,size: 18,),
+                  Text("Your Referral List",style:TextType.titleStyled),
+                  TextView("11 referrals",color: Palette.hintColor,size: 16,),
                 ],
               ),
 
@@ -318,15 +319,15 @@ class ReferAndEarn extends ConsumerWidget {
                                           SizedBox(
                                             width: 5,
                                           ),
-                                          TextView("Jane Cooper",color: Colors.black,size: 18,fontWeight: FontWeight.w600,),
+                                          TextView("Jane Cooper",color: Colors.black,size: 16,fontWeight: FontWeight.w600,),
                                         ],
                                       ),
                                     ),
                                     InkWell(
                                       child: Row(
                                         children: [
-                                          TextView("REDEEM",color:Color(0xff193B61),size: 17,fontWeight: FontWeight.bold,),
-                                          SvgPicture.asset(Assets.assetsIconsArrowRight),
+                                          TextView("REDEEM",color:Color(0xff193B61),size: 12,fontWeight: FontWeight.bold,),
+                                          SvgPicture.asset(Assets.assetsIconsArrowRight,width:60,height: 30,),
                                         ],
                                       ),
                                     ),
@@ -351,15 +352,23 @@ class ReferAndEarn extends ConsumerWidget {
                                           TextView(
                                             "Invite Accepted",
                                             color: Colors.black,
-                                            size: 18,
+                                            size: 14,
                                           ),
                                           SizedBox(
-                                            width: 20,
+                                            width: 10,
+                                          ),
+                                          TextView(
+                                            "-",
+                                            color: Palette.hintColor,
+                                            size: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
                                           ),
                                           SvgPicture.asset(Assets.assetsIconsCart),
                                           TextView(
                                             "Purchase Completed",
-                                            size: 18,
+                                            size: 14,
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -454,15 +463,16 @@ class ReferAndEarn extends ConsumerWidget {
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            text: 'Refer a friend to pride of cows and you will bot get ',
+            text: "Refer a friend to pride of cows and you'll both get ",
             style: TextStyle(color: Palette.hintColor,fontSize: 19,),
             children: <TextSpan>[
               TextSpan(
-                text: '5 litre milk free!',
+                text: '5 litres milk free!',
                 style: TextStyle(
+                  fontFamily: GoogleFonts.suranna().fontFamily,
                   color: Colors.black,
                  fontWeight: FontWeight.w500,
-                  fontSize: 19
+                  fontSize: 20,
                 ),
               ),
             ],
@@ -471,38 +481,49 @@ class ReferAndEarn extends ConsumerWidget {
             SizedBox(
               height: 25,
             ),
-            Text("Share your code",style: TextStyle(fontSize: 22)),
-            SizedBox(
-              height: 10,
-            ),
             Container(
-              width: 250,
-              child:  ElevatedButton.icon(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shape: const StadiumBorder(),
-                  minimumSize: const Size(50, 50),
-                  maximumSize: const Size(500, 50),
-                ),
-                icon: SizedBox.square(
-                  dimension: 25,
-                  child: Image.asset("assets/images/whatsapp_icon.png"),
-                ),
-                label: TextView(
-                  'SHARE VIA WHATSAPP',
-                  textType: TextType.header2,
-                  size: TextSize.regularLarge,
-                  color: Palette.onPrimaryColor,
-                  height: 1.9,
-                ),
+              height: 196,
+              width: 375,
+              color: Color(0xffEEF9FF),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Share your code",style: TextStyle(fontSize: 22)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: 250,
+                    child:  ElevatedButton.icon(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        shape: const StadiumBorder(),
+                        minimumSize: const Size(50, 50),
+                        maximumSize: const Size(500, 50),
+                      ),
+                      icon: SizedBox.square(
+                        dimension: 25,
+                        child: Image.asset("assets/images/whatsapp_icon.png"),
+                      ),
+                      label: TextView(
+                        'SHARE VIA WHATSAPP',
+                        textType: TextType.header2,
+                        size: TextSize.regularLarge,
+                        color: Palette.onPrimaryColor,
+                        height: 1.9,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  PrimaryButton(width: 250,title: "Or share via",icon: Assets.assetsIconsShare,iconSize: 30,onPressed: (){},colorFill: false,),
+                ],
               ),
             ),
 
-            SizedBox(
-              height: 10,
-            ),
-            PrimaryButton(width: 250,title: "Or share via",icon: Assets.assetsIconsShare,iconSize: 30,onPressed: (){},colorFill: false,),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
               child:Column(
