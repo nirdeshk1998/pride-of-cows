@@ -306,7 +306,7 @@ class LoyaltyProgramScreen extends ConsumerWidget {
   }
 
   Future<Widget?> _howItWorksBottomSheet(BuildContext context) {
-    return Utils.bottomSheet(
+    return Utils.showPrimaryBottomSheet(
       context,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),

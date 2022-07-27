@@ -27,15 +27,13 @@ class ReferAndEarn extends ConsumerWidget {
           const SecondaryAppBar(),
           10.0.height,
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.defaultPadding),
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
             child: TextView(
               'Refer & Earn',
               textType: TextType.header,
             ),
           ),
           10.0.height,
-
           Expanded(
             child: DefaultTabController(
               length: 2,
@@ -43,8 +41,7 @@ class ReferAndEarn extends ConsumerWidget {
                 children: [
                   Container(
                     height: 46,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.defaultPadding),
+                    margin: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       border: Border.all(color: Palette.selectedTabColor),
@@ -80,18 +77,16 @@ class ReferAndEarn extends ConsumerWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 
   Future<Widget?> _howItWorksBottomSheet(BuildContext context) {
-    return Utils.bottomSheet(
+    return Utils.showPrimaryBottomSheet(
       context,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.defaultPadding),
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -262,8 +257,7 @@ class ReferAndEarn extends ConsumerWidget {
     );
   }
 
-  Widget _ReferralsTab(BuildContext context) =>
-      Container(
+  Widget _ReferralsTab(BuildContext context) => Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(
@@ -274,11 +268,14 @@ class ReferAndEarn extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextView("Your Referral List",color: Colors.black,size: 20),
-                  TextView("11 referrals",color: Palette.hintColor,size: 18,),
+                  TextView("Your Referral List", color: Colors.black, size: 20),
+                  TextView(
+                    "11 referrals",
+                    color: Palette.hintColor,
+                    size: 18,
+                  ),
                 ],
               ),
-
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -291,13 +288,9 @@ class ReferAndEarn extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Container(
                             decoration: index != 10
-                                ? BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.grey, width: 0)))
+                                ? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0)))
                                 : BoxDecoration(),
                             child: Column(
                               children: [
@@ -312,25 +305,34 @@ class ReferAndEarn extends ConsumerWidget {
                                           Stack(
                                             children: [
                                               SvgPicture.asset(Assets.assetsIconsSemiRounded),
-                                              Positioned(top: 1,left:5,child: SvgPicture.asset(Assets.assetsIconsGreenTick))
+                                              Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))
                                             ],
                                           ),
                                           SizedBox(
                                             width: 5,
                                           ),
-                                          TextView("Jane Cooper",color: Colors.black,size: 18,fontWeight: FontWeight.w600,),
+                                          TextView(
+                                            "Jane Cooper",
+                                            color: Colors.black,
+                                            size: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ],
                                       ),
                                     ),
                                     InkWell(
                                       child: Row(
                                         children: [
-                                          TextView("REDEEM",color:Color(0xff193B61),size: 17,fontWeight: FontWeight.bold,),
+                                          TextView(
+                                            "REDEEM",
+                                            color: Color(0xff193B61),
+                                            size: 17,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                           SvgPicture.asset(Assets.assetsIconsArrowRight),
                                         ],
                                       ),
                                     ),
-
                                   ],
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 ),
@@ -338,15 +340,13 @@ class ReferAndEarn extends ConsumerWidget {
                                   height: 10,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
                                             Assets.assetsIconsDoubleTick,
-
                                           ),
                                           TextView(
                                             "Invite Accepted",
@@ -385,12 +385,16 @@ class ReferAndEarn extends ConsumerWidget {
               Container(
                 child: Column(
                   children: [
-                   PrimaryButton(title: "View More",colorFill: true,onPressed: (){},),
+                    PrimaryButton(
+                      title: "View More",
+                      colorFill: true,
+                      onPressed: () {},
+                    ),
                     Divider(
                       thickness: 1,
                     ),
                     InkWell(
-                      onTap: ()=>_howItWorksBottomSheet(context),
+                      onTap: () => _howItWorksBottomSheet(context),
                       child: Row(
                         children: [
                           Container(
@@ -398,8 +402,7 @@ class ReferAndEarn extends ConsumerWidget {
                             height: 30.0,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(50.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
                               border: Border.all(
                                 color: Color(0xffD2AB68),
                                 width: 1.0,
@@ -415,8 +418,7 @@ class ReferAndEarn extends ConsumerWidget {
                           SizedBox(
                             width: 8,
                           ),
-                          TextView("How it works?",
-                              size: 16, decoration: TextDecoration.underline),
+                          TextView("How it works?", size: 16, decoration: TextDecoration.underline),
                         ],
                       ),
                     ),
@@ -429,12 +431,9 @@ class ReferAndEarn extends ConsumerWidget {
             ],
           ),
         ),
-
-
       );
 
-  Widget _InviteTab(BuildContext context) =>
-      SingleChildScrollView(
+  Widget _InviteTab(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
@@ -451,33 +450,32 @@ class ReferAndEarn extends ConsumerWidget {
             SizedBox(
               height: 10,
             ),
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: 'Refer a friend to pride of cows and you will bot get ',
-            style: TextStyle(color: Palette.hintColor,fontSize: 19,),
-            children: <TextSpan>[
-              TextSpan(
-                text: '5 litre milk free!',
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'Refer a friend to pride of cows and you will bot get ',
                 style: TextStyle(
-                  color: Colors.black,
-                 fontWeight: FontWeight.w500,
-                  fontSize: 19
+                  color: Palette.hintColor,
+                  fontSize: 19,
                 ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '5 litre milk free!',
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 19),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
             SizedBox(
               height: 25,
             ),
-            Text("Share your code",style: TextStyle(fontSize: 22)),
+            Text("Share your code", style: TextStyle(fontSize: 22)),
             SizedBox(
               height: 10,
             ),
             Container(
               width: 250,
-              child:  ElevatedButton.icon(
+              child: ElevatedButton.icon(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
@@ -498,14 +496,20 @@ class ReferAndEarn extends ConsumerWidget {
                 ),
               ),
             ),
-
             SizedBox(
               height: 10,
             ),
-            PrimaryButton(width: 250,title: "Or share via",icon: Assets.assetsIconsShare,iconSize: 30,onPressed: (){},colorFill: false,),
+            PrimaryButton(
+              width: 250,
+              title: "Or share via",
+              icon: Assets.assetsIconsShare,
+              iconSize: 30,
+              onPressed: () {},
+              colorFill: false,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
-              child:Column(
+              child: Column(
                 children: [
                   Divider(
                     thickness: 1,
@@ -514,7 +518,7 @@ class ReferAndEarn extends ConsumerWidget {
                     height: 10,
                   ),
                   InkWell(
-                    onTap: ()=> _howItWorksBottomSheet(context),
+                    onTap: () => _howItWorksBottomSheet(context),
                     child: Row(
                       children: [
                         Container(
@@ -522,20 +526,23 @@ class ReferAndEarn extends ConsumerWidget {
                           height: 30.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: Color(0xffD2AB68),
                               width: 1.0,
                             ),
                           ),
-                          child:Center(
-                            child: TextView("i",color: Color(0xffD2AB68),),
+                          child: Center(
+                            child: TextView(
+                              "i",
+                              color: Color(0xffD2AB68),
+                            ),
                           ),
                         ),
                         SizedBox(
                           width: 8,
                         ),
-                        TextView("How it works?",size: 16,decoration: TextDecoration.underline),
+                        TextView("How it works?", size: 16, decoration: TextDecoration.underline),
                       ],
                     ),
                   ),
@@ -544,11 +551,8 @@ class ReferAndEarn extends ConsumerWidget {
                   ),
                 ],
               ),
-
             ),
           ],
         ),
       );
 }
-
-

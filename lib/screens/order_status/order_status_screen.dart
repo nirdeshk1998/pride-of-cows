@@ -44,6 +44,19 @@ class OrderStatusScreen extends ConsumerWidget {
     }
   }
 
+  String get rateSubtitle {
+    switch (status) {
+      case OrderStatus.updated:
+        return LocalString.orderUpdationRateSubtitle;
+      case OrderStatus.cancelled:
+        return LocalString.orderCancellationRateSubtitle;
+      case OrderStatus.cancellationRequest:
+        return LocalString.subscriptionCancellationRateSubtitle;
+      default:
+        return LocalString.orderUpdationRateSubtitle;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -118,8 +131,9 @@ class OrderStatusScreen extends ConsumerWidget {
                       ),
                       10.0.height,
                       TextView(
-                        'Please rate your editing experience',
+                        rateSubtitle,
                         textAlign: TextAlign.center,
+                        maxLines: 3,
                         textType: TextType.subtitle,
                         color: Palette.textColor,
                       ),

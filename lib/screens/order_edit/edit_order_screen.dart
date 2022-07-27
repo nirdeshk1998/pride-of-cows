@@ -32,17 +32,116 @@ class EditOrderScreen extends ConsumerWidget {
                 fontSize: TextSize.regular,
               ),
               5.0.height,
-              _buttonTextTile(context, title: 'Delivery:', subtitle: '31-12-21'),
+              _buttonTextTile(
+                context,
+                title: 'Delivery:',
+                subtitle: '31-12-21',
+                onPressed: () => Utils.showPrimaryDialog(
+                  context,
+                  title: 'Edit Order',
+                  subtitle: 'Select new delivery date',
+                  child: PrimaryCalendarDatePicker(
+                    isVisible: true,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2060),
+                    onDateChanged: (i) {},
+                    label: '',
+                    onMonthPressed: () {},
+                  ),
+                ),
+              ),
             ],
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buttonTextTile(context, title: 'Delivery Plan:', subtitle: 'Daily'),
+              _buttonTextTile(
+                context,
+                title: 'Delivery Plan:',
+                subtitle: 'Daily',
+                onPressed: () => Utils.showPrimaryDialog(
+                  context,
+                  title: 'Edit Order',
+                  subtitle: 'Select new delivery plan',
+                  onDone: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TextView(
+                        'Delivery plan:',
+                        textType: TextType.subtitle,
+                        color: Palette.hintColor,
+                      ),
+                      5.0.height,
+                      Wrap(
+                        direction: Axis.horizontal,
+                        spacing: 15.0,
+                        children: List.generate(
+                          3,
+                          (index) {
+                            bool isSelected = index == 0;
+
+                            return PrimaryOutlineButton(
+                              title: [
+                                'daily',
+                                'alternate',
+                                'custom',
+                              ][index],
+                              letterSpacing: 1,
+                              isFilled: isSelected,
+                              onPressed: () {},
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               5.0.height,
-              _buttonTextTile(context, title: 'Start:', subtitle: '30-11-21'),
+              _buttonTextTile(
+                context,
+                title: 'Start:',
+                subtitle: '30-11-21',
+                onPressed: () => Utils.showPrimaryDialog(
+                  context,
+                  title: 'Edit Order',
+                  subtitle: 'Select new delivery date',
+                  onDone: () {},
+                  child: PrimaryCalendarDatePicker(
+                    isVisible: true,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2060),
+                    onDateChanged: (i) {},
+                    label: '',
+                    onMonthPressed: () {},
+                  ),
+                ),
+              ),
               5.0.height,
-              _buttonTextTile(context, title: 'End:', subtitle: '31-12-21'),
+              _buttonTextTile(
+                context,
+                title: 'End:',
+                subtitle: '31-12-21',
+                onPressed: () => Utils.showPrimaryDialog(
+                  context,
+                  title: 'Edit Order',
+                  subtitle: 'Select new delivery date',
+                  onDone: () {},
+                  child: PrimaryCalendarDatePicker(
+                    isVisible: true,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2060),
+                    onDateChanged: (i) {},
+                    label: '',
+                    onMonthPressed: () {},
+                  ),
+                ),
+              ),
               5.0.height,
               PrimaryTextButton(
                 title: 'View Calender',
@@ -272,7 +371,12 @@ class EditOrderScreen extends ConsumerWidget {
     );
   }
 
-  Row _buttonTextTile(BuildContext context, {required String title, required String subtitle}) {
+  Row _buttonTextTile(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    VoidCallback? onPressed,
+  }) {
     return Row(
       children: [
         _textTile(
@@ -285,90 +389,9 @@ class EditOrderScreen extends ConsumerWidget {
           svg: Assets.assetsIconsPencil,
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           size: 16,
-          onPressed: () {
-            _editDialog(context);
-          },
+          onPressed: onPressed,
         ),
       ],
-    );
-  }
-
-  Future<Widget?> _editDialog(BuildContext context) {
-    return showDialog<Widget>(
-      context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: Dimensions.radius10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          TextView(
-                            'Edit Order',
-                            color: Palette.textColor,
-                            textType: TextType.header2,
-                            height: 1,
-                          ),
-                          TextView(
-                            ' - Select new delivery date',
-                            color: Palette.textColor,
-                            textType: TextType.regular,
-                            height: 0.9,
-                          ),
-                        ],
-                      ),
-                      10.0.height,
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Palette.surfaceColor,
-                      ),
-                      Dimensions.defaultPadding.height,
-                      PrimaryCalendarDatePicker(
-                        isVisible: true,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2060),
-                        onDateChanged: (i) {},
-                        label: '',
-                        onMonthPressed: () {},
-                      ),
-                      PrimaryButton(
-                        title: 'done',
-                        onPressed: () {},
-                        width: 130,
-                      ),
-                      Dimensions.defaultPadding.height,
-                      PrimaryButton(
-                        title: 'cancel',
-                        onPressed: () => Utils.pop(context),
-                        width: 130,
-                        colorFill: false,
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: PrimaryIconButton(
-                    svg: Assets.assetsIconsCrossRound,
-                    padding: const EdgeInsets.all(10.0),
-                    size: 16,
-                    onPressed: () => Utils.pop(context),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 

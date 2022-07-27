@@ -10,8 +10,10 @@ import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/checkbox.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class OrderCancellingScreen extends ConsumerWidget {
-  const OrderCancellingScreen({Key? key}) : super(key: key);
+class OrderCancellingReasonScreen extends ConsumerWidget {
+  const OrderCancellingReasonScreen({Key? key, required this.orderType}) : super(key: key);
+
+  final OrderType orderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,9 +47,14 @@ class OrderCancellingScreen extends ConsumerWidget {
                 30.0.height,
                 Center(
                   child: PrimaryButton(
-                    title: 'cancel item',
-                    onPressed: () => Utils.push(context, const OrderStatusScreen(status: OrderStatus.cancelled)),
-                    width: 200,
+                    title: orderType == OrderType.oneTime ? 'cancel item' : 'request cancellation',
+                    onPressed: () => Utils.push(
+                      context,
+                      OrderStatusScreen(
+                        status: orderType == OrderType.oneTime ? OrderStatus.cancelled : OrderStatus.cancellationRequest,
+                      ),
+                    ),
+                    width: 240,
                   ),
                 ),
                 Dimensions.defaultPadding.height,
@@ -56,7 +63,7 @@ class OrderCancellingScreen extends ConsumerWidget {
                     title: 'discard changes',
                     onPressed: () {},
                     colorFill: false,
-                    width: 200,
+                    width: 240,
                   ),
                 ),
               ],

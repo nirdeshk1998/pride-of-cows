@@ -376,7 +376,7 @@ class OrderDetailsScreen extends ConsumerWidget {
               Center(
                 child: PrimaryButton(
                   title: 'cancel order',
-                  onPressed: () => Utils.push(context, const OrderCancelScreen()),
+                  onPressed: () => Utils.push(context, OrderCancelScreen(orderType: orderType)),
                   colorFill: false,
                   width: 200,
                 ),

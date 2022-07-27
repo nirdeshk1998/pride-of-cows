@@ -25,6 +25,9 @@ class LocalString {
       'The selected items have been successfully cancelled. The amount will be refunded to your Pride of Cows Wallet in 24 hours.';
   static const String orderCancellationRequestSubtitle =
       'Within the next 24 hours, our Customer Care team will get in touch with you to fix the issue and make the experience better for you.';
+  static const String orderUpdationRateSubtitle = 'Please rate your editing experience';
+  static const String orderCancellationRateSubtitle = 'Please rate your cancellation experience';
+  static const String subscriptionCancellationRateSubtitle = 'Were we helpful? Please rate your experience';
 
   static const String referEarnSubtitle =
       'For every friend who joins using your invitation code, you earn 5 litres milk free, and so does your friend.';

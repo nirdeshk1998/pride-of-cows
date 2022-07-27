@@ -14,13 +14,12 @@ import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class Rewards extends ConsumerWidget {
-
   const Rewards({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isRewardInfoVisible=true;
-    String pageTitle="Rewards";
+    bool isRewardInfoVisible = true;
+    String pageTitle = "Rewards";
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,15 +27,16 @@ class Rewards extends ConsumerWidget {
           const SecondaryAppBar(),
           10.0.height,
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.defaultPadding),
-            child: isRewardInfoVisible==true?TextView(
-              "Rewards",
-              textType: TextType.header,
-            ):TextView(
-              "My Rewards",
-              textType: TextType.header,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+            child: isRewardInfoVisible == true
+                ? TextView(
+                    "Rewards",
+                    textType: TextType.header,
+                  )
+                : TextView(
+                    "My Rewards",
+                    textType: TextType.header,
+                  ),
           ),
           10.0.height,
           Expanded(
@@ -46,8 +46,7 @@ class Rewards extends ConsumerWidget {
                 children: [
                   Container(
                     height: 46,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.defaultPadding),
+                    margin: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       border: Border.all(color: Palette.selectedTabColor),
@@ -68,17 +67,16 @@ class Rewards extends ConsumerWidget {
                         Tab(text: 'Rewards'.toUpperCase()),
                         Tab(text: 'History'.toUpperCase()),
                       ],
-                      onTap: (index){
-                        if(index==0){
-                          isRewardInfoVisible=true;
-                          pageTitle="Rewards";
+                      onTap: (index) {
+                        if (index == 0) {
+                          isRewardInfoVisible = true;
+                          pageTitle = "Rewards";
                           print(pageTitle);
                           print(isRewardInfoVisible);
-
                         }
-                        if(index==1){
-                          isRewardInfoVisible=false;
-                          pageTitle="My Rewards";
+                        if (index == 1) {
+                          isRewardInfoVisible = false;
+                          pageTitle = "My Rewards";
                           print(pageTitle);
                           print(isRewardInfoVisible);
                         }
@@ -98,18 +96,16 @@ class Rewards extends ConsumerWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 
   Future<Widget?> _howItWorksBottomSheet(BuildContext context) {
-    return Utils.bottomSheet(
+    return Utils.showPrimaryBottomSheet(
       context,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.defaultPadding),
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -280,8 +276,7 @@ class Rewards extends ConsumerWidget {
     );
   }
 
-  Widget _HistoryTab(BuildContext context) =>
-      Container(
+  Widget _HistoryTab(BuildContext context) => Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(
@@ -300,10 +295,7 @@ class Rewards extends ConsumerWidget {
                         children: [
                           Container(
                             decoration: index != 9
-                                ? BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.grey, width: 0)))
+                                ? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0)))
                                 : BoxDecoration(),
                             child: Column(
                               children: [
@@ -322,8 +314,7 @@ class Rewards extends ConsumerWidget {
                                   height: 10,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Row(
@@ -381,7 +372,6 @@ class Rewards extends ConsumerWidget {
                 child: Column(
                   children: [
                     Row(
-
                       children: [
                         InkWell(
                           child: SvgPicture.asset(Assets.assetsIconsArrowLeft),
@@ -408,7 +398,7 @@ class Rewards extends ConsumerWidget {
                       thickness: 1,
                     ),
                     InkWell(
-                      onTap: ()=>_howItWorksBottomSheet(context),
+                      onTap: () => _howItWorksBottomSheet(context),
                       child: Row(
                         children: [
                           Container(
@@ -416,8 +406,7 @@ class Rewards extends ConsumerWidget {
                             height: 30.0,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(50.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
                               border: Border.all(
                                 color: Color(0xffD2AB68),
                                 width: 1.0,
@@ -433,8 +422,7 @@ class Rewards extends ConsumerWidget {
                           SizedBox(
                             width: 8,
                           ),
-                          TextView("How it works?",
-                              size: 16, decoration: TextDecoration.underline),
+                          TextView("How it works?", size: 16, decoration: TextDecoration.underline),
                         ],
                       ),
                     ),
@@ -447,22 +435,16 @@ class Rewards extends ConsumerWidget {
             ],
           ),
         ),
-
-
       );
 
-  Widget _RewardTab(BuildContext context) =>
-      SingleChildScrollView(
+  Widget _RewardTab(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
               height: 10,
             ),
             Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               height: 50,
               color: Color(0xffEEF9FF),
               child: Row(
@@ -517,21 +499,20 @@ class Rewards extends ConsumerWidget {
                         Container(
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [
-                                  Color(0xffF6F3FB),
-                                  Color(0xffEFF3FB),
-                                ],
-                                begin: Alignment.bottomRight,
-                                end: Alignment.topLeft,
-                              )),
+                            colors: [
+                              Color(0xffF6F3FB),
+                              Color(0xffEFF3FB),
+                            ],
+                            begin: Alignment.bottomRight,
+                            end: Alignment.topLeft,
+                          )),
                           child: Column(
                             children: [
                               SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextView(
                                     "Use:",
@@ -564,8 +545,7 @@ class Rewards extends ConsumerWidget {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextView(
                                     "CROWN25",
@@ -595,22 +575,15 @@ class Rewards extends ConsumerWidget {
                                 children: [
                                   const SizedBox.square(
                                     dimension: 100,
-                                    child: Image(
-                                        image: AssetImage(
-                                            "assets/images/paneer.png")),
+                                    child: Image(image: AssetImage("assets/images/paneer.png")),
                                   ),
                                   const SizedBox(
                                     width: 20,
                                   ),
                                   SizedBox(
-                                    width:
-                                    MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width - 180,
+                                    width: MediaQuery.of(context).size.width - 180,
                                     child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         TextView(
                                           "50 % discount",
@@ -656,7 +629,7 @@ class Rewards extends ConsumerWidget {
             ),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
-              child:Column(
+              child: Column(
                 children: [
                   Divider(
                     thickness: 1,
@@ -665,7 +638,7 @@ class Rewards extends ConsumerWidget {
                     height: 10,
                   ),
                   InkWell(
-                    onTap: ()=> _howItWorksBottomSheet(context),
+                    onTap: () => _howItWorksBottomSheet(context),
                     child: Row(
                       children: [
                         Container(
@@ -673,20 +646,23 @@ class Rewards extends ConsumerWidget {
                           height: 30.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: Color(0xffD2AB68),
                               width: 1.0,
                             ),
                           ),
-                          child:Center(
-                            child: TextView("i",color: Color(0xffD2AB68),),
+                          child: Center(
+                            child: TextView(
+                              "i",
+                              color: Color(0xffD2AB68),
+                            ),
                           ),
                         ),
                         SizedBox(
                           width: 8,
                         ),
-                        TextView("How it works?",size: 16,decoration: TextDecoration.underline),
+                        TextView("How it works?", size: 16, decoration: TextDecoration.underline),
                       ],
                     ),
                   ),
@@ -695,11 +671,8 @@ class Rewards extends ConsumerWidget {
                   ),
                 ],
               ),
-
             ),
           ],
         ),
       );
 }
-
-

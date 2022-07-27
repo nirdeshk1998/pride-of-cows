@@ -8,6 +8,7 @@ import 'package:poc/screens/order_edit/edit_order_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/order_enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -15,7 +16,9 @@ import 'package:poc/widgets/checkbox.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class OrderCancelScreen extends ConsumerWidget {
-  const OrderCancelScreen({Key? key}) : super(key: key);
+  const OrderCancelScreen({Key? key, required this.orderType}) : super(key: key);
+
+  final OrderType orderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -170,7 +173,7 @@ class OrderCancelScreen extends ConsumerWidget {
                     Row(
                       children: [
                         const TextView(
-                          'Why don’t I see all of my cart items?',
+                          'Why don\'t I see all of my cart items?',
                           color: Palette.primaryColor,
                         ),
                         10.0.width,
@@ -191,7 +194,7 @@ class OrderCancelScreen extends ConsumerWidget {
                 Center(
                   child: PrimaryButton(
                     title: 'next',
-                    onPressed: () => Utils.push(context, const OrderCancellingScreen()),
+                    onPressed: () => Utils.push(context, OrderCancellingReasonScreen(orderType: orderType)),
                     width: 200,
                   ),
                 ),

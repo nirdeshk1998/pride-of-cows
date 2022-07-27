@@ -543,7 +543,7 @@ class GiftCardScreen extends ConsumerWidget {
   }
 
   Future<Widget?> _howItWorksbottomSheet(BuildContext context) {
-    return Utils.bottomSheet(
+    return Utils.showPrimaryBottomSheet(
       context,
       child: Padding(
         padding: const EdgeInsets.symmetric(
