@@ -70,7 +70,7 @@ class MyProfile extends ConsumerWidget {
                     height: 20,
                   ),
                   const PrimaryTextFormField(
-                    controller: wProvider.fNameController,
+                    // controller: wProvider.fNameController,
                     label: 'First Name*',
                     hint: 'Enter Here',
                   ),
