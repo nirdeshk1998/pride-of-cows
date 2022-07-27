@@ -8,7 +8,7 @@ import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/menu/address/my_address_book.dart';
-import 'package:poc/screens/menu/my_profile.dart';
+import 'package:poc/screens/profile/my_profile.dart';
 import 'package:poc/screens/menu/rewards/rewards.dart';
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/notification/notification_settings.dart';

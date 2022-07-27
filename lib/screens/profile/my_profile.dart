@@ -11,12 +11,14 @@ import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/offers.dart';
 import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/screens/menu/menu_screen.dart';
+import 'package:poc/screens/profile/providers/my_profile_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/styles/widget_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/checkbox.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/terms_condition.dart';
@@ -27,8 +29,8 @@ class MyProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rProvider = ref.read(loginProvider);
-    final wProvider = ref.watch(loginProvider);
+    final rProvider = ref.read(profileProvider);
+    final wProvider = ref.watch(profileProvider);
     bool addressSelect = true;
     //   var genderList = [
     // "Male","Female","Others"
@@ -68,6 +70,7 @@ class MyProfile extends ConsumerWidget {
                     height: 20,
                   ),
                   const PrimaryTextFormField(
+                    // controller: wProvider.fNameController,
                     label: 'First Name*',
                     hint: 'Enter Here',
                   ),
@@ -192,7 +195,7 @@ class MyProfile extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
+                      PrimaryCheckbox(onChanged: (value){}),
                       const SizedBox(
                         width: 5,
                       ),
