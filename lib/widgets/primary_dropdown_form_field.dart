@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,8 +8,10 @@ import 'package:poc/styles/widget_styles.dart';
 
 class PrimaryDropdownFormField extends StatelessWidget {
   final String label;
+  final void Function(int?) ? onChanged;
   const PrimaryDropdownFormField({
     Key? key, required this.label,
+    this.onChanged
   }) : super(key: key);
 
   @override
@@ -42,7 +46,7 @@ class PrimaryDropdownFormField extends StatelessWidget {
         DropdownMenuItem(value: 0, child: Text('Male')),
         DropdownMenuItem(value: 1, child: Text('Female')),
       ],
-      onChanged: (i) {},
+      onChanged:onChanged,
     );
   }
 }
