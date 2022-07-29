@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/cart_summary.dart';
+import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -13,6 +14,8 @@ class CartOffers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+   final rProvider=ref.read(cartProvider);
+   final wProvider=ref.watch(cartProvider);
     bool addressSelect = true;
     return Scaffold(
       body: SingleChildScrollView(
@@ -115,9 +118,9 @@ class CartOffers extends ConsumerWidget {
                                               fontFamily: GoogleFonts.suranna().fontFamily,
                                               letterSpacing: 1)),
                                       InkWell(
-                                        onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const CartSummary()));
-                                        },
+                                        onTap: (){
+                                          rProvider.onApplyOffer("NEWFOUNDLOVE",context);
+                              },
                                         child: const Text(
                                           "APPLY OFFERS",
                                           style: TextStyle(color: Color(0xff193B61), fontSize: 17),

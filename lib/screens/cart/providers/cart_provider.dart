@@ -1,5 +1,9 @@
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/screens/cart/cart_summary.dart';
+import 'package:poc/utils/utils.dart';
 
 final cartProvider = ChangeNotifierProvider.autoDispose<CartChangeProvider>(
   (ref) => CartChangeProvider(),
@@ -8,6 +12,7 @@ final cartProvider = ChangeNotifierProvider.autoDispose<CartChangeProvider>(
 class CartChangeProvider extends ChangeNotifier {
   int _itemCount = 0;
   String get itemCount => _itemCount.toString();
+  String appliedOffer="";
 
   void onItemPlus() {
     ++_itemCount;
@@ -23,5 +28,11 @@ class CartChangeProvider extends ChangeNotifier {
 
   void itemAmountCounter() {
     //
+  }
+  void onApplyOffer(String value,context){
+    appliedOffer=value;
+    Utils.push(context,  CartSummary());
+    notifyListeners();
+
   }
 }

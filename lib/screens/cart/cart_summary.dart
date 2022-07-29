@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/offers.dart';
+import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -17,6 +18,8 @@ class CartSummary extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool addressSelect = true;
+    final rProvider=ref.read(cartProvider);
+    final wProvider=ref.watch(cartProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -209,12 +212,12 @@ class CartSummary extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              children: const [
+                              children:  [
                                 Image(image: AssetImage("assets/icons/discount.png")),
                                 SizedBox(
                                   width: 3,
                                 ),
-                                Text("Select a promo code"),
+                               rProvider.appliedOffer!=""? Text("${rProvider.appliedOffer} applied!"):Text("Select a promo code"),
                               ],
                             ),
                             Row(

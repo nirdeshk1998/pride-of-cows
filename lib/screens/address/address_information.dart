@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/screens/menu/address/edit_address.dart';
+import 'package:poc/screens/address/edit_address.dart';
+import 'package:poc/screens/address/provider/address_information_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -13,6 +14,8 @@ class AddressInfromation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final rProvider=ref.read(addressInformationProvider);
+    final wProvider=ref.watch(addressInformationProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -44,7 +47,10 @@ class AddressInfromation extends ConsumerWidget {
                   ),
                   PrimaryTextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const EditAddress()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EditAddress()));
                     },
                     title: "Edit Address",
                     showUnderline: true,
@@ -67,13 +73,19 @@ class AddressInfromation extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Radio(value: true, groupValue: true, onChanged: (value) {}),
+                      Radio(
+                          value: wProvider.doorDelivery, groupValue:wProvider.delInGroupVal, onChanged:rProvider.onChangeDoorDeliveryFun,
+                      ),
                       const TextView("Contactless delivery at the door"),
                     ],
                   ),
                   Row(
                     children: [
-                      Radio(value: false, groupValue: true, onChanged: (value) {}),
+                      Radio(
+                          value: wProvider.handMeOrder,
+                          groupValue: wProvider.delInGroupVal,
+                          onChanged:rProvider.onChangeHandMeOrderFun,
+                          ),
                       const TextView("Hand me the order"),
                     ],
                   ),
@@ -89,7 +101,11 @@ class AddressInfromation extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Radio(value: false, groupValue: true, onChanged: (value) {}),
+                      Radio(
+                          value: wProvider.contactLess,
+                          groupValue: wProvider.delInGroupVal,
+                          onChanged: rProvider.onChangeContactLessFun,
+                          ),
                       const TextView("Contactless delivery to the guard"),
                     ],
                   ),
@@ -103,13 +119,17 @@ class AddressInfromation extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Radio(value: true, groupValue: true, onChanged: (value) {}),
+                      Radio(
+                          value: wProvider.ringBell, groupValue: wProvider.addInGroupVal, onChanged:rProvider.onChangeRingBellFun),
                       const TextView("Ring the bell"),
                     ],
                   ),
                   Row(
                     children: [
-                      Radio(value: false, groupValue: true, onChanged: (value) {}),
+                      Radio(
+                          value: wProvider.notRingBell,
+                          groupValue: wProvider.addInGroupVal,
+                          onChanged:rProvider.onChangeNotRingBellFun),
                       const TextView("Don't Ring the bell"),
                     ],
                   ),
