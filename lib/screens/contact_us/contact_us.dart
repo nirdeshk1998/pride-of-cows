@@ -71,7 +71,7 @@ class ContactUs extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Image.asset(Assets.assetsIconsWhatsappIconGrey),
+                      Image.asset(Assets.assetsIconsWhatsappIconGrey,height: 20.62,width: 20.62),
                       SizedBox(
                         width: 10,
                       ),
@@ -84,7 +84,7 @@ class ContactUs extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(Assets.assetsIconsPhoneGrey),
+                      SvgPicture.asset(Assets.assetsIconsPhoneGrey,height: 20.62,width: 20.62),
                       SizedBox(
                         width: 10,
                       ),
@@ -110,7 +110,7 @@ class ContactUs extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(Assets.assetsIconsEmail),
+                      SvgPicture.asset(Assets.assetsIconsEmail,height: 20.62,width: 20.62,),
                       SizedBox(
                         width: 10,
                       ),
@@ -123,7 +123,7 @@ class ContactUs extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Image.asset(Assets.assetsIconsLocationGrey),
+                      Image.asset(Assets.assetsIconsLocationGrey,height: 20.62,width: 20.62),
                       SizedBox(
                         width: 10,
                       ),
@@ -220,6 +220,12 @@ class ContactUs extends ConsumerWidget {
                       enabledBorder: WidgetStyle.inputBorder,
                       focusedBorder: WidgetStyle.activeInputBorder,
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  const PrimaryTextFormField(
+                    label: 'Email Id*',
                   ),
                   SizedBox(
                     height: 20,

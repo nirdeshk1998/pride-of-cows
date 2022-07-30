@@ -35,4 +35,9 @@ class CartChangeProvider extends ChangeNotifier {
     notifyListeners();
 
   }
+  void onRemoveOffer(){
+    appliedOffer="";
+    notifyListeners();
+
+  }
 }

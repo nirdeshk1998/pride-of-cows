@@ -6,12 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/address/my_address_book.dart';
+import 'package:poc/screens/address/provider/edit_address_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/styles/widget_styles.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
+import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class EditAddress extends ConsumerWidget {
@@ -19,6 +22,9 @@ class EditAddress extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final rProvider = ref.read(editaddressProvider);
+    List<DropdownMenuItem<int>> stateList = [];
+    final wProvider = ref.watch(editaddressProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -189,7 +195,7 @@ class EditAddress extends ConsumerWidget {
                           height: 20,
                         ),
                         const PrimaryTextFormField(
-                          label: 'Pin Code',
+                          label: 'Pin Code*',
                         ),
                         const SizedBox(
                           height: 20,
@@ -207,14 +213,20 @@ class EditAddress extends ConsumerWidget {
                           height: 20,
                         ),
                         const PrimaryTextFormField(
-                          label: 'City',
+                          label: 'City*',
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const PrimaryTextFormField(
-                          label: 'State',
-                        ),
+                        DropdownFormField(
+                            onChanged: (value) {},
+                            label: 'State*',
+                            items: [
+                              DropdownMenuItem(
+                                  value: 0, child: Text('Maharasthtra')),
+                              DropdownMenuItem(
+                                  value: 1, child: Text('Uttar Pradesh')),
+                            ]),
                         const SizedBox(
                           height: 20,
                         ),
@@ -228,9 +240,10 @@ class EditAddress extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   Radio(
-                                      value: false,
-                                      groupValue: true,
-                                      onChanged: (value) {}),
+                                    value: wProvider.home,
+                                    groupValue: true,
+                                    onChanged: rProvider.onChangeHomeFun,
+                                  ),
                                   const Text("Home"),
                                 ],
                               ),
@@ -242,9 +255,10 @@ class EditAddress extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   Radio(
-                                      value: false,
-                                      groupValue: true,
-                                      onChanged: (value) {}),
+                                    value: wProvider.work,
+                                    groupValue: true,
+                                    onChanged: rProvider.onChangeWorkFun,
+                                  ),
                                   const Text("Work"),
                                 ],
                               ),
@@ -256,9 +270,10 @@ class EditAddress extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   Radio(
-                                      value: true,
-                                      groupValue: true,
-                                      onChanged: (value) {}),
+                                    value: wProvider.others,
+                                    groupValue: true,
+                                    onChanged: rProvider.onChangeOthersFun,
+                                  ),
                                   const Text("Other"),
                                 ],
                               ),
@@ -272,8 +287,8 @@ class EditAddress extends ConsumerWidget {
                         Row(
                           children: [
                             Checkbox(
-                              value: true,
-                              onChanged: (value) {},
+                              value: wProvider.defaultAddress,
+                              onChanged: rProvider.onChangeDefaultAddressFun,
                               activeColor: Colors.white,
                               checkColor: Colors.black,
                             ),
@@ -297,37 +312,42 @@ class EditAddress extends ConsumerWidget {
                                       // );
                                       return Dialog(
                                         child: Container(
-                                          height: 300,
+                                          height: 250,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                "Request for updating \n       address sent!",
-                                                style: TextStyles.header,
-                                              ),
+                                                "Request for updating address sent!",
+                                                style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily,fontSize: 24,fontWeight: FontWeight.w400),
+                                             textAlign: TextAlign.center, ),
                                               Divider(
                                                 thickness: 1,
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(
                                                     left: 18, right: 18),
-                                                child: Text(
+                                                child: TextView(
                                                   "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
-                                                  style:
-                                                      TextStyle(fontSize: 17),
+                                               size: 16,
+                                                  maxLines: 10,
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: 10,
+                                                height: 30,
                                               ),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
-                                                  PrimaryButton(title: "OKAY, I UNDERSTAND",colorFill: true,onPressed: (){},)
+                                                  PrimaryButton(
+                                                    title: "OKAY, I UNDERSTAND",
+                                                    colorFill: true,
+                                                    onPressed: () {
+                                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyAddressBook()));
+                                                    },
+                                                  )
                                                 ],
                                               ),
                                             ],

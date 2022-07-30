@@ -32,7 +32,8 @@ class Notifications extends ConsumerWidget {
         child: Container(
           child: Column(
             children: [
-              const SecondaryAppBar(),
+              SecondaryAppBar(
+              ),
               10.0.height,
               Padding(
                 padding: const EdgeInsets.symmetric(

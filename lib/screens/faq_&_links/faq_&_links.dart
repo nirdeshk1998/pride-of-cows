@@ -32,11 +32,11 @@ class FaqAndLinks extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.defaultPadding),
               child: TextView(
-                'Faq & Links',
+                "Faq's & Links",
                 textType: TextType.header,
               ),
             ),
-            10.0.height,
+            20.0.height,
             menuListSection(title: "FAQs", children: [
               menuListTile(
                 onTap: () {

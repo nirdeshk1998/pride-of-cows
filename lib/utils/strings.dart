@@ -26,4 +26,6 @@ class LocalString {
   static const String howItWorksreferEarn1 = '1. Share your unique Pride of cows code with your loved ones';
   static const String howItWorksreferEarn2 = '2. Your friend joins and completes a purchase';
   static const String howItWorksreferEarn3 = '3. You both get 5 litres of fresh milk free!';
+  static const String howItWorksBottomReferLine =
+      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ';
 }
