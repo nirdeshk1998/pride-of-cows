@@ -7,7 +7,7 @@ import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -16,16 +16,18 @@ import 'package:poc/widgets/text_view.dart';
 class OrderStatusScreen extends ConsumerWidget {
   const OrderStatusScreen({Key? key, required this.status}) : super(key: key);
 
-  final OrderStatus status;
+  final EditOrderStatus status;
 
   String get orderStatusHeader {
     switch (status) {
-      case OrderStatus.updated:
+      case EditOrderStatus.updated:
         return 'Order Updated!';
-      case OrderStatus.cancelled:
+      case EditOrderStatus.cancelled:
         return 'Order Cancelled!';
-      case OrderStatus.cancellationRequest:
+      case EditOrderStatus.cancellationRequest:
         return 'Cancellation Request Received!';
+      case EditOrderStatus.rated:
+        return 'Thank you for your Valuable Feedback!';
       default:
         return 'Order Updated!';
     }
@@ -33,11 +35,11 @@ class OrderStatusScreen extends ConsumerWidget {
 
   String get orderStatusSubtitle {
     switch (status) {
-      case OrderStatus.updated:
+      case EditOrderStatus.updated:
         return LocalString.orderUpdatedSubtitle;
-      case OrderStatus.cancelled:
+      case EditOrderStatus.cancelled:
         return LocalString.orderCancelledSubtitle;
-      case OrderStatus.cancellationRequest:
+      case EditOrderStatus.cancellationRequest:
         return LocalString.orderCancellationRequestSubtitle;
       default:
         return LocalString.orderUpdatedSubtitle;
@@ -46,11 +48,11 @@ class OrderStatusScreen extends ConsumerWidget {
 
   String get rateSubtitle {
     switch (status) {
-      case OrderStatus.updated:
+      case EditOrderStatus.updated:
         return LocalString.orderUpdationRateSubtitle;
-      case OrderStatus.cancelled:
+      case EditOrderStatus.cancelled:
         return LocalString.orderCancellationRateSubtitle;
-      case OrderStatus.cancellationRequest:
+      case EditOrderStatus.cancellationRequest:
         return LocalString.subscriptionCancellationRateSubtitle;
       default:
         return LocalString.orderUpdationRateSubtitle;
@@ -94,81 +96,84 @@ class OrderStatusScreen extends ConsumerWidget {
               thickness: 1,
               color: Palette.primaryColor.withOpacity(0.3),
             ),
-            10.0.height,
-            Center(
-              child: TextView(
-                orderStatusSubtitle,
-                textType: TextType.subtitle,
-                maxLines: 5,
-                height: 1.5,
-                color: Palette.textColor,
+            if (status != EditOrderStatus.rated) 10.0.height,
+            if (status != EditOrderStatus.rated)
+              Center(
+                child: TextView(
+                  orderStatusSubtitle,
+                  textType: TextType.subtitle,
+                  maxLines: 5,
+                  height: 1.5,
+                  color: Palette.textColor,
+                ),
               ),
-            ),
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding).copyWith(top: 25.0),
-                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    children: [
-                      15.0.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          5,
-                          (index) => PrimaryIconButton(
-                            svg: Assets.assetsIconsStar3,
-                            size: 30,
-                            padding: EdgeInsets.only(right: index < 4 ? 15.0 : 0),
-                            onPressed: () {},
+            if (status != EditOrderStatus.rated)
+              Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding).copyWith(top: 25.0),
+                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        15.0.height,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            5,
+                            (index) => PrimaryIconButton(
+                              svg: Assets.assetsIconsStar3,
+                              size: 30,
+                              padding: EdgeInsets.only(right: index < 4 ? 15.0 : 0),
+                              onPressed: () {},
+                            ),
                           ),
                         ),
-                      ),
-                      10.0.height,
-                      TextView(
-                        rateSubtitle,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
-                        textType: TextType.subtitle,
-                        color: Palette.textColor,
-                      ),
-                      30.0.height,
-                      PrimaryButton(
-                        title: 'submit review',
-                        onPressed: () {},
-                        width: 180,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xffe7f5fc),
-                      width: 5,
-                    ),
-                    color: Palette.scaffoldBackgroundColor,
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      Assets.assetsIconsTick,
-                      fit: BoxFit.contain,
-                      height: 18,
-                      width: 18,
+                        10.0.height,
+                        TextView(
+                          rateSubtitle,
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                          textType: TextType.subtitle,
+                          color: Palette.textColor,
+                        ),
+                        30.0.height,
+                        PrimaryButton(
+                          title: 'submit review',
+                          onPressed: () {},
+                          width: 180,
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-            30.0.height,
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xffe7f5fc),
+                        width: 5,
+                      ),
+                      color: Palette.scaffoldBackgroundColor,
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        Assets.assetsIconsTick,
+                        fit: BoxFit.contain,
+                        height: 18,
+                        width: 18,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            if (status != EditOrderStatus.rated) Dimensions.defaultPadding.height,
+            10.0.height,
             TextView(
               'For any queries or suggestions, connect at',
               textAlign: TextAlign.center,
@@ -195,7 +200,7 @@ class OrderStatusScreen extends ConsumerWidget {
                 title: 'go back to home',
                 onPressed: () => Utils.pushAndRemoveUntil(context, const MainScreen()),
                 width: 220,
-                colorFill: false,
+                isFilled: false,
               ),
             ),
           ],

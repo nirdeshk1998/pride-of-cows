@@ -48,10 +48,12 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String title;
   final String? icon;
-  final double? iconSize, width;
+  final double? iconSize, width, height;
   final bool? isExpanded;
-  final bool? colorFill;
+  final bool? isFilled;
   final bool? isRounded;
+  final EdgeInsets? padding;
+  final Color? strokeColor;
 
   const PrimaryButton({
     Key? key,
@@ -61,8 +63,11 @@ class PrimaryButton extends StatelessWidget {
     this.icon,
     this.iconSize,
     this.width,
-    this.colorFill,
+    this.isFilled,
     this.isRounded,
+    this.padding,
+    this.height,
+    this.strokeColor,
   }) : super(key: key);
 
   @override
@@ -73,15 +78,15 @@ class PrimaryButton extends StatelessWidget {
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))
           : StadiumBorder(
               side: BorderSide(
-                color: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
-                width: colorFill == false ? 1 : 0,
+                color: isFilled == false ? strokeColor ?? Palette.primaryColor : Palette.onPrimaryColor,
+                width: isFilled == false ? 1 : 0,
               ),
             ),
       elevation: 0,
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      height: 50,
-      color: colorFill == false ? null : Palette.primaryColor,
-      textColor: colorFill == false ? Palette.primaryColor : Palette.onPrimaryColor,
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 40),
+      height: height ?? 50,
+      color: isFilled == false ? null : Palette.primaryColor,
+      textColor: isFilled == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
       disabledTextColor: Palette.onDisabledColor,
       minWidth: isExpanded == true ? double.maxFinite : width,
@@ -100,7 +105,7 @@ class PrimaryButton extends StatelessWidget {
             height: 1.1,
             letterSpacing: 1.2,
             textType: TextType.primaryButton,
-            color: colorFill == false
+            color: isFilled == false
                 ? Palette.primaryColor
                 : onPressed == null
                     ? Palette.onDisabledColor

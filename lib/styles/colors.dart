@@ -31,6 +31,7 @@ class Palette {
   static const surfaceBackgroundColor = Color(0xFFEAF7FE);
 
   static const successColor = Color(0xFF6FCF97);
+  static const success2Color = Color(0xFF219653);
   static const selectedTabColor = Color(0xFFE3F6FC);
 }
 

@@ -8,7 +8,7 @@ import 'package:poc/screens/order_edit/edit_order_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -203,7 +203,7 @@ class OrderCancelScreen extends ConsumerWidget {
                   child: PrimaryButton(
                     title: 'discard changes',
                     onPressed: () {},
-                    colorFill: false,
+                    isFilled: false,
                     width: 200,
                   ),
                 ),

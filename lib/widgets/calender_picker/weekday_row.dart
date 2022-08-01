@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:flutter_calendar_carousel/src/default_styles.dart' show defaultWeekdayTextStyle;
 import 'package:intl/intl.dart';
+import 'package:poc/utils/enums.dart';
+import 'package:poc/widgets/calender_picker/calender_picker2.dart';
+import 'package:poc/widgets/calender_picker/default_style.dart';
 
 class WeekdayRow extends StatelessWidget {
-  WeekdayRow(this.firstDayOfWeek, this.customWeekdayBuilder,
-      {required this.showWeekdays,
+  const WeekdayRow(this.firstDayOfWeek, this.customWeekdayBuilder,
+      {Key? key,
+      required this.showWeekdays,
       required this.weekdayFormat,
       required this.weekdayMargin,
       required this.weekdayPadding,
       required this.weekdayBackgroundColor,
       required this.weekdayTextStyle,
-      required this.localeDate});
+      required this.localeDate})
+      : super(key: key);
 
   final WeekdayBuilder? customWeekdayBuilder;
   final bool showWeekdays;
@@ -81,7 +84,6 @@ class WeekdayRow extends StatelessWidget {
 //    }
 //  }
 
-  // TODO - locale issues
   List<Widget> _renderWeekDays() {
     List<Widget> list = [];
 

@@ -63,7 +63,7 @@ class RatingPage extends ConsumerWidget {
                     children: [
                       Container(
                         child: Center(
-                          child:Column(
+                          child: Column(
                             children: [
                               SizedBox(
                                 height: 30,
@@ -71,31 +71,39 @@ class RatingPage extends ConsumerWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.star_border,color: Color(0xffE2C29B),size: 50,),
-                                  Icon(Icons.star_border,color: Color(0xffE2C29B),size: 50),
-                                  Icon(Icons.star_border,color: Color(0xffE2C29B),size: 50),
-                                  Icon(Icons.star_border,color: Color(0xffE2C29B),size: 50),
-                                  Icon(Icons.star_border,color: Color(0xffE2C29B),size: 50),
+                                  Icon(
+                                    Icons.star_border,
+                                    color: Color(0xffE2C29B),
+                                    size: 50,
+                                  ),
+                                  Icon(Icons.star_border, color: Color(0xffE2C29B), size: 50),
+                                  Icon(Icons.star_border, color: Color(0xffE2C29B), size: 50),
+                                  Icon(Icons.star_border, color: Color(0xffE2C29B), size: 50),
+                                  Icon(Icons.star_border, color: Color(0xffE2C29B), size: 50),
                                 ],
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text("Please rate your experience",style: TextStyle(fontSize: 18),),
+                              Text(
+                                "Please rate your experience",
+                                style: TextStyle(fontSize: 18),
+                              ),
                               SizedBox(
                                 height: 10,
                               ),
-                              PrimaryButton(title: "Submit Review",colorFill: true,onPressed: (){},)
+                              PrimaryButton(
+                                title: "Submit Review",
+                                isFilled: true,
+                                onPressed: () {},
+                              )
                             ],
                           ),
                         ),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                         height: 200,
                         width: MediaQuery.of(context).size.width / 1.3,
                       ),
-
                       Positioned(
                         child: CircleAvatar(
                           backgroundColor: Color(0xffdff0f9),
@@ -108,57 +116,76 @@ class RatingPage extends ConsumerWidget {
                       ),
                       Positioned(
                           top: -30,
-                          child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child:
-                              SvgPicture.asset("assets/icons/Vector.svg"))),
-
+                          child: CircleAvatar(backgroundColor: Colors.white, child: SvgPicture.asset("assets/icons/Vector.svg"))),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text("For any queries or suggestion, connect at",style: TextStyle(fontSize: 18),),
-             SizedBox(
-               height: 10,
-             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset("assets/icons/phone.svg",height: 20,width: 20,),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: (){},
-                    child: Text("022-68156815",style: TextStyle(color:Color(0xff193B61),fontSize: 18,decoration: TextDecoration.underline),),
-                  ),
-                ],
-              ),
+                Text(
+                  "For any queries or suggestion, connect at",
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/phone.svg",
+                      height: 20,
+                      width: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        "022-68156815",
+                        style: TextStyle(color: Color(0xff193B61), fontSize: 18, decoration: TextDecoration.underline),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 15,
                 ),
                 Container(
-                  child:   Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Stack(
                         children: [
                           Container(
                               width: 25,
-                              height: 25 ,
-                              child: Image(image: AssetImage("assets/images/whatsapproundedborder.png"),fit: BoxFit.fill,)
-                          ),
-                          Positioned(right: 5,top: 5,child:  SvgPicture.asset("assets/icons/whatsappicon.svg",width: 15,height: 15,),)
+                              height: 25,
+                              child: Image(
+                                image: AssetImage("assets/images/whatsapproundedborder.png"),
+                                fit: BoxFit.fill,
+                              )),
+                          Positioned(
+                            right: 5,
+                            top: 5,
+                            child: SvgPicture.asset(
+                              "assets/icons/whatsappicon.svg",
+                              width: 15,
+                              height: 15,
+                            ),
+                          )
                         ],
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       InkWell(
-                        onTap: (){},
-                        child: Text("022-9876543210",style: TextStyle(color:Color(0xff193B61),fontSize: 18,decoration: TextDecoration.underline),),
+                        onTap: () {},
+                        child: Text(
+                          "022-9876543210",
+                          style: TextStyle(color: Color(0xff193B61), fontSize: 18, decoration: TextDecoration.underline),
+                        ),
                       ),
                     ],
                   ),
@@ -172,22 +199,27 @@ class RatingPage extends ConsumerWidget {
                     Container(
                       width: 20,
                       height: 20,
-                      child:   Image(image: AssetImage("assets/images/mail.png"),fit: BoxFit.fill,),
+                      child: Image(
+                        image: AssetImage("assets/images/mail.png"),
+                        fit: BoxFit.fill,
+                      ),
                     ),
-
                     SizedBox(
                       width: 10,
                     ),
                     InkWell(
-                      onTap: (){},
-                      child: Text("bookings@prideofcows.com",style: TextStyle(color:Color(0xff193B61),fontSize: 18,decoration: TextDecoration.underline),),
+                      onTap: () {},
+                      child: Text(
+                        "bookings@prideofcows.com",
+                        style: TextStyle(color: Color(0xff193B61), fontSize: 18, decoration: TextDecoration.underline),
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(
-              height: 20,
+                  height: 20,
                 ),
-                PrimaryButton(title: "CONTINUE  SHOPPING",onPressed: (){},colorFill: false),
+                PrimaryButton(title: "CONTINUE  SHOPPING", onPressed: () {}, isFilled: false),
               ],
             ),
           ),

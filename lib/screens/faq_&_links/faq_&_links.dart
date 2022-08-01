@@ -29,8 +29,7 @@ class FaqAndLinks extends ConsumerWidget {
             const SecondaryAppBar(),
             10.0.height,
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: TextView(
                 'Faq & Links',
                 textType: TextType.header,
@@ -40,8 +39,7 @@ class FaqAndLinks extends ConsumerWidget {
             menuListSection(title: "FAQs", children: [
               menuListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderHelp()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderHelp()));
                 },
                 title: "Order and My account",
                 icon: Assets.assetsIconsCartRound,
@@ -74,24 +72,9 @@ class FaqAndLinks extends ConsumerWidget {
             ]),
             10.0.height,
             menuListSection(title: "Legal", children: [
-              menuListTile(
-                  onTap: () {},
-                  title: "Shipping and Return Policy",
-                  iconLabelWidth: 0,
-                  iconHeight: 0,
-                  iconWidth: 0),
-              menuListTile(
-                  onTap: () {},
-                  title: "Terms & Conditions",
-                  iconLabelWidth: 0,
-                  iconHeight: 0,
-                  iconWidth: 0),
-              menuListTile(
-                  onTap: () {},
-                  title: "Privacy Policy",
-                  iconLabelWidth: 0,
-                  iconHeight: 0,
-                  iconWidth: 0),
+              menuListTile(onTap: () {}, title: "Shipping and Return Policy", iconLabelWidth: 0, iconHeight: 0, iconWidth: 0),
+              menuListTile(onTap: () {}, title: "Terms & Conditions", iconLabelWidth: 0, iconHeight: 0, iconWidth: 0),
+              menuListTile(onTap: () {}, title: "Privacy Policy", iconLabelWidth: 0, iconHeight: 0, iconWidth: 0),
             ]),
           ],
         ),
@@ -180,8 +163,7 @@ class FaqAndLinks extends ConsumerWidget {
                 ),
                 Container(
                   padding: EdgeInsets.only(right: 10),
-                  child:
-                      SvgPicture.asset(Assets.assetsImagesRedeemRightArrowHead),
+                  child: SvgPicture.asset(Assets.assetsIconsChevRight),
                 ),
               ],
             ),

@@ -7,7 +7,7 @@ import 'package:poc/screens/order_details/order_details_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -89,7 +89,10 @@ class OrdersScreen extends ConsumerWidget {
                                 minSize: 0,
                                 onPressed: () => Utils.push(
                                   context,
-                                  OrderDetailsScreen(orderType: index.isEven ? OrderType.oneTime : OrderType.subscription),
+                                  OrderDetailsScreen(
+                                    orderType: index.isEven ? OrderType.oneTime : OrderType.subscription,
+                                    orderStatus: index.isEven ? OrderStatus.processing : OrderStatus.delivered,
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
@@ -168,13 +171,16 @@ class OrdersScreen extends ConsumerWidget {
                                   children: [
                                     SizedBox.square(
                                       dimension: 16,
-                                      child: SvgPicture.asset(Assets.assetsIconsOngoing),
+                                      child: SvgPicture.asset(
+                                        index.isEven ? Assets.assetsIconsOngoing : Assets.assetsIconsTickRound,
+                                        color: index.isEven ? Palette.goldenIconColor : Palette.success2Color,
+                                      ),
                                     ),
                                     5.0.width,
                                     TextView(
-                                      'Ongoing',
+                                      index.isEven ? 'Ongoing' : 'Delivered',
                                       textType: TextType.subtitle,
-                                      color: Palette.goldenIconColor,
+                                      color: index.isEven ? Palette.goldenIconColor : Palette.success2Color,
                                     ),
                                   ],
                                 ),

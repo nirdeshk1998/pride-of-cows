@@ -19,6 +19,7 @@ import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+
 class ContactUs extends ConsumerWidget {
   const ContactUs({Key? key}) : super(key: key);
 
@@ -32,8 +33,7 @@ class ContactUs extends ConsumerWidget {
             const SecondaryAppBar(),
             10.0.height,
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: TextView(
                 'Contact Us',
                 textType: TextType.header,
@@ -41,8 +41,7 @@ class ContactUs extends ConsumerWidget {
             ),
             10.0.height,
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Column(
                 children: [
                   Row(
@@ -56,10 +55,7 @@ class ContactUs extends ConsumerWidget {
                         width: 5,
                       ),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width / 1.4,
+                        width: MediaQuery.of(context).size.width / 1.4,
                         child: Divider(
                           thickness: 1,
                         ),
@@ -71,12 +67,15 @@ class ContactUs extends ConsumerWidget {
                   ),
                   Row(
                     children: [
-                      Image.asset(Assets.assetsIconsWhatsappIconGrey),
+                      Image.asset(Assets.assetsIconsWhatsappGrey),
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("+91-9876543210", size: 16,
-                        fontWeight: FontWeight.w400,),
+                      TextView(
+                        "+91-9876543210",
+                        size: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -88,8 +87,11 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("022 - 68156815", size: 16,
-                        fontWeight: FontWeight.w400,),
+                      TextView(
+                        "022 - 68156815",
+                        size: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ],
                   ),
                   Row(
@@ -100,9 +102,11 @@ class ContactUs extends ConsumerWidget {
                       Flexible(
                         child: TextView(
                           "Mon - Sat: 7:30am - 7:30pm; Sun: 7.30am – 3.30pm",
-                          size: 16, color: Palette.hintColor, maxLines: 2,),
+                          size: 16,
+                          color: Palette.hintColor,
+                          maxLines: 2,
+                        ),
                       ),
-
                     ],
                   ),
                   SizedBox(
@@ -114,8 +118,11 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      TextView("bookings@prideofcows.com", size: 16,
-                        fontWeight: FontWeight.w400,),
+                      TextView(
+                        "bookings@prideofcows.com",
+                        size: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -127,9 +134,14 @@ class ContactUs extends ConsumerWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Flexible(child: TextView(
-                        "Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",
-                        size: 16, fontWeight: FontWeight.w400, maxLines: 2,),),
+                      Flexible(
+                        child: TextView(
+                          "Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",
+                          size: 16,
+                          fontWeight: FontWeight.w400,
+                          maxLines: 2,
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -146,10 +158,7 @@ class ContactUs extends ConsumerWidget {
                         width: 5,
                       ),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width / 2,
+                        width: MediaQuery.of(context).size.width / 2,
                         child: Divider(
                           thickness: 1,
                         ),
@@ -172,35 +181,28 @@ class ContactUs extends ConsumerWidget {
                     ],
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(
-                          maxHeight: 50, minWidth: 50),
+                      constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
                       labelText: 'Phone number*',
                       prefixIcon: Padding(
-                        padding:
-                        const EdgeInsets.only(left: 15, right: 5),
+                        padding: const EdgeInsets.only(left: 15, right: 5),
                         child: CountryCodePicker(
                           initialSelection: 'in',
                           textStyle: TextStyle(
                             color: Palette.textColor,
-                            fontFamily: GoogleFonts
-                                .lato()
-                                .fontFamily,
+                            fontFamily: GoogleFonts.lato().fontFamily,
                             fontSize: 16,
                             letterSpacing: 0,
                             fontWeight: FontWeight.normal,
                           ),
                           flagWidth: 20,
                           showDropDownButton: true,
-                          flagDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4)),
+                          flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
                         ),
                       ),
                       prefixIconConstraints: const BoxConstraints(),
                       labelStyle: TextStyle(
                         color: Palette.hintColor,
-                        fontFamily: GoogleFonts
-                            .lato()
-                            .fontFamily,
+                        fontFamily: GoogleFonts.lato().fontFamily,
                         fontSize: 16,
                         letterSpacing: 0,
                         fontWeight: FontWeight.normal,
@@ -208,9 +210,7 @@ class ContactUs extends ConsumerWidget {
                       ),
                       floatingLabelStyle: TextStyle(
                         color: Palette.hintColor,
-                        fontFamily: GoogleFonts
-                            .lato()
-                            .fontFamily,
+                        fontFamily: GoogleFonts.lato().fontFamily,
                         fontSize: 18,
                         letterSpacing: 0,
                         fontWeight: FontWeight.normal,
@@ -231,9 +231,7 @@ class ContactUs extends ConsumerWidget {
                     height: 20,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Your Message"
-                    ),
+                    decoration: InputDecoration(labelText: "Your Message"),
                   ),
                   SizedBox(
                     height: 20,
@@ -242,7 +240,10 @@ class ContactUs extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PrimaryButton(
-                        title: "Submit", onPressed: () {}, colorFill: true,)
+                        title: "Submit",
+                        onPressed: () {},
+                        isFilled: true,
+                      )
                     ],
                   ),
                   SizedBox(

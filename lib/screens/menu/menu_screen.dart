@@ -256,7 +256,7 @@ class MenuScreen extends ConsumerWidget {
         Center(
           child: PrimaryButton(
             title: 'log out',
-            colorFill: false,
+            isFilled: false,
             onPressed: () {},
           ),
         ),

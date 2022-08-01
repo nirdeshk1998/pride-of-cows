@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -51,7 +51,7 @@ class OrderCancellingReasonScreen extends ConsumerWidget {
                     onPressed: () => Utils.push(
                       context,
                       OrderStatusScreen(
-                        status: orderType == OrderType.oneTime ? OrderStatus.cancelled : OrderStatus.cancellationRequest,
+                        status: orderType == OrderType.oneTime ? EditOrderStatus.cancelled : EditOrderStatus.cancellationRequest,
                       ),
                     ),
                     width: 240,
@@ -62,7 +62,7 @@ class OrderCancellingReasonScreen extends ConsumerWidget {
                   child: PrimaryButton(
                     title: 'discard changes',
                     onPressed: () {},
-                    colorFill: false,
+                    isFilled: false,
                     width: 240,
                   ),
                 ),

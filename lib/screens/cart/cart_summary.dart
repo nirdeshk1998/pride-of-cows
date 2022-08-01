@@ -379,7 +379,7 @@ class CartSummary extends ConsumerWidget {
                     title: "Request a new address",
                     isRounded: true,
                     width: 20,
-                    colorFill: false,
+                    isFilled: false,
                   ),
                   const SizedBox(
                     height: 20,

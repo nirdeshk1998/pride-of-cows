@@ -419,7 +419,7 @@ class ReferAndEarn extends ConsumerWidget {
                   children: [
                     PrimaryButton(
                       title: "View More",
-                      colorFill: true,
+                      isFilled: true,
                       onPressed: () {},
                     ),
                     const Divider(
@@ -546,7 +546,7 @@ class ReferAndEarn extends ConsumerWidget {
               icon: Assets.assetsIconsShare,
               iconSize: 30,
               onPressed: () {},
-              colorFill: false,
+              isFilled: false,
             ),
             Container(
               height: 196,
@@ -591,7 +591,7 @@ class ReferAndEarn extends ConsumerWidget {
                     icon: Assets.assetsIconsShare,
                     iconSize: 30,
                     onPressed: () {},
-                    colorFill: false,
+                    isFilled: false,
                   ),
                 ],
               ),

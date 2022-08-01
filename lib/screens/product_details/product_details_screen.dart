@@ -2,7 +2,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/main/main_screen.dart';

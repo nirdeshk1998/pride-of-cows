@@ -38,78 +38,88 @@ class Utils {
 
   static Future<Widget?> showPrimaryDialog(
     BuildContext context, {
-    required String title,
-    required String subtitle,
-    required Widget child,
-    VoidCallback? onDone,
-    VoidCallback? onCancel,
+    required final String headerTitle,
+    final String? subheaderTitle,
+    final String? title,
+    required final Widget child,
+    final VoidCallback? onDone,
+    final VoidCallback? onCancel,
   }) {
     return showDialog<Widget>(
       context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: Dimensions.radius10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
+      builder: (context) => Center(
+        child: SingleChildScrollView(
+          child: Dialog(
+            shape: RoundedRectangleBorder(borderRadius: Dimensions.radius10),
+            insetPadding: const EdgeInsets.all(Dimensions.defaultPadding),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          TextView(
-                            title,
-                            color: Palette.textColor,
-                            textType: TextType.header2,
-                            height: 1,
-                          ),
-                          TextView(
-                            ' - $subtitle',
-                            color: Palette.textColor,
-                            textType: TextType.regular,
-                            height: 0.7,
-                          ),
-                        ],
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding, vertical: 30.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                TextView(
+                                  headerTitle,
+                                  color: Palette.textColor,
+                                  textType: TextType.header2,
+                                  maxLines: 2,
+                                  height: 1,
+                                ),
+                                if (subheaderTitle != null)
+                                  TextView(
+                                    ' - $subheaderTitle',
+                                    color: Palette.textColor,
+                                    textType: TextType.regular,
+                                    height: 0.7,
+                                  ),
+                              ],
+                            ),
+                            10.0.height,
+                            const Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Palette.surfaceColor,
+                            ),
+                            Dimensions.defaultPadding.height,
+                            child,
+                            30.0.height,
+                            PrimaryButton(
+                              title: title ?? 'done',
+                              onPressed: onDone,
+                              width: 130,
+                            ),
+                            Dimensions.defaultPadding.height,
+                            PrimaryButton(
+                              title: 'cancel',
+                              onPressed: onCancel ?? () => Utils.pop(context),
+                              width: 130,
+                              isFilled: false,
+                            ),
+                          ],
+                        ),
                       ),
-                      10.0.height,
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Palette.surfaceColor,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: PrimaryIconButton(
+                        svg: Assets.assetsIconsCrossRound,
+                        padding: const EdgeInsets.all(10.0),
+                        size: 16,
+                        onPressed: () => Utils.pop(context),
                       ),
-                      Dimensions.defaultPadding.height,
-                      child,
-                      30.0.height,
-                      PrimaryButton(
-                        title: 'done',
-                        onPressed: onDone,
-                        width: 130,
-                      ),
-                      Dimensions.defaultPadding.height,
-                      PrimaryButton(
-                        title: 'cancel',
-                        onPressed: onCancel ?? () => Utils.pop(context),
-                        width: 130,
-                        colorFill: false,
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: PrimaryIconButton(
-                    svg: Assets.assetsIconsCrossRound,
-                    padding: const EdgeInsets.all(10.0),
-                    size: 16,
-                    onPressed: () => Utils.pop(context),
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

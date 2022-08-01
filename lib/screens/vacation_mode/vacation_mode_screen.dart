@@ -87,7 +87,7 @@ class VacationModeScreen extends ConsumerWidget {
                   child: PrimaryButton(
                     title: 'cancel',
                     width: 180,
-                    colorFill: false,
+                    isFilled: false,
                     onPressed: () => Utils.pop(context),
                   ),
                 ),

@@ -144,9 +144,11 @@ class PrimarySearchAppBar extends StatelessWidget {
   const PrimarySearchAppBar({
     Key? key,
     this.controller,
+    this.onClearPressed,
   }) : super(key: key);
 
   final TextEditingController? controller;
+  final VoidCallback? onClearPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +189,10 @@ class PrimarySearchAppBar extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () => controller?.clear(),
+                    onPressed: () {
+                      controller?.clear();
+                      onClearPressed?.call();
+                    },
                     splashRadius: 28,
                     iconSize: 24,
                     color: Palette.primaryColor,

@@ -7,6 +7,7 @@ class TextType {
     fontSize: TextSize.regularSmall,
     fontWeight: FontWeight.bold,
     color: Palette.textColor,
+    letterSpacing: 1,
     fontFamily: GoogleFonts.lato().fontFamily,
   );
 

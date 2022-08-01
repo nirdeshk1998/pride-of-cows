@@ -5,19 +5,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/order_cancel/order_cancel_screen.dart';
 import 'package:poc/screens/order_edit/edit_order_screen.dart';
+import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/order_enums.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class OrderDetailsScreen extends ConsumerWidget {
-  const OrderDetailsScreen({Key? key, required this.orderType}) : super(key: key);
+  const OrderDetailsScreen({Key? key, required this.orderType, required this.orderStatus}) : super(key: key);
 
   final OrderType orderType;
+  final OrderStatus orderStatus;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -96,13 +99,16 @@ class OrderDetailsScreen extends ConsumerWidget {
                       children: [
                         SizedBox.square(
                           dimension: 16,
-                          child: SvgPicture.asset(Assets.assetsIconsOngoing),
+                          child: SvgPicture.asset(
+                            orderStatus == OrderStatus.delivered ? Assets.assetsIconsTickRound : Assets.assetsIconsOngoing,
+                            color: orderStatus == OrderStatus.delivered ? Palette.success2Color : Palette.goldenIconColor,
+                          ),
                         ),
                         3.0.width,
                         TextView(
-                          'Ongoing',
+                          orderStatus == OrderStatus.delivered ? 'Delivered' : 'Ongoing',
                           textType: TextType.subtitle,
-                          color: Palette.goldenIconColor,
+                          color: orderStatus == OrderStatus.delivered ? Palette.success2Color : Palette.goldenIconColor,
                           height: 1.2,
                         ),
                         const Spacer(),
@@ -259,11 +265,10 @@ class OrderDetailsScreen extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextView(
-                                    "Order placed",
-                                    textType: TextType.regular,
-                                    color: Palette.lightTextColor,
-                                    height: 1,
+                                  _orderStatusWidget(
+                                    icon: orderStatus == OrderStatus.placed ? Assets.assetsIconsProcessing : null,
+                                    title: 'Order placed',
+                                    color: orderStatus == OrderStatus.placed ? Palette.orangeIconColor : Palette.lightTextColor,
                                   ),
                                   5.0.width,
                                   const SizedBox(
@@ -272,19 +277,11 @@ class OrderDetailsScreen extends ConsumerWidget {
                                     child: ColoredBox(color: Palette.lightIconColor),
                                   ),
                                   5.0.width,
-                                  SizedBox.square(
-                                    dimension: 16,
-                                    child: SvgPicture.asset(
-                                      Assets.assetsIconsProcessing,
-                                      color: Palette.orangeIconColor,
-                                    ),
-                                  ),
-                                  5.0.width,
-                                  TextView(
-                                    "Processing",
-                                    textType: TextType.regular,
-                                    color: Palette.orangeIconColor,
-                                    height: 1,
+                                  _orderStatusWidget(
+                                    icon: orderStatus == OrderStatus.processing ? Assets.assetsIconsProcessing : null,
+                                    title: 'Processing',
+                                    color:
+                                        orderStatus == OrderStatus.processing ? Palette.orangeIconColor : Palette.lightTextColor,
                                   ),
                                   5.0.width,
                                   const SizedBox(
@@ -293,11 +290,10 @@ class OrderDetailsScreen extends ConsumerWidget {
                                     child: ColoredBox(color: Palette.lightIconColor),
                                   ),
                                   5.0.width,
-                                  TextView(
-                                    "Delivered",
-                                    textType: TextType.regular,
-                                    color: Palette.lightTextColor,
-                                    height: 1,
+                                  _orderStatusWidget(
+                                    icon: orderStatus == OrderStatus.delivered ? Assets.assetsIconsTickRound : null,
+                                    title: 'Delivered',
+                                    color: orderStatus == OrderStatus.delivered ? Palette.success2Color : Palette.lightTextColor,
                                   ),
                                 ],
                               )
@@ -365,27 +361,184 @@ class OrderDetailsScreen extends ConsumerWidget {
                 ),
               ),
               Dimensions.defaultPadding.height,
-              Center(
-                child: PrimaryButton(
-                  title: 'edit order',
-                  onPressed: () => Utils.push(context, EditOrderScreen(orderType: orderType)),
-                  width: 200,
-                ),
-              ),
-              Dimensions.defaultPadding.height,
-              Center(
-                child: PrimaryButton(
-                  title: 'cancel order',
-                  onPressed: () => Utils.push(context, OrderCancelScreen(orderType: orderType)),
-                  colorFill: false,
-                  width: 200,
-                ),
-              ),
+              _actionButtons(context),
               40.0.height,
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget _actionButtons(BuildContext context) {
+    return orderStatus == OrderStatus.delivered
+        ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    TextView(
+                      'Rate delivery experience:',
+                      textType: TextType.subtitle,
+                      color: Palette.hintColor,
+                      height: 1.3,
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: List.generate(
+                        5,
+                        (index) => PrimaryIconButton(
+                          svg: Assets.assetsIconsStar,
+                          size: 20.0,
+                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
+                          onPressed: () => Utils.showPrimaryDialog(
+                            context,
+                            headerTitle: 'Your Pride of Cows Experience',
+                            title: 'Submit',
+                            onDone: () {
+                              Utils.pushAndRemoveUntil(
+                                context,
+                                const OrderStatusScreen(status: EditOrderStatus.rated),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    TextView(
+                                      'Rate delivery experience:',
+                                      textType: TextType.subtitle,
+                                      color: Palette.textColor,
+                                      height: 1,
+                                    ),
+                                    5.0.height,
+                                    Row(
+                                      children: List.generate(
+                                        5,
+                                        (index) => PrimaryIconButton(
+                                          svg: Assets.assetsIconsStar,
+                                          size: 20.0,
+                                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                30.0.height,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    TextView(
+                                      'Rate product experience:',
+                                      textType: TextType.subtitle,
+                                      color: Palette.textColor,
+                                      height: 1,
+                                    ),
+                                    5.0.height,
+                                    Row(
+                                      children: List.generate(
+                                        5,
+                                        (index) => PrimaryIconButton(
+                                          svg: Assets.assetsIconsStar,
+                                          size: 20.0,
+                                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                30.0.height,
+                                TextView(
+                                  'What went well?',
+                                  textType: TextType.subtitle,
+                                  color: Palette.textColor,
+                                  height: 1,
+                                ),
+                                5.0.height,
+                                Wrap(
+                                  spacing: 15.0,
+                                  runSpacing: 10.0,
+                                  children: List.generate(
+                                    4,
+                                    (index) => PrimaryButton(
+                                      onPressed: () {},
+                                      title: ['Packaging', 'Product Quality', 'Delivery associate', 'Other'][index],
+                                      isFilled: index == 3,
+                                      strokeColor: Palette.outlineColor,
+                                      height: 46,
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    ),
+                                  ),
+                                ),
+                                5.0.height,
+                                const SecondaryFormField(
+                                  hint: 'Type your reason here...',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Dimensions.defaultPadding.height,
+                PrimaryTextButton(
+                  title: 'Have an issue with order?',
+                  onPressed: () {},
+                  isUpperCase: false,
+                  showUnderline: true,
+                  size: TextSize.subHeader,
+                ),
+              ],
+            ),
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              PrimaryButton(
+                title: 'edit order',
+                onPressed: () => Utils.push(context, EditOrderScreen(orderType: orderType)),
+                width: 200,
+              ),
+              Dimensions.defaultPadding.height,
+              PrimaryButton(
+                title: 'cancel order',
+                onPressed: () => Utils.push(context, OrderCancelScreen(orderType: orderType)),
+                isFilled: false,
+                width: 200,
+              ),
+            ],
+          );
+  }
+
+  Row _orderStatusWidget({required Color color, String? icon, required String title}) {
+    return Row(
+      children: [
+        if (icon != null)
+          SizedBox.square(
+            dimension: 16,
+            child: SvgPicture.asset(
+              icon,
+              color: color,
+            ),
+          ),
+        5.0.width,
+        TextView(
+          title,
+          textType: TextType.regular,
+          color: color,
+          height: 1,
+        ),
+      ],
     );
   }
 
