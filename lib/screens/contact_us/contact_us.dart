@@ -46,48 +46,48 @@ class ContactUs extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      TextView(
+                      const TextView(
                         "Reach us",
                         size: 18,
                         fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width / 1.4,
-                        child: Divider(
+                        child: const Divider(
                           thickness: 1,
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
                       Image.asset(Assets.assetsIconsWhatsappGrey),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      TextView(
+                      const TextView(
                         "+91-9876543210",
                         size: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(Assets.assetsIconsPhoneGrey),
-                      SizedBox(
+                      SvgPicture.asset(Assets.assetsIconsPhoneGrey, height: 20.62, width: 20.62),
+                      const SizedBox(
                         width: 10,
                       ),
-                      TextView(
+                      const TextView(
                         "022 - 68156815",
                         size: 16,
                         fontWeight: FontWeight.w400,
@@ -95,7 +95,7 @@ class ContactUs extends ConsumerWidget {
                     ],
                   ),
                   Row(
-                    children: [
+                    children: const [
                       SizedBox(
                         width: 25,
                       ),
@@ -109,32 +109,36 @@ class ContactUs extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(Assets.assetsIconsEmail),
-                      SizedBox(
+                      SvgPicture.asset(
+                        Assets.assetsIconsEmail,
+                        height: 20.62,
+                        width: 20.62,
+                      ),
+                      const SizedBox(
                         width: 10,
                       ),
-                      TextView(
+                      const TextView(
                         "bookings@prideofcows.com",
                         size: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      Image.asset(Assets.assetsIconsLocationGrey),
-                      SizedBox(
+                      Image.asset(Assets.assetsIconsLocationGrey, height: 20.62, width: 20.62),
+                      const SizedBox(
                         width: 10,
                       ),
-                      Flexible(
+                      const Flexible(
                         child: TextView(
                           "Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",
                           size: 16,
@@ -144,34 +148,34 @@ class ContactUs extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      TextView(
+                      const TextView(
                         "Submit your Query",
                         size: 18,
                         fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
-                        child: Divider(
+                        child: const Divider(
                           thickness: 1,
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const PrimaryTextFormField(
                     label: 'Full Name*',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
@@ -221,19 +225,25 @@ class ContactUs extends ConsumerWidget {
                       focusedBorder: WidgetStyle.activeInputBorder,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const PrimaryTextFormField(
+                    label: 'Email Id*',
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   const PrimaryTextFormField(
                     label: 'Your Location*',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "Your Message"),
+                    decoration: const InputDecoration(labelText: "Your Message"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -246,7 +256,7 @@ class ContactUs extends ConsumerWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],

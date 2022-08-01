@@ -69,20 +69,27 @@ class MyProfile extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryTextFormField(
-                    // controller: wProvider.fNameController,
+                  PrimaryTextFormField(
                     label: 'First Name*',
                     hint: 'Enter Here',
+                    controller: wProvider.fNameController,
+                    onChanged: rProvider.onChangeFNameFun,
+
+
                   ),
                   const SizedBox(height: 20),
-                  const PrimaryTextFormField(
+                   PrimaryTextFormField(
                     label: 'Last Name*',
                     hint: 'Enter Here',
+                    controller: wProvider.lNameController,
+                    onChanged: rProvider.onChangeLNameFun,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    controller: wProvider.phoneNoController,
+                    onChanged: rProvider.onChangePhNoFun,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.digitsOnly,
@@ -132,13 +139,16 @@ class MyProfile extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryDropdownFormField(
+                   PrimaryDropdownFormField(
+                     onChanged: rProvider.onChangeGenderFun,
                     label: 'Gender*',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryTextFormField(
+                   PrimaryTextFormField(
+                     controller: wProvider.eMailController,
+                     onChanged: rProvider.onChangeEmailFun,
                     label: 'Email Id*',
                     hint: 'Enter Here',
                   ),
@@ -146,6 +156,8 @@ class MyProfile extends ConsumerWidget {
                     height: 20,
                   ),
                   TextFormField(
+                    controller: wProvider.dobController,
+                    onChanged: rProvider.onChangeDobFun,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.digitsOnly,
@@ -205,8 +217,10 @@ class MyProfile extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const PrimaryButton(title: "SAVE"),
-                ],
+                   PrimaryButton(title: "SAVE",
+                     onPressed: wProvider.saveButtonState?()=>rProvider.onSendOtpButton:null,
+                   ),
+]
               ),
             ),
           ],

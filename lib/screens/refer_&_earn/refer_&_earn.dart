@@ -482,38 +482,6 @@ class ReferAndEarn extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: "Refer a friend to pride of cows and you'll both get ",
-                style: const TextStyle(
-                  color: Palette.hintColor,
-                  fontSize: 19,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '5 litres milk free!',
-                    style: TextStyle(
-                      fontFamily: GoogleFonts.suranna().fontFamily,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                    children: const <TextSpan>[
-                      TextSpan(
-                        text: '5 litre milk free!',
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 19),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 25),
-            const Text("Share your code", style: TextStyle(fontSize: 22)),
-            const SizedBox(
-              height: 10,
-            ),
             SizedBox(
               width: 250,
               child: ElevatedButton.icon(

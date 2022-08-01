@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/providers/login_provider.dart';
-import 'package:poc/screens/menu/address/address_information.dart';
+import 'package:poc/screens/address/address_information.dart';
+import 'package:poc/screens/address/edit_address.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -48,7 +49,9 @@ class MyAddressBook extends ConsumerWidget {
                         title: 'Add a new address',
                         isUpperCase: true,
                         size: TextSize.textButton,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>EditAddress()));
+                        },
                       ),
                     ],
                   ),

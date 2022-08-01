@@ -13,6 +13,8 @@ class PrimaryTextFormField extends StatelessWidget {
   final String? label;
   final String? hint;
   final TextEditingController? controller;
+  final void Function(String)? onChanged;
+
 
 
   const PrimaryTextFormField({
@@ -20,11 +22,14 @@ class PrimaryTextFormField extends StatelessWidget {
     this.label,
     this.controller,
     this.hint,
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
+      controller: controller,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
@@ -52,6 +57,7 @@ class PrimaryTextFormField extends StatelessWidget {
         enabledBorder: WidgetStyle.inputBorder,
         focusedBorder: WidgetStyle.activeInputBorder,
       ),
+
     );
   }
 }

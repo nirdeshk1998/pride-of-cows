@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/offers.dart';
+import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -17,6 +19,8 @@ class CartSummary extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool addressSelect = true;
+    final rProvider = ref.read(cartProvider);
+    final wProvider = ref.watch(cartProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -56,7 +60,9 @@ class CartSummary extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                const Image(image: AssetImage("assets/icons/shoppingcart.png")),
+                                const Image(
+                                    image: AssetImage(
+                                        "assets/icons/shoppingcart.png")),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -91,7 +97,8 @@ class CartSummary extends ConsumerWidget {
                                             child: Row(
                                               children: const [
                                                 Image(
-                                                  image: AssetImage("assets/images/ghee.png"),
+                                                  image: AssetImage(
+                                                      "assets/images/ghee.png"),
                                                   fit: BoxFit.fitHeight,
                                                 ),
                                               ],
@@ -102,19 +109,24 @@ class CartSummary extends ConsumerWidget {
                                               left: 10,
                                             ),
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "Ghee (250 grams)",
                                                   style: TextStyles.subheader,
                                                 ),
-                                                Text('\u{20B9}${"50"}', style: TextStyles.hint),
+                                                Text('\u{20B9}${"50"}',
+                                                    style: TextStyles.hint),
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
                                                 Row(
                                                   children: const [
-                                                    Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("Delivery Plan: ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.grey)),
                                                     Text("Alternate"),
                                                   ],
                                                 ),
@@ -123,7 +135,10 @@ class CartSummary extends ConsumerWidget {
                                                 ),
                                                 Row(
                                                   children: const [
-                                                    Text("Delivery: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("Delivery: ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.grey)),
                                                     Text("10-09-2022"),
                                                   ],
                                                 ),
@@ -132,7 +147,10 @@ class CartSummary extends ConsumerWidget {
                                                 ),
                                                 Row(
                                                   children: const [
-                                                    Text("Quantity: ", style: TextStyle(color: Colors.grey)),
+                                                    Text("Quantity: ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.grey)),
                                                     Text("1"),
                                                   ],
                                                 ),
@@ -205,34 +223,88 @@ class CartSummary extends ConsumerWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: const [
-                                Image(image: AssetImage("assets/icons/discount.png")),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text("Select a promo code"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CartOffers()));
-                                  },
-                                  child: const Text(
-                                    "VIEW OFFERS",
-                                    style: TextStyle(fontSize: 14, color: Color(0xff193B61)),
+                            rProvider.appliedOffer == ""
+                                ? Row(
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Image(
+                                                image: AssetImage(
+                                                    "assets/icons/discount.png")),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text("Select a promo code"),
+                                          ],
+                                        ),
+                                      ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                    const CartOffers()));
+                                          },
+                                          child: const Text(
+                                            "VIEW OFFERS",
+                                            style: TextStyle(
+                                                fontSize: 14, color: Color(0xff193B61)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+
+                                    ],
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  )
+                                : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                Assets.assetsIconsGreenTick),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            TextView(
+                                              "${rProvider.appliedOffer} applied!",
+                                              size: 16,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            PrimaryTextButton(
+                                              title: "(Remove)",
+                                              isUpperCase: false,
+                                              showUnderline: true,
+                                              onPressed: () {
+                                                rProvider.onRemoveOffer();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            TextView("-\u{20B9}${"350"}"),
+                                          ],
+                                        ),
+                                      ),
+
+
+                                    ],
+                                  ),
+
                         const SizedBox(
                           height: 10,
                         ),
@@ -258,7 +330,8 @@ class CartSummary extends ConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 1),
                             ),
-                            const Text('\u{20B9}${"1850"}', style: TextStyle(fontSize: 20)),
+                            const Text('\u{20B9}${"1850"}',
+                                style: TextStyle(fontSize: 20)),
                           ],
                         ),
                         const SizedBox(
@@ -269,7 +342,8 @@ class CartSummary extends ConsumerWidget {
                           children: const [
                             Text(
                               "CHOOSE ADDRESS",
-                              style: TextStyle(color: Color(0xff193B61), fontSize: 14),
+                              style: TextStyle(
+                                  color: Color(0xff193B61), fontSize: 14),
                             ),
                             Text(
                               "PAYMENT",
@@ -424,7 +498,8 @@ class CartSummary extends ConsumerWidget {
           ),
           PrimaryButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const RatingPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const RatingPage()));
             },
             title: "Proceed to Payment",
             isExpanded: true,

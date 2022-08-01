@@ -26,6 +26,7 @@ class VacationModeScreen extends ConsumerWidget {
         children: [
           SecondaryAppBar(
             sIcon: Assets.assetsIconsHamburger,
+
             sOnPressed: () {},
           ),
           Expanded(
