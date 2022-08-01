@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -269,12 +270,6 @@ class ReferAndEarn extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TextView("Your Referral List", color: Colors.black, size: 20),
-                  const TextView(
-                    "11 referrals",
-                    color: Palette.hintColor,
-                    size: 18,
-                  ),
                   Text("Your Referral List", style: TextType.titleStyled),
                   const TextView(
                     "11 referrals",
@@ -321,12 +316,6 @@ class ReferAndEarn extends ConsumerWidget {
                                           const TextView(
                                             "Jane Cooper",
                                             color: Colors.black,
-                                            size: 18,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          const TextView(
-                                            "Jane Cooper",
-                                            color: Colors.black,
                                             size: 16,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -336,13 +325,6 @@ class ReferAndEarn extends ConsumerWidget {
                                     InkWell(
                                       child: Row(
                                         children: [
-                                          const TextView(
-                                            "REDEEM",
-                                            color: Color(0xff193B61),
-                                            size: 17,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          SvgPicture.asset(Assets.assetsIconsArrowRight),
                                           const TextView(
                                             "REDEEM",
                                             color: Color(0xff193B61),
@@ -482,40 +464,55 @@ class ReferAndEarn extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              width: 250,
-              child: ElevatedButton.icon(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shape: const StadiumBorder(),
-                  minimumSize: const Size(50, 50),
-                  maximumSize: const Size(500, 50),
-                ),
-                icon: SizedBox.square(
-                  dimension: 25,
-                  child: Image.asset("assets/images/whatsapp_icon.png"),
-                ),
-                label: TextView(
-                  'SHARE VIA WHATSAPP',
-                  textType: TextType.header2,
-                  size: TextSize.regularLarge,
-                  color: Palette.onPrimaryColor,
-                  height: 1.9,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            PrimaryButton(
-              width: 250,
-              title: "Or share via",
-              icon: Assets.assetsIconsShare,
-              iconSize: 30,
-              onPressed: () {},
-              isFilled: false,
-            ),
+       Padding(padding:EdgeInsets.only(left: 40,right: 40),child:    RichText(
+         textAlign: TextAlign.center,
+         text: TextSpan(
+             children: [
+               TextSpan(
+                   text: "Refer a friend to Pride of Cows and you’ll both get ",
+                   style: TextStyle(color:Palette.hintColor,fontSize: 16)
+               ),
+               TextSpan(
+                   text: "5 litres milk free!",
+                   style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black,fontFamily:GoogleFonts.suranna().fontFamily, fontSize: 20,)
+               ),
+             ]
+         ),),),
+
+            // SizedBox(
+            //   width: 250,
+            //   child: ElevatedButton.icon(
+            //     onPressed: () {},
+            //     style: ElevatedButton.styleFrom(
+            //       elevation: 0,
+            //       shape: const StadiumBorder(),
+            //       minimumSize: const Size(50, 50),
+            //       maximumSize: const Size(500, 50),
+            //     ),
+            //     icon: SizedBox.square(
+            //       dimension: 25,
+            //       child: Image.asset("assets/images/whatsapp_icon.png"),
+            //     ),
+            //     label: TextView(
+            //       'SHARE VIA WHATSAPP',
+            //       textType: TextType.header2,
+            //       size: TextSize.regularLarge,
+            //       color: Palette.onPrimaryColor,
+            //       height: 1.9,
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // PrimaryButton(
+            //   width: 250,
+            //   title: "Or share via",
+            //   icon: Assets.assetsIconsShare,
+            //   iconSize: 30,
+            //   onPressed: () {},
+            //   isFilled: false,
+            // ),
             Container(
               height: 196,
               width: 375,

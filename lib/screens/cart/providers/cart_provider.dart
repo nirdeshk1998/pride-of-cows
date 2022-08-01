@@ -13,6 +13,7 @@ class CartChangeProvider extends ChangeNotifier {
   int _itemCount = 0;
   String get itemCount => _itemCount.toString();
   String appliedOffer="";
+  bool showItems=true;
 
   void onItemPlus() {
     ++_itemCount;
@@ -37,6 +38,11 @@ class CartChangeProvider extends ChangeNotifier {
   }
   void onRemoveOffer(){
     appliedOffer="";
+    notifyListeners();
+
+  }
+  void showAndHideItems(){
+    showItems=!showItems;
     notifyListeners();
 
   }

@@ -9,7 +9,7 @@ import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/address/my_address_book.dart';
 import 'package:poc/screens/profile/my_profile.dart';
-import 'package:poc/screens/menu/rewards/rewards.dart';
+
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/notification/providers/notification_settings_provider.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';

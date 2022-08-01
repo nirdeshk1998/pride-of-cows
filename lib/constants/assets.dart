@@ -169,6 +169,10 @@ class Assets {
   /// assets/icons/gift_round.svg
   static const String assetsIconsGiftRound = "assets/icons/gift_round.svg";
 
+  /// Assets for assetsIconsGiftRound
+  /// assets/icons/gift_round.svg
+  static const String assetsImagesGhee =  "assets/images/ghee.png";
+
   /// Assets for assetsIconsGreenTick
   /// assets/icons/green_tick.svg
   static const String assetsIconsGreenTick = "assets/icons/green_tick.svg";
@@ -437,9 +441,9 @@ class Assets {
   /// assets/images/crown.png
   static const String assetsImagesCrown = "assets/images/crown.png";
 
-  /// Assets for assetsImagesGhee
-  /// assets/images/ghee.png
-  static const String assetsImagesGhee = "assets/images/ghee.png";
+  // /// Assets for assetsImagesGhee
+  // /// assets/images/ghee.png
+  // static const String assetsImagesGhee = "assets/images/ghee.png";
 
   /// Assets for assetsImagesGiftCard
   /// assets/images/gift_card.png

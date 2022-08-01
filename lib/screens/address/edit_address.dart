@@ -201,12 +201,7 @@ class EditAddress extends ConsumerWidget {
                         const PrimaryTextFormField(
                           label: 'Landmark',
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const PrimaryTextFormField(
-                          label: 'City*',
-                        ),
+
                         const SizedBox(
                           height: 20,
                         ),
@@ -214,6 +209,12 @@ class EditAddress extends ConsumerWidget {
                           const DropdownMenuItem(value: 0, child: Text('Maharasthtra')),
                           const DropdownMenuItem(value: 1, child: Text('Uttar Pradesh')),
                         ]),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const PrimaryTextFormField(
+                          label: 'City*',
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
