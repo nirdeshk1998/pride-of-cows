@@ -33,6 +33,11 @@ class Palette {
   static const successColor = Color(0xFF6FCF97);
   static const success2Color = Color(0xFF219653);
   static const selectedTabColor = Color(0xFFE3F6FC);
+
+  static const deliveredColor = secondaryColor;
+  static const upcomingColor = primaryColor;
+  static const vacationColor = Color(0xFFE2C29B);
+  static const cancelledColor = Color(0xFFF2858A);
 }
 
 class MaterialPalette {
