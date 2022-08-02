@@ -9,11 +9,12 @@ import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/address/my_address_book.dart';
 import 'package:poc/screens/profile/my_profile.dart';
-import 'package:poc/screens/menu/rewards/rewards.dart';
+
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/orders/orders_screen.dart';
 import 'package:poc/screens/notification/notification.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
+import 'package:poc/screens/rewards/rewards.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/utils.dart';
@@ -209,7 +210,7 @@ class MenuScreen extends ConsumerWidget {
           title: 'Help and Support',
           children: [
             menuListTile(
-              title: 'FAQs and Links',
+              title: "FAQ's and Links",
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => FaqAndLinks()));
               },

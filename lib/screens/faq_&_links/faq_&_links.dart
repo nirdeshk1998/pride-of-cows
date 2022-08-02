@@ -36,7 +36,7 @@ class FaqAndLinks extends ConsumerWidget {
               ),
             ),
             20.0.height,
-            menuListSection(title: "FAQs", children: [
+            menuListSection(title: "FAQ's", children: [
               menuListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => OrderHelp()));

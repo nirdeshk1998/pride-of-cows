@@ -62,7 +62,7 @@ class CartSummary extends ConsumerWidget {
                               children: [
                                 const Image(
                                     image: AssetImage(
-                                        "assets/icons/shoppingcart.png")),
+                                        Assets.assetsIconsShoppingcart)),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -76,12 +76,16 @@ class CartSummary extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            const InkWell(
-                              child: Icon(Icons.keyboard_arrow_down),
+                            InkWell(
+                              onTap: () {
+                                rProvider.showAndHideItems();
+                              },
+                              child: wProvider.showItems?Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),
                             ),
                           ],
                         ),
                         Visibility(
+                            visible: wProvider.showItems,
                             child: ListView.builder(
                                 itemCount: 3,
                                 shrinkWrap: true,
@@ -98,7 +102,7 @@ class CartSummary extends ConsumerWidget {
                                               children: const [
                                                 Image(
                                                   image: AssetImage(
-                                                      "assets/images/ghee.png"),
+                                                      Assets.assetsImagesGhee),
                                                   fit: BoxFit.fitHeight,
                                                 ),
                                               ],
@@ -223,22 +227,22 @@ class CartSummary extends ConsumerWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                            rProvider.appliedOffer == ""
-                                ? Row(
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Image(
-                                                image: AssetImage(
-                                                    "assets/icons/discount.png")),
-                                            SizedBox(
-                                              width: 3,
-                                            ),
-                                            Text("Select a promo code"),
-                                          ],
+                        rProvider.appliedOffer == ""
+                            ? Row(
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                            image: AssetImage(
+                                                Assets.assetsIconsDiscount)),
+                                        SizedBox(
+                                          width: 3,
                                         ),
-                                      ),
+                                        Text("Select a promo code"),
+                                      ],
+                                    ),
+                                  ),
                                   Container(
                                     child: Row(
                                       children: [
@@ -248,63 +252,61 @@ class CartSummary extends ConsumerWidget {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                    const CartOffers()));
+                                                        const CartOffers()));
                                           },
                                           child: const Text(
                                             "VIEW OFFERS",
                                             style: TextStyle(
-                                                fontSize: 14, color: Color(0xff193B61)),
+                                                fontSize: 14,
+                                                color: Color(0xff193B61)),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-
-                                    ],
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  )
-                                : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                Assets.assetsIconsGreenTick),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            TextView(
-                                              "${rProvider.appliedOffer} applied!",
-                                              size: 16,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            PrimaryTextButton(
-                                              title: "(Remove)",
-                                              isUpperCase: false,
-                                              showUnderline: true,
-                                              onPressed: () {
-                                                rProvider.onRemoveOffer();
-                                              },
-                                            ),
-                                          ],
+                                ],
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            Assets.assetsIconsGreenTick),
+                                        SizedBox(
+                                          width: 5,
                                         ),
-                                      ),
-
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            TextView("-\u{20B9}${"350"}"),
-                                          ],
+                                        TextView(
+                                          "${rProvider.appliedOffer} applied!",
+                                          size: 16,
                                         ),
-                                      ),
-
-
-                                    ],
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        PrimaryTextButton(
+                                          title: "(Remove)",
+                                          isUpperCase: false,
+                                          showUnderline: true,
+                                          onPressed: () {
+                                            rProvider.onRemoveOffer();
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
-
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        TextView("-\u{20B9}${"350"}"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                         const SizedBox(
                           height: 10,
                         ),
