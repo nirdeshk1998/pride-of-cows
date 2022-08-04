@@ -27,4 +27,12 @@ class TextStyles {
     letterSpacing: 0,
     fontWeight: FontWeight.normal,
   );
+  static TextStyle drawerHeader = TextStyle(
+    color: Palette.textColor,
+    fontFamily: GoogleFonts.suranna().fontFamily,
+    fontSize: 24,
+    height: 0,
+    letterSpacing: 0,
+    fontWeight: FontWeight.normal,
+  );
 }

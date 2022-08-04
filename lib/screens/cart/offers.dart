@@ -8,6 +8,7 @@ import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class CartOffers extends ConsumerWidget {
   const CartOffers({Key? key}) : super(key: key);
@@ -17,8 +18,9 @@ class CartOffers extends ConsumerWidget {
    final rProvider=ref.read(cartProvider);
    final wProvider=ref.watch(cartProvider);
     bool addressSelect = true;
-    return Scaffold(
-      body: SingleChildScrollView(
+    return Drawer(
+      width:  MediaQuery.of(context).size.width/1.09,
+      child: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
@@ -35,20 +37,26 @@ class CartOffers extends ConsumerWidget {
                         children: [
                           Text(
                             "Apply Coupan",
-                            style: TextStyles.header,
+                            style: TextStyles.drawerHeader,
                           ),
-                          const Icon(Icons.clear),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child:  Icon(Icons.clear),
+                          ),
+
                         ],
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.12,
-                            height: 55,
+                            width: 305,
+                            height: 46,
                             child: TextFormField(
                               decoration: InputDecoration(
                                 suffixIcon: SizedBox(
@@ -57,8 +65,8 @@ class CartOffers extends ConsumerWidget {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: const Text(
-                                      "Apply",
-                                      style: TextStyle(color: Colors.black),
+                                      "APPLY",
+                                      style: TextStyle(color: Color(0xffA6A6A6)),
                                     ),
                                     style: ButtonStyle(
                                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
@@ -69,15 +77,18 @@ class CartOffers extends ConsumerWidget {
                                 ),
                                 contentPadding: const EdgeInsets.only(left: 20, bottom: 37),
                                 labelText: "Enter Promo Code",
+                                labelStyle: TextStyle(color: Color(0xff808080)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
-                                    color: Colors.grey,
+                                      color: Color(0xffE5E5E5),
+                                      width: 1
                                   ),
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
-                                    color: Colors.grey,
+                                    color: Color(0xffE5E5E5),
+                                    width: 1
                                   ),
                                   borderRadius: BorderRadius.circular(40),
                                 ),
@@ -94,83 +105,96 @@ class CartOffers extends ConsumerWidget {
                       ),
                       Text(
                         "Available Offers",
-                        style: TextStyles.header,
-                      ),
-                      const SizedBox(
-                        height: 10,
+                        style: TextStyles.drawerHeader
                       ),
                       Container(
                         child: ListView.builder(
+                          padding: EdgeInsets.only(),
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
                             itemCount: 3,
                             itemBuilder: (_, index) {
                               return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("NEWFOUNDLOVE",
-                                          style: TextStyle(
-                                              color: const Color(0xff193B61),
-                                              fontSize: 18,
-                                              fontFamily: GoogleFonts.suranna().fontFamily,
-                                              letterSpacing: 1)),
-                                      InkWell(
-                                        onTap: (){
-                                          rProvider.onApplyOffer("NEWFOUNDLOVE",context);
-                              },
-                                        child: const Text(
-                                          "APPLY OFFERS",
-                                          style: TextStyle(color: Color(0xff193B61), fontSize: 17),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox.square(
-                                        dimension: 100,
-                                        child: Image(image: AssetImage("assets/images/paneer.png")),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width - 180,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                  Container(
+                                    padding:EdgeInsets.only(left: 15,right: 15),
+                                    color: Color(0xffF7F7F7),
+                                    child:  Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              '\u{20B9}${"500"} Discount',
-                                              style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 20),
-                                            ),
-                                            const Text(
-                                              "Get 5 off upto \u{20B9}${"500"} on your first purchase.",
-                                              style: TextStyle(fontSize: 17),
+                                            Text("NEWFOUNDLOVE",
+                                                style: TextStyle(
+                                                    color: const Color(0xff193B61),
+                                                    fontSize: 16,
+                                                    fontFamily: GoogleFonts.suranna().fontFamily,
+                                                    letterSpacing: 1)),
+                                            InkWell(
+                                              onTap: (){
+                                                rProvider.onApplyOffer("NEWFOUNDLOVE",context);
+                                              },
+                                              child: TextView(
+                                                "APPLY OFFERS",
+                                                color: Color(0xff193B61), size: 12,fontWeight: FontWeight.w700,letterSpacing: 1,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                        const Divider(
+                                          thickness: 1,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox.square(
+                                              dimension: 100,
+                                              child: Image(image: AssetImage("assets/images/paneer.png")),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width - 218,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '\u{20B9}${"500"} Discount',
+                                                    style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 20),
+                                                  ),
+                                                  const TextView(
+                                                    "Get 5 off upto \u{20B9}${"500"} on your first purchase.",
+                                                    size: 14,
+                                                    maxLines: 3,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        const TextView(
+                                          "Valid on orders with items worth \u{20B9}${"159"} or more.",
+                                          size: 14, color: Palette.hintColor,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text(
-                                    "Valid on orders with items worth \u{20B9}${"159"} or more.",
-                                    style: const TextStyle(fontSize: 17, color: Colors.grey),
-                                  ),
-                                  const SizedBox(
+                                  SizedBox(
                                     height: 20,
                                   ),
                                 ],
                               );
+
+
                             }),
                       ),
                     ],

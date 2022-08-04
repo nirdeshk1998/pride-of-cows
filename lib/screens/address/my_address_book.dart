@@ -63,11 +63,15 @@ class MyAddressBook extends ConsumerWidget {
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AddressInfromation()));
                       },
-                      child: Card(
-                        elevation: 0,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20,right: 21),
+                        color: Color(0xffFAFAFA),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: 10,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -101,23 +105,22 @@ class MyAddressBook extends ConsumerWidget {
                             const Divider(
                               thickness: 1,
                             ),
-                            const Text(
+                            const TextView(
                               "Akansha Das",
-                              style: TextStyle(fontSize: 17),
+                             size: 16,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            const TextView(
                               "2118,Thornidge Syracuse, Opposite Starbucks, Bandra East, Mumbai-356241,Maharasthra",
-                              style: TextStyle(fontSize: 17),
-                            ),
+                              size: 16,maxLines: 3,),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            const TextView(
                               "Phone number: 9876543210, 0123456789",
-                              style: TextStyle(fontSize: 17),
+                                size: 16
                             ),
                             const SizedBox(
                               height: 10,
@@ -126,8 +129,8 @@ class MyAddressBook extends ConsumerWidget {
                               thickness: 1,
                             ),
                             const TextView("Default Address"),
-                            const SizedBox(
-                              height: 5,
+                            SizedBox(
+                              height: 10,
                             ),
                           ],
                         ),
@@ -140,16 +143,20 @@ class MyAddressBook extends ConsumerWidget {
                   Container(
                     child: GestureDetector(
                       onTap: () {},
-                      child: Card(
-                        elevation: 0,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20,right: 21),
+                        color: Color(0xffFAFAFA),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: 10,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextView(
-                                  "Parent's",
+                                  'Parent’s',
                                   textType: TextType.titleStyled,
                                   color: Palette.textColor,
                                   height: 1,
@@ -180,28 +187,31 @@ class MyAddressBook extends ConsumerWidget {
                             ),
                             const TextView(
                               "Akshay Das",
-                              size: 17,
+                              size: 16,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "B-35, Sector-36,Near Cambridge Intl School, Noida- 201301, Uttar Pradesh",
-                              style: TextStyle(fontSize: 17),
-                            ),
+                            const TextView(
+                              "B-35,  Sector-36, Near Cambridge Intl School, Noida - 201301, Uttar Pradesh",
+                              size: 16,maxLines: 3,),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "Phone number: 9876543210, 0123456789",
-                              style: TextStyle(fontSize: 17),
+                            const TextView(
+                                "Phone number: 9876543210,0123456789",
+                                size: 16,
+                              maxLines: 2,
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             const Divider(
                               thickness: 1,
                             ),
-                            const TextView(
-                              "Verification Pending",
-                              size: 16,
+                            const TextView("Default Address"),
+                            SizedBox(
+                              height: 10,
                             ),
                           ],
                         ),
