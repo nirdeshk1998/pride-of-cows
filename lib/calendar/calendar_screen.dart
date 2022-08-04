@@ -6,6 +6,7 @@ import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/calender_picker/calender_picker2.dart';
+import 'package:poc/widgets/calender_view.dart';
 import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/text_view.dart';
 
@@ -30,29 +31,35 @@ class CalendarScreen extends ConsumerWidget {
                   'Calendar',
                   textType: TextType.header,
                 ),
-                SizedBox(
-                  height: 380,
-                  child: PrimaryCalendar(
-                    childAspectRatio: 1,
-                    dayPadding: 0,
-                    todayButtonColor: Palette.backgroundColor,
-                    todayBorderColor: Palette.primaryColor,
-                    isScrollable: false,
-                    headerMargin: EdgeInsets.zero,
-                    daysTextStyle: TextType.calender,
-                    todayTextStyle: TextType.calender,
-                    selectedDayTextStyle: TextType.calender,
-                    headerTextStyle: TextType.calender,
-                    weekdayTextStyle: TextType.calender.copyWith(color: Palette.hintColor, fontWeight: FontWeight.normal),
-                    weekendTextStyle: TextType.calender,
-                    nextDaysTextStyle: TextType.calender.apply(color: Palette.lightIconColor),
-                    prevDaysTextStyle: TextType.calender.apply(color: Palette.lightIconColor),
-                    inactiveDaysTextStyle: TextType.calender,
-                    inactiveWeekendTextStyle: TextType.calender,
-                    markedDateCustomTextStyle: TextType.calender,
-                    markedDateMoreCustomTextStyle: TextType.calender,
+                CalendarDateViewer(
+                  initialDate: DateTime.now(),
+                  deliveredDate: [
+                    DateTime(2022, 08, 01),
+                    DateTime(2022, 08, 02),
+                  ],
+                  upcomingDate: [
+                    DateTime(2022, 08, 08),
+                    DateTime(2022, 08, 31),
+                  ],
+                  vacationDate: [
+                    DateTime(2022, 08, 24),
+                    DateTime(2022, 08, 25),
+                    DateTime(2022, 08, 26),
+                  ],
+                  cancelledDate: [
+                    DateTime(2022, 08, 13),
+                  ],
+                  firstDate: DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
                   ),
+                  lastDate: DateTime(
+                    DateTime.now().year + 1,
+                    DateTime.now().month,
+                  ),
+                  onDateChanged: (i) {},
                 ),
+                10.0.height,
                 Row(
                   children: [
                     Container(
@@ -175,12 +182,12 @@ class CalendarScreen extends ConsumerWidget {
                             5.0.height,
                             Row(
                               children: [
-                                TextView(
+                                const TextView(
                                   'Delivery plan:',
                                   color: Palette.hintColor,
                                 ),
                                 5.0.width,
-                                TextView(
+                                const TextView(
                                   'Alternate',
                                 ),
                               ],

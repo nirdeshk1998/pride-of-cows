@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/orders/orders_screen.dart';
+import 'package:poc/screens/splash/splash_screen.dart';
 import 'package:poc/styles/colors.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
-      home: const MainScreen(),
+      home: const SplashScreen(),
     );
   }
 }

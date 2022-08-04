@@ -151,6 +151,7 @@ class PrimaryIconButton extends StatelessWidget {
         child: SvgPicture.asset(
           svg,
           fit: BoxFit.contain,
+          color: color,
         ),
       ),
     );

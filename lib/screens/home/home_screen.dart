@@ -383,10 +383,11 @@ class HomeScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(
-                      'https://i.pinimg.com/736x/a0/9b/01/a09b012df444b020f2638276d43f505c.jpg',
-                    ),
-                    fit: BoxFit.cover),
+                  image: NetworkImage(
+                    'https://i.pinimg.com/736x/a0/9b/01/a09b012df444b020f2638276d43f505c.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

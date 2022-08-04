@@ -91,7 +91,7 @@ class OrdersScreen extends ConsumerWidget {
                                   context,
                                   OrderDetailsScreen(
                                     orderType: index.isEven ? OrderType.oneTime : OrderType.subscription,
-                                    orderStatus: index.isEven ? OrderStatus.processing : OrderStatus.delivered,
+                                    orderStatus: index.isEven ? OrderStatus.processing : OrderStatus.processing,
                                   ),
                                 ),
                                 child: Row(
@@ -172,15 +172,15 @@ class OrdersScreen extends ConsumerWidget {
                                     SizedBox.square(
                                       dimension: 16,
                                       child: SvgPicture.asset(
-                                        index.isEven ? Assets.assetsIconsOngoing : Assets.assetsIconsTickRound,
-                                        color: index.isEven ? Palette.goldenIconColor : Palette.success2Color,
+                                        index.isEven ? Assets.assetsIconsOngoing : Assets.assetsIconsOngoing,
+                                        color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
                                       ),
                                     ),
                                     5.0.width,
                                     TextView(
-                                      index.isEven ? 'Ongoing' : 'Delivered',
+                                      index.isEven ? 'Ongoing' : 'Ongoing',
                                       textType: TextType.subtitle,
-                                      color: index.isEven ? Palette.goldenIconColor : Palette.success2Color,
+                                      color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
                                     ),
                                   ],
                                 ),

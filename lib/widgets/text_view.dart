@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/styles/colors.dart';
 
 class TextType {
-  static TextStyle calender = TextStyle(
+  static TextStyle calendar = TextStyle(
     fontSize: TextSize.regularSmall,
     fontWeight: FontWeight.bold,
     color: Palette.textColor,
