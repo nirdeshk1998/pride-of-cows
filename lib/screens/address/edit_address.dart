@@ -299,7 +299,7 @@ class EditAddress extends ConsumerWidget {
                                       // );
                                       return Dialog(
                                         child: Container(
-                                          height: 250,
+                                          height: 290,
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                                           child: Column(
                                             children: [
@@ -310,6 +310,7 @@ class EditAddress extends ConsumerWidget {
                                                     fontSize: 24,
                                                     fontWeight: FontWeight.w400),
                                                 textAlign: TextAlign.center,
+                                                textScaleFactor:0
                                               ),
                                               const Divider(
                                                 thickness: 1,
@@ -317,7 +318,7 @@ class EditAddress extends ConsumerWidget {
                                               const Padding(
                                                 padding: EdgeInsets.only(left: 18, right: 18),
                                                 child: TextView(
-                                                  "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
+                                                  "We will review your request and update the address after verification. The verification process will take upto 24 hours.",
                                                   size: 16,
                                                   maxLines: 10,
                                                 ),

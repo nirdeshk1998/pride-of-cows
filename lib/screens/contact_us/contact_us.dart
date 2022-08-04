@@ -55,7 +55,7 @@ class ContactUs extends ConsumerWidget {
                         width: 5,
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.4,
+                        width: MediaQuery.of(context).size.width / 1.42,
                         child: const Divider(
                           thickness: 1,
                         ),
@@ -97,7 +97,7 @@ class ContactUs extends ConsumerWidget {
                   Row(
                     children: const [
                       SizedBox(
-                        width: 25,
+                        width: 28,
                       ),
                       Flexible(
                         child: TextView(
@@ -133,17 +133,18 @@ class ContactUs extends ConsumerWidget {
                     height: 20,
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.asset(Assets.assetsIconsLocationGrey, height: 20.62, width: 20.62),
                       const SizedBox(
                         width: 10,
                       ),
-                      const Flexible(
+                      Flexible(
                         child: TextView(
                           "Pride of Cows, 20th flr, Nirmal Building, Nariman Pt, Mumbai, Maharashtra-400021",
                           size: 16,
                           fontWeight: FontWeight.w400,
-                          maxLines: 2,
+                          maxLines: 4,
                         ),
                       ),
                     ],

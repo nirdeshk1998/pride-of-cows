@@ -161,7 +161,12 @@ class CartSummary extends ConsumerWidget {
                                                             color:
                                                                 Colors.grey)),
                                                     Text("1"),
+                                                    SizedBox(
+                                                      width: 114,
+                                                    ),
+                                                    Text("\u{20B9}100"),
                                                   ],
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 ),
                                                 const SizedBox(
                                                   height: 2,
@@ -170,6 +175,7 @@ class CartSummary extends ConsumerWidget {
                                             ),
                                           ),
                                         ],
+
                                       ),
                                       const SizedBox(
                                         height: 20,

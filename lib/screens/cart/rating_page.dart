@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/cart/cart_summary.dart';
+import 'package:poc/screens/home/home_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -86,7 +87,7 @@ class RatingPage extends ConsumerWidget {
                                 height: 10,
                               ),
                               Text(
-                                "Please rate your experience",
+                                "Please rate your shopping experience",
                                 style: TextStyle(fontSize: 18),
                               ),
                               SizedBox(
@@ -95,7 +96,9 @@ class RatingPage extends ConsumerWidget {
                               PrimaryButton(
                                 title: "Submit Review",
                                 isFilled: true,
-                                onPressed: () {},
+                                onPressed: () {
+
+                                },
                               )
                             ],
                           ),
