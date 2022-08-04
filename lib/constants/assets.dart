@@ -206,8 +206,8 @@ class Assets {
   static const String assetsIconsLineThrough = "assets/icons/line_through.svg";
 
   /// Assets for assetsIconsLocationGrey
-  /// assets/icons/location_grey.svg
-  static const String assetsIconsLocationGrey = "assets/icons/location_grey.svg";
+  /// assets/icons/location_grey.png
+  static const String assetsIconsLocationGrey = "assets/icons/location_grey.png";
 
   /// Assets for assetsIconsLoveLetter
   /// assets/icons/love_letter.svg

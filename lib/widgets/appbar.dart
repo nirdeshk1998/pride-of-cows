@@ -271,6 +271,7 @@ class SecondaryAppBar extends StatelessWidget {
                   constraints: const BoxConstraints(),
                 ),
               const SizedBox.square(dimension: 9.5),
+
             ],
           ),
         ),
@@ -278,3 +279,85 @@ class SecondaryAppBar extends StatelessWidget {
     );
   }
 }
+
+class NotificationAppBar extends StatelessWidget {
+  const NotificationAppBar({
+    Key? key,
+    this.sOnPressed,
+    this.sIcon,
+    this.color,
+    this.sIcon2,
+    this.sicon3,
+  }) : super(key: key);
+
+  final VoidCallback? sOnPressed;
+  final String? sIcon;
+  final Color? color;
+  final String ? sIcon2;
+  final String ? sicon3;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      decoration: BoxDecoration(color: color ?? Palette.scaffoldBackgroundColor),
+      child: SizedBox(
+        height: kToolbarHeight,
+        child: Material(
+          color: Colors.transparent,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox.square(dimension: 9.5),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                splashRadius: 28,
+                iconSize: 24,
+                color: Palette.primaryColor,
+                icon: SvgPicture.asset(Assets.assetsIconsBack),
+                padding: const EdgeInsets.all(10.5),
+                constraints: const BoxConstraints(),
+              ),
+              const Spacer(),
+              if (sIcon != null)
+                IconButton(
+                  onPressed: sOnPressed,
+                  splashRadius: 28,
+                  iconSize: 24,
+                  color: Palette.primaryColor,
+                  icon: SvgPicture.asset(sIcon ?? ''),
+                  padding: const EdgeInsets.all(10.5),
+                  constraints: const BoxConstraints(),
+                ),
+              const SizedBox.square(dimension: 1.5),
+              if (sIcon2 != null)
+                IconButton(
+                  onPressed: sOnPressed,
+                  splashRadius: 28,
+                  iconSize: 24,
+                  color: Palette.primaryColor,
+                  icon: SvgPicture.asset(sIcon2 ?? ''),
+                  padding: const EdgeInsets.all(10.5),
+                  constraints: const BoxConstraints(),
+                ),
+              const SizedBox.square(dimension: 1.5),
+              if (sicon3 != null)
+                IconButton(
+                  onPressed: sOnPressed,
+                  splashRadius: 28,
+                  iconSize: 24,
+                  color: Palette.primaryColor,
+                  icon: SvgPicture.asset(sicon3 ?? ''),
+                  padding: const EdgeInsets.all(10.5),
+                  constraints: const BoxConstraints(),
+                ),
+              const SizedBox.square(dimension: 1.5),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

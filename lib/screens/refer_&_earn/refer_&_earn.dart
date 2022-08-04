@@ -520,7 +520,7 @@ class ReferAndEarn extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Share your code", style: const TextStyle(fontSize: 22)),
+                   Text("Share your code", style: TextStyle(fontSize: 24,fontFamily:GoogleFonts.suranna().fontFamily)),
                   const SizedBox(
                     height: 10,
                   ),
@@ -565,9 +565,7 @@ class ReferAndEarn extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: [
-                  const Divider(
-                    thickness: 1,
-                  ),
+
                   const SizedBox(
                     height: 10,
                   ),
@@ -576,8 +574,8 @@ class ReferAndEarn extends ConsumerWidget {
                     child: Row(
                       children: [
                         Container(
-                          width: 30.0,
-                          height: 30.0,
+                          width: 20.0,
+                          height: 20.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
@@ -596,12 +594,12 @@ class ReferAndEarn extends ConsumerWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        const TextView("How it works?", size: 16, decoration: TextDecoration.underline),
+                        const PrimaryTextButton(title:"How it works?", size: 16,isUpperCase: false, showUnderline: true,),
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                 ],
               ),

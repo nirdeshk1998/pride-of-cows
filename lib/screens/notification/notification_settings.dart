@@ -34,7 +34,11 @@ class NotificationsSettings extends ConsumerWidget {
         child: Container(
           child: Column(
             children: [
-              const SecondaryAppBar(),
+              NotificationAppBar(
+                sIcon: Assets.assetsIconsSearch,
+                sIcon2: Assets.assetsIconsCalendar,
+                sicon3: Assets.assetsIconsBellDot,
+              ),
               10.0.height,
               Padding(
                 padding: const EdgeInsets.symmetric(

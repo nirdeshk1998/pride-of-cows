@@ -21,7 +21,10 @@ class CartSummary extends ConsumerWidget {
     bool addressSelect = true;
     final rProvider = ref.read(cartProvider);
     final wProvider = ref.watch(cartProvider);
+    final GlobalKey<ScaffoldState>  _scaffoldKey = new GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: CartOffers(),
       body: Column(
         children: [
           Expanded(
@@ -80,7 +83,9 @@ class CartSummary extends ConsumerWidget {
                               onTap: () {
                                 rProvider.showAndHideItems();
                               },
-                              child: wProvider.showItems?Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),
+                              child: wProvider.showItems
+                                  ? Icon(Icons.keyboard_arrow_up)
+                                  : Icon(Icons.keyboard_arrow_down),
                             ),
                           ],
                         ),
@@ -156,7 +161,12 @@ class CartSummary extends ConsumerWidget {
                                                             color:
                                                                 Colors.grey)),
                                                     Text("1"),
+                                                    SizedBox(
+                                                      width: 114,
+                                                    ),
+                                                    Text("\u{20B9}100"),
                                                   ],
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 ),
                                                 const SizedBox(
                                                   height: 2,
@@ -165,6 +175,7 @@ class CartSummary extends ConsumerWidget {
                                             ),
                                           ),
                                         ],
+
                                       ),
                                       const SizedBox(
                                         height: 20,
@@ -248,11 +259,7 @@ class CartSummary extends ConsumerWidget {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const CartOffers()));
+                                            _scaffoldKey.currentState!.openEndDrawer();
                                           },
                                           child: const Text(
                                             "VIEW OFFERS",
@@ -313,10 +320,8 @@ class CartSummary extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Padding(
+                  Container(
+                    color: Color(0xffFAFAFA),
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,82 +375,122 @@ class CartSummary extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Radio(
-                                value: true,
-                                groupValue: addressSelect,
-                                onChanged: (value) {
-                                  print(value);
-                                }),
-                            const Text(
-                              "Home",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        const Text(
-                          "Akansha Das",
-                          style: TextStyle(fontSize: 15),
+                        Container(
+                          color:Color(0xffFAFAFA),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Radio(
+                                      value: true,
+                                      groupValue: addressSelect,
+                                      onChanged: (value) {
+                                        print(value);
+                                      }),
+                                  const TextView(
+                                    "Home",
+                                   size: 18,
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 44),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Divider(
+                                      thickness: 1,
+                                    ),
+                                    const TextView(
+                                      "Akansha Das",
+                                    size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const TextView(
+                                      "2118,Thornidge Syracuse,Opposite Starbucks,Bandra East,Mumbai-356241,Maharasthra",
+                                      size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const TextView(
+                                      "Phone Number: 9876432134",
+                                      size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
-                        const Text(
-                          "2118,Thornidge Syracuse,Opposite Starbucks,Bandra East,Mumbai-356241,Maharasthra",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Phone Number: 9876432134",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                                value: false,
-                                groupValue: addressSelect,
-                                onChanged: (value) {
-                                  print(value);
-                                }),
-                            const Text(
-                              "Parent's",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        const Text("Akshay Das"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "B-35, Sector-36,Near Cambridge Intl School, Noida- 201301, Uttar Pradesh",
-                          style: TextStyle(fontSize: 15),
+                        Container(
+                          color:Color(0xffFAFAFA),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Radio(
+                                      value: false,
+                                      groupValue: addressSelect,
+                                      onChanged: (value) {
+                                        print(value);
+                                      }),
+                                  const TextView(
+                                    "Parent’s",
+                                   size: 18,
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 44),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Divider(
+                                      thickness: 1,
+                                    ),
+                                    const TextView(
+                                      "Akshay Das",
+                                    size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const TextView(
+                                      "B-35,  Sector-36, Near Cambridge Intl School, Noida - 201301, Uttar Pradesh",
+                                    size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const TextView(
+                                      "Phone Number: 9876432134",
+                                     size: 15,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: const [
-                        Text(
-                          "Phone Number: 9876432134",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -460,6 +505,9 @@ class CartSummary extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
+                  Divider(
+                    thickness: 1,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Row(
@@ -472,21 +520,19 @@ class CartSummary extends ConsumerWidget {
                           size: TextSize.textButton,
                           onPressed: () {},
                         ),
-                        InkWell(
-                          child: TextView(
-                            "Privacy Policy",
-                            textType: TextType.regular,
-                            color: Palette.textColor,
-                          ),
+                        PrimaryTextButton(
+                          title: 'Privacy Policy',
+                          isUpperCase: false,
+                          showUnderline: true,
+                          size: TextSize.textButton,
+                          onPressed: () {},
                         ),
-                        const InkWell(
-                          child: Text(
-                            "Terms of service",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Color(0xFF193B61),
-                            ),
-                          ),
+                        PrimaryTextButton(
+                          title: 'Terms of service',
+                          isUpperCase: false,
+                          showUnderline: true,
+                          size: TextSize.textButton,
+                          onPressed: () {},
                         ),
                       ],
                     ),
