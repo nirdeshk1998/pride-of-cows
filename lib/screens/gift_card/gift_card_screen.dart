@@ -19,6 +19,7 @@ class GiftCardScreen extends ConsumerWidget {
   const GiftCardScreen({Key? key}) : super(key: key);
 
   @override
+
   Widget build(BuildContext context, WidgetRef ref) {
     final rProvider = ref.read(giftCardProvider);
     final wProvider = ref.watch(giftCardProvider);
@@ -74,7 +75,7 @@ class GiftCardScreen extends ConsumerWidget {
                 ),
                 10.0.height,
                 [
-                  _eGiftCardPage(),
+                  _eGiftCardPage(context,ref),
                   _physicalGiftCardPage(),
                   _giftASubscriptionPage(),
                 ][wProvider.selectedGiftCard],
@@ -98,109 +99,121 @@ class GiftCardScreen extends ConsumerWidget {
       ),
     );
   }
+Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
+  final rProvider = ref.read(giftCardProvider);
+  final wProvider = ref.watch(giftCardProvider);
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      TextView(
+        LocalString.eGiftCardSubtitle,
+        color: Palette.textColor,
+        textType: TextType.regular,
+        maxLines: 2,
+      ),
+      Dimensions.defaultPadding.height,
+      TextView(
+        'Select amount:',
+        textType: TextType.subtitle,
+        color: Palette.hintColor,
+      ),
+      5.0.height,
+      Wrap(
+        direction: Axis.horizontal,
+        spacing: 15.0,
+        children: List.generate(
+          5,
+              (index) {
+            bool isSelected = index == 0;
 
-  Column _eGiftCardPage() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextView(
-          LocalString.eGiftCardSubtitle,
-          color: Palette.textColor,
-          textType: TextType.regular,
-          maxLines: 2,
+            return PrimaryOutlineButton(
+              title: [
+                '₹500',
+                '₹1000',
+                '₹2000',
+                '₹2500',
+                '₹5000',
+              ][index],
+              letterSpacing: 1,
+              isFilled: isSelected,
+              onPressed: () {},
+            );
+          },
         ),
-        Dimensions.defaultPadding.height,
-        TextView(
-          'Select amount:',
-          textType: TextType.subtitle,
-          color: Palette.hintColor,
+      ),
+      30.0.height,
+      TextView(
+        'To:',
+        textType: TextType.header2,
+        color: Palette.textColor,
+        size: TextSize.title,
+      ),
+      5.0.height,
+      PrimaryTextFormField(
+        onChanged: rProvider.onChangeRNameFun,
+        label: 'Recipient\'s full name*',
+      ),
+      Dimensions.defaultPadding.height,
+       PhoneNumberFormField(
+        onChanged: rProvider.onChangeRPhNoFun,
+        label: 'Recipient\'s phone number*',
+      ),
+      Dimensions.defaultPadding.height,
+      // const PrimaryTextFormField(
+      //   label: 'Recipient\'s address line 1*',
+      // ),
+      // Dimensions.defaultPadding.height,
+      // const PrimaryTextFormField(
+      //   label: 'Recipient\'s address line 2*',
+      // ),
+      // Dimensions.defaultPadding.height,
+      // const PrimaryTextFormField(
+      //   label: 'Recipient\'s address line 3',
+      // ),
+      // Dimensions.defaultPadding.height,
+       PrimaryTextFormField(
+         onChanged: rProvider.onChangeREmailFun,
+        label: 'Recipient\'s email ID*',
+      ),
+      30.0.height,
+      TextView(
+        'From:',
+        textType: TextType.header2,
+        color: Palette.textColor,
+        size: TextSize.title,
+      ),
+      5.0.height,
+       PrimaryTextFormField(
+        onChanged: rProvider.onChangeSNameFun,
+        label: 'Sender\'s full name*',
+      ),
+      Dimensions.defaultPadding.height,
+       PhoneNumberFormField(
+         onChanged: rProvider.onChangeSPhNoFun,
+        label: 'Sender\' phone number*',
+      ),
+      Dimensions.defaultPadding.height,
+       PrimaryTextFormField(
+         onChanged: rProvider.onChangeSEmailFun,
+        label: 'Sender\'s email ID*',
+      ),
+      Dimensions.defaultPadding.height,
+      const SecondaryFormField(),
+      30.0.height,
+      wProvider.saveButtonState? Center(
+        child: PrimaryButton(
+          onPressed: (){},
+          title: 'add to cart',
         ),
-        5.0.height,
-        Wrap(
-          direction: Axis.horizontal,
-          spacing: 15.0,
-          children: List.generate(
-            5,
-            (index) {
-              bool isSelected = index == 0;
-
-              return PrimaryOutlineButton(
-                title: [
-                  '₹500',
-                  '₹1000',
-                  '₹2000',
-                  '₹2500',
-                  '₹5000',
-                ][index],
-                letterSpacing: 1,
-                isFilled: isSelected,
-                onPressed: () {},
-              );
-            },
-          ),
-        ),
-        30.0.height,
-        TextView(
-          'To:',
-          textType: TextType.header2,
-          color: Palette.textColor,
-          size: TextSize.title,
-        ),
-        5.0.height,
-        const PrimaryTextFormField(
-          label: 'Recipient\'s full name*',
-        ),
-        Dimensions.defaultPadding.height,
-        const PhoneNumberFormField(
-          label: 'Recipient\'s phone number*',
-        ),
-        Dimensions.defaultPadding.height,
-        // const PrimaryTextFormField(
-        //   label: 'Recipient\'s address line 1*',
-        // ),
-        // Dimensions.defaultPadding.height,
-        // const PrimaryTextFormField(
-        //   label: 'Recipient\'s address line 2*',
-        // ),
-        // Dimensions.defaultPadding.height,
-        // const PrimaryTextFormField(
-        //   label: 'Recipient\'s address line 3',
-        // ),
-        // Dimensions.defaultPadding.height,
-        const PrimaryTextFormField(
-          label: 'Recipient\'s email ID*',
-        ),
-        30.0.height,
-        TextView(
-          'From:',
-          textType: TextType.header2,
-          color: Palette.textColor,
-          size: TextSize.title,
-        ),
-        5.0.height,
-        const PrimaryTextFormField(
-          label: 'Sender\'s full name*',
-        ),
-        Dimensions.defaultPadding.height,
-        const PhoneNumberFormField(
-          label: 'Sender\' phone number*',
-        ),
-        Dimensions.defaultPadding.height,
-        const PrimaryTextFormField(
-          label: 'Sender\'s email ID*',
-        ),
-        Dimensions.defaultPadding.height,
-        const SecondaryFormField(),
-        30.0.height,
-        const Center(
-          child: PrimaryButton(
-            title: 'add to cart',
-          ),
-        ),
-      ],
-    );
-  }
+      ):Center(
+  child: PrimaryButton(
+  title: 'add to cart',
+  ),
+  ),
+    ],
+  );
+}
 
   Column _physicalGiftCardPage() {
     return Column(

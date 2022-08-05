@@ -369,10 +369,11 @@ class CartSummary extends ConsumerWidget {
                             Text(
                               "My Address Book",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 24,
                                 fontFamily: GoogleFonts.suranna().fontFamily,
                               ),
                             ),
+                            TextView("  (2 saved)",size: 14,),
                           ],
                         ),
                         Container(
