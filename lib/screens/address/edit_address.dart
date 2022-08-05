@@ -51,8 +51,8 @@ class EditAddress extends ConsumerWidget {
                         children: [
                           Container(
                               child: const Image(
-                            image: AssetImage("assets/images/maps.png"),
-                          )),
+                                image: AssetImage("assets/images/maps.png"),
+                              )),
                           Positioned(
                             bottom: 100,
                             left: 210,
@@ -299,18 +299,20 @@ class EditAddress extends ConsumerWidget {
                                       // );
                                       return Dialog(
                                         child: Container(
-                                          height: 290,
+                                          height: 312,
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                                           child: Column(
                                             children: [
+                                              SizedBox(
+                                                height: 32,
+                                              ),
                                               Text(
                                                 "Request for updating address sent!",
                                                 style: TextStyle(
                                                     fontFamily: GoogleFonts.suranna().fontFamily,
                                                     fontSize: 24,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight: FontWeight.w400,height: 1),
                                                 textAlign: TextAlign.center,
-                                                textScaleFactor:0
                                               ),
                                               const Divider(
                                                 thickness: 1,
@@ -318,9 +320,10 @@ class EditAddress extends ConsumerWidget {
                                               const Padding(
                                                 padding: EdgeInsets.only(left: 18, right: 18),
                                                 child: TextView(
-                                                  "We will review your request and update the address after verification. The verification process will take upto 24 hours.",
+                                                  "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
                                                   size: 16,
                                                   maxLines: 10,
+                                                  height: 1.8,
                                                 ),
                                               ),
                                               const SizedBox(
@@ -338,6 +341,9 @@ class EditAddress extends ConsumerWidget {
                                                     },
                                                   )
                                                 ],
+                                              ),
+                                              SizedBox(
+                                                height: 30,
                                               ),
                                             ],
                                           ),

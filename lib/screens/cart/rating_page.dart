@@ -9,6 +9,7 @@ import 'package:poc/screens/home/home_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class RatingPage extends ConsumerWidget {
   const RatingPage({Key? key}) : super(key: key);
@@ -50,9 +51,10 @@ class RatingPage extends ConsumerWidget {
                 Divider(
                   thickness: 1,
                 ),
-                Text(
+                TextView(
                   "Your order #98765 was completed succesfully",
-                  style: TextStyle(fontSize: 18),
+                 textAlign: TextAlign.center,
+                 size: 16,
                 ),
                 SizedBox(
                   height: 50,
@@ -86,9 +88,9 @@ class RatingPage extends ConsumerWidget {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              TextView(
                                 "Please rate your shopping experience",
-                                style: TextStyle(fontSize: 18),
+                                size: 14,
                               ),
                               SizedBox(
                                 height: 10,
@@ -97,9 +99,11 @@ class RatingPage extends ConsumerWidget {
                                 title: "Submit Review",
                                 isFilled: true,
                                 onPressed: () {
-
                                 },
-                              )
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
                             ],
                           ),
                         ),
@@ -126,9 +130,9 @@ class RatingPage extends ConsumerWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
+                TextView(
                   "For any queries or suggestion, connect at",
-                  style: TextStyle(fontSize: 18),
+                 size: 16
                 ),
                 SizedBox(
                   height: 10,

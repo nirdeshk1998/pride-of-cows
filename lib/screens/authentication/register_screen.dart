@@ -8,6 +8,7 @@ import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/terms_condition.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class RegisterScreen extends ConsumerWidget {
   const RegisterScreen({
@@ -34,10 +35,9 @@ class RegisterScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox.square(dimension: 30),
-              SizedBox(
-                height: 38,
-                child: Text('Register', textAlign: TextAlign.left, style: TextStyles.header),
-              ),
+
+               Text('Register', textAlign: TextAlign.left, style: TextStyles.header),
+
               const SizedBox.square(dimension: 5),
               Text(
                 'Please create an account to continue.',
@@ -56,7 +56,7 @@ class RegisterScreen extends ConsumerWidget {
               ),
               const SizedBox.square(dimension: 26),
               const PrimaryTextFormField(
-                label: 'Email ID',
+                label: 'Email ID*',
               ),
               const SizedBox.square(dimension: 26),
               const PrimaryDropdownFormField(
@@ -80,11 +80,11 @@ class RegisterScreen extends ConsumerWidget {
               ),
               const SizedBox.square(dimension: 26),
               const PrimaryDropdownFormField(
-                label: 'City*',
+                label: 'State*',
               ),
               const SizedBox.square(dimension: 26),
               const PrimaryDropdownFormField(
-                label: 'State*',
+                label: 'City*',
               ),
               const SizedBox.square(dimension: 30),
               Center(

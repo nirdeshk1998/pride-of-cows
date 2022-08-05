@@ -217,9 +217,14 @@ class MyProfile extends ConsumerWidget {
                       ),
                     ],
                   ),
-                   PrimaryButton(title: "SAVE",
-                     onPressed: wProvider.saveButtonState?()=>rProvider.onSendOtpButton:null,
+                   SizedBox(
+                     height: 30,
                    ),
+                  wProvider.saveButtonState? PrimaryButton(title: "Edit",
+                     onPressed: (){},
+                    isFilled: false,
+                   ): PrimaryButton(title: "SAVE",
+                  ),
 ]
               ),
             ),

@@ -91,7 +91,7 @@ class MyWalletScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            10.0.height,
+            15.0.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -194,11 +194,15 @@ class MyWalletScreen extends ConsumerWidget {
             borderRadius: Dimensions.radius10,
             color: Palette.onPrimaryColor,
           ),
-          child: TextView(
-            point,
-            textType: TextType.header,
-            height: 1.9,
+          child: Center(
+            child:   TextView(
+              point,
+              textType: TextType.header,
+              textAlign: TextAlign.center,
+              height: 1.7,
+            ),
           ),
+
         ),
         5.0.height,
         TextView(

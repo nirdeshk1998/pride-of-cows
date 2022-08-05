@@ -266,10 +266,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('My Crowns', style: TextStyles.header),
-                  ),
+                  Text('My Crowns', style: TextStyles.header),
+
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view rewards',
@@ -377,10 +375,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Refer & Earn', style: TextStyles.header),
-                  ),
+                   Text('Refer & Earn', style: TextStyles.header),
+
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view details',
@@ -531,10 +527,9 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Top Picks', style: TextStyles.header),
-                  ),
+
+                    Text('Top Picks', style: TextStyles.header),
+
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'shop all',
@@ -663,10 +658,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Order Again', style: TextStyles.header),
-                  ),
+                   Text('Order Again', style: TextStyles.header),
+
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view all',
@@ -857,10 +850,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Why Pride of Cows', style: TextStyles.header),
-                  ),
+                  Text('Why Pride of Cows', style: TextStyles.header),
+
                   const Spacer(),
                 ],
               ),

@@ -25,6 +25,9 @@ class OnBoardingScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Center(
               child: Image.asset(
                 Assets.assetsLogoPocLogo,
@@ -36,9 +39,11 @@ class OnBoardingScreen extends ConsumerWidget {
             SizedBox(
               height: 380,
               child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged:rProvider.onSwipe,
+                // physics: const NeverScrollableScrollPhysics(),
                 controller: wProvider.pageController,
                 pageSnapping: true,
+                scrollDirection: Axis.horizontal,
                 children: [
                   buildOnBoardingColumn(
                     svg: Assets.assetsImagesOb1,

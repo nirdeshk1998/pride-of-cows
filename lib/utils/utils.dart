@@ -78,6 +78,7 @@ class Utils {
                                     color: Palette.textColor,
                                     textType: TextType.regular,
                                     height: 0.7,
+
                                   ),
                               ],
                             ),
