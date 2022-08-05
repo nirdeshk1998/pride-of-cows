@@ -344,6 +344,7 @@ class EditOrderScreen extends ConsumerWidget {
                     Center(
                       child: PrimaryButton(
                         title: 'update order',
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
                         onPressed: () => Utils.push(
                           context,
                           const OrderStatusScreen(status: EditOrderStatus.updated),
@@ -355,6 +356,7 @@ class EditOrderScreen extends ConsumerWidget {
                     Center(
                       child: PrimaryButton(
                         title: 'discard changes',
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
                         onPressed: () => Utils.pop(context),
                         isFilled: false,
                         width: 200,

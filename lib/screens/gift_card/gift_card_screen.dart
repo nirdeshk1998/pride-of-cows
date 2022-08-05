@@ -13,7 +13,6 @@ import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
-import 'package:widget_size/widget_size.dart';
 
 class GiftCardScreen extends ConsumerWidget {
   const GiftCardScreen({Key? key}) : super(key: key);

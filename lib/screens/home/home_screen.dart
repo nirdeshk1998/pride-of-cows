@@ -13,6 +13,7 @@ import 'package:poc/test_widget.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/progress_bar.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({
@@ -23,6 +24,8 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final rProvider = ref.read(homeProvider);
     final wProvider = ref.watch(homeProvider);
+
+    MediaQuery.of(context).size.width;
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -247,6 +250,12 @@ class HomeScreen extends ConsumerWidget {
         ),
         const SizedBox.square(dimension: 40),
 
+        // PrimarySlider(
+        //   value: 0.4,
+        //   divisions: 4,
+        //   onChanged: (i) {},
+        // ),
+
         // My Crowns
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -319,7 +328,9 @@ class HomeScreen extends ConsumerWidget {
                         )
                       ],
                     ),
-                    const RewardProgressBar(),
+                    const RewardProgressBar(
+                      value: 50,
+                    ),
                   ],
                 ),
               ),

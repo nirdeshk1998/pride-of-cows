@@ -78,7 +78,9 @@ class LoyaltyProgramScreen extends ConsumerWidget {
                   )
                 ],
               ),
-              const RewardProgressBar(),
+              const RewardProgressBar(
+                value: 20,
+              ),
             ],
           ),
         ),

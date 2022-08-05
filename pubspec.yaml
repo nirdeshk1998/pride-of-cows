@@ -20,7 +20,7 @@ dependencies:
   carousel_slider: ^4.1.1
   card_swiper: ^2.0.1
   # flutter_calendar_carousel: ^2.4.0
-  widget_size: ^0.0.2
+  # widget_size: ^0.0.2
 
 
 dev_dependencies:
