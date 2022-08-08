@@ -121,16 +121,20 @@ class OrderStatusScreen extends ConsumerWidget {
                     child: Column(
                       children: [
                         15.0.height,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                            5,
-                            (index) => PrimaryIconButton(
-                              svg: Assets.assetsIconsStar3,
-                              size: 30,
-                              padding: EdgeInsets.only(right: index < 4 ? 15.0 : 0),
-                              onPressed: () {},
-                            ),
+                        GridView.builder(
+                          itemCount: 5,
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
+                            childAspectRatio: 1,
+                          ),
+                          itemBuilder: (BuildContext context, int index) => PrimaryIconButton(
+                            svg: Assets.assetsIconsStar3,
+                            size: 30,
+                            // padding: EdgeInsets.only(right: index < 4 ? 15.0 : 0),
+                            onPressed: () {},
                           ),
                         ),
                         10.0.height,
@@ -190,8 +194,9 @@ class OrderStatusScreen extends ConsumerWidget {
             Center(
               child: PrimaryButton(
                 title: 'continue shopping',
-                onPressed: () {},
+                onPressed: () => Utils.pushAndRemoveUntil(context, const MainScreen()),
                 width: 220,
+                padding: EdgeInsets.zero,
               ),
             ),
             Dimensions.defaultPadding.height,
@@ -200,9 +205,11 @@ class OrderStatusScreen extends ConsumerWidget {
                 title: 'go back to home',
                 onPressed: () => Utils.pushAndRemoveUntil(context, const MainScreen()),
                 width: 220,
+                padding: EdgeInsets.zero,
                 isFilled: false,
               ),
             ),
+            40.0.height
           ],
         ),
       ),

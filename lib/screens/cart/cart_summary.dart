@@ -10,6 +10,7 @@ import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
@@ -21,10 +22,10 @@ class CartSummary extends ConsumerWidget {
     bool addressSelect = true;
     final rProvider = ref.read(cartProvider);
     final wProvider = ref.watch(cartProvider);
-    final GlobalKey<ScaffoldState>  _scaffoldKey = new GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: CartOffers(),
+      endDrawer: const CartOffers(),
       body: Column(
         children: [
           Expanded(
@@ -63,9 +64,7 @@ class CartSummary extends ConsumerWidget {
                           children: [
                             Row(
                               children: [
-                                const Image(
-                                    image: AssetImage(
-                                        Assets.assetsIconsShoppingcart)),
+                                const Image(image: AssetImage(Assets.assetsIconsShoppingcart)),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -84,105 +83,84 @@ class CartSummary extends ConsumerWidget {
                                 rProvider.showAndHideItems();
                               },
                               child: wProvider.showItems
-                                  ? Icon(Icons.keyboard_arrow_up)
-                                  : Icon(Icons.keyboard_arrow_down),
+                                  ? const Icon(Icons.keyboard_arrow_up)
+                                  : const Icon(Icons.keyboard_arrow_down),
                             ),
                           ],
                         ),
                         Visibility(
-                            visible: wProvider.showItems,
-                            child: ListView.builder(
-                                itemCount: 3,
-                                shrinkWrap: true,
-                                physics: const ScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Column(
+                          visible: wProvider.showItems,
+                          child: ListView.builder(
+                            itemCount: 3,
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 100,
-                                            height: 100,
-                                            child: Row(
-                                              children: const [
-                                                Image(
-                                                  image: AssetImage(
-                                                      Assets.assetsImagesGhee),
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.only(
-                                              left: 10,
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Ghee (250 grams)",
-                                                  style: TextStyles.subheader,
-                                                ),
-                                                Text('\u{20B9}${"50"}',
-                                                    style: TextStyles.hint),
-                                                const SizedBox(
-                                                  height: 2,
-                                                ),
-                                                Row(
-                                                  children: const [
-                                                    Text("Delivery Plan: ",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.grey)),
-                                                    Text("Alternate"),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 2,
-                                                ),
-                                                Row(
-                                                  children: const [
-                                                    Text("Delivery: ",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.grey)),
-                                                    Text("10-09-2022"),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 2,
-                                                ),
-                                                Row(
-                                                  children: const [
-                                                    Text("Quantity: ",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.grey)),
-                                                    Text("1"),
-                                                    SizedBox(
-                                                      width: 114,
-                                                    ),
-                                                    Text("\u{20B9}100"),
-                                                  ],
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                ),
-                                                const SizedBox(
-                                                  height: 2,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-
+                                      const SizedBox.square(
+                                        dimension: 100,
+                                        child: Image(
+                                          image: AssetImage(Assets.assetsImagesMilkProd),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        height: 20,
+                                      10.0.width,
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Ghee (250 grams)",
+                                              style: TextStyles.subheader,
+                                            ),
+                                            Text('\u{20B9}${"50"}', style: TextStyles.hint),
+                                            const SizedBox(
+                                              height: 2,
+                                            ),
+                                            Row(
+                                              children: const [
+                                                Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
+                                                Text("Alternate"),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 2,
+                                            ),
+                                            Row(
+                                              children: const [
+                                                Text("Delivery: ", style: TextStyle(color: Colors.grey)),
+                                                Text("10-09-2022"),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 2,
+                                            ),
+                                            Row(
+                                              children: const [
+                                                Text("Quantity: ", style: TextStyle(color: Colors.grey)),
+                                                Text("1"),
+                                                Spacer(),
+                                                Text("\u{20B9}100"),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 2,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
-                                  );
-                                })),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                         const Divider(
                           thickness: 1,
                         ),
@@ -243,10 +221,8 @@ class CartSummary extends ConsumerWidget {
                                 children: [
                                   Container(
                                     child: Row(
-                                      children: [
-                                        Image(
-                                            image: AssetImage(
-                                                Assets.assetsIconsDiscount)),
+                                      children: const [
+                                        Image(image: AssetImage(Assets.assetsIconsDiscount)),
                                         SizedBox(
                                           width: 3,
                                         ),
@@ -263,35 +239,30 @@ class CartSummary extends ConsumerWidget {
                                           },
                                           child: const Text(
                                             "VIEW OFFERS",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Color(0xff193B61)),
+                                            style: TextStyle(fontSize: 14, color: Color(0xff193B61)),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ],
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               )
                             : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset(
-                                            Assets.assetsIconsGreenTick),
-                                        SizedBox(
+                                        SvgPicture.asset(Assets.assetsIconsGreenTick),
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         TextView(
                                           "${rProvider.appliedOffer} applied!",
                                           size: 16,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         PrimaryTextButton(
@@ -307,7 +278,7 @@ class CartSummary extends ConsumerWidget {
                                   ),
                                   Container(
                                     child: Row(
-                                      children: [
+                                      children: const [
                                         TextView("-\u{20B9}${"350"}"),
                                       ],
                                     ),
@@ -321,7 +292,7 @@ class CartSummary extends ConsumerWidget {
                     ),
                   ),
                   Container(
-                    color: Color(0xffFAFAFA),
+                    color: const Color(0xffFAFAFA),
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,8 +308,7 @@ class CartSummary extends ConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 1),
                             ),
-                            const Text('\u{20B9}${"1850"}',
-                                style: TextStyle(fontSize: 20)),
+                            const Text('\u{20B9}${"1850"}', style: TextStyle(fontSize: 20)),
                           ],
                         ),
                         const SizedBox(
@@ -349,8 +319,7 @@ class CartSummary extends ConsumerWidget {
                           children: const [
                             Text(
                               "CHOOSE ADDRESS",
-                              style: TextStyle(
-                                  color: Color(0xff193B61), fontSize: 14),
+                              style: TextStyle(color: Color(0xff193B61), fontSize: 14),
                             ),
                             Text(
                               "PAYMENT",
@@ -373,11 +342,14 @@ class CartSummary extends ConsumerWidget {
                                 fontFamily: GoogleFonts.suranna().fontFamily,
                               ),
                             ),
-                            TextView("  (2 saved)",size: 14,),
+                            const TextView(
+                              "  (2 saved)",
+                              size: 14,
+                            ),
                           ],
                         ),
                         Container(
-                          color:Color(0xffFAFAFA),
+                          color: const Color(0xffFAFAFA),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -391,37 +363,37 @@ class CartSummary extends ConsumerWidget {
                                       }),
                                   const TextView(
                                     "Home",
-                                   size: 18,
+                                    size: 18,
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 44),
+                                padding: const EdgeInsets.only(left: 44),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Divider(
+                                  children: const [
+                                    Divider(
                                       thickness: 1,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "Akansha Das",
-                                    size: 15,
+                                      size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "2118,Thornidge Syracuse,Opposite Starbucks,Bandra East,Mumbai-356241,Maharasthra",
                                       size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "Phone Number: 9876432134",
                                       size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
                                   ],
@@ -434,7 +406,7 @@ class CartSummary extends ConsumerWidget {
                           height: 20,
                         ),
                         Container(
-                          color:Color(0xffFAFAFA),
+                          color: const Color(0xffFAFAFA),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -448,37 +420,37 @@ class CartSummary extends ConsumerWidget {
                                       }),
                                   const TextView(
                                     "Parent’s",
-                                   size: 18,
+                                    size: 18,
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 44),
+                                padding: const EdgeInsets.only(left: 44),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Divider(
+                                  children: const [
+                                    Divider(
                                       thickness: 1,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "Akshay Das",
-                                    size: 15,
+                                      size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "B-35,  Sector-36, Near Cambridge Intl School, Noida - 201301, Uttar Pradesh",
-                                    size: 15,
+                                      size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
-                                    const TextView(
+                                    TextView(
                                       "Phone Number: 9876432134",
-                                     size: 15,
+                                      size: 15,
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
                                   ],
@@ -506,7 +478,7 @@ class CartSummary extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   Padding(
@@ -547,8 +519,7 @@ class CartSummary extends ConsumerWidget {
           ),
           PrimaryButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const RatingPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const RatingPage()));
             },
             title: "Proceed to Payment",
             isExpanded: true,

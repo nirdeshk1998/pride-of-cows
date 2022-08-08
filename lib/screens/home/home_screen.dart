@@ -9,11 +9,11 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/providers/home_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
-import 'package:poc/test_widget.dart';
+import 'package:poc/utils/extensions.dart';
+import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
-import 'package:poc/widgets/progress_bar.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({
@@ -221,7 +221,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox.square(dimension: 10),
             AspectRatio(
-              aspectRatio: 375 / 110,
+              aspectRatio: 375 / 120,
               child: ListView.separated(
                 itemCount: 10,
                 scrollDirection: Axis.horizontal,
@@ -248,7 +248,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox.square(dimension: 40),
+        10.0.height,
 
         // PrimarySlider(
         //   value: 0.4,
@@ -267,7 +267,6 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('My Crowns', style: TextStyles.header),
-
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view rewards',
@@ -327,7 +326,7 @@ class HomeScreen extends ConsumerWidget {
                       ],
                     ),
                     const RewardProgressBar(
-                      value: 50,
+                      value: 30,
                     ),
                   ],
                 ),
@@ -363,7 +362,7 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox.square(dimension: 40),
+        40.0.height,
 
         // Refer and earn
         Column(
@@ -375,8 +374,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   Text('Refer & Earn', style: TextStyles.header),
-
+                  Text('Refer & Earn', style: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view details',
@@ -527,9 +525,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
-                    Text('Top Picks', style: TextStyles.header),
-
+                  Text('Top Picks', style: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'shop all',
@@ -658,8 +654,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   Text('Order Again', style: TextStyles.header),
-
+                  Text('Order Again', style: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view all',
@@ -851,7 +846,6 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('Why Pride of Cows', style: TextStyles.header),
-
                   const Spacer(),
                 ],
               ),

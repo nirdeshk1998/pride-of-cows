@@ -22,24 +22,25 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
     super.initState();
   }
 
-  Size _getProgressSize() {
-    final RenderBox renderBox = _widgetKey.currentContext?.findRenderObject() as RenderBox;
+  // Size _getProgressSize() {
+  //   final RenderBox renderBox = _widgetKey.currentContext?.findRenderObject() as RenderBox;
 
-    final Size size = renderBox.size; // or _widgetKey.currentContext?.size
-    debugPrint('Size: ${size.width}, ${size.height}');
+  //   final Size size = renderBox.size; // or _widgetKey.currentContext?.size
+  //   debugPrint('Size: ${size.width}, ${size.height}');
 
-    return size;
+  //   return size;
 
-    // final Offset offset = renderBox.localToGlobal(Offset.zero);
-    // debugPrint('Offset: ${offset.dx}, ${offset.dy}');
-    // debugPrint('Position: ${(offset.dx + size.width) / 2}, ${(offset.dy + size.height) / 2}');
-  }
+  //   // final Offset offset = renderBox.localToGlobal(Offset.zero);
+  //   // debugPrint('Offset: ${offset.dx}, ${offset.dy}');
+  //   // debugPrint('Position: ${(offset.dx + size.width) / 2}, ${(offset.dy + size.height) / 2}');
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // final double progressBarWidth = MediaQuery.of(context).size.width - 80;
-    final double progressValue = ((widget.value - 10) * 100) / 40;
-    final double progress = ((_getProgressSize().width) * progressValue) / 100;
+    final double progressWidth = MediaQuery.of(context).size.width - 80;
+    debugPrint('progressWidth: $progressWidth');
+    final double progressValue = ((widget.value) * 100) / 50;
+    final double progress = ((progressWidth) * progressValue) / 100;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -48,7 +49,7 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Container(
-            key: _widgetKey,
+            // key: _widgetKey,
             height: 1,
             margin: const EdgeInsets.symmetric(vertical: 9.0),
             width: double.maxFinite,
@@ -81,7 +82,7 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
-            5,
+            6,
             (index) => SizedBox(
               width: 20,
               child: Column(
@@ -99,18 +100,18 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
                           color: const Color(0xFFEEF9FF),
                           width: 2,
                         ),
-                        color: index < 2 ? Palette.primaryColor : const Color(0xff8AD6FF),
+                        color: (index * 10) <= widget.value ? Palette.primaryColor : const Color(0xff8AD6FF),
                       ),
                     ),
                   ),
                   4.0.height,
                   TextView(
-                    '${10 * (1 + index)}',
+                    '${10 * index}',
                     textAlign: TextAlign.center,
                     textType: TextType.regular,
                     size: TextSize.regularSmall,
                     height: 1,
-                    color: index < 2 ? Palette.primaryColor : const Color(0xff658395),
+                    color: (index * 10) <= widget.value ? Palette.primaryColor : const Color(0xff658395),
                   ),
                 ],
               ),

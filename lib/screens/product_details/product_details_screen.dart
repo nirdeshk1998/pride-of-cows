@@ -8,7 +8,6 @@ import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/main/providers/main_provider.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/utils/utils.dart';
@@ -235,6 +234,9 @@ class ProductDetailsScreen extends ConsumerWidget {
                                                     setState(() {
                                                       startDateVisibilty = !startDateVisibilty;
                                                     });
+                                                  },
+                                                  onDateTapped: () {
+                                                    print('object');
                                                   },
                                                   isVisible: startDateVisibilty,
                                                   initialCalendarMode: DatePickerMode.day,

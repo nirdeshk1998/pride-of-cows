@@ -50,6 +50,8 @@ const double _monthNavButtonsWidth = 66.0;
 ///    time picker.
 ///
 class PrimaryCalendarDatePicker extends StatefulWidget {
+  final VoidCallback? onDateTapped;
+
   /// Creates a calendar date picker.
   ///
   /// It will display a grid of days for the [initialDate]'s month. The day
@@ -90,6 +92,7 @@ class PrimaryCalendarDatePicker extends StatefulWidget {
     required this.label,
     required this.isVisible,
     required this.onMonthPressed,
+    this.onDateTapped,
   })  : initialDate = DateUtils.dateOnly(initialDate),
         firstDate = DateUtils.dateOnly(firstDate),
         lastDate = DateUtils.dateOnly(lastDate),
@@ -270,6 +273,7 @@ class _PrimaryCalendarDatePickerState extends State<PrimaryCalendarDatePicker> {
           firstDate: widget.firstDate,
           lastDate: widget.lastDate,
           selectedDate: _selectedDate,
+          onDateTapped: widget.onDateTapped,
           onChanged: _handleDayChanged,
           onDisplayedMonthChanged: _handleMonthChanged,
           selectableDayPredicate: widget.selectableDayPredicate,
@@ -459,10 +463,13 @@ class _MonthPicker extends StatefulWidget {
     required this.onDisplayedMonthChanged,
     this.selectableDayPredicate,
     required this.isVisible,
+    this.onDateTapped,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
         assert(!selectedDate.isAfter(lastDate)),
         super(key: key);
+
+  final VoidCallback? onDateTapped;
 
   /// The initial month to display.
   final DateTime initialMonth;
@@ -743,6 +750,7 @@ class _MonthPickerState extends State<_MonthPicker> {
       onChanged: _handleDateSelected,
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
+      onDateTapped: widget.onDateTapped,
       displayedMonth: month,
       selectableDayPredicate: widget.selectableDayPredicate,
     );
@@ -846,10 +854,13 @@ class _DayPicker extends StatefulWidget {
     required this.selectedDate,
     required this.onChanged,
     this.selectableDayPredicate,
+    this.onDateTapped,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
         assert(!selectedDate.isAfter(lastDate)),
         super(key: key);
+
+  final VoidCallback? onDateTapped;
 
   /// The currently selected date.
   ///
@@ -1032,7 +1043,10 @@ class _DayPickerState extends State<_DayPicker> {
         } else {
           dayWidget = InkResponse(
             focusNode: _dayFocusNodes[day - 1],
-            onTap: () => widget.onChanged(dayToBuild),
+            onTap: () {
+              widget.onChanged(dayToBuild);
+              widget.onDateTapped?.call();
+            },
             radius: _dayPickerRowHeight / 2 + 4,
             splashColor: selectedDayBackground.withOpacity(0.38),
             child: Semantics(

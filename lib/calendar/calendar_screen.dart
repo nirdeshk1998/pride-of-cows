@@ -180,7 +180,7 @@ class CalendarScreen extends ConsumerWidget {
                               height: 1,
                             ),
                             5.0.height,
-                            Row(
+                            Wrap(
                               children: [
                                 const TextView(
                                   'Delivery plan:',

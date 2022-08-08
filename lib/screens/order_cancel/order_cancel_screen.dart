@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/order_cancel/oreder_canceling_reasons.dart';
 import 'package:poc/screens/order_edit/edit_order_screen.dart';
+import 'package:poc/screens/order_status/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -87,7 +88,7 @@ class OrderCancelScreen extends ConsumerWidget {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              4.0.height,
+                                              5.0.height,
                                               Row(
                                                 children: [
                                                   TextView(
@@ -114,14 +115,12 @@ class OrderCancelScreen extends ConsumerWidget {
                                               ),
                                               5.0.height,
                                               _textTile(
-                                                icon: Assets.assetsIconsClock,
                                                 title: 'Delivery Plan:',
                                                 subtitle: 'Daily',
                                                 fontSize: TextSize.regular,
                                               ),
                                               5.0.height,
                                               _textTile(
-                                                icon: Assets.assetsIconsCalender2,
                                                 title: 'Delivery:',
                                                 subtitle: '31-12-21',
                                                 fontSize: TextSize.regular,
@@ -138,7 +137,6 @@ class OrderCancelScreen extends ConsumerWidget {
                                                   TextView(
                                                     '₹50',
                                                     textType: TextType.regular,
-                                                    height: 1.5,
                                                     color: Palette.textColor,
                                                   ),
                                                 ],
@@ -161,58 +159,123 @@ class OrderCancelScreen extends ConsumerWidget {
                         color: Palette.onPrimaryColor,
                       ),
                     ),
-                    40.0.height,
+                    Dimensions.defaultPadding.height,
                     const Divider(
                       height: 1,
                       thickness: 1,
                       color: Palette.surfaceColor,
                     ),
                     10.0.height,
-                    const TextView('Showing 2 returnable items'),
-                    Dimensions.defaultPadding.height,
-                    Row(
+                    // const TextView('Showing 2 returnable items'),
+                    // Dimensions.defaultPadding.height,
+                    // Row(
+                    //   children: [
+                    //     const TextView(
+                    //       'Why don\'t I see all of my cart items?',
+                    //       color: Palette.primaryColor,
+                    //     ),
+                    //     10.0.width,
+                    //     SizedBox.square(
+                    //       dimension: 12,
+                    //       child: SvgPicture.asset(
+                    //         Assets.assetsIconsChevronDownThin,
+                    //         fit: BoxFit.contain,
+                    //         color: Palette.primaryColor,
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const TextView(
-                          'Why don\'t I see all of my cart items?',
-                          color: Palette.primaryColor,
+                          'Why are you cancelling this?',
+                          size: TextSize.regularLarge,
                         ),
-                        10.0.width,
-                        SizedBox.square(
-                          dimension: 12,
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsChevronDownThin,
-                            fit: BoxFit.contain,
-                            color: Palette.primaryColor,
+                        Dimensions.defaultPadding.height,
+                        _iconTile(text: 'Product was not up to quality', onChanged: (i) {}),
+                        15.0.height,
+                        _iconTile(text: 'Delivery is later than expected', onChanged: (i) {}),
+                        15.0.height,
+                        _iconTile(text: 'Product is not required anymore', onChanged: (i) {}),
+                        15.0.height,
+                        _iconTile(text: 'Change in delivery address', onChanged: (i) {}),
+                        15.0.height,
+                        _iconTile(text: 'Cash not available for COD', onChanged: (i) {}),
+                        15.0.height,
+                        _iconTile(text: 'Other', onChanged: (i) {}),
+                        30.0.height,
+                        Center(
+                          child: PrimaryButton(
+                            title: orderType == OrderType.oneTime ? 'cancel item' : 'request cancellation',
+                            onPressed: () => Utils.push(
+                              context,
+                              OrderStatusScreen(
+                                status: orderType == OrderType.oneTime
+                                    ? EditOrderStatus.cancelled
+                                    : EditOrderStatus.cancellationRequest,
+                              ),
+                            ),
+                            padding: EdgeInsets.zero,
+                            width: 240,
                           ),
-                        )
+                        ),
+                        Dimensions.defaultPadding.height,
+                        Center(
+                          child: PrimaryButton(
+                            title: 'discard changes',
+                            onPressed: () => Utils.pop(context),
+                            isFilled: false,
+                            padding: EdgeInsets.zero,
+                            width: 240,
+                          ),
+                        ),
                       ],
                     ),
+
                     10.0.height,
                   ],
                 ),
-                Dimensions.defaultPadding.height,
-                Center(
-                  child: PrimaryButton(
-                    title: 'next',
-                    onPressed: () => Utils.push(context, OrderCancellingReasonScreen(orderType: orderType)),
-                    width: 200,
-                  ),
-                ),
-                Dimensions.defaultPadding.height,
-                Center(
-                  child: PrimaryButton(
-                    title: 'discard changes',
-                    onPressed: () {},
-                    isFilled: false,
-                    width: 200,
-                  ),
-                ),
+                // Dimensions.defaultPadding.height,
+                // Center(
+                //   child: PrimaryButton(
+                //     title: 'next',
+                //     onPressed: () => Utils.push(
+                //       context,
+                //       OrderCancellingReasonScreen(orderType: orderType),
+                //     ),
+                //     width: 200,
+                //     padding: EdgeInsets.zero,
+                //   ),
+                // ),
+                // Dimensions.defaultPadding.height,
+                // Center(
+                //   child: PrimaryButton(
+                //     title: 'discard changes',
+                //     onPressed: () => Utils.pop(context),
+                //     isFilled: false,
+                //     width: 200,
+                //     padding: EdgeInsets.zero,
+                //   ),
+                // ),
                 40.0.height,
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Row _iconTile({required String text, required void Function(dynamic i) onChanged}) {
+    return Row(
+      children: [
+        PrimaryCheckbox(onChanged: onChanged),
+        5.0.width,
+        TextView(text),
+      ],
     );
   }
 

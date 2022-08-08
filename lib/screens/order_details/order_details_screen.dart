@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:poc/calendar/calendar_screen.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/order_cancel/order_cancel_screen.dart';
 import 'package:poc/screens/order_edit/edit_order_screen.dart';
@@ -114,7 +115,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                         const Spacer(),
                         PrimaryTextButton(
                           title: 'View Calender',
-                          onPressed: () {},
+                          onPressed: () => Utils.push(context, const CalendarScreen()),
                           isUpperCase: false,
                           showUnderline: true,
                           height: 1.2,
