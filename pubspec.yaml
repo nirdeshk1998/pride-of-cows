@@ -10,19 +10,24 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.5
-  intl: ^0.17.0
-  flutter_riverpod: ^1.0.4
-  flutter_svg: ^1.1.0
   google_fonts: ^3.0.1
+  # Localization
+  intl: ^0.17.0
+  # State
+  flutter_riverpod: ^1.0.4
+  # Widget
+  flutter_svg: ^1.1.0
   dots_indicator: ^2.1.0
   country_code_picker: ^2.0.2
   pin_code_fields: ^7.4.0
   carousel_slider: ^4.1.1
-  card_swiper: ^2.0.1
+  # Network
   dio: ^4.0.6
   pretty_dio_logger: ^1.1.1
-  # flutter_calendar_carousel: ^2.4.0
-  # widget_size: ^0.0.2
+  # Firebase
+  firebase_messaging: ^12.0.1
+  firebase_core: ^1.20.0
+
 
 
 dev_dependencies:

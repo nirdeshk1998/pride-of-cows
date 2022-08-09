@@ -26,7 +26,6 @@ class VacationModeScreen extends ConsumerWidget {
         children: [
           SecondaryAppBar(
             sIcon: Assets.assetsIconsHamburger,
-
             sOnPressed: () {},
           ),
           Expanded(
@@ -81,6 +80,7 @@ class VacationModeScreen extends ConsumerWidget {
                     title: 'save changes',
                     width: 180,
                     onPressed: () {},
+                    padding: EdgeInsets.zero,
                   ),
                 ),
                 Dimensions.defaultPadding.height,
@@ -90,6 +90,7 @@ class VacationModeScreen extends ConsumerWidget {
                     width: 180,
                     isFilled: false,
                     onPressed: () => Utils.pop(context),
+                    padding: EdgeInsets.zero,
                   ),
                 ),
                 Dimensions.defaultPadding.height,

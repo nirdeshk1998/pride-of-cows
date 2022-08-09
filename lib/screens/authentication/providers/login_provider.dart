@@ -6,24 +6,26 @@ import 'package:poc/utils/utils.dart';
 final loginProvider = ChangeNotifierProvider.autoDispose((ref) => LoginChangeProvider());
 
 class LoginChangeProvider with ChangeNotifier {
-  bool checkState = false, otpButtonState = false;
+  final TextEditingController _numberController = TextEditingController();
+  TextEditingController get numberController => _numberController;
 
-  final TextEditingController numberController = TextEditingController();
+  bool _tcToggle = false, _otpButtonState = false, _isOTPSent = false;
+  bool get tcToggle => _tcToggle;
+  bool get isNumberValid => _otpButtonState;
+  bool get isOtpSent => _isOTPSent;
 
-  void onSendOtpButton(context){
-    Utils.push(context, const RegisterScreen());
-  }
+  void onSendOtpButton(context) {}
 
-  void onCheckFun() {
-    checkState = !checkState;
+  void onTcTappedFun() {
+    _tcToggle = !_tcToggle;
     notifyListeners();
   }
 
   void onChangedFun(String value) {
     if (value.length == 10) {
-      otpButtonState = true;
+      _otpButtonState = true;
     } else {
-      otpButtonState = false;
+      _otpButtonState = false;
     }
     notifyListeners();
   }

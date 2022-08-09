@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/providers/login_provider.dart';
+import 'package:poc/screens/authentication/providers/login_provider.dart';
 import 'package:poc/screens/address/address_information.dart';
 import 'package:poc/screens/address/edit_address.dart';
 import 'package:poc/styles/colors.dart';
@@ -37,7 +37,6 @@ class MyAddressBook extends ConsumerWidget {
                   Row(
                     children: [
                       Text('My Address Book', style: TextStyles.header),
-
                     ],
                   ),
                   const SizedBox(
@@ -51,7 +50,7 @@ class MyAddressBook extends ConsumerWidget {
                         isUpperCase: true,
                         size: TextSize.textButton,
                         onPressed: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>EditAddress()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => EditAddress()));
                         },
                       ),
                     ],
@@ -65,7 +64,7 @@ class MyAddressBook extends ConsumerWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AddressInfromation()));
                       },
                       child: Container(
-                        padding: EdgeInsets.only(left: 20,right: 21),
+                        padding: EdgeInsets.only(left: 20, right: 21),
                         color: Color(0xffFAFAFA),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,21 +107,20 @@ class MyAddressBook extends ConsumerWidget {
                             ),
                             const TextView(
                               "Akansha Das",
-                             size: 16,
+                              size: 16,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             const TextView(
                               "2118,Thornidge Syracuse, Opposite Starbucks, Bandra East, Mumbai-356241,Maharasthra",
-                              size: 16,maxLines: 3,),
+                              size: 16,
+                              maxLines: 3,
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const TextView(
-                              "Phone number: 9876543210, 0123456789",
-                                size: 16
-                            ),
+                            const TextView("Phone number: 9876543210, 0123456789", size: 16),
                             const SizedBox(
                               height: 10,
                             ),
@@ -145,7 +143,7 @@ class MyAddressBook extends ConsumerWidget {
                     child: GestureDetector(
                       onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.only(left: 20,right: 21),
+                        padding: EdgeInsets.only(left: 20, right: 21),
                         color: Color(0xffFAFAFA),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,13 +193,15 @@ class MyAddressBook extends ConsumerWidget {
                             ),
                             const TextView(
                               "B-35,  Sector-36, Near Cambridge Intl School, Noida - 201301, Uttar Pradesh",
-                              size: 16,maxLines: 3,),
+                              size: 16,
+                              maxLines: 3,
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
                             const TextView(
-                                "Phone number: 9876543210,0123456789",
-                                size: 16,
+                              "Phone number: 9876543210,0123456789",
+                              size: 16,
                               maxLines: 2,
                             ),
                             const SizedBox(

@@ -4,11 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/providers/login_provider.dart';
+import 'package:poc/screens/authentication/providers/login_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/styles/widget_styles.dart';
 import 'package:poc/utils/country_code_picker.dart';
+import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/terms_condition.dart';
 
@@ -103,48 +104,15 @@ class LoginScreen extends ConsumerWidget {
                   focusedBorder: WidgetStyle.activeInputBorder,
                 ),
               ),
-              const SizedBox.square(dimension: 30),
-              Text(
-                'Enter OTP sent to your phone number*',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: const Color.fromRGBO(127, 127, 127, 1),
-                  fontFamily: GoogleFonts.lato().fontFamily,
-                  fontSize: 14,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox.square(dimension: 5),
-              PinCodeTextField(
-                appContext: context,
-                length: 4,
-                textStyle: TextStyle(
-                  color: const Color.fromRGBO(43, 43, 43, 1),
-                  fontFamily: GoogleFonts.lato().fontFamily,
-                  fontSize: 16,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                ),
-                pinTheme: PinTheme(
-                  fieldHeight: 30,
-                  fieldOuterPadding: EdgeInsets.zero,
-                  borderWidth: 1,
-                  inactiveColor: Palette.surfaceColor,
-                  activeColor: Palette.primaryColor,
-                  fieldWidth: 62,
-                ),
-                onChanged: (i) {},
-              ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Resend OTP via ',
+              30.0.height,
+              if (wProvider.isOtpSent)
+                Column(
+                  children: [
+                    Text(
+                      'Enter OTP sent to your phone number*',
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                        color: const Color(0xFF9B9B9B),
+                        color: const Color.fromRGBO(127, 127, 127, 1),
                         fontFamily: GoogleFonts.lato().fontFamily,
                         fontSize: 14,
                         letterSpacing: 0,
@@ -152,55 +120,100 @@ class LoginScreen extends ConsumerWidget {
                         height: 1.5,
                       ),
                     ),
-                    TextSpan(
-                      text: 'sms',
-                      style: TextStyle(
-                        color: const Color(0xFF193B61),
+                    const SizedBox.square(dimension: 5),
+                    PinCodeTextField(
+                      appContext: context,
+                      length: 4,
+                      textStyle: TextStyle(
+                        color: const Color.fromRGBO(43, 43, 43, 1),
                         fontFamily: GoogleFonts.lato().fontFamily,
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
+                        fontSize: 16,
                         letterSpacing: 0,
                         fontWeight: FontWeight.normal,
-                        height: 1.5,
+                      ),
+                      pinTheme: PinTheme(
+                        fieldHeight: 30,
+                        fieldOuterPadding: EdgeInsets.zero,
+                        borderWidth: 1,
+                        inactiveColor: Palette.surfaceColor,
+                        activeColor: Palette.primaryColor,
+                        fieldWidth: 62,
+                      ),
+                      onChanged: (i) {},
+                    ),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Resend OTP via ',
+                            style: TextStyle(
+                              color: const Color(0xFF9B9B9B),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'sms',
+                            style: TextStyle(
+                              color: const Color(0xFF193B61),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' or ',
+                            style: TextStyle(
+                              color: const Color(0xFF9B9B9B),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'call.',
+                            style: TextStyle(
+                              color: const Color(0xFF193B61),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    TextSpan(
-                      text: ' or ',
-                      style: TextStyle(
-                        color: const Color(0xFF9B9B9B),
-                        fontFamily: GoogleFonts.lato().fontFamily,
-                        fontSize: 14,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1.5,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'call.',
-                      style: TextStyle(
-                        color: const Color(0xFF193B61),
-                        fontFamily: GoogleFonts.lato().fontFamily,
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1.5,
+                    30.0.height,
+                    Center(
+                      child: PrimaryButton(
+                        title: 'verify & continue',
+                        onPressed: wProvider.isNumberValid ? () => rProvider.onSendOtpButton(context) : null,
                       ),
                     ),
                   ],
+                )
+              else
+                Center(
+                  child: PrimaryButton(
+                    title: 'send otp',
+                    onPressed: wProvider.isNumberValid ? () => rProvider.onSendOtpButton(context) : null,
+                  ),
                 ),
-              ),
-              const SizedBox.square(dimension: 30),
-              Center(
-                child: PrimaryButton(
-                  title: 'send otp',
-                  onPressed: wProvider.otpButtonState ? () => rProvider.onSendOtpButton(context) : null,
-                ),
-              ),
               const SizedBox.square(dimension: 15),
               TermsConditionsWidget(
-                checkState: wProvider.checkState,
-                onCheckPressed: rProvider.onCheckFun,
+                checkState: wProvider.tcToggle,
+                onCheckPressed: rProvider.onTcTappedFun,
               )
             ],
           ),
