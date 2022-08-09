@@ -5,7 +5,6 @@ import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
-import 'package:poc/widgets/calender_picker/calender_picker2.dart';
 import 'package:poc/widgets/calender_view.dart';
 import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/text_view.dart';
