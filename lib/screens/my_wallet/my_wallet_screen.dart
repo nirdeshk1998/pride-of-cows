@@ -88,10 +88,9 @@ class MyWalletScreen extends ConsumerWidget {
           horizontal: Dimensions.defaultPadding,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            15.0.height,
+            20.0.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -199,7 +198,6 @@ class MyWalletScreen extends ConsumerWidget {
               point,
               textType: TextType.header,
               textAlign: TextAlign.center,
-              height: 1.7,
             ),
           ),
 

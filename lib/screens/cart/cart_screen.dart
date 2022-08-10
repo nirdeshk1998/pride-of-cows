@@ -107,7 +107,7 @@ class CartScreen extends ConsumerWidget {
                                         const Spacer(),
                                         PrimaryIconButton(
                                           svg: Assets.assetsIconsDelete,
-                                          size: 16,
+                                          size: 20,
                                           onPressed: () {},
                                         ),
                                       ],

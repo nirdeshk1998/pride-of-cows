@@ -200,6 +200,7 @@ class SearchScreen extends ConsumerWidget {
       body: Column(
         children: [
           PrimarySearchAppBar(
+
             controller: TextEditingController(),
             onClearPressed: () => rProvider.onRecentSearchPressed(false),
           ),

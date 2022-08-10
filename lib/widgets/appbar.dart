@@ -6,6 +6,7 @@ import 'package:poc/screens/search/search_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/form_fields.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class PrimaryAppBar extends StatelessWidget {
   const PrimaryAppBar({
@@ -145,10 +146,12 @@ class PrimarySearchAppBar extends StatelessWidget {
     Key? key,
     this.controller,
     this.onClearPressed,
+
   }) : super(key: key);
 
-  final TextEditingController? controller;
+  final TextEditingController ? controller;
   final VoidCallback? onClearPressed;
+
 
   @override
   Widget build(BuildContext context) {
@@ -188,24 +191,24 @@ class PrimarySearchAppBar extends StatelessWidget {
                     constraints: const BoxConstraints(),
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      controller?.clear();
-                      onClearPressed?.call();
-                    },
-                    splashRadius: 28,
-                    iconSize: 24,
-                    color: Palette.primaryColor,
-                    icon: SizedBox.square(
-                      dimension: 24,
-                      child: SvgPicture.asset(
-                        Assets.assetsIconsClose,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(10.5),
-                    constraints: const BoxConstraints(),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     controller?.clear();
+                  //     onClearPressed?.call();
+                  //   },
+                  //   splashRadius: 28,
+                  //   iconSize: 24,
+                  //   color: Palette.primaryColor,
+                  //   icon: SizedBox.square(
+                  //     dimension: 24,
+                  //     child: SvgPicture.asset(
+                  //       Assets.assetsIconsClose,
+                  //       fit: BoxFit.contain,
+                  //     ),
+                  //   ),
+                  //   padding: const EdgeInsets.all(10.5),
+                  //   constraints: const BoxConstraints(),
+                  // ),
                   const SizedBox.square(dimension: 9.5),
                 ],
               ),
@@ -215,6 +218,12 @@ class PrimarySearchAppBar extends StatelessWidget {
               child: SearchFormField(
                 hintText: 'Enter here',
                 controller: controller,
+                suffix: InkWell(
+                  onTap: (){
+                    controller?.clear();
+                  },
+                  child: TextView("Clear",color: Palette.hintColor,),
+                ),
               ),
             ),
           ],

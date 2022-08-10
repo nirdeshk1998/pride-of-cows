@@ -111,14 +111,15 @@ class CartSummary extends ConsumerWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            TextView(
                                               "Ghee (250 grams)",
-                                              style: TextStyles.subheader,
+                                              textType: TextStyles.subheader,
+
                                             ),
                                             Text('\u{20B9}${"50"}', style: TextStyles.hint),
-                                            const SizedBox(
-                                              height: 2,
-                                            ),
                                             Row(
                                               children: const [
                                                 Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
@@ -170,8 +171,8 @@ class CartSummary extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
-                            Text("Subtotal"),
-                            Text('\u{20B9}${"1800"}'),
+                            TextView("Subtotal",color: Color(0xff2B2B2B),fontWeight: FontWeight.w500,size: 14,),
+                            TextView('\u{20B9}${"1800"}',color: Color(0xff2B2B2B),fontWeight: FontWeight.w500,size: 14,),
                           ],
                         ),
                         Row(
@@ -209,8 +210,8 @@ class CartSummary extends ConsumerWidget {
                           height: 10,
                         ),
                         Row(
-                          children: const [
-                            Text("Offers"),
+                          children:  [
+                            Text("Offers",style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily,fontSize: 16)),
                           ],
                         ),
                         const SizedBox(
@@ -239,7 +240,7 @@ class CartSummary extends ConsumerWidget {
                                           },
                                           child: const Text(
                                             "VIEW OFFERS",
-                                            style: TextStyle(fontSize: 14, color: Color(0xff193B61)),
+                                            style: TextStyle(fontSize: 12, color: Color(0xff193B61),fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ],
@@ -292,7 +293,7 @@ class CartSummary extends ConsumerWidget {
                     ),
                   ),
                   Container(
-                    color: const Color(0xffFAFAFA),
+                    color: const Color(0xfafafa),
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,9 +318,10 @@ class CartSummary extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
-                            Text(
+                            TextView(
                               "CHOOSE ADDRESS",
-                              style: TextStyle(color: Color(0xff193B61), fontSize: 14),
+                              color: Color(0xff193B61), size: 12,
+                              fontWeight: FontWeight.w700,
                             ),
                             Text(
                               "PAYMENT",
@@ -349,7 +351,7 @@ class CartSummary extends ConsumerWidget {
                           ],
                         ),
                         Container(
-                          color: const Color(0xffFAFAFA),
+                          color:  Color(0xfff8f6f6),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -406,7 +408,7 @@ class CartSummary extends ConsumerWidget {
                           height: 20,
                         ),
                         Container(
-                          color: const Color(0xffFAFAFA),
+                          color: Color(0xfff8f6f6),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

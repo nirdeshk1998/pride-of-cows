@@ -14,6 +14,7 @@ import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({
@@ -51,7 +52,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox.square(dimension: 10),
+              const SizedBox.square(dimension: 13),
               SizedBox(
                 height: 70,
                 child: GridView.builder(
@@ -147,16 +148,14 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                height: 38,
-                child: Text(
+              padding: const EdgeInsets.symmetric(horizontal:20),
+                child: TextView(
                   "Deals & Offers",
-                  style: TextStyles.header,
+                  textType: TextStyles.header,
                 ),
-              ),
+
             ),
-            const SizedBox.square(dimension: 10),
+            const SizedBox.square(dimension: 13),
             CarouselSlider.builder(
               itemCount: 3,
               options: CarouselOptions(
@@ -207,10 +206,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Shop by Category', style: TextStyles.header),
-                  ),
+                 TextView('Shop by Category', textType: TextStyles.header),
+
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'shop all',
@@ -219,7 +216,7 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 10),
+            const SizedBox.square(dimension: 13),
             AspectRatio(
               aspectRatio: 375 / 120,
               child: ListView.separated(
@@ -266,7 +263,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('My Crowns', style: TextStyles.header),
+                  TextView('My Crowns',textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view rewards',
@@ -274,7 +271,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox.square(dimension: 10),
+              const SizedBox.square(dimension: 13),
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -374,7 +371,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Refer & Earn', style: TextStyles.header),
+                  TextView('Refer & Earn',textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view details',
@@ -383,7 +380,7 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 10),
+            const SizedBox.square(dimension: 13),
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(

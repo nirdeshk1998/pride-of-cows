@@ -68,10 +68,12 @@ class SearchFormField extends StatelessWidget {
     Key? key,
     this.controller,
     this.hintText,
+    this.suffix,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final String? hintText;
+  final Widget ? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,7 @@ class SearchFormField extends StatelessWidget {
       textInputAction: TextInputAction.search,
       style: TextType.hint.apply(color: Palette.textColor, heightFactor: 1.2),
       decoration: InputDecoration(
+        suffix: suffix,
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 10.0),
           child: SizedBox.square(
