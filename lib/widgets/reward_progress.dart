@@ -15,8 +15,6 @@ class RewardProgressBar extends StatefulWidget {
 }
 
 class _RewardProgressBarState extends State<RewardProgressBar> {
-  final GlobalKey _widgetKey = GlobalKey();
-
   @override
   void initState() {
     super.initState();
@@ -38,7 +36,6 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
   @override
   Widget build(BuildContext context) {
     final double progressWidth = MediaQuery.of(context).size.width - 80;
-    debugPrint('progressWidth: $progressWidth');
     final double progressValue = ((widget.value) * 100) / 50;
     final double progress = ((progressWidth) * progressValue) / 100;
 

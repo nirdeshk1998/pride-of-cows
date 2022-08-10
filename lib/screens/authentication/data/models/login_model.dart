@@ -1,18 +1,20 @@
 class LoginReqModel {
-  int? mobileNo;
+  String? mobileNo;
   String? fCMToken;
   String? type;
-  String? devicetype;
+  String? deviceOs;
   String? platform;
   String? devicename;
+  String? deviceOsVersion;
 
   LoginReqModel({
     this.mobileNo,
     this.fCMToken,
     this.type,
-    this.devicetype,
+    this.deviceOs,
     this.platform,
     this.devicename,
+    this.deviceOsVersion,
   });
 
   Map<String, dynamic> toJson() {
@@ -20,9 +22,10 @@ class LoginReqModel {
     data['MobileNo'] = mobileNo;
     data['FCMToken'] = fCMToken;
     data['Type'] = type;
-    data['devicetype'] = devicetype;
-    data['platform'] = platform;
-    data['devicename'] = devicename;
+    data['DeviceType'] = deviceOs;
+    data['Platform'] = platform;
+    data['DeviceName'] = devicename;
+    data['OsVersion'] = devicename;
     return data;
   }
 }

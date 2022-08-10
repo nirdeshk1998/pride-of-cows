@@ -23,6 +23,14 @@ class Utils {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
+  static showPrimarySnackbar(context, String? text) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text ?? ''),
+      ),
+    );
+  }
+
   static Future<Widget?> showPrimaryBottomSheet(BuildContext context, {required Widget child}) {
     return showModalBottomSheet<Widget>(
       context: context,
@@ -78,7 +86,6 @@ class Utils {
                                     color: Palette.textColor,
                                     textType: TextType.regular,
                                     height: 0.7,
-
                                   ),
                               ],
                             ),

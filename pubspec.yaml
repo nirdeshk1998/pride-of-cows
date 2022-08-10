@@ -11,10 +11,12 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.5
   google_fonts: ^3.0.1
+  device_info_plus: ^4.0.3
   # Localization
   intl: ^0.17.0
   # State
   flutter_riverpod: ^1.0.4
+  shared_preferences: ^2.0.15
   # Widget
   flutter_svg: ^1.1.0
   dots_indicator: ^2.1.0

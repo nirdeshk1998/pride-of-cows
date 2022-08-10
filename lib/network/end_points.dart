@@ -7,4 +7,5 @@ class Endpoint {
 
   // Authentication
   static const String login = '/customer/login';
+  static const String verifyOtp = '/customer/otpverifylogin';
 }

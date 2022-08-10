@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:poc/network/end_points.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -27,13 +26,14 @@ class BaseDio {
       ..interceptors.addAll(
         [
           PrettyDioLogger(
+            request: false,
             requestHeader: true,
             requestBody: true,
             responseBody: true,
             responseHeader: false,
-            compact: false,
+            compact: true,
           ),
-          LogInterceptor(responseBody: false),
+          // LogInterceptor(responseBody: false),
         ],
       );
   }
@@ -56,7 +56,7 @@ class BaseDio {
       );
       return response;
     } catch (e) {
-      debugPrint(e.toString());
+      // debugPrint(e.toString());
       rethrow;
     }
   }
@@ -74,7 +74,7 @@ class BaseDio {
     try {
       final Response response = await getDio().post(
         url,
-        data: data,
+        data: data.toJson(),
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
@@ -83,7 +83,7 @@ class BaseDio {
       );
       return response;
     } catch (e) {
-      debugPrint(e.toString());
+      // debugPrint(e.toString());
       rethrow;
     }
   }

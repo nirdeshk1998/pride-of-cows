@@ -31,3 +31,8 @@ enum WeekdayFormat {
   narrow,
   standaloneNarrow,
 }
+
+enum UserType {
+  user,
+  guest,
+}
