@@ -9,6 +9,7 @@ import 'package:poc/providers/home_provider.dart';
 import 'package:poc/screens/calendar/calendar_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/utils.dart';
@@ -895,17 +896,15 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox.square(dimension: 5),
-            Text(
+            TextView(
               "Most Advanced Dairy Farm",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: const Color(0xff2b2b2b),
-                fontSize: 20,
-                fontFamily: GoogleFonts.suranna().fontFamily,
-              ),
+              textType: TextType.header2,
+              size: TextSize.title,
             )
           ],
         ),
+        Dimensions.defaultPadding.height,
       ],
     );
   }

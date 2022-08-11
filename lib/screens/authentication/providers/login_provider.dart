@@ -9,6 +9,7 @@ import 'package:poc/screens/authentication/data/models/otp_model.dart';
 import 'package:poc/screens/authentication/register_screen.dart';
 import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/utils/enums.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 
@@ -47,45 +48,164 @@ class LoginChangeProvider with ChangeNotifier {
   }
 
   void onSendOtpButton(context) async {
-    if (!_checkValidationFun(context)) return;
+    if (_tcToggle == false) {
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      return;
+    }
 
     showLoader(true);
-    _isOTPSent = false;
     await _getDeviceInfoFun();
     await loginOtpRequest(context);
     _isOTPSent = true;
     showLoader(false);
   }
 
-  Future<void> onVerifyButton(context) async {
-    if (!_checkValidationFun(context)) return;
+  void onVerifyButton(context) async {
+    if (_tcToggle == false) {
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      return;
+    } else if (_receivedOtp != _otpController.text) {
+      Utils.showPrimarySnackbar(context, LocalString.otpNotValidated);
+      return;
+    }
 
     showLoader(true);
     await otpVerificationRequest(context);
+    showLoader(false);
+    (_isNewUser == UserType.guest.index)
+        ? await Utils.push(context, const RegisterScreen())
+        : await Utils.pushAndRemoveUntil(context, const MainScreen());
+  }
 
-    await Utils.pushReplacement(
-      context,
-      (_isNewUser == UserType.guest.index) ? const RegisterScreen() : const MainScreen(),
-    );
+  void onResendSmsButton(context) async {
+    if (_tcToggle == false) {
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      return;
+    }
 
+    showLoader(true);
+    await resendSmsOtpRequest(context);
+    showLoader(false);
+  }
+
+  void onResendCallButton(context) async {
+    if (_tcToggle == false) {
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      return;
+    }
+
+    showLoader(true);
+    await resendCallOtpRequest(context);
     showLoader(false);
   }
 
   Future<void> loginOtpRequest(context) async {
-    final result = await _loginRepo.sendOtpRepo(_loginReqModel);
-    _receivedOtp = result.otp.toString();
-    _isNewUser = result.isNew;
-    Utils.showPrimarySnackbar(context, result.message);
+    await _loginRepo.sendOtpRepo(_loginReqModel).then(
+      (response) {
+        final result = LoginResModel.fromJson(response.data);
+
+        if (response.statusCode == 200) {
+          _receivedOtp = result.otp.toString();
+          _isNewUser = result.isNew;
+        } else {
+          //
+        }
+
+        Utils.showPrimarySnackbar(context, result.message);
+      },
+    ).onError(
+      (error, stackTrace) {
+        showLoader(false);
+        Utils.showDebugSnackbar(context, stackTrace.toString());
+      },
+    );
   }
 
   Future<void> otpVerificationRequest(context) async {
-    final result = await _loginRepo.verifyOtpRepo(_otpReqModel);
-    Utils.showPrimarySnackbar(context, result.message);
+    await _loginRepo.verifyOtpRepo(_otpReqModel).then((response) async {
+      final result = OtpResModel.fromJson(response.data);
+
+      if (response.statusCode == 200) {
+        final element = result.data;
+        await _settingPrefs(element);
+      } else {
+        //
+      }
+
+      Utils.showPrimarySnackbar(context, result.message);
+    }).onError(
+      (error, stackTrace) {
+        showLoader(false);
+        Utils.showDebugSnackbar(context, stackTrace.toString());
+      },
+    );
+  }
+
+  Future<void> resendSmsOtpRequest(context) async {
+    await _loginRepo.resendSmsOtpRepo(_resendOtpReqModel).then((response) {
+      final result = LoginResModel.fromJson(response.data);
+      if (response.statusCode == 200) {
+        _receivedOtp = result.otp.toString();
+      } else {
+        //
+      }
+
+      Utils.showPrimarySnackbar(context, result.message);
+    }).onError(
+      (error, stackTrace) {
+        showLoader(false);
+        Utils.showDebugSnackbar(context, stackTrace.toString());
+      },
+    );
+  }
+
+  Future<void> resendCallOtpRequest(context) async {
+    await _loginRepo.resendCallOtpRepo(_resendOtpReqModel).then((response) {
+      final result = LoginResModel.fromJson(response.data);
+
+      if (response.statusCode == 200) {
+        _receivedOtp = result.otp.toString();
+      } else {
+        //
+      }
+
+      Utils.showPrimarySnackbar(context, result.message);
+    }).onError(
+      (error, stackTrace) {
+        showLoader(false);
+        Utils.showDebugSnackbar(context, stackTrace.toString());
+      },
+    );
+  }
+
+  Future<void> _settingPrefs(Data? element) async {
+    await LocalStorage.setString(element?.token, StorageField.token);
+    await LocalStorage.setString(element?.userID.toString(), StorageField.userId);
+    await LocalStorage.setString(element?.mobileNo, StorageField.mobileNumber);
+    await LocalStorage.setString(element?.firstName, StorageField.firstName);
+    await LocalStorage.setString(element?.lastName, StorageField.lastName);
+    await LocalStorage.setString(element?.middleName, StorageField.middleName);
+    await LocalStorage.setString(element?.addressType, StorageField.addressType);
+    await LocalStorage.setString(element?.area, StorageField.area);
+    await LocalStorage.setString(element?.buildingName, StorageField.buildingName);
+    await LocalStorage.setString(element?.city, StorageField.city);
+    await LocalStorage.setString(element?.cityId, StorageField.cityId);
+    await LocalStorage.setString(element?.customerType, StorageField.customerType);
+    await LocalStorage.setString(element?.deliveryOption, StorageField.deliveryOption);
+    await LocalStorage.setString(element?.email, StorageField.email);
+    await LocalStorage.setString(element?.flatPlotNo, StorageField.flatPlotNumber);
+    await LocalStorage.setString(element?.landmark, StorageField.landmark);
+    await LocalStorage.setString(element?.streetRoad, StorageField.streetRoad);
+    await LocalStorage.setString(element?.pincode.toString(), StorageField.pincode);
   }
 
   OtpReqModel get _otpReqModel => OtpReqModel(
         mobileNo: _numberController.text,
         otp: _otpController.text,
+      );
+
+  OtpReqModel get _resendOtpReqModel => OtpReqModel(
+        mobileNo: _numberController.text,
       );
 
   LoginReqModel get _loginReqModel => LoginReqModel(
@@ -105,19 +225,6 @@ class LoginChangeProvider with ChangeNotifier {
       _deviceOs = 'Android';
       _deviceName = '${info.brand?.toUpperCase()}_${info.model?.toUpperCase()}';
       _deviceOsVersion = '${info.version.release}';
-    }
-  }
-
-  /// Returns true if validated
-  bool _checkValidationFun(context) {
-    if (_tcToggle == false) {
-      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
-      return false;
-    } else if (_isOTPSent != false && _receivedOtp != _otpController.text) {
-      Utils.showPrimarySnackbar(context, LocalString.otpNotValidated);
-      return false;
-    } else {
-      return true;
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,7 @@ import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/terms_condition.dart';
+import 'package:poc/widgets/text_view.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({
@@ -24,12 +26,41 @@ class LoginScreen extends ConsumerWidget {
     final rProvider = ref.read(loginProvider);
     final wProvider = ref.watch(loginProvider);
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          _buildBody(wProvider, rProvider, context),
-          if (rProvider.isLoading) const PrimaryLoader(),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const TextView('Do you want to exit?'),
+              actionsAlignment: MainAxisAlignment.end,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: const Text('Yes'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(),
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: const TextView('No'),
+                ),
+              ],
+            );
+          },
+        );
+        return shouldPop!;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            _buildBody(wProvider, rProvider, context),
+            if (rProvider.isLoading) const PrimaryLoader(),
+          ],
+        ),
       ),
     );
   }
@@ -188,6 +219,7 @@ class LoginScreen extends ConsumerWidget {
                         ),
                         TextSpan(
                           text: 'sms',
+                          recognizer: TapGestureRecognizer()..onTap = () => rProvider.onResendSmsButton(context),
                           style: TextStyle(
                             color: const Color(0xFF193B61),
                             fontFamily: GoogleFonts.lato().fontFamily,
@@ -210,12 +242,24 @@ class LoginScreen extends ConsumerWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'call.',
+                          text: 'call',
+                          recognizer: TapGestureRecognizer()..onTap = () => rProvider.onResendCallButton(context),
                           style: TextStyle(
                             color: const Color(0xFF193B61),
                             fontFamily: GoogleFonts.lato().fontFamily,
                             fontSize: 14,
                             decoration: TextDecoration.underline,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.normal,
+                            height: 1.5,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '.',
+                          style: TextStyle(
+                            color: const Color(0xFF9B9B9B),
+                            fontFamily: GoogleFonts.lato().fontFamily,
+                            fontSize: 14,
                             letterSpacing: 0,
                             fontWeight: FontWeight.normal,
                             height: 1.5,

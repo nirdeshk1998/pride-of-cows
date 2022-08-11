@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:poc/network/end_points.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class BaseDio {
@@ -15,6 +19,9 @@ class BaseDio {
   }
 
   final BaseOptions options = BaseOptions(
+    // headers: {
+    //  ,
+    // },
     baseUrl: Endpoint.baseUrl,
     connectTimeout: Endpoint.connectionTimeout,
     receiveTimeout: Endpoint.receiveTimeout,
@@ -25,6 +32,21 @@ class BaseDio {
     return _dio ??= Dio(options)
       ..interceptors.addAll(
         [
+          // QueuedInterceptorsWrapper(
+          //   onRequest: (options, handler) async {
+          //     final token = await LocalStorage.getString(StorageField.token);
+          //     if (token != null && token != '') {
+          //       options.headers = {HttpHeaders.authorizationHeader: 'Bearer $token'};
+          //     }
+          //     return handler.next(options);
+          //   },
+          //   onResponse: (e, handler) {
+          //     return handler.next(e);
+          //   },
+          //   onError: (e, handler) {
+          //     return handler.next(e);
+          //   },
+          // ),
           PrettyDioLogger(
             request: false,
             requestHeader: true,

@@ -47,6 +47,13 @@ class LoginResModel {
     isNew = json['is_new'];
   }
 
+  LoginResModel.fromResendOtpJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    otp = json['otp'];
+    data = json['data'];
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;

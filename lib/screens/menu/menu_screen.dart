@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/authentication/login_screen.dart';
 import 'package:poc/screens/contact_us/contact_us.dart';
 import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
@@ -17,6 +18,7 @@ import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/rewards/rewards.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -106,7 +108,7 @@ class MenuScreen extends ConsumerWidget {
                         const SizedBox.square(dimension: 10),
                         _profileTile(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Notifications()));
                           },
                           text: '5',
                           title: 'Pending notifications',
@@ -195,7 +197,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: 'Refer and Earn',
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ReferAndEarn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReferAndEarn()));
               },
               icon: Assets.assetsIconsReferRound,
             ),
@@ -212,7 +214,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: "FAQ's and Links",
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FaqAndLinks()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const FaqAndLinks()));
               },
               icon: Assets.assetsIconsFaqRound,
             ),
@@ -224,7 +226,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: 'Contact Us',
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactUs()));
               },
               icon: Assets.assetsIconsContactUsRound,
             ),
@@ -258,7 +260,11 @@ class MenuScreen extends ConsumerWidget {
           child: PrimaryButton(
             title: 'log out',
             isFilled: false,
-            onPressed: () {},
+            onPressed: () {
+              LocalStorage.clearSavedData().whenComplete(() async {
+                await Utils.pushAndRemoveUntil(context, const LoginScreen());
+              });
+            },
           ),
         ),
         const SizedBox.square(dimension: 20),

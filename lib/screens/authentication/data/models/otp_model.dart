@@ -15,6 +15,12 @@ class OtpReqModel {
     data['OTP'] = otp;
     return data;
   }
+
+  Map<String, dynamic> toResendOtpJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['MobileNo'] = mobileNo;
+    return data;
+  }
 }
 
 class OtpResModel {

@@ -31,6 +31,15 @@ class Utils {
     );
   }
 
+  static showDebugSnackbar(context, String? text) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text ?? ''),
+        backgroundColor: Colors.redAccent,
+      ),
+    );
+  }
+
   static Future<Widget?> showPrimaryBottomSheet(BuildContext context, {required Widget child}) {
     return showModalBottomSheet<Widget>(
       context: context,
