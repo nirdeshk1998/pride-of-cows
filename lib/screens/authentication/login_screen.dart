@@ -112,6 +112,7 @@ class LoginScreen extends ConsumerWidget {
               controller: wProvider.numberController,
               onChanged: rProvider.onNumberChangedFun,
               keyboardType: TextInputType.phone,
+              enabled: !wProvider.isOtpSent,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
                 FilteringTextInputFormatter.digitsOnly,

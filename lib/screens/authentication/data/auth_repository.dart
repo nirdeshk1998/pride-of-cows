@@ -1,10 +1,11 @@
-import 'package:dio/src/response.dart';
+import 'package:dio/dio.dart';
 import 'package:poc/network/dio_client.dart';
 import 'package:poc/network/end_points.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/authentication/data/models/otp_model.dart';
+import 'package:poc/screens/authentication/data/models/user_register_model.dart';
 
-class LoginRepository {
+class AuthenticationRepository {
   Future<Response> sendOtpRepo(LoginReqModel reqModel) async {
     try {
       return await BaseDio.getInstance().post(Endpoint.login, data: reqModel);
@@ -32,6 +33,14 @@ class LoginRepository {
   Future<Response> resendCallOtpRepo(OtpReqModel reqModel) async {
     try {
       return await BaseDio.getInstance().post(Endpoint.resendCallOtp, data: reqModel);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Response> userRegistrationRepo(UserRegisterReqModel reqModel) async {
+    try {
+      return await BaseDio.getInstance().post(Endpoint.userRegisterOtp, data: reqModel);
     } catch (e) {
       throw Exception(e);
     }

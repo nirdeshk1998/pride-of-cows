@@ -10,4 +10,10 @@ class Endpoint {
   static const String verifyOtp = '/customer/otpverifylogin';
   static const String resendMsgOtp = '/customer/resendotp';
   static const String resendCallOtp = '/customer/voiceotp';
+  static const String userRegisterOtp = '/customer/register';
+
+  // Data Lists
+  static const String stateList = '/customer/statelist';
+  static const String cityList = '/customer/citylist';
+  static const String pincodeList = '/customer/pincodelist';
 }

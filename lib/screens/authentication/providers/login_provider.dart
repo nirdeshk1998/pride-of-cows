@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/screens/authentication/data/login_repository.dart';
+import 'package:poc/screens/authentication/data/auth_repository.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/authentication/data/models/otp_model.dart';
 import 'package:poc/screens/authentication/register_screen.dart';
@@ -16,7 +16,7 @@ import 'package:poc/utils/utils.dart';
 final loginProvider = ChangeNotifierProvider.autoDispose((ref) => LoginChangeProvider());
 
 class LoginChangeProvider with ChangeNotifier {
-  final LoginRepository _loginRepo = LoginRepository();
+  final AuthenticationRepository _authRepo = AuthenticationRepository();
 
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
@@ -30,7 +30,6 @@ class LoginChangeProvider with ChangeNotifier {
   String? _deviceName;
   String? _deviceOs;
   String? _deviceOsVersion;
-
   String? _receivedOtp;
   int? _isNewUser;
 
@@ -49,7 +48,7 @@ class LoginChangeProvider with ChangeNotifier {
 
   void onSendOtpButton(context) async {
     if (_tcToggle == false) {
-      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
       return;
     }
 
@@ -62,10 +61,10 @@ class LoginChangeProvider with ChangeNotifier {
 
   void onVerifyButton(context) async {
     if (_tcToggle == false) {
-      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
       return;
     } else if (_receivedOtp != _otpController.text) {
-      Utils.showPrimarySnackbar(context, LocalString.otpNotValidated);
+      Utils.showPrimarySnackbar(context, LocalString.otpNotValidated, type: SnackType.invalidated);
       return;
     }
 
@@ -79,7 +78,7 @@ class LoginChangeProvider with ChangeNotifier {
 
   void onResendSmsButton(context) async {
     if (_tcToggle == false) {
-      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
       return;
     }
 
@@ -90,7 +89,7 @@ class LoginChangeProvider with ChangeNotifier {
 
   void onResendCallButton(context) async {
     if (_tcToggle == false) {
-      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated);
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
       return;
     }
 
@@ -100,80 +99,82 @@ class LoginChangeProvider with ChangeNotifier {
   }
 
   Future<void> loginOtpRequest(context) async {
-    await _loginRepo.sendOtpRepo(_loginReqModel).then(
+    await _authRepo.sendOtpRepo(_loginReqModel).then(
       (response) {
-        final result = LoginResModel.fromJson(response.data);
+        final result = OtpResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
           _receivedOtp = result.otp.toString();
           _isNewUser = result.isNew;
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
         } else {
-          //
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
-
-        Utils.showPrimarySnackbar(context, result.message);
       },
     ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showDebugSnackbar(context, stackTrace.toString());
+        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
       },
     );
   }
 
   Future<void> otpVerificationRequest(context) async {
-    await _loginRepo.verifyOtpRepo(_otpReqModel).then((response) async {
-      final result = OtpResModel.fromJson(response.data);
+    await _authRepo.verifyOtpRepo(_otpReqModel).then(
+      (response) async {
+        final result = LoginResModel.fromJson(response.data);
 
-      if (response.statusCode == 200) {
-        final element = result.data;
-        await _settingPrefs(element);
-      } else {
-        //
-      }
-
-      Utils.showPrimarySnackbar(context, result.message);
-    }).onError(
+        if (response.statusCode == 200) {
+          final element = result.data;
+          await _settingPrefs(element);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+      },
+    ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showDebugSnackbar(context, stackTrace.toString());
+        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
       },
     );
   }
 
   Future<void> resendSmsOtpRequest(context) async {
-    await _loginRepo.resendSmsOtpRepo(_resendOtpReqModel).then((response) {
-      final result = LoginResModel.fromJson(response.data);
-      if (response.statusCode == 200) {
-        _receivedOtp = result.otp.toString();
-      } else {
-        //
-      }
-
-      Utils.showPrimarySnackbar(context, result.message);
-    }).onError(
+    await _authRepo.resendSmsOtpRepo(_resendOtpReqModel).then(
+      (response) {
+        final result = OtpResModel.fromResendOtpJson(response.data);
+        if (response.statusCode == 200) {
+          _receivedOtp = result.otp.toString();
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+      },
+    ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showDebugSnackbar(context, stackTrace.toString());
+        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
       },
     );
   }
 
   Future<void> resendCallOtpRequest(context) async {
-    await _loginRepo.resendCallOtpRepo(_resendOtpReqModel).then((response) {
-      final result = LoginResModel.fromJson(response.data);
+    await _authRepo.resendCallOtpRepo(_resendOtpReqModel).then(
+      (response) {
+        final result = OtpResModel.fromResendOtpJson(response.data);
 
-      if (response.statusCode == 200) {
-        _receivedOtp = result.otp.toString();
-      } else {
-        //
-      }
-
-      Utils.showPrimarySnackbar(context, result.message);
-    }).onError(
+        if (response.statusCode == 200) {
+          _receivedOtp = result.otp.toString();
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+      },
+    ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showDebugSnackbar(context, stackTrace.toString());
+        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
       },
     );
   }
@@ -228,7 +229,7 @@ class LoginChangeProvider with ChangeNotifier {
     }
   }
 
-  void onTcTappedFun() async {
+  void onTcTappedFun() {
     _tcToggle = !_tcToggle;
     notifyListeners();
   }

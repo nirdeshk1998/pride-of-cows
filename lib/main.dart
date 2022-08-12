@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poc/screens/authentication/register_screen.dart';
 
 import 'package:poc/screens/splash/splash_screen.dart';
 import 'package:poc/styles/colors.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
-      home: const SplashScreen(),
+      home: const RegisterScreen(),
     );
   }
 }

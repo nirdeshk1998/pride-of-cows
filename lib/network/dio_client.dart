@@ -9,44 +9,50 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class BaseDio {
   BaseDio._();
   Dio? _dio;
+  // String? _token;
 
   static final BaseDio _singleton = BaseDio._();
-
-  BaseDio();
 
   static BaseDio getInstance() {
     return _singleton;
   }
 
-  final BaseOptions options = BaseOptions(
-    // headers: {
-    //  ,
-    // },
-    baseUrl: Endpoint.baseUrl,
-    connectTimeout: Endpoint.connectionTimeout,
-    receiveTimeout: Endpoint.receiveTimeout,
-    responseType: ResponseType.json,
-  );
+  // Future<String?> _getToken() async {
+  //   return await LocalStorage.getString(StorageField.token);
+  // }
+
+  BaseOptions get _options {
+    // _getToken().then((value) => _token = value);
+    return BaseOptions(
+      baseUrl: Endpoint.baseUrl,
+      connectTimeout: Endpoint.connectionTimeout,
+      receiveTimeout: Endpoint.receiveTimeout,
+      responseType: ResponseType.json,
+      // headers: {
+      //   if (_token != null && _token != '') HttpHeaders.authorizationHeader: 'Bearer $_token',
+      // },
+    );
+  }
 
   Dio getDio() {
-    return _dio ??= Dio(options)
+    return _dio ??= Dio(_options)
       ..interceptors.addAll(
         [
-          // QueuedInterceptorsWrapper(
-          //   onRequest: (options, handler) async {
-          //     final token = await LocalStorage.getString(StorageField.token);
-          //     if (token != null && token != '') {
-          //       options.headers = {HttpHeaders.authorizationHeader: 'Bearer $token'};
-          //     }
-          //     return handler.next(options);
-          //   },
-          //   onResponse: (e, handler) {
-          //     return handler.next(e);
-          //   },
-          //   onError: (e, handler) {
-          //     return handler.next(e);
-          //   },
-          // ),
+          InterceptorsWrapper(
+            onRequest: (options, handler) async {
+              final token = await LocalStorage.getString(StorageField.token);
+              if (token != null && token != '') {
+                options.headers = {HttpHeaders.authorizationHeader: 'Bearer $token'};
+              }
+              return handler.next(options);
+            },
+            onResponse: (e, handler) {
+              return handler.next(e);
+            },
+            onError: (e, handler) {
+              return handler.next(e);
+            },
+          ),
           PrettyDioLogger(
             request: false,
             requestHeader: true,

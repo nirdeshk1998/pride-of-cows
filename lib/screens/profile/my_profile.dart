@@ -113,7 +113,8 @@ class MyProfile extends ConsumerWidget {
                   height: 20,
                 ),
                 PrimaryDropdownFormField(
-                  onChanged: rProvider.onChangeGenderFun,
+                  // onChanged: rProvider.onChangeGenderFun,
+                  list: [],
                   label: 'Gender*',
                 ),
                 const SizedBox(

@@ -6,6 +6,14 @@ import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
+enum SnackType {
+  error,
+  success,
+  invalidated,
+  info,
+  debug,
+}
+
 class Utils {
   static Future<void> push(context, widget) async {
     await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
@@ -23,19 +31,40 @@ class Utils {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
-  static showPrimarySnackbar(context, String? text) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(text ?? ''),
-      ),
-    );
-  }
+  static showPrimarySnackbar(context, String? text, {SnackType? type}) {
+    Color? color, textColor;
+    switch (type) {
+      case SnackType.error:
+        color = const Color(0xFFDC3545);
+        textColor = Colors.white;
+        break;
+      case SnackType.invalidated:
+        color = const Color(0xFFDC3545);
+        textColor = Colors.white;
+        break;
+      case SnackType.success:
+        color = const Color(0xFF28A745);
+        textColor = Colors.white;
+        break;
+      case SnackType.info:
+        color = Colors.grey;
+        break;
+      case SnackType.debug:
+        color = const Color(0xFFFFC107);
+        textColor = const Color(0xFF343A40);
+        break;
+      default:
+        color = Colors.grey;
+        break;
+    }
 
-  static showDebugSnackbar(context, String? text) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(text ?? ''),
-        backgroundColor: Colors.redAccent,
+        content: TextView(
+          text ?? '',
+          color: textColor,
+        ),
+        backgroundColor: color,
       ),
     );
   }
