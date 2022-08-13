@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
-      home: const RegisterScreen(),
+      home: const SplashScreen(),
     );
   }
 }

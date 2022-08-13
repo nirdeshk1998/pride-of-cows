@@ -12,10 +12,10 @@ import 'package:poc/widgets/text_view.dart';
 class PrimaryTextFormField extends StatelessWidget {
   final String? label;
   final String? hint;
+  final bool? isNumber;
+  final int? maxLength;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
-
-
 
   const PrimaryTextFormField({
     Key? key,
@@ -23,6 +23,8 @@ class PrimaryTextFormField extends StatelessWidget {
     this.controller,
     this.hint,
     this.onChanged,
+    this.isNumber,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,11 @@ class PrimaryTextFormField extends StatelessWidget {
       onChanged: onChanged,
       controller: controller,
       textCapitalization: TextCapitalization.sentences,
+      keyboardType: isNumber == true ? TextInputType.number : null,
+      inputFormatters: [
+        if (isNumber == true) FilteringTextInputFormatter.digitsOnly,
+        if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
+      ],
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
         constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
@@ -58,7 +65,6 @@ class PrimaryTextFormField extends StatelessWidget {
         enabledBorder: WidgetStyle.inputBorder,
         focusedBorder: WidgetStyle.activeInputBorder,
       ),
-
     );
   }
 }

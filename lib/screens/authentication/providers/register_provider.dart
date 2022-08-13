@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/network/models/city_model.dart';
+import 'package:poc/network/models/pincode_model.dart';
+import 'package:poc/network/models/state_model.dart';
 import 'package:poc/network/repository.dart';
 import 'package:poc/screens/authentication/data/auth_repository.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
-import 'package:poc/screens/authentication/data/models/otp_model.dart';
 import 'package:poc/screens/authentication/data/models/user_register_model.dart';
 import 'package:poc/utils/local_storage.dart';
+import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 
 final registerProvider = ChangeNotifierProvider.autoDispose((ref) => RegisterChangeProvider());
@@ -21,15 +24,18 @@ class RegisterChangeProvider with ChangeNotifier {
   final TextEditingController _addressLineController = TextEditingController();
   final TextEditingController _addressLine2Controller = TextEditingController();
   final TextEditingController _pincodeController = TextEditingController();
+  final TextEditingController _landmarkController = TextEditingController();
 
   bool _tcToggle = false;
   bool _isLoading = false;
   String? _userId;
   String? _gender;
-  int? _state;
-  int? _city;
-  List? _stateList;
-  List? _cityList;
+  int? _stateId;
+  int? _cityId;
+  List<StateListData>? _stateList;
+  List<CityListData>? _cityList;
+  int? _stateDropdownValue;
+  String? _cityDropdownValue;
 
   TextEditingController get firstNameController => _firstNameController;
   TextEditingController get lastNameController => _lastNameController;
@@ -38,27 +44,79 @@ class RegisterChangeProvider with ChangeNotifier {
   TextEditingController get addressLineController => _addressLineController;
   TextEditingController get addressLine2Controller => _addressLine2Controller;
   TextEditingController get pincodeController => _pincodeController;
+  TextEditingController get landmarkController => _landmarkController;
   bool get isLoading => _isLoading;
   bool get tcToggle => _tcToggle;
-
-  List get stateList => _stateList ?? [];
-  List get cityList => _cityList ?? [];
+  List<StateListData> get stateList => _stateList ?? [];
+  List<CityListData> get cityList => _cityList ?? [];
+  int? get stateDropdownValue => _stateDropdownValue;
+  String? get cityDropdownValue => _cityDropdownValue;
 
   void showLoader(bool value) {
     _isLoading = value;
     notifyListeners();
   }
 
+  Future<void> onCreate(context) async {
+    showLoader(true);
+    await _stateListRequest(context);
+    showLoader(false);
+  }
+
   void onGenderChanged(gender) => _gender = gender;
-  void onStateChanged(state) => _state = state;
-  void onCityChanged(city) => _city = city;
+
+  Future<void> onStateChanged(stateId, context) async {
+    _stateId = stateId;
+    showLoader(true);
+    await _cityListRequest(context, stateId.toString());
+    showLoader(false);
+  }
+
+  void onCityChanged(cityId) => _cityId = int.tryParse(cityId);
 
   Future<void> onStartShoppingButton(context) async {
-    if (true) return;
+    if (_firstNameController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'First name is required', type: SnackType.invalidated);
+      return;
+    } else if (_lastNameController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Last name is required', type: SnackType.invalidated);
+      return;
+    } else if (_emailController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Email id is required', type: SnackType.invalidated);
+      return;
+    } else if (_gender == null) {
+      Utils.showPrimarySnackbar(context, 'Gender is required', type: SnackType.invalidated);
+      return;
+    } else if (_addressLineController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Address is required', type: SnackType.invalidated);
+      return;
+    } else if (_landmarkController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Landmark is required', type: SnackType.invalidated);
+      return;
+    } else if (_pincodeController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Pincode is required', type: SnackType.invalidated);
+      return;
+    } else if (_stateId == null) {
+      Utils.showPrimarySnackbar(context, 'State is required', type: SnackType.invalidated);
+      return;
+    } else if (_cityId == null) {
+      Utils.showPrimarySnackbar(context, 'City is required', type: SnackType.invalidated);
+      return;
+    } else if (!_tcToggle) {
+      Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
+      return;
+    }
+
     showLoader(true);
     await _getUserData();
     await _userRegisterRequest(context);
     showLoader(false);
+  }
+
+  void onPincodeChanged(String val, BuildContext context) {
+    if (val.length == 6) {
+      _pincodeDataRequest(context, int.parse(val));
+    }
   }
 
   void onTcPressedFun() {
@@ -69,10 +127,11 @@ class RegisterChangeProvider with ChangeNotifier {
   Future<void> _stateListRequest(context) async {
     await _listRepo.stateListRepo().then(
       (response) {
-        final result = LoginResModel.fromJson(response.data);
+        final result = StateListResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+          _stateList = result.data;
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
@@ -80,18 +139,49 @@ class RegisterChangeProvider with ChangeNotifier {
     ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
       },
     );
   }
 
-  Future<void> _cityListRequest(context) async {
-    await _listRepo.cityListRepo('').then(
-      (response) {
-        final result = LoginResModel.fromJson(response.data);
+  Future<void> _pincodeDataRequest(context, int pincode) async {
+    showLoader(true);
+    await _listRepo.pincodeDataRepo(pincode).then(
+      (response) async {
+        final result = PincodeResModel.fromJson(response.data);
+        final element = result.data;
 
         if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+          if (result.status != 0) {
+            _stateDropdownValue = int.parse(element?.stateId ?? '0');
+            await _cityListRequest(context, element?.stateId ?? '0');
+            _cityDropdownValue = element?.cityId ?? '0';
+            _stateId = int.parse(element?.stateId ?? '0');
+            _cityId = int.parse(element?.cityId ?? '0');
+          }
+
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+        showLoader(false);
+      },
+    ).onError(
+      (error, stackTrace) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
+      },
+    );
+  }
+
+  Future<void> _cityListRequest(BuildContext context, String stateId) async {
+    await _listRepo.cityListRepo(stateId).then(
+      (response) {
+        final result = CityListResModel.fromJson(response.data);
+
+        if (response.statusCode == 200) {
+          _cityList = result.data;
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
@@ -128,13 +218,14 @@ class RegisterChangeProvider with ChangeNotifier {
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
         email: _emailController.text,
-        gender: _gender,
+        gender: _gender?.toLowerCase(),
         referedCode: _referralController.text,
         address1: _addressLineController.text,
         address2: _addressLine2Controller.text,
+        landmark: _landmarkController.text,
         pincode: int.parse(_pincodeController.text),
-        state: _state,
-        city: _city,
+        state: _stateId,
+        city: _cityId,
       );
 
   Future<void> _getUserData() async {

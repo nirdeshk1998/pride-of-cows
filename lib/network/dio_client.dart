@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:poc/network/end_points.dart';
@@ -27,10 +26,8 @@ class BaseDio {
       baseUrl: Endpoint.baseUrl,
       connectTimeout: Endpoint.connectionTimeout,
       receiveTimeout: Endpoint.receiveTimeout,
-      responseType: ResponseType.json,
-      // headers: {
-      //   if (_token != null && _token != '') HttpHeaders.authorizationHeader: 'Bearer $_token',
-      // },
+      // contentType: 'multipart/form-data'
+      // headers: {'Content-Type': 'multipart/form-data'},
     );
   }
 
@@ -44,6 +41,8 @@ class BaseDio {
               if (token != null && token != '') {
                 options.headers = {HttpHeaders.authorizationHeader: 'Bearer $token'};
               }
+
+              print(options.data);
               return handler.next(options);
             },
             onResponse: (e, handler) {
@@ -102,7 +101,7 @@ class BaseDio {
     try {
       final Response response = await getDio().post(
         url,
-        data: data.toJson(),
+        data: data,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,

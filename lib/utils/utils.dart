@@ -31,7 +31,9 @@ class Utils {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
-  static showPrimarySnackbar(context, String? text, {SnackType? type}) {
+  static showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+
     Color? color, textColor;
     switch (type) {
       case SnackType.error:
@@ -60,6 +62,7 @@ class Utils {
 
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
         content: TextView(
           text ?? '',
           color: textColor,

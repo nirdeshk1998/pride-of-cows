@@ -20,9 +20,9 @@ class ListDataRepository {
     }
   }
 
-  Future<Response> pincodeListRepo(String cityId) async {
+  Future<Response> pincodeDataRepo(int pincode) async {
     try {
-      return await BaseDio.getInstance().post(Endpoint.pincodeList, data: {FieldConstant.cityId: cityId});
+      return await BaseDio.getInstance().post(Endpoint.pincodeList, data: {FieldConstant.pincode: pincode});
     } catch (e) {
       throw Exception(e);
     }

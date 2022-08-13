@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/network/models/state_model.dart';
 import 'package:poc/screens/authentication/providers/register_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -12,13 +13,27 @@ import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/terms_condition.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class RegisterScreen extends ConsumerWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => ref.read(registerProvider).onCreate(context),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final rProvider = ref.read(registerProvider);
     final wProvider = ref.watch(registerProvider);
 
@@ -101,20 +116,44 @@ class RegisterScreen extends ConsumerWidget {
             ),
             26.0.height,
             PrimaryTextFormField(
+              label: 'Landmark*',
+              controller: rProvider.landmarkController,
+            ),
+            26.0.height,
+            PrimaryTextFormField(
               label: 'Pincode*',
+              isNumber: true,
+              maxLength: 6,
+              onChanged: (i) => rProvider.onPincodeChanged(i, context),
               controller: rProvider.pincodeController,
             ),
             26.0.height,
             PrimaryDropdownFormField(
               label: 'State*',
-              list: wProvider.stateList,
-              onChanged: rProvider.onStateChanged,
+              value: wProvider.stateDropdownValue,
+              items: wProvider.stateList
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e.stateId,
+                      child: Text(e.stateName ?? ''),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (i) => rProvider.onStateChanged(i, context),
             ),
             26.0.height,
             PrimaryDropdownFormField(
               label: 'City*',
-              list: wProvider.cityList,
-              onChanged: rProvider.onCityChanged,
+              value: wProvider.cityDropdownValue,
+              items: wProvider.cityList
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e.cityId,
+                      child: Text(e.cityName ?? ''),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (i) => rProvider.onCityChanged(i),
             ),
             30.0.height,
             Center(

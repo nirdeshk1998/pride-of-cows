@@ -9,14 +9,18 @@ import 'package:poc/styles/widget_styles.dart';
 
 class PrimaryDropdownFormField extends StatelessWidget {
   final String label;
-  final List list;
+  final List? list;
+  final List<DropdownMenuItem<dynamic>>? items;
+  final dynamic value;
   final void Function(dynamic)? onChanged;
 
   const PrimaryDropdownFormField({
     Key? key,
     required this.label,
     this.onChanged,
-    required this.list,
+    this.items,
+    this.list,
+    this.value,
   }) : super(key: key);
 
   @override
@@ -25,13 +29,14 @@ class PrimaryDropdownFormField extends StatelessWidget {
       alignedDropdown: true,
       padding: EdgeInsets.zero,
       child: DropdownButtonFormField(
+        value: value,
         icon: SvgPicture.asset(Assets.assetsIconsChevronDownThin),
         iconSize: 12,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
           labelText: label,
-          prefixIconConstraints: const BoxConstraints(),
+          prefixIconConstraints: const BoxConstraints(maxWidth: 0, minWidth: 0),
           labelStyle: TextStyle(
             color: Palette.hintColor,
             fontFamily: GoogleFonts.lato().fontFamily,
@@ -51,14 +56,15 @@ class PrimaryDropdownFormField extends StatelessWidget {
           focusedBorder: WidgetStyle.activeInputBorder,
         ),
         onChanged: onChanged,
-        items: list
-            .map(
-              (e) => DropdownMenuItem(
-                value: e,
-                child: Text(e),
-              ),
-            )
-            .toList(),
+        items: items ??
+            list
+                ?.map(
+                  (e) => DropdownMenuItem(
+                    value: e,
+                    child: Text(e),
+                  ),
+                )
+                .toList(),
       ),
     );
   }

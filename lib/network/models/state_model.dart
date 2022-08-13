@@ -1,17 +1,17 @@
-class StateListReqModel {
+class StateListResModel {
   int? status;
   String? message;
-  List<Data>? data;
+  List<StateListData>? data;
 
-  StateListReqModel({this.status, this.message, this.data});
+  StateListResModel({this.status, this.message, this.data});
 
-  StateListReqModel.fromJson(Map<String, dynamic> json) {
+  StateListResModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <StateListData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(StateListData.fromJson(v));
       });
     }
   }
@@ -27,13 +27,13 @@ class StateListReqModel {
   }
 }
 
-class Data {
+class StateListData {
   int? stateId;
   String? stateName;
 
-  Data({this.stateId, this.stateName});
+  StateListData({this.stateId, this.stateName});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  StateListData.fromJson(Map<String, dynamic> json) {
     stateId = json['state_id'];
     stateName = json['state_name'];
   }

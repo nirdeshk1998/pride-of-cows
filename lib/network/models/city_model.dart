@@ -1,7 +1,7 @@
 class CityListResModel {
   int? status;
   String? message;
-  List<Data>? data;
+  List<CityListData>? data;
 
   CityListResModel({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class CityListResModel {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CityListData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(CityListData.fromJson(v));
       });
     }
   }
@@ -27,13 +27,13 @@ class CityListResModel {
   }
 }
 
-class Data {
+class CityListData {
   String? cityId;
   String? cityName;
 
-  Data({this.cityId, this.cityName});
+  CityListData({this.cityId, this.cityName});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CityListData.fromJson(Map<String, dynamic> json) {
     cityId = json['city_id'];
     cityName = json['city_name'];
   }
