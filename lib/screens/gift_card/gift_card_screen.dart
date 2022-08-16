@@ -264,27 +264,27 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
         ),
         5.0.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s full name*',
+          label: 'Recipient full name*',
         ),
         Dimensions.defaultPadding.height,
         const PhoneNumberFormField(
-          label: 'Recipient\'s phone number*',
+          label: 'Recipient phone number*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s address line 1*',
+          label: 'Recipient address line 1*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s address line 2*',
+          label: 'Recipient address line 2*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s address line 3',
+          label: 'Recipient address line 3',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s email ID*',
+          label: 'Recipient email ID*',
         ),
         30.0.height,
         TextView(
@@ -295,15 +295,15 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
         ),
         5.0.height,
         const PrimaryTextFormField(
-          label: 'Sender\'s full name*',
+          label: 'Sender full name*',
         ),
         Dimensions.defaultPadding.height,
         const PhoneNumberFormField(
-          label: 'Sender\' phone number*',
+          label: 'Sender phone number*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Sender\'s email ID*',
+          label: 'Sender email ID*',
         ),
         Dimensions.defaultPadding.height,
         const SecondaryFormField(),
@@ -445,15 +445,15 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
         ),
         5.0.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s full name*',
+          label: 'Recipient full name*',
         ),
         Dimensions.defaultPadding.height,
         const PhoneNumberFormField(
-          label: 'Recipient\'s phone number*',
+          label: 'Recipient phone number*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Recipient\'s email ID*',
+          label: 'Recipient email ID*',
         ),
         30.0.height,
         TextView(
@@ -464,15 +464,15 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
         ),
         5.0.height,
         const PrimaryTextFormField(
-          label: 'Sender\'s full name*',
+          label: 'Sender full name*',
         ),
         Dimensions.defaultPadding.height,
         const PhoneNumberFormField(
-          label: 'Sender\' phone number*',
+          label: 'Sender phone number*',
         ),
         Dimensions.defaultPadding.height,
         const PrimaryTextFormField(
-          label: 'Sender\'s email ID*',
+          label: 'Sender email ID*',
         ),
         Dimensions.defaultPadding.height,
         const SecondaryFormField(),

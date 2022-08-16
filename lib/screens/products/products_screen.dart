@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/product_details_screen.dart';
+import 'package:poc/screens/products/providers/product_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -11,9 +12,12 @@ import 'package:poc/widgets/indicators.dart';
 
 class ProductsScreen extends ConsumerWidget {
   const ProductsScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final rProvider=ref.read(ProductProvider);
+    final wProvider=ref.watch(ProductProvider);
+
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -127,7 +131,7 @@ class ProductsScreen extends ConsumerWidget {
                     6,
                     (index) => GridView.builder(
                       shrinkWrap: true,
-                      itemCount: 20,
+                      itemCount:wProvider.productList.length,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -138,6 +142,8 @@ class ProductsScreen extends ConsumerWidget {
                         mainAxisExtent: 200,
                       ),
                       itemBuilder: (BuildContext context, int index) {
+                        print("hello");
+                        rProvider.getProducts();
                         return Container(
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -152,15 +158,15 @@ class ProductsScreen extends ConsumerWidget {
                             children: [
                               Expanded(
                                 child: Image.network(
-                                  'https://i.pinimg.com/564x/d8/3c/fc/d83cfc0043cde21c8735110b13f443fe.jpg',
+                                  'https://stagingpoc.heptawork.com//storage/62f26875ea4b1.png',
                                   height: double.maxFinite,
                                   width: double.maxFinite,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               const SizedBox.square(dimension: 10),
-                              const Text(
-                                'Milk',
+                               Text(
+                                '${wProvider.productList[index]["name"]}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: Palette.textColor,
@@ -169,8 +175,8 @@ class ProductsScreen extends ConsumerWidget {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
-                              const Text(
-                                '1 litre',
+                               Text(
+                                '${wProvider.productList[index]["product_unit"]}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: Palette.hintColor,
@@ -183,8 +189,8 @@ class ProductsScreen extends ConsumerWidget {
                               Row(
                                 children: [
                                   // Figma Flutter Generator 120Widget - TEXT
-                                  const Text(
-                                    '₹120',
+                                   Text(
+                                     '${wProvider.productList[index]["finalprice"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: Palette.textColor,
@@ -194,8 +200,8 @@ class ProductsScreen extends ConsumerWidget {
                                     ),
                                   ),
                                   const SizedBox.square(dimension: 5),
-                                  const Text(
-                                    '₹150',
+                                   Text(
+                                     '${wProvider.productList[index]["price"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: Palette.surfaceColor,
@@ -247,3 +253,4 @@ class ProductsScreen extends ConsumerWidget {
     );
   }
 }
+

@@ -52,71 +52,60 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox.square(dimension: 13),
-              SizedBox(
-                height: 70,
-                child: GridView.builder(
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    mainAxisExtent: 60,
-                    crossAxisSpacing: 9,
-                    mainAxisSpacing: 0,
-                  ),
-                  itemCount: 7,
-                  itemBuilder: (BuildContext context, int index) {
+              const SizedBox.square(dimension: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                  7,
+                  (index) {
                     bool today = wProvider.currentDate.day.toString() == wProvider.getCurrentWeek()[index];
                     return Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        AspectRatio(
-                          aspectRatio: 41 / 45,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: today ? Palette.primaryColor : Colors.transparent,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: const Color(0xffe1eaf4),
-                                width: 1,
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  wProvider.weekNameList[index],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: today ? Palette.altTextColor : Palette.hintColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                const SizedBox.square(dimension: 2),
-                                Text(
-                                  wProvider.getCurrentWeek()[index],
-                                  style: TextStyle(
-                                    color: today ? Palette.altTextColor : Palette.textColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 0.72,
-                                  ),
-                                ),
-                              ],
+                        Container(
+                          height: 45,
+                          width: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: today ? Palette.primaryColor : Colors.transparent,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xffe1eaf4),
+                              width: today ? 0 : 1,
                             ),
                           ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextView(
+                                wProvider.weekNameList[index],
+                                textAlign: TextAlign.center,
+                                color: today ? Palette.altTextColor : Palette.hintColor,
+                                size: TextSize.regularSmall,
+                              ),
+                              2.0.height,
+                              Text(
+                                wProvider.getCurrentWeek()[index],
+                                style: TextStyle(
+                                  color: today ? Palette.altTextColor : Palette.textColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 0.72,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox.square(dimension: 10),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
+                        10.0.height,
+                        Container(
+                          height: 3,
+                          width: 15,
                           clipBehavior: Clip.antiAlias,
-                          child: SizedBox(
-                            height: 3,
-                            width: 15,
-                            child: ColoredBox(
-                              color: today ? Palette.primaryColor : Palette.secondaryColor,
-                            ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: today ? Palette.primaryColor : Palette.secondaryColor,
                           ),
                         ),
                       ],
@@ -124,7 +113,7 @@ class HomeScreen extends ConsumerWidget {
                   },
                 ),
               ),
-              const SizedBox.square(dimension: 5),
+              10.0.height,
               const Text(
                 "Deliveries scheduled:",
                 style: TextStyle(
@@ -148,14 +137,14 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal:20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextView(
                   "Deals & Offers",
                   textType: TextStyles.header,
                 ),
 
             ),
-            const SizedBox.square(dimension: 13),
+            const SizedBox.square(dimension: 15),
             CarouselSlider.builder(
               itemCount: 3,
               options: CarouselOptions(
@@ -206,7 +195,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 TextView('Shop by Category', textType: TextStyles.header),
+
+                  TextView('Shop by Category', textType: TextStyles.header),
 
                   const Spacer(),
                   PrimaryTextButton(
@@ -216,7 +206,7 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 13),
+            const SizedBox.square(dimension: 15),
             AspectRatio(
               aspectRatio: 375 / 120,
               child: ListView.separated(
@@ -263,7 +253,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextView('My Crowns',textType: TextStyles.header),
+                  TextView('My Crowns', textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view rewards',
@@ -271,7 +261,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox.square(dimension: 13),
+              const SizedBox.square(dimension: 15),
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -323,7 +313,7 @@ class HomeScreen extends ConsumerWidget {
                       ],
                     ),
                     const RewardProgressBar(
-                      value: 30,
+                      value: 35,
                     ),
                   ],
                 ),
@@ -371,7 +361,7 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextView('Refer & Earn',textType: TextStyles.header),
+                  TextView('Refer & Earn', textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view details',
@@ -380,7 +370,7 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 13),
+            const SizedBox.square(dimension: 15),
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(

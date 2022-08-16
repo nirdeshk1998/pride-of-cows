@@ -23,6 +23,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.controller,
     this.hint,
     this.onChanged,
+
   }) : super(key: key);
 
   @override

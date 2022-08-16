@@ -1,14 +1,12 @@
+class Endpoint {
+  Endpoint._();
 
-
-class Endpoints {
-  Endpoints._();
-
-  // base url
-  static const String baseUrl = "https://";
-
-  // receiveTimeout
+  static const String baseUrl = 'https://stagingpoc.heptawork.com/api';
   static const int receiveTimeout = 15000;
-
-  // connectTimeout
   static const int connectionTimeout = 15000;
+
+  // Authentication
+  static const String login = '/customer/login';
+  static const String verifyOtp = '/customer/otpverifylogin';
+  static const String productList = '/customer/productlist';
 }

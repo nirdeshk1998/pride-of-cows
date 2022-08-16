@@ -2,40 +2,40 @@ import 'package:dio/dio.dart';
 import 'package:poc/network/end_points.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-const baseApiUrl = 'http://localhost';
-
 class BaseDio {
   BaseDio._();
+  Dio? _dio;
 
   static final BaseDio _singleton = BaseDio._();
+
+  BaseDio();
 
   static BaseDio getInstance() {
     return _singleton;
   }
 
   final BaseOptions options = BaseOptions(
-    baseUrl: Endpoints.baseUrl,
-    connectTimeout: Endpoints.connectionTimeout,
-    receiveTimeout: Endpoints.receiveTimeout,
+    baseUrl: Endpoint.baseUrl,
+    connectTimeout: Endpoint.connectionTimeout,
+    receiveTimeout: Endpoint.receiveTimeout,
     responseType: ResponseType.json,
   );
 
   Dio getDio() {
-    final dio = Dio(options)
+    return _dio ??= Dio(options)
       ..interceptors.addAll(
         [
           PrettyDioLogger(
+            request: false,
             requestHeader: true,
             requestBody: true,
             responseBody: true,
             responseHeader: false,
-            compact: false,
+            compact: true,
           ),
-          LogInterceptor(responseBody: false),
+          // LogInterceptor(responseBody: false),
         ],
       );
-
-    return dio;
   }
 
   // Get:-----------------------------------------------------------------------
@@ -56,6 +56,7 @@ class BaseDio {
       );
       return response;
     } catch (e) {
+      // debugPrint(e.toString());
       rethrow;
     }
   }
@@ -73,7 +74,7 @@ class BaseDio {
     try {
       final Response response = await getDio().post(
         url,
-        data: data,
+        data: data.toJson(),
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
@@ -82,6 +83,7 @@ class BaseDio {
       );
       return response;
     } catch (e) {
+      // debugPrint(e.toString());
       rethrow;
     }
   }
