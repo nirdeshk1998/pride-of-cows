@@ -7,6 +7,7 @@ import 'package:poc/network/repository.dart';
 import 'package:poc/screens/authentication/data/auth_repository.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/authentication/data/models/user_register_model.dart';
+import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
@@ -30,8 +31,8 @@ class RegisterChangeProvider with ChangeNotifier {
   bool _isLoading = false;
   String? _userId;
   String? _gender;
-  int? _stateId;
-  int? _cityId;
+  String? _stateId;
+  String? _cityId;
   List<StateListData>? _stateList;
   List<CityListData>? _cityList;
   int? _stateDropdownValue;
@@ -66,13 +67,13 @@ class RegisterChangeProvider with ChangeNotifier {
   void onGenderChanged(gender) => _gender = gender;
 
   Future<void> onStateChanged(stateId, context) async {
-    _stateId = stateId;
+    _stateId = stateId.toString();
     showLoader(true);
     await _cityListRequest(context, stateId.toString());
     showLoader(false);
   }
 
-  void onCityChanged(cityId) => _cityId = int.tryParse(cityId);
+  void onCityChanged(cityId) => _cityId = cityId;
 
   Future<void> onStartShoppingButton(context) async {
     if (_firstNameController.text.isEmpty) {
@@ -96,10 +97,10 @@ class RegisterChangeProvider with ChangeNotifier {
     } else if (_pincodeController.text.isEmpty) {
       Utils.showPrimarySnackbar(context, 'Pincode is required', type: SnackType.invalidated);
       return;
-    } else if (_stateId == null) {
+    } else if ((_stateId ?? '').isEmpty) {
       Utils.showPrimarySnackbar(context, 'State is required', type: SnackType.invalidated);
       return;
-    } else if (_cityId == null) {
+    } else if ((_cityId ?? '').isEmpty) {
       Utils.showPrimarySnackbar(context, 'City is required', type: SnackType.invalidated);
       return;
     } else if (!_tcToggle) {
@@ -108,7 +109,7 @@ class RegisterChangeProvider with ChangeNotifier {
     }
 
     showLoader(true);
-    await _getUserData();
+    await _gettingPrefs();
     await _userRegisterRequest(context);
     showLoader(false);
   }
@@ -152,15 +153,15 @@ class RegisterChangeProvider with ChangeNotifier {
         final element = result.data;
 
         if (response.statusCode == 200) {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+
           if (result.status != 0) {
             _stateDropdownValue = int.parse(element?.stateId ?? '0');
             await _cityListRequest(context, element?.stateId ?? '0');
             _cityDropdownValue = element?.cityId ?? '0';
-            _stateId = int.parse(element?.stateId ?? '0');
-            _cityId = int.parse(element?.cityId ?? '0');
+            _stateId = element?.stateId;
+            _cityId = element?.cityId;
           }
-
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
@@ -180,8 +181,8 @@ class RegisterChangeProvider with ChangeNotifier {
         final result = CityListResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          _cityList = result.data;
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+          _cityList = result.data;
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
@@ -196,11 +197,13 @@ class RegisterChangeProvider with ChangeNotifier {
 
   Future<void> _userRegisterRequest(context) async {
     await _authRepo.userRegistrationRepo(_registerReqModel).then(
-      (response) {
+      (response) async {
         final result = LoginResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+          await _settingPrefs(result.data);
+          Utils.pushAndRemoveUntil(context, const MainScreen());
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
@@ -208,7 +211,7 @@ class RegisterChangeProvider with ChangeNotifier {
     ).onError(
       (error, stackTrace) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
       },
     );
   }
@@ -223,12 +226,33 @@ class RegisterChangeProvider with ChangeNotifier {
         address1: _addressLineController.text,
         address2: _addressLine2Controller.text,
         landmark: _landmarkController.text,
-        pincode: int.parse(_pincodeController.text),
+        pincode: _pincodeController.text,
         state: _stateId,
         city: _cityId,
       );
 
-  Future<void> _getUserData() async {
+  Future<void> _gettingPrefs() async {
     _userId = await LocalStorage.getString(StorageField.userId);
+  }
+
+  Future<void> _settingPrefs(LoginData? element) async {
+    await LocalStorage.setString(element?.token, StorageField.token);
+    await LocalStorage.setString(element?.userID.toString(), StorageField.userId);
+    await LocalStorage.setString(element?.mobileNo, StorageField.mobileNumber);
+    await LocalStorage.setString(element?.firstName, StorageField.firstName);
+    await LocalStorage.setString(element?.lastName, StorageField.lastName);
+    await LocalStorage.setString(element?.middleName, StorageField.middleName);
+    await LocalStorage.setString(element?.addressType, StorageField.addressType);
+    await LocalStorage.setString(element?.area, StorageField.area);
+    await LocalStorage.setString(element?.buildingName, StorageField.buildingName);
+    await LocalStorage.setString(element?.city, StorageField.city);
+    await LocalStorage.setString(element?.cityId, StorageField.cityId);
+    await LocalStorage.setString(element?.customerType, StorageField.customerType);
+    await LocalStorage.setString(element?.deliveryOption, StorageField.deliveryOption);
+    await LocalStorage.setString(element?.email, StorageField.email);
+    await LocalStorage.setString(element?.flatPlotNo, StorageField.flatPlotNumber);
+    await LocalStorage.setString(element?.landmark, StorageField.landmark);
+    await LocalStorage.setString(element?.streetRoad, StorageField.streetRoad);
+    await LocalStorage.setString(element?.pincode.toString(), StorageField.pincode);
   }
 }

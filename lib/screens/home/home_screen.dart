@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/providers/home_provider.dart';
+import 'package:poc/screens/home/providers/home_provider.dart';
 import 'package:poc/screens/calendar/calendar_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
@@ -17,13 +19,26 @@ import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(homeProvider).initState(context);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final rProvider = ref.read(homeProvider);
     final wProvider = ref.watch(homeProvider);
 
@@ -34,7 +49,7 @@ class HomeScreen extends ConsumerWidget {
         const PrimaryAppBar(showSearch: true),
         // This week
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(Dimensions.defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -171,7 +186,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox.square(dimension: 15),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Row(
                 children: [
                   const Expanded(flex: 3, child: Divider(height: 1, thickness: 1, color: Palette.primaryColor)),
@@ -193,7 +208,7 @@ class HomeScreen extends ConsumerWidget {
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,46 +225,49 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 10),
-            AspectRatio(
-              aspectRatio: 375 / 120,
+            10.0.height,
+
+            // Shop by category
+            SizedBox(
+              height: 105,
               child: ListView.separated(
-                itemCount: 10,
+                itemCount: wProvider.categoryList?.length ?? 0,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
                 separatorBuilder: (context, index) => const SizedBox.square(dimension: 25),
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(wProvider.imageList[2]),
-                    ),
-                    const SizedBox.square(dimension: 5),
-                    const Text(
-                      'Milk',
-                      style: TextStyle(
-                        color: Palette.textColor,
-                        fontSize: 16,
+                itemBuilder: (context, index) {
+                  final element = wProvider.categoryList?[index];
+
+                  return Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        child: Image.network(
+                          element?.thumbnail ?? '',
+                          fit: BoxFit.fill,
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      const Spacer(),
+                      TextView(
+                        element?.catName ?? 'N/A',
+                        textType: TextType.subtitle,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
         ),
-        10.0.height,
 
-        // PrimarySlider(
-        //   value: 0.4,
-        //   divisions: 4,
-        //   onChanged: (i) {},
-        // ),
+        40.0.height,
 
         // My Crowns
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -360,7 +378,7 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,7 +394,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox.square(dimension: 10),
             Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(Dimensions.defaultPadding),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
@@ -509,7 +527,7 @@ class HomeScreen extends ConsumerWidget {
 
         // Top Picks
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
           child: Column(
             children: [
               Row(
@@ -527,7 +545,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox.square(dimension: 10),
               GridView.builder(
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: wProvider.productList?.length ?? 0,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -537,6 +555,8 @@ class HomeScreen extends ConsumerWidget {
                   mainAxisSpacing: 20,
                 ),
                 itemBuilder: (BuildContext context, int index) {
+                  final element = wProvider.productList?[index];
+
                   return Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
@@ -551,18 +571,17 @@ class HomeScreen extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: Image.network(
-                            'https://i.pinimg.com/564x/d8/3c/fc/d83cfc0043cde21c8735110b13f443fe.jpg',
+                            element?.thumb ?? '',
                             height: double.maxFinite,
                             width: double.maxFinite,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox.square(dimension: 10),
-                        const Text(
-                          'Milk',
+                        10.0.height,
+                        TextView(
+                          element?.name ?? '',
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Palette.textColor,
+                          textType: const TextStyle(
                             fontSize: 16,
                             letterSpacing: 0,
                             fontWeight: FontWeight.normal,
@@ -640,7 +659,7 @@ class HomeScreen extends ConsumerWidget {
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -831,7 +850,7 @@ class HomeScreen extends ConsumerWidget {
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -843,7 +862,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox.square(dimension: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
               child: ClipRRect(
                 clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.circular(10),

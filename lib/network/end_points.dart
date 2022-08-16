@@ -16,4 +16,16 @@ class Endpoint {
   static const String stateList = '/customer/statelist';
   static const String cityList = '/customer/citylist';
   static const String pincodeList = '/customer/pincodelist';
+
+  // Category
+  static const String categoryList = '/customer/categorylist';
+
+  // Promocode & Offers
+  static const String dealsAndOffers = '/customer/offers';
+  static const String applyCoupon = '/promocode/applycoupon';
+  static const String removeCoupon = '/promocode/removecoupon';
+
+  // Products
+  static const String productList = '/customer/productlist';
+  static const String productDetails = '/customer/productdetail';
 }

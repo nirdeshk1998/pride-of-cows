@@ -26,6 +26,8 @@ class BaseDio {
       baseUrl: Endpoint.baseUrl,
       connectTimeout: Endpoint.connectionTimeout,
       receiveTimeout: Endpoint.receiveTimeout,
+      // validateStatus: (status) => true,
+      // followRedirects: false,
       // contentType: 'multipart/form-data'
       // headers: {'Content-Type': 'multipart/form-data'},
     );
@@ -41,8 +43,6 @@ class BaseDio {
               if (token != null && token != '') {
                 options.headers = {HttpHeaders.authorizationHeader: 'Bearer $token'};
               }
-
-              print(options.data);
               return handler.next(options);
             },
             onResponse: (e, handler) {
@@ -110,7 +110,6 @@ class BaseDio {
       );
       return response;
     } catch (e) {
-      // debugPrint(e.toString());
       rethrow;
     }
   }

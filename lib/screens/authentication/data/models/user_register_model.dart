@@ -7,9 +7,9 @@ class UserRegisterReqModel {
   String? address1;
   String? address2;
   String? landmark;
-  int? pincode;
-  int? state;
-  int? city;
+  String? pincode;
+  String? state;
+  String? city;
   String? referedCode;
 
   UserRegisterReqModel({

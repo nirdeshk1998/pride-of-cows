@@ -33,7 +33,7 @@ class LoginReqModel {
 class LoginResModel {
   String? message;
   int? status;
-  Data? data;
+  LoginData? data;
   Citydata? citydata;
 
   LoginResModel({this.message, this.status, this.data, this.citydata});
@@ -41,7 +41,7 @@ class LoginResModel {
   LoginResModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? LoginData.fromJson(json['data']) : null;
     citydata = json['citydata'] != null ? Citydata.fromJson(json['citydata']) : null;
   }
 
@@ -59,7 +59,7 @@ class LoginResModel {
   }
 }
 
-class Data {
+class LoginData {
   String? token;
   int? userID;
   String? mobileNo;
@@ -74,12 +74,12 @@ class Data {
   String? streetRoad;
   String? area;
   String? landmark;
-  int? pincode;
+  String? pincode;
   String? addressType;
   String? customerType;
   String? deliveryOption;
 
-  Data(
+  LoginData(
       {this.token,
       this.userID,
       this.mobileNo,
@@ -99,7 +99,7 @@ class Data {
       this.customerType,
       this.deliveryOption});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  LoginData.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     userID = json['UserID'];
     mobileNo = json['MobileNo'];

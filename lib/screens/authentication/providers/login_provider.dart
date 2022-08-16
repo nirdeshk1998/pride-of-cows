@@ -179,7 +179,7 @@ class LoginChangeProvider with ChangeNotifier {
     );
   }
 
-  Future<void> _settingPrefs(Data? element) async {
+  Future<void> _settingPrefs(LoginData? element) async {
     await LocalStorage.setString(element?.token, StorageField.token);
     await LocalStorage.setString(element?.userID.toString(), StorageField.userId);
     await LocalStorage.setString(element?.mobileNo, StorageField.mobileNumber);

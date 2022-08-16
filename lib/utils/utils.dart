@@ -31,7 +31,7 @@ class Utils {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
-  static showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
+  static ScaffoldFeatureController showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
     ScaffoldMessenger.of(context).clearSnackBars();
 
     Color? color, textColor;
