@@ -1,14 +1,14 @@
 class ProductListResModel {
   int? status;
-  String? messgae;
+  String? message;
   List<ProductData>? data;
   int? totalproduct;
 
-  ProductListResModel({this.status, this.messgae, this.data, this.totalproduct});
+  ProductListResModel({this.status, this.message, this.data, this.totalproduct});
 
   ProductListResModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    messgae = json['messgae'];
+    message = json['message'];
     if (json['data'] != null) {
       data = <ProductData>[];
       json['data'].forEach((v) {
@@ -21,7 +21,7 @@ class ProductListResModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    data['messgae'] = messgae;
+    data['messgae'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }

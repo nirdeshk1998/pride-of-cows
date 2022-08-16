@@ -26,6 +26,7 @@ class LoginReqModel {
     data['Platform'] = platform;
     data['DeviceName'] = devicename;
     data['OsVersion'] = devicename;
+    print("data${data}");
     return data;
   }
 }

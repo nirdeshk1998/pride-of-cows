@@ -154,15 +154,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                height: 38,
-                child: Text(
-                  "Deals & Offers",
-                  style: TextStyles.header,
-                ),
+              child: TextView(
+                "Deals & Offers",
+                textType: TextStyles.header,
               ),
             ),
-            const SizedBox.square(dimension: 10),
+            const SizedBox.square(dimension: 15),
             CarouselSlider.builder(
               itemCount: 3,
               options: CarouselOptions(
@@ -213,10 +210,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 38,
-                    child: Text('Shop by Category', style: TextStyles.header),
-                  ),
+                  TextView('Shop by Category', textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'shop all',
@@ -275,7 +269,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('My Crowns', style: TextStyles.header),
+                  TextView('My Crowns', textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view rewards',
@@ -283,7 +277,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox.square(dimension: 10),
+              const SizedBox.square(dimension: 15),
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -383,7 +377,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Refer & Earn', style: TextStyles.header),
+                  TextView('Refer & Earn', textType: TextStyles.header),
                   const Spacer(),
                   PrimaryTextButton(
                     title: 'view details',
@@ -392,7 +386,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 10),
+            const SizedBox.square(dimension: 15),
             Container(
               padding: const EdgeInsets.all(Dimensions.defaultPadding),
               decoration: const BoxDecoration(

@@ -210,8 +210,8 @@ class Assets {
   static const String assetsIconsLocationGrey = "assets/icons/location_grey.png";
 
   /// Assets for assetsIconsLoveLetter
-  /// assets/icons/love_letter.svg
-  static const String assetsIconsLoveLetter = "assets/icons/love_letter.svg";
+  /// assets/icons/love_letter.png
+  static const String assetsIconsLoveLetter = "assets/icons/love_letter.png";
 
   /// Assets for assetsIconsLoyaltyRound
   /// assets/icons/loyalty_round.svg
@@ -222,8 +222,8 @@ class Assets {
   static const String assetsIconsMenu = "assets/icons/menu.svg";
 
   /// Assets for assetsIconsMilk
-  /// assets/icons/milk.svg
-  static const String assetsIconsMilk = "assets/icons/milk.svg";
+  /// assets/icons/milk.png
+  static const String assetsIconsMilk = "assets/icons/milk.png";
 
   /// Assets for assetsIconsMinus
   /// assets/icons/minus.svg
@@ -246,8 +246,8 @@ class Assets {
   static const String assetsIconsPencil = "assets/icons/pencil.svg";
 
   /// Assets for assetsIconsPersonalInformation
-  /// assets/icons/personal_information.svg
-  static const String assetsIconsPersonalInformation = "assets/icons/personal_information.svg";
+  /// assets/icons/personal_information.png
+  static const String assetsIconsPersonalInformation = "assets/icons/personal_information.png";
 
   /// Assets for assetsIconsPhone
   /// assets/icons/phone.svg

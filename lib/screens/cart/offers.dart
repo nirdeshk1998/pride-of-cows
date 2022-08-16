@@ -102,7 +102,7 @@ class CartOffers extends ConsumerWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.only(left: 15, right: 15),
-                                  color: const Color(0xffF7F7F7),
+                                  color: Color(0xfff8f6f6),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,

@@ -199,6 +199,12 @@ class EditAddress extends ConsumerWidget {
                           height: 20,
                         ),
                         const PrimaryTextFormField(
+                          label: 'Locality*',
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const PrimaryTextFormField(
                           label: 'Landmark',
                         ),
 
@@ -297,33 +303,30 @@ class EditAddress extends ConsumerWidget {
                                       // return AlertDialog(
                                       //   title: Text("Request for updating address sent!",style: TextStyles.header,),
                                       // );
-                                      return Dialog(
-                                        child: Container(
-                                          height: 312,
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                                      return AlertDialog(
+                                        title:     Text(
+                                          "Request for updating address sent!",
+                                          style: TextStyle(
+                                              fontFamily: GoogleFonts.suranna().fontFamily,
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w400,height: 1),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        content: Container(
                                           child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              SizedBox(
-                                                height: 32,
-                                              ),
-                                              Text(
-                                                "Request for updating address sent!",
-                                                style: TextStyle(
-                                                    fontFamily: GoogleFonts.suranna().fontFamily,
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w400,height: 1),
-                                                textAlign: TextAlign.center,
-                                              ),
                                               const Divider(
                                                 thickness: 1,
                                               ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(left: 18, right: 18),
+                                               Container(
+
                                                 child: TextView(
                                                   "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
                                                   size: 16,
                                                   maxLines: 10,
-                                                  height: 1.8,
+                                                  height: 1.4,
                                                 ),
                                               ),
                                               const SizedBox(

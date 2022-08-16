@@ -72,9 +72,9 @@ class HomeChangeProvider with ChangeNotifier {
 
         if (response.statusCode == 200) {
           _productList = result.data;
-          Utils.showPrimarySnackbar(context, result.messgae, type: SnackType.success);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
         } else {
-          Utils.showPrimarySnackbar(context, result.messgae, type: SnackType.error);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
       },
     ).onError(

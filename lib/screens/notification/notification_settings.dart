@@ -114,8 +114,8 @@ class NotificationsSettings extends ConsumerWidget {
                           ),
                           CupertinoSwitch(
                             activeColor: Palette.successColor,
-                            value: wProvider.notificationSetting,
-                            onChanged: (i) => rProvider.notificationSettingFun(i),
+                            value: wProvider.enableAll,
+                            onChanged: (i) => rProvider.enableAllNotificationSettingFun(i),
                           ),
                         ],
                       ),
@@ -162,8 +162,8 @@ class NotificationsSettings extends ConsumerWidget {
                           ),
                           CupertinoSwitch(
                             activeColor: Palette.successColor,
-                            value: wProvider.notificationSetting,
-                            onChanged: (i) => rProvider.notificationSettingFun(i),
+                            value: wProvider.order,
+                            onChanged: (i) => rProvider.orderNotificationSettingFun(i),
                           ),
                         ],
                       ),
@@ -204,8 +204,8 @@ class NotificationsSettings extends ConsumerWidget {
                           ),
                           CupertinoSwitch(
                             activeColor: Palette.successColor,
-                            value: wProvider.notificationSetting,
-                            onChanged: (i) => rProvider.notificationSettingFun(i),
+                            value: wProvider.promo,
+                            onChanged: (i) => rProvider.promoNotificationSettingFun(i),
                           ),
                         ],
                       ),

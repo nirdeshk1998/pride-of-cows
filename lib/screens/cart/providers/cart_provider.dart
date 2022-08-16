@@ -13,7 +13,7 @@ class CartChangeProvider extends ChangeNotifier {
   int _itemCount = 0;
   String get itemCount => _itemCount.toString();
   String appliedOffer="";
-  bool showItems=true;
+  bool showItems=false;
 
   void onItemPlus() {
     ++_itemCount;
