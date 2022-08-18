@@ -60,7 +60,7 @@ class MainScreen extends ConsumerWidget {
         ),
         body: [
           const HomeScreen(),
-          const ProductsScreen(),
+          const ProductScreen(),
           const CartScreen(),
           const MenuScreen(),
         ][wProvider.currentIndex],
@@ -68,19 +68,23 @@ class MainScreen extends ConsumerWidget {
     );
   }
 
-  BottomNavigationBarItem navItem({required String icon, required String title}) {
+  BottomNavigationBarItem navItem(
+      {required String icon, required String title}) {
     return BottomNavigationBarItem(
       label: '',
       icon: Column(
         children: [
           SizedBox.square(dimension: 25, child: SvgPicture.asset(icon)),
-          Text(title, style: const TextStyle(color: Color(0xff658395), fontSize: 12)),
+          Text(title,
+              style: const TextStyle(color: Color(0xff658395), fontSize: 12)),
         ],
       ),
       activeIcon: Column(
         children: [
           SizedBox.square(dimension: 25, child: SvgPicture.asset(icon)),
-          Text(title, style: const TextStyle(color: Palette.primaryColor, fontSize: 12)),
+          Text(title,
+              style:
+                  const TextStyle(color: Palette.primaryColor, fontSize: 12)),
           const SizedBox.square(dimension: 4),
           const CircleAvatar(radius: 2, backgroundColor: Palette.primaryColor),
         ],
