@@ -10,14 +10,26 @@ import 'package:poc/styles/text_styles.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/indicators.dart';
 
-class ProductsScreen extends ConsumerWidget {
-  const ProductsScreen({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+class ProductScreen extends ConsumerStatefulWidget {
+  const ProductScreen({Key? key}) : super(key: key);
 
+  @override
+  ConsumerState<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends ConsumerState<ProductScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(ProductProvider).getProducts();
+      ref.read(ProductProvider).getCatergory(context);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final rProvider=ref.read(ProductProvider);
     final wProvider=ref.watch(ProductProvider);
-
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -90,7 +102,7 @@ class ProductsScreen extends ConsumerWidget {
           ),
         ),
         DefaultTabController(
-          length: 6,
+          length:6,
           initialIndex: 0,
           child: Column(
             children: [
@@ -129,7 +141,7 @@ class ProductsScreen extends ConsumerWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   children: List.generate(
                     6,
-                    (index) => GridView.builder(
+                        (index) => GridView.builder(
                       shrinkWrap: true,
                       itemCount:wProvider.productList.length,
                       physics: const NeverScrollableScrollPhysics(),
@@ -141,10 +153,9 @@ class ProductsScreen extends ConsumerWidget {
                         mainAxisSpacing: 20,
                         mainAxisExtent: 200,
                       ),
-                      itemBuilder: (BuildContext context, int index) {
-                        print("hello");
-                        rProvider.getProducts();
-                        return Container(
+                      itemBuilder: (BuildContext context, int index)=>
+
+                         Container(
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -165,7 +176,7 @@ class ProductsScreen extends ConsumerWidget {
                                 ),
                               ),
                               const SizedBox.square(dimension: 10),
-                               Text(
+                              Text(
                                 '${wProvider.productList[index]["name"]}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -175,7 +186,7 @@ class ProductsScreen extends ConsumerWidget {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
-                               Text(
+                              Text(
                                 '${wProvider.productList[index]["product_unit"]}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -189,8 +200,8 @@ class ProductsScreen extends ConsumerWidget {
                               Row(
                                 children: [
                                   // Figma Flutter Generator 120Widget - TEXT
-                                   Text(
-                                     '${wProvider.productList[index]["finalprice"]}',
+                                  Text(
+                                    '${wProvider.productList[index]["finalprice"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: Palette.textColor,
@@ -200,8 +211,8 @@ class ProductsScreen extends ConsumerWidget {
                                     ),
                                   ),
                                   const SizedBox.square(dimension: 5),
-                                   Text(
-                                     '${wProvider.productList[index]["price"]}',
+                                  Text(
+                                    '${wProvider.productList[index]["price"]}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: Palette.surfaceColor,
@@ -240,8 +251,7 @@ class ProductsScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                        );
-                      },
+                        )
                     ),
                   ),
                 ),
@@ -253,4 +263,7 @@ class ProductsScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
 
