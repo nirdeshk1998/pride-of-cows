@@ -1,5 +1,5 @@
 class CategoryResModel{
-  String ? status;
+  int ? status;
   String ? message;
   List ? data;
   CategoryResModel({

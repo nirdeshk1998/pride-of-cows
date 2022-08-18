@@ -26,7 +26,12 @@ ProductReqModel get _productListModel=> ProductReqModel(
 Future<void> getCatergory(context)async{
   await CategoryRepository().getCategoryList().then((response){
     final result=CategoryResModel.fromJson(response.data);
-    categoryList=result.data!;
+    List data=result.data!;
+    for(var a in data){
+      categoryList.add(a["cat_name"]);
+    }
+    print(categoryList);
+    notifyListeners();
   });
 }
 

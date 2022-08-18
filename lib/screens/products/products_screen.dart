@@ -125,14 +125,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                     fontWeight: FontWeight.normal,
                     height: 1.5,
                   ),
-                  tabs: const [
-                    Tab(text: 'Milk'),
-                    Tab(text: 'Cheese'),
-                    Tab(text: 'Ghee'),
-                    Tab(text: 'Curd'),
-                    Tab(text: 'Butter'),
-                    Tab(text: 'Combinations'),
-                  ],
+                  tabs:  [Tab(text:wProvider.categoryList.toString())]
                 ),
               ),
               SizedBox(
