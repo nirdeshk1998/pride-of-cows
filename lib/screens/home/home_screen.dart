@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -564,11 +562,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
-                          child: Image.network(
-                            element?.thumb ?? '',
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                            fit: BoxFit.cover,
+                          child: ClipRRect(
+                            borderRadius: Dimensions.radius10,
+                            child: Image.network(
+                              element?.thumb ?? '',
+                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                Assets.assetsImagesSplashBg,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.bottomCenter,
+                              ),
+                              height: double.maxFinite,
+                              width: double.maxFinite,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         10.0.height,
@@ -581,15 +587,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        const Text(
-                          '1 litre',
+                        TextView(
+                          element?.price ?? '',
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Palette.hintColor,
-                            fontSize: 14,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          textType: TextType.regular,
+                          color: Palette.lightTextColor,
                         ),
                         const SizedBox.square(dimension: 10),
                         Row(
