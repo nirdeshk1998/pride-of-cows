@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
@@ -31,7 +32,7 @@ class Utils {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
-  static ScaffoldFeatureController showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
+  static ScaffoldFeatureController? showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
     ScaffoldMessenger.of(context).clearSnackBars();
 
     Color? color, textColor;
@@ -52,6 +53,7 @@ class Utils {
         color = Colors.grey;
         break;
       case SnackType.debug:
+        if (!kDebugMode) return null;
         color = const Color(0xFFFFC107);
         textColor = const Color(0xFF343A40);
         break;

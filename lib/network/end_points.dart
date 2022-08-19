@@ -17,8 +17,11 @@ class Endpoint {
   static const String cityList = '/customer/citylist';
   static const String pincodeList = '/customer/pincodelist';
 
-  // Category
+  // Home
   static const String categoryList = '/customer/categorylist';
+
+  // Category
+  static const String home = '/customer/home';
 
   // Promocode & Offers
   static const String dealsAndOffers = '/customer/offers';
@@ -28,5 +31,4 @@ class Endpoint {
   // Products
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
-
 }

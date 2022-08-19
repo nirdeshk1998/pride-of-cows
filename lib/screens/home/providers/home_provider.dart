@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/home/data/home_repo.dart';
 import 'package:poc/screens/home/data/models/category_model.dart';
-import 'package:poc/screens/home/data/models/product_model.dart';
+import 'package:poc/screens/home/data/models/home_model.dart';
 import 'package:poc/screens/products/data/models/products_model.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
@@ -14,13 +14,23 @@ class HomeChangeProvider with ChangeNotifier {
 
   late BuildContext _context;
 
-  bool _isLoading = false;
-  int? _userId, _cityId;
+  bool _isLoading = true;
+  String? _userId;
   List<CategoryData>? _categoryList;
-  List<ProductData>? _productList;
+  List<ProductData>? _topPicksList;
+  List<DealsOfferData>? _dealsOffersList;
+  AboutVideoData? _aboutVideoData;
+  EarnedCrownResModel? _myCrownsData;
+  String? _referAndEarnData;
 
+  bool get isLoading => _isLoading;
+  List<DealsOfferData>? get dealsOffersList => _dealsOffersList;
   List<CategoryData>? get categoryList => _categoryList;
-  List<ProductData>? get productList => _productList;
+  List<ProductData>? get topPicksList => _topPicksList;
+  AboutVideoData? get aboutVideoList => _aboutVideoData;
+  EarnedCrownResModel? get myCrownsData => _myCrownsData;
+  String? get referAndEarnData => _referAndEarnData;
+
   DateTime get currentDate => DateTime.now();
   List<String> get weekNameList => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   List<String> get imageList => [
@@ -45,64 +55,42 @@ class HomeChangeProvider with ChangeNotifier {
     showLoader(true);
 
     await _gettingPrefs();
-    await _categoryListRequest();
-    await _productListRequest();
+    await _homeDataRequest();
 
     showLoader(false);
   }
 
-  Future<void> _categoryListRequest() async {
-    await _homeRepo.categoryListRepo().then(
+  Future<void> _homeDataRequest() async {
+    await _homeRepo.homeDataRepo(_userId ?? '').then(
       (response) async {
-        final result = CategoryListResModel.fromJson(response.data);
+        final result = HomeResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          _categoryList = result.data ?? [];
+          _categoryList = result.categoryListResModel?.data;
+          _topPicksList = result.topPicksData;
+          // _orderAgainList = result.orderAgainData;
+          _aboutVideoData = result.aboutVideoResModel?.data;
+          _referAndEarnData = result.referEarnResModel?.data;
+          _dealsOffersList = result.dealsOfferData;
+          _myCrownsData = result.earnedCrownResModel;
 
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.success);
+          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.debug);
         } else {
           Utils.showPrimarySnackbar(_context, result.message, type: SnackType.error);
         }
       },
     ).onError(
       (error, stackTrace) {
+        debugPrint('stackTrace: $stackTrace');
+        debugPrint('error: $error');
         showLoader(false);
+
         Utils.showPrimarySnackbar(_context, error.toString(), type: SnackType.debug);
       },
     );
   }
-
-  Future<void> _productListRequest() async {
-    await _homeRepo.productListRepo(_productReqModel).then(
-      (response) async {
-        final result = ProductListResModel.fromJson(response.data);
-
-        if (response.statusCode == 200) {
-          _productList = result.data;
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.success);
-        } else {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (error, stackTrace) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(_context, error.toString(), type: SnackType.debug);
-      },
-    );
-  }
-
-  ProductReqModel get _productReqModel => ProductReqModel(
-        userId: _userId,
-        catId: null,
-        cityId: _cityId,
-        page: 1,
-        perPage: 6,
-        search: '',
-      );
 
   Future<void> _gettingPrefs() async {
-    _userId = int.parse(await LocalStorage.getString(StorageField.userId) ?? '');
-    _cityId = int.parse(await LocalStorage.getString(StorageField.cityId) ?? '');
+    _userId = await LocalStorage.getString(StorageField.userId);
   }
 }

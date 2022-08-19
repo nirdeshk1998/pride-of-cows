@@ -200,9 +200,8 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                                 const SizedBox.square(dimension: 10),
                                 Row(
                                   children: [
-                                    // Figma Flutter Generator 120Widget - TEXT
                                     Text(
-                                      element?.finalprice ?? 'N/A',
+                                      element?.finalprice.toString() ?? 'N/A',
                                       textAlign: TextAlign.left,
                                       style: const TextStyle(
                                         color: Palette.textColor,

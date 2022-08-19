@@ -94,7 +94,7 @@ class ProductData {
   int? taxprice;
   int? offerTax;
   int? discountprice;
-  String? finalprice;
+  int? finalprice;
   String? minimumQuantity;
   String? isOrdered;
 
