@@ -13,7 +13,7 @@ class HomeResModel {
   List<ProductData>? topPicksData;
   OrderAgainResModel? orderAgainResModel;
   AboutVideoResModel? aboutVideoResModel;
-  String? featuredData;
+  dynamic featuredData;
 
   HomeResModel(
       {this.status,
@@ -305,7 +305,7 @@ class Products {
 
 class EarnedCrownResModel {
   int? status;
-  String? rewardPointsBalance;
+  int? rewardPointsBalance;
   List<Reward>? reward;
 
   EarnedCrownResModel({this.status, this.rewardPointsBalance, this.reward});
@@ -339,8 +339,8 @@ class Reward {
   String? thumbnail;
   String? rewardCode;
   String? rewardValue;
-  Null? noOfProduct;
-  Null? productSelection;
+  int? noOfProduct;
+  String? productSelection;
   String? validity;
   int? status;
 

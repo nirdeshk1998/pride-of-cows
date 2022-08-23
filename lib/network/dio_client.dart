@@ -58,6 +58,7 @@ class BaseDio {
             requestBody: true,
             responseBody: true,
             responseHeader: false,
+            error: false,
             compact: true,
           ),
           // LogInterceptor(responseBody: false),
@@ -109,7 +110,7 @@ class BaseDio {
         onReceiveProgress: onReceiveProgress,
       );
       return response;
-    } catch (e) {
+    } on DioError {
       rethrow;
     }
   }

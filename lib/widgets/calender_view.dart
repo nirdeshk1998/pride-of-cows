@@ -26,7 +26,7 @@ const double _yearPickerRowSpacing = 8.0;
 const double _subHeaderHeight = 50.0;
 const double _monthNavButtonsWidth = 108.0;
 
-late BuildContext classContext;
+const double _dateContainerHeight = 35.0;
 
 /// Displays a grid of days for a given month and allows the user to select a
 /// date.
@@ -158,7 +158,6 @@ class _CalendarDateViewerState extends State<CalendarDateViewer> {
     _mode = widget.initialCalendarMode;
     _currentDisplayedMonthDate = DateTime(widget.initialDate.year, widget.initialDate.month);
     _selectedDate = widget.initialDate;
-    classContext = context;
   }
 
   @override
@@ -516,8 +515,6 @@ class _MonthPickerState extends State<_MonthPicker> {
   void _handleMonthPageChanged(int monthPage) {
     // debugPrint('monthPage: $monthPage');
 
-    print('_currentMonth.weekday');
-    print(_currentMonth);
     setState(() {
       // _maxDayPickerHeight = _currentMonth. ;
       final DateTime monthDate = DateUtils.addMonthsToMonthDate(widget.firstDate, monthPage);
@@ -749,6 +746,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                 date: _dayGridFocus.hasFocus ? _focusedDay : null,
                 child: PageView.builder(
                   key: _pageViewKey,
+                  padEnds: false,
                   controller: _pageController,
                   itemBuilder: _buildItems,
                   pageSnapping: true,
@@ -962,56 +960,27 @@ class _DayPickerState extends State<_DayPicker> {
         late bool isVacation;
         late bool isCancelled;
 
-        BoxDecoration? decoration, indicatorDecoration;
+        BoxDecoration? decoration;
         Color dayColor = enabledDayColor;
 
         for (final date in widget.deliveredDate ?? []) {
           isDelivered = DateUtils.isSameDay(date, dayToBuild);
 
-          if (isDelivered == true) {
-            indicatorDecoration = BoxDecoration(
-              color: Palette.deliveredColor,
-              borderRadius: Dimensions.maxRadius,
-            );
-
-            break;
-          }
+          if (isDelivered == true) break;
         }
         for (final date in widget.upcomingDate ?? []) {
           isUpcoming = DateUtils.isSameDay(date, dayToBuild);
 
-          if (isUpcoming == true) {
-            indicatorDecoration = BoxDecoration(
-              color: Palette.upcomingColor,
-              borderRadius: Dimensions.maxRadius,
-            );
-
-            break;
-          }
+          if (isUpcoming == true) break;
         }
         for (final date in widget.vacationDate ?? []) {
           isVacation = DateUtils.isSameDay(date, dayToBuild);
-
-          if (isVacation == true) {
-            indicatorDecoration = BoxDecoration(
-              color: Palette.vacationColor,
-              borderRadius: Dimensions.maxRadius,
-            );
-
-            break;
-          }
+          if (isVacation == true) break;
         }
         for (final date in widget.cancelledDate ?? []) {
           isCancelled = DateUtils.isSameDay(date, dayToBuild);
 
-          if (isCancelled == true) {
-            indicatorDecoration = BoxDecoration(
-              color: Palette.cancelledColor,
-              borderRadius: Dimensions.maxRadius,
-            );
-
-            break;
-          }
+          if (isCancelled == true) break;
         }
 
         if (isSelectedDay) {
@@ -1032,23 +1001,67 @@ class _DayPickerState extends State<_DayPicker> {
           );
         }
 
-        Widget dayWidget = Container(
-          decoration: decoration,
-          alignment: Alignment.center,
+        Widget dayWidget = Center(
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Center(
+              Container(
+                height: _dateContainerHeight,
+                width: _dateContainerHeight,
+                decoration: decoration,
+                alignment: Alignment.center,
                 child: Text(
                   localizations.formatDecimal(i),
                   style: dayStyle.apply(color: dayColor),
                 ),
               ),
-              Container(
-                height: 3,
-                width: 12,
-                margin: const EdgeInsets.only(top: 22),
-                decoration: indicatorDecoration,
+              Padding(
+                padding: const EdgeInsets.only(top: 23.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    if (isDelivered)
+                      Container(
+                        height: 3,
+                        width: 12,
+                        margin: const EdgeInsets.only(top: 1),
+                        decoration: BoxDecoration(
+                          color: Palette.deliveredColor,
+                          borderRadius: Dimensions.maxRadius,
+                        ),
+                      ),
+                    if (isUpcoming)
+                      Container(
+                        height: 3,
+                        width: 12,
+                        margin: const EdgeInsets.only(top: 1),
+                        decoration: BoxDecoration(
+                          color: Palette.upcomingColor,
+                          borderRadius: Dimensions.maxRadius,
+                        ),
+                      ),
+                    if (isVacation)
+                      Container(
+                        height: 3,
+                        width: 12,
+                        margin: const EdgeInsets.only(top: 1),
+                        decoration: BoxDecoration(
+                          color: Palette.vacationColor,
+                          borderRadius: Dimensions.maxRadius,
+                        ),
+                      ),
+                    if (isCancelled)
+                      Container(
+                        height: 3,
+                        width: 12,
+                        margin: const EdgeInsets.only(top: 1),
+                        decoration: BoxDecoration(
+                          color: Palette.cancelledColor,
+                          borderRadius: Dimensions.maxRadius,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -1087,12 +1100,18 @@ class _DayPickerState extends State<_DayPicker> {
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
       gridDelegate: _dayPickerGridDelegate,
-      shrinkWrap: true,
       childrenDelegate: SliverChildListDelegate(
         dayItems,
         addRepaintBoundaries: false,
       ),
     );
+    // return GridView.builder(
+    //   physics: const NeverScrollableScrollPhysics(),
+    //   padding: EdgeInsets.zero,
+    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7),
+    //   shrinkWrap: true,
+    //   itemBuilder: (context, index) => dayItems[index],
+    // );
   }
 }
 
@@ -1102,11 +1121,13 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     const int columnCount = DateTime.daysPerWeek;
-    final double tileWidth = constraints.crossAxisExtent / columnCount;
-    final double tileHeight = math.min(
-      _dayPickerRowHeight,
-      constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 2),
-    );
+
+    debugPrint('constraints: ${constraints.crossAxisExtent}');
+    // final double tileWidth = constraints.crossAxisExtent / columnCount;
+    // final double tileHeight = math.min(
+    //   _dayPickerRowHeight,
+    //   constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 2),
+    // );
 
     // final double tileWidth = constraints.crossAxisExtent / columnCount;
     // final double tileHeight = math.min(
@@ -1115,11 +1136,11 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
     // );
 
     return SliverGridRegularTileLayout(
-      childCrossAxisExtent: 30,
-      childMainAxisExtent: 30,
+      childCrossAxisExtent: constraints.crossAxisExtent / 7,
+      childMainAxisExtent: _dateContainerHeight,
       crossAxisCount: columnCount,
-      crossAxisStride: ((MediaQuery.of(classContext).size.width - 17) / 7),
-      mainAxisStride: tileHeight,
+      crossAxisStride: (constraints.crossAxisExtent) / 7,
+      mainAxisStride: constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 2),
       reverseCrossAxis: false,
     );
   }

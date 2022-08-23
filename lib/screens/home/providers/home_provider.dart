@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/home/data/home_repo.dart';
@@ -80,12 +81,11 @@ class HomeChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
-        debugPrint('stackTrace: $stackTrace');
-        debugPrint('error: $error');
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
         showLoader(false);
 
-        Utils.showPrimarySnackbar(_context, error.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(_context, error.type.toString(), type: SnackType.debug);
       },
     );
   }

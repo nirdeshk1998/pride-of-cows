@@ -312,7 +312,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Row(
                             children: [
                               Text(
-                                wProvider.myCrownsData?.rewardPointsBalance?.split('.').first ?? 'N/A',
+                                wProvider.myCrownsData?.rewardPointsBalance.toString() ?? 'N/A',
                                 style: TextStyle(
                                   color: const Color(0xff323232),
                                   fontSize: 32,
@@ -342,7 +342,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                       RewardProgressBar(
-                        value: int.parse(wProvider.myCrownsData?.rewardPointsBalance?.split('.').first ?? '0'),
+                        value: wProvider.myCrownsData?.rewardPointsBalance?.toInt() ?? 0,
                       ),
                     ],
                   ),
