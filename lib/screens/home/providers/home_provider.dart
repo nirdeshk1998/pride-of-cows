@@ -15,7 +15,6 @@ class HomeChangeProvider with ChangeNotifier {
 
   late BuildContext _context;
 
-  bool _isLoading = true;
   String? _userId;
   List<CategoryData>? _categoryList;
   List<ProductData>? _topPicksList;
@@ -24,7 +23,6 @@ class HomeChangeProvider with ChangeNotifier {
   EarnedCrownResModel? _myCrownsData;
   String? _referAndEarnData;
 
-  bool get isLoading => _isLoading;
   List<DealsOfferData>? get dealsOffersList => _dealsOffersList;
   List<CategoryData>? get categoryList => _categoryList;
   List<ProductData>? get topPicksList => _topPicksList;
@@ -45,6 +43,8 @@ class HomeChangeProvider with ChangeNotifier {
     return List.generate(7, (i) => '${startFrom.add(Duration(days: i)).day}');
   }
 
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
   void showLoader(bool value) {
     _isLoading = value;
     notifyListeners();

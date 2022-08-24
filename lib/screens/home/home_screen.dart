@@ -7,10 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/home/providers/home_provider.dart';
 import 'package:poc/screens/calendar/calendar_screen.dart';
+import 'package:poc/screens/product_details/product_details_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/utils.dart';
@@ -175,21 +177,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        element?.thumbnailImage ?? '',
-                        errorBuilder: (context, error, stackTrace) => Image.asset(
-                          Assets.assetsImagesSplashBg,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.bottomCenter,
-                          height: double.maxFinite,
-                          width: double.maxFinite,
-                        ),
-                        fit: BoxFit.cover,
-                        height: double.maxFinite,
-                        width: double.maxFinite,
-                      ),
+                    child: ImageView(
+                      element?.thumbnailImage,
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   );
                 },
@@ -249,14 +239,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     return Column(
                       children: [
                         CircleAvatar(
-                          radius: 40,
-                          child: Image.network(
-                            element?.thumbnail ?? '',
-                            fit: BoxFit.fill,
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                          ),
-                        ),
+                            radius: 40,
+                            child: ImageView(
+                              element?.thumbnail,
+                              borderRadius: BorderRadius.circular(500),
+                            )),
                         const Spacer(),
                         TextView(
                           element?.catName ?? 'N/A',
@@ -577,19 +564,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            child: ClipRRect(
-                              borderRadius: Dimensions.radius10,
-                              child: Image.network(
-                                element?.thumb ?? '',
-                                errorBuilder: (context, error, stackTrace) => Image.asset(
-                                  Assets.assetsImagesSplashBg,
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.bottomCenter,
-                                ),
-                                height: double.maxFinite,
-                                width: double.maxFinite,
-                                fit: BoxFit.cover,
-                              ),
+                            child: ImageView(
+                              element?.thumb,
                             ),
                           ),
                           10.0.height,
@@ -603,7 +579,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           TextView(
-                            element?.price ?? '',
+                            '${element?.minimumQuantity} ${element?.productUnit}',
                             textAlign: TextAlign.left,
                             textType: TextType.regular,
                             color: Palette.lightTextColor,
@@ -611,11 +587,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           const SizedBox.square(dimension: 10),
                           Row(
                             children: [
-                              // Figma Flutter Generator 120Widget - TEXT
-                              const Text(
-                                '₹120',
+                              Text(
+                                '₹${element?.price}',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Palette.textColor,
                                   fontSize: 16,
                                   letterSpacing: 0,
@@ -641,7 +616,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 borderRadius: BorderRadius.circular(5),
                                 clipBehavior: Clip.antiAlias,
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () => Utils.push(context, ProductDetailsScreen(productId: element?.id)),
                                   child: Container(
                                     height: 24,
                                     width: 24,
@@ -690,6 +665,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   separatorBuilder: (_, index) => const SizedBox(width: 20),
                   itemBuilder: (context, index) => SizedBox(
@@ -706,9 +682,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               padding: const EdgeInsets.only(left: 5, top: 5),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: SizedBox.square(
+                                child: const SizedBox.square(
                                   dimension: 100,
-                                  child: Image.network('https://i.pinimg.com/564x/6f/e5/00/6fe50068243ce3b57b127d8aff26a3e1.jpg'),
+                                  child: const ImageView(
+                                    'https://i.pinimg.com/564x/6f/e5/00/6fe50068243ce3b57b127d8aff26a3e1.jpg',
+                                  ),
                                 ),
                               ),
                             ),

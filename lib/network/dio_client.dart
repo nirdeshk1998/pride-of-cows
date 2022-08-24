@@ -5,6 +5,9 @@ import 'package:poc/network/end_points.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+export 'package:dio/dio.dart';
+export 'package:poc/network/end_points.dart';
+
 class BaseDio {
   BaseDio._();
   Dio? _dio;

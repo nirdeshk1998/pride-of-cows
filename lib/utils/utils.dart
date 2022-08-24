@@ -53,7 +53,7 @@ class Utils {
         color = Colors.grey;
         break;
       case SnackType.debug:
-        if (!kDebugMode) return null;
+        if (kReleaseMode) return null;
         color = const Color(0xFFFFC107);
         textColor = const Color(0xFF343A40);
         break;
