@@ -1153,10 +1153,10 @@ const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
 
 /// A scrollable grid of years to allow picking a year.
 ///
-/// The year picker widget is rarely used directly. Instead, consider using
+///    The year picker widget is rarely used directly. Instead, consider using
 /// [CalendarDateViewer], or [showDatePicker] which create full date pickers.
 ///
-/// See also:
+/// Se  e also:
 ///
 ///  * [CalendarDateViewer], which provides a Material Design date picker
 ///    interface.
@@ -1339,8 +1339,7 @@ class _YearPickerGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final double tileWidth =
-        (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
+    final double tileWidth = (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
     return SliverGridRegularTileLayout(
       childCrossAxisExtent: tileWidth,
       childMainAxisExtent: _yearPickerRowHeight,

@@ -212,16 +212,15 @@ class CartScreen extends ConsumerWidget {
                                       ],
                                     ),
                                     const SizedBox.square(dimension: 5),
-                                   Row(
-                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                     children: [
-                                       PrimaryCounter(
-                                         onCounterChanged: (i) {},
-                                       ),
-                                       Text("\u{20B9}100")
-                                     ],
-                                   ),
-
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        PrimaryCounter(
+                                          onCounterChanged: (i) {},
+                                        ),
+                                        const Text("\u{20B9}100")
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),

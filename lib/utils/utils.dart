@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -30,6 +31,14 @@ class Utils {
 
   static Future<void> pushAndRemoveUntil(context, widget) async {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
+  }
+
+  static String? dateFormatDMY(DateTime? date) {
+    if (date != null) {
+      return DateFormat('dd-MM-yyyy').format(date);
+    } else {
+      return null;
+    }
   }
 
   static ScaffoldFeatureController? showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {

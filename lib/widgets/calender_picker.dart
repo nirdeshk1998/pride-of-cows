@@ -12,22 +12,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/extensions.dart';
+import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
 const double _dayPickerRowHeight = 42.0;
-const int _maxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
+int _maxDayPickerRowCount = 5; // A 31 day month that starts on Saturday.
 // One extra row for the day-of-week header.
-const double _maxDayPickerHeight = _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
-const double _monthPickerHorizontalPadding = 8.0;
+double _maxDayPickerHeight = _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
+const double _monthPickerHorizontalPadding = 0.0;
 
 const int _yearPickerColumnCount = 3;
 const double _yearPickerPadding = 16.0;
 const double _yearPickerRowHeight = 52.0;
 const double _yearPickerRowSpacing = 8.0;
 
-const double _subHeaderHeight = 45.0;
+const double _subHeaderHeight = 40.0;
 const double _monthNavButtonsWidth = 66.0;
 
 /// Displays a grid of days for a given month and allows the user to select a
@@ -50,7 +52,7 @@ const double _monthNavButtonsWidth = 66.0;
 ///    time picker.
 ///
 class PrimaryCalendarDatePicker extends StatefulWidget {
-  final VoidCallback? onDateTapped;
+  final VoidCallback? onDatePressed;
 
   /// Creates a calendar date picker.
   ///
@@ -91,8 +93,9 @@ class PrimaryCalendarDatePicker extends StatefulWidget {
     this.selectableDayPredicate,
     required this.label,
     required this.isVisible,
-    required this.onMonthPressed,
-    this.onDateTapped,
+    required this.onPressed,
+    this.onDatePressed,
+    this.title,
   })  : initialDate = DateUtils.dateOnly(initialDate),
         firstDate = DateUtils.dateOnly(firstDate),
         lastDate = DateUtils.dateOnly(lastDate),
@@ -116,7 +119,9 @@ class PrimaryCalendarDatePicker extends StatefulWidget {
     );
   }
 
-  final VoidCallback onMonthPressed;
+  final VoidCallback onPressed;
+
+  final String? title;
 
   /// The initially selected [DateTime] that the picker should display.
   final DateTime initialDate;
@@ -267,13 +272,16 @@ class _PrimaryCalendarDatePickerState extends State<PrimaryCalendarDatePicker> {
       case DatePickerMode.day:
         return _MonthPicker(
           key: _monthPickerKey,
+          label: widget.label,
+          onMonthPressed: widget.onPressed,
+          title: widget.title,
           isVisible: widget.isVisible,
           initialMonth: _currentDisplayedMonthDate,
           currentDate: widget.currentDate,
           firstDate: widget.firstDate,
           lastDate: widget.lastDate,
           selectedDate: _selectedDate,
-          onDateTapped: widget.onDateTapped,
+          onDateTapped: widget.onDatePressed,
           onChanged: _handleDayChanged,
           onDisplayedMonthChanged: _handleMonthChanged,
           selectableDayPredicate: widget.selectableDayPredicate,
@@ -306,16 +314,15 @@ class _PrimaryCalendarDatePickerState extends State<PrimaryCalendarDatePicker> {
           child: _buildPicker(),
         ),
         // Put the mode toggle button on top so that it won't be covered up by the _MonthPicker
-        _DatePickerModeToggleButton(
-          mode: _mode,
-          label: widget.label,
-          title: _localizations.formatMonthYear(_currentDisplayedMonthDate),
-          onTitlePressed: () {
-            // Toggle the day/year mode.
-            _handleModeChanged(_mode == DatePickerMode.day ? DatePickerMode.year : DatePickerMode.day);
-          },
-          onDatePressed: widget.onMonthPressed,
-        ),
+        // _DatePickerModeToggleButton(
+        //   mode: _mode,
+        //   label: widget.label,
+        //   title: widget.title ?? _localizations.formatMonthYear(_currentDisplayedMonthDate),
+        //   onTitlePressed: () {
+        //     _handleModeChanged(_mode == DatePickerMode.day ? DatePickerMode.year : DatePickerMode.day);
+        //   },
+        //   onDatePressed: widget.onMonthPressed,
+        // ),
       ],
     );
   }
@@ -382,13 +389,10 @@ class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final Color controlColor = colorScheme.onSurface.withOpacity(0.60);
-
-    return Container(
+    return SizedBox(
       // padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
       height: _subHeaderHeight,
+      // height: _subHeaderHeight + (widget.isVisible ? _maxDayPickerHeight : 0),
       child: Row(
         children: <Widget>[
           Flexible(
@@ -398,46 +402,44 @@ class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton
               button: true,
               child: SizedBox(
                 height: _subHeaderHeight,
-                child: CupertinoButton(
-                  // onPressed: widget.onTitlePressed,
-                  onPressed: null,
-                  padding: EdgeInsets.zero,
-                  minSize: 0,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: TextView(
-                          widget.label,
-                          textType: TextType.subtitle,
-                          color: Palette.hintColor,
-                        ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: TextView(
+                        widget.label,
+                        height: 1.2,
+                        textType: TextType.subtitle,
+                        color: Palette.hintColor,
                       ),
-                      CupertinoButton(
-                        onPressed: widget.onDatePressed,
-                        padding: EdgeInsets.zero,
-                        minSize: 0,
-                        child: TextView(
-                          widget.title,
-                          textType: TextType.subtitle,
-                          color: Palette.textColor,
-                        ),
+                    ),
+                    CupertinoButton(
+                      onPressed: widget.onDatePressed,
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      minSize: 0,
+                      child: TextView(
+                        widget.title,
+                        height: 1.2,
+                        textType: TextType.subtitle,
+                        color: Palette.textColor,
                       ),
-                      // RotationTransition(
-                      //   turns: _controller,
-                      //   child: Icon(
-                      //     Icons.arrow_drop_down,
-                      //     color: controlColor,
-                      //   ),
-                      // ),
-                    ],
-                  ),
+                    ),
+
+                    // RotationTransition(
+                    //   turns: _controller,
+                    //   child: Icon(
+                    //     Icons.arrow_drop_down,
+                    //     color: controlColor,
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
             ),
           ),
-          if (widget.mode == DatePickerMode.day)
-            // Give space for the prev/next month buttons that are underneath this row
-            const SizedBox(width: _monthNavButtonsWidth),
+          // if (widget.mode == DatePickerMode.day)
+          //   // Give space for the prev/next month buttons that are underneath this row
+          //   const SizedBox(width: _monthNavButtonsWidth),
         ],
       ),
     );
@@ -451,6 +453,10 @@ class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton
 }
 
 class _MonthPicker extends StatefulWidget {
+  final String? title, label;
+
+  final VoidCallback? onMonthPressed;
+
   /// Creates a month picker.
   _MonthPicker({
     Key? key,
@@ -464,6 +470,9 @@ class _MonthPicker extends StatefulWidget {
     this.selectableDayPredicate,
     required this.isVisible,
     this.onDateTapped,
+    this.title,
+    this.label,
+    this.onMonthPressed,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
         assert(!selectedDate.isAfter(lastDate)),
@@ -718,9 +727,11 @@ class _MonthPickerState extends State<_MonthPicker> {
   int _dayDirectionOffset(TraversalDirection traversalDirection, TextDirection textDirection) {
     // Swap left and right if the text direction if RTL
     if (textDirection == TextDirection.rtl) {
-      if (traversalDirection == TraversalDirection.left)
+      if (traversalDirection == TraversalDirection.left) {
         traversalDirection = TraversalDirection.right;
-      else if (traversalDirection == TraversalDirection.right) traversalDirection = TraversalDirection.left;
+      } else if (traversalDirection == TraversalDirection.right) {
+        traversalDirection = TraversalDirection.left;
+      }
     }
     return _directionOffset[traversalDirection]!;
   }
@@ -758,55 +769,85 @@ class _MonthPickerState extends State<_MonthPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final Color controlColor = Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    final Color controlColor = Theme.of(context).colorScheme.primary;
 
     return Semantics(
       child: Column(
         children: <Widget>[
+          // Header
           SizedBox(
-            // padding: const EdgeInsetsDirectional.only(start: 0, end: 0),
             height: _subHeaderHeight,
             child: Row(
-              children: <Widget>[
-                const Spacer(),
-                IconButton(
-                  icon: SvgPicture.asset(Assets.assetsIconsChevLeft),
-                  padding: const EdgeInsets.all(4),
-                  constraints: const BoxConstraints(minHeight: 0, minWidth: 0),
-                  color: controlColor,
-                  tooltip: _isDisplayingFirstMonth ? null : _localizations.previousMonthTooltip,
-                  onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+              children: [
+                Expanded(
+                  child: TextView(
+                    widget.label,
+                    height: 1.2,
+                    textType: TextType.subtitle,
+                    color: Palette.hintColor,
+                  ),
                 ),
-                IconButton(
-                  constraints: const BoxConstraints(minHeight: 0, minWidth: 0),
-                  padding: const EdgeInsets.all(4),
-                  icon: SvgPicture.asset(Assets.assetsIconsChevRight),
-                  color: controlColor,
-                  tooltip: _isDisplayingLastMonth ? null : _localizations.nextMonthTooltip,
-                  onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                CupertinoButton(
+                  onPressed: widget.onMonthPressed,
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  minSize: 0,
+                  child: TextView(
+                    widget.title ?? _localizations.formatMonthYear(widget.initialMonth),
+                    height: 1.2,
+                    textType: TextType.subtitle,
+                    color: Palette.textColor,
+                  ),
                 ),
+                10.0.width,
+                if (widget.title != null && !widget.isVisible)
+                  PrimaryIconButton(
+                    svg: Assets.assetsIconsEditPencil,
+                    padding: const EdgeInsets.all(4),
+                    size: 22,
+                    color: controlColor,
+                    onPressed: widget.onMonthPressed,
+                  ),
+                if (widget.title == null || widget.isVisible)
+                  PrimaryIconButton(
+                    svg: Assets.assetsIconsChevLeft,
+                    padding: const EdgeInsets.all(4),
+                    size: 22,
+                    color: controlColor,
+                    onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                  ),
+                if (widget.title == null || widget.isVisible)
+                  PrimaryIconButton(
+                    padding: const EdgeInsets.all(4),
+                    svg: Assets.assetsIconsChevRight,
+                    size: 22,
+                    color: controlColor,
+                    onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                  ),
               ],
             ),
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            onEnd: () {},
-            height: widget.isVisible ? 250 : 0,
-            child: FocusableActionDetector(
-              shortcuts: _shortcutMap,
-              actions: _actionMap,
-              focusNode: _dayGridFocus,
-              onFocusChange: _handleGridFocusChange,
-              child: _FocusedDate(
-                date: _dayGridFocus.hasFocus ? _focusedDay : null,
-                child: PageView.builder(
-                  key: _pageViewKey,
-                  controller: _pageController,
-                  itemBuilder: _buildItems,
-                  itemCount: DateUtils.monthDelta(widget.firstDate, widget.lastDate) + 1,
-                  onPageChanged: _handleMonthPageChanged,
-                ),
-              ),
+          // Calender
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: !widget.isVisible
+                  ? null
+                  : FocusableActionDetector(
+                      shortcuts: _shortcutMap,
+                      actions: _actionMap,
+                      focusNode: _dayGridFocus,
+                      onFocusChange: _handleGridFocusChange,
+                      child: _FocusedDate(
+                        date: _dayGridFocus.hasFocus ? _focusedDay : null,
+                        child: PageView.builder(
+                          key: _pageViewKey,
+                          controller: _pageController,
+                          itemBuilder: _buildItems,
+                          itemCount: DateUtils.monthDelta(widget.firstDate, widget.lastDate) + 1,
+                          onPageChanged: _handleMonthPageChanged,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ],
@@ -989,6 +1030,13 @@ class _DayPickerState extends State<_DayPicker> {
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
     int day = -dayOffset;
+
+    if (dayOffset > 5) {
+      _maxDayPickerRowCount = 5;
+    } else {
+      _maxDayPickerRowCount = 4;
+    }
+
     while (day < daysInMonth) {
       day++;
       if (day < 1) {
@@ -1014,21 +1062,26 @@ class _DayPickerState extends State<_DayPicker> {
           );
         } else if (isDisabled) {
           dayColor = disabledDayColor;
-        } else if (isToday) {
-          // The current day gets a different text color and a circle stroke
-          // border.
-          dayColor = todayColor;
-          decoration = BoxDecoration(
-            border: Border.all(color: todayColor),
-            borderRadius: BorderRadius.circular(10),
-            shape: BoxShape.rectangle,
-          );
         }
 
-        Widget dayWidget = Container(
-          decoration: decoration,
-          padding: EdgeInsets.zero,
-          child: Center(
+        // } else if (isToday) {
+        //   // The current day gets a different text color and a circle stroke
+        //   // border.
+        //   dayColor = todayColor;
+        //   decoration = BoxDecoration(
+        //     border: Border.all(color: todayColor),
+        //     borderRadius: BorderRadius.circular(10),
+        //     shape: BoxShape.rectangle,
+        //   );
+        // }
+
+        Widget dayWidget = Center(
+          child: Container(
+            height: 35,
+            width: 35,
+            alignment: Alignment.center,
+            decoration: decoration,
+            padding: EdgeInsets.zero,
             child: Text(
               localizations.formatDecimal(day),
               style: dayStyle.apply(color: dayColor),
@@ -1050,15 +1103,8 @@ class _DayPickerState extends State<_DayPicker> {
             radius: _dayPickerRowHeight / 2 + 4,
             splashColor: selectedDayBackground.withOpacity(0.38),
             child: Semantics(
-              // We want the day of month to be spoken first irrespective of the
-              // locale-specific preferences or TextDirection. This is because
-              // an accessibility user is more likely to be interested in the
-              // day of month before the rest of the date, as they are looking
-              // for the day of month. To do that we prepend day of month to the
-              // formatted full date.
               label: '${localizations.formatDecimal(day)}, ${localizations.formatFullDate(dayToBuild)}',
               selected: isSelectedDay,
-
               excludeSemantics: true,
               child: dayWidget,
             ),
@@ -1069,18 +1115,14 @@ class _DayPickerState extends State<_DayPicker> {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _monthPickerHorizontalPadding,
-      ),
-      child: GridView.custom(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: _dayPickerGridDelegate,
-        childrenDelegate: SliverChildListDelegate(
-          dayItems,
-          addRepaintBoundaries: false,
-        ),
+    return GridView.custom(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      gridDelegate: _dayPickerGridDelegate,
+      childrenDelegate: SliverChildListDelegate(
+        dayItems,
+        addRepaintBoundaries: false,
       ),
     );
   }
@@ -1092,18 +1134,27 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     const int columnCount = DateTime.daysPerWeek;
-    final double tileWidth = constraints.crossAxisExtent / columnCount;
-    final double tileHeight = math.min(
-      _dayPickerRowHeight,
-      constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 1),
-    );
+
+    debugPrint('constraints: ${constraints.crossAxisExtent}');
+    // final double tileWidth = constraints.crossAxisExtent / columnCount;
+    // final double tileHeight = math.min(
+    //   _dayPickerRowHeight,
+    //   constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 2),
+    // );
+
+    // final double tileWidth = constraints.crossAxisExtent / columnCount;
+    // final double tileHeight = math.min(
+    //   _dayPickerRowHeight,
+    //   constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 1),
+    // );
+
     return SliverGridRegularTileLayout(
-      childCrossAxisExtent: tileWidth,
-      childMainAxisExtent: tileHeight,
+      childCrossAxisExtent: constraints.crossAxisExtent / 7,
+      childMainAxisExtent: 35,
       crossAxisCount: columnCount,
-      crossAxisStride: tileWidth,
-      mainAxisStride: tileHeight,
-      reverseCrossAxis: axisDirectionIsReversed(constraints.crossAxisDirection),
+      crossAxisStride: (constraints.crossAxisExtent) / 7,
+      mainAxisStride: constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 2),
+      reverseCrossAxis: false,
     );
   }
 
@@ -1303,8 +1354,7 @@ class _YearPickerGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final double tileWidth =
-        (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
+    final double tileWidth = (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
     return SliverGridRegularTileLayout(
       childCrossAxisExtent: tileWidth,
       childMainAxisExtent: _yearPickerRowHeight,

@@ -32,4 +32,10 @@ class Endpoint {
   // Products
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
+
+  // Cart
+  static const String addToCart = '/cart/addtocart';
+  static const String removeFromCart = '/cart/removecart';
+  static const String updateProductQuantity = '/customer/productdetail';
+  static const String userCartList = '/cart/items';
 }

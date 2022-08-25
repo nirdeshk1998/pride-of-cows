@@ -154,14 +154,15 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   // ),
                   const SizedBox.square(dimension: 5),
                   // PrimaryCalendarDatePicker(
-                  //   label: 'Select end date',
-                  //   onMonthPressed: () {},
-                  //   isVisible: true,
+                  //   label: 'Select start date',
+                  //   onMonthPressed: () => rProvider.onStartMonthPressed(),
+                  //   onDateTapped: () => rProvider.onStartDateSelect(),
+                  //   isVisible: wProvider.startDateVisibilty,
                   //   initialCalendarMode: DatePickerMode.day,
                   //   initialDate: DateTime.now(),
                   //   firstDate: DateTime.now(),
                   //   lastDate: DateTime(DateTime.now().year + 1),
-                  //   onDateChanged: (i) {},
+                  //   onDateChanged: (i) => wProvider.onStartDateChanged(i),
                   // ),
 
                   Wrap(
@@ -182,8 +183,9 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                   ),
                                   builder: (builder) {
                                     int totalItemCount = 1;
-                                    bool startDateVisibilty = false;
                                     bool endDateVisibilty = false;
+                                    bool startDateVisibilty = false;
+                                    DateTime? startDate, endDate;
 
                                     return StatefulBuilder(
                                       builder: (context, setState) {
@@ -247,34 +249,34 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                   const SizedBox.square(dimension: 8),
                                                   PrimaryCalendarDatePicker(
                                                     label: 'Select start date',
-                                                    onMonthPressed: () {
-                                                      setState(() {
-                                                        startDateVisibilty = !startDateVisibilty;
-                                                      });
-                                                    },
-                                                    onDateTapped: () {
-                                                      print('object');
-                                                    },
+                                                    title: Utils.dateFormatDMY(startDate),
                                                     isVisible: startDateVisibilty,
                                                     initialCalendarMode: DatePickerMode.day,
                                                     initialDate: DateTime.now(),
                                                     firstDate: DateTime.now(),
                                                     lastDate: DateTime(DateTime.now().year + 1),
-                                                    onDateChanged: (i) {},
+                                                    onPressed: () => setState(() {
+                                                      startDateVisibilty = !startDateVisibilty;
+                                                      endDateVisibilty = false;
+                                                    }),
+                                                    onDateChanged: (i) => setState(() => startDate = i),
                                                   ),
                                                   PrimaryCalendarDatePicker(
                                                     label: 'Select end date',
-                                                    onMonthPressed: () {
-                                                      setState(() {
-                                                        endDateVisibilty = !endDateVisibilty;
-                                                      });
-                                                    },
+                                                    title: Utils.dateFormatDMY(endDate),
                                                     isVisible: endDateVisibilty,
                                                     initialCalendarMode: DatePickerMode.day,
                                                     initialDate: DateTime.now(),
                                                     firstDate: DateTime.now(),
                                                     lastDate: DateTime(DateTime.now().year + 1),
-                                                    onDateChanged: (i) {},
+                                                    onPressed: () => setState(() {
+                                                      endDateVisibilty = !endDateVisibilty;
+                                                      startDateVisibilty = false;
+                                                    }),
+                                                    onDateChanged: (i) => setState(() {
+                                                      endDate = i;
+                                                      endDateVisibilty = false;
+                                                    }),
                                                   ),
                                                   const SizedBox.square(dimension: 6),
                                                   Row(
