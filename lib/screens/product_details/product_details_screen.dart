@@ -118,14 +118,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         TextSpan(
                           text: wProvider.productDetailsData?.description?.substring(
                             0,
-                            wProvider.minimizeAboutProduct ? null : 160,
+                            wProvider.foldAboutProduct ? null : 160,
                           ),
                         ),
                         TextSpan(
-                          text: rProvider.minimizeAboutProduct ? ' ' : '... ',
+                          text: rProvider.foldAboutProduct ? ' ' : '... ',
                         ),
                         TextSpan(
-                          text: wProvider.minimizeAboutProduct ? 'Read less' : 'Read more',
+                          text: wProvider.foldAboutProduct ? 'Read less' : 'Read more',
                           recognizer: TapGestureRecognizer()..onTap = () => rProvider.onReadMoreButton(),
                           style: const TextStyle(
                             color: Palette.primaryColor,
@@ -182,10 +182,10 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                     ),
                                   ),
                                   builder: (builder) {
-                                    int totalItemCount = 1;
+                                    int quantity = 1;
+                                    String? startDate, endDate;
                                     bool endDateVisibilty = false;
                                     bool startDateVisibilty = false;
-                                    DateTime? startDate, endDate;
 
                                     return StatefulBuilder(
                                       builder: (context, setState) {
@@ -234,7 +234,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                       ),
                                                       const Spacer(),
                                                       TextView(
-                                                        'Alternate',
+                                                        e,
                                                         textType: TextType.subtitle,
                                                         color: Palette.textColor,
                                                       ),
@@ -249,7 +249,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                   const SizedBox.square(dimension: 8),
                                                   PrimaryCalendarDatePicker(
                                                     label: 'Select start date',
-                                                    title: Utils.dateFormatDMY(startDate),
+                                                    title: startDate,
                                                     isVisible: startDateVisibilty,
                                                     initialCalendarMode: DatePickerMode.day,
                                                     initialDate: DateTime.now(),
@@ -259,11 +259,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                       startDateVisibilty = !startDateVisibilty;
                                                       endDateVisibilty = false;
                                                     }),
-                                                    onDateChanged: (i) => setState(() => startDate = i),
+                                                    onDateChanged: (i) => setState(() {
+                                                      startDate = Utils.dateFormatDMY(i);
+                                                      startDateVisibilty = false;
+                                                    }),
                                                   ),
                                                   PrimaryCalendarDatePicker(
                                                     label: 'Select end date',
-                                                    title: Utils.dateFormatDMY(endDate),
+                                                    title: endDate,
                                                     isVisible: endDateVisibilty,
                                                     initialCalendarMode: DatePickerMode.day,
                                                     initialDate: DateTime.now(),
@@ -274,7 +277,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                       startDateVisibilty = false;
                                                     }),
                                                     onDateChanged: (i) => setState(() {
-                                                      endDate = i;
+                                                      endDate = Utils.dateFormatDMY(i);
                                                       endDateVisibilty = false;
                                                     }),
                                                   ),
@@ -290,7 +293,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                       PrimaryCounter(
                                                         onCounterChanged: (i) {
                                                           setState(() {
-                                                            totalItemCount = i;
+                                                            quantity = i;
                                                           });
                                                         },
                                                       ),
@@ -311,7 +314,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                   ),
                                                   const Spacer(),
                                                   TextView(
-                                                    totalItemCount.toString(),
+                                                    quantity.toString(),
                                                     textType: TextType.title,
                                                     color: Palette.textColor,
                                                   ),
@@ -323,8 +326,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                               child: PrimaryButton(
                                                 title: 'add to cart',
                                                 onPressed: () async {
-                                                  ref.read(mainProvider).onMenuTapped(Navigation.cart.index);
-                                                  Utils.pushAndRemoveUntil(context, const MainScreen());
+                                                  ref.read(productDetailsProvider).onAddCartButton(
+                                                        deliveryPlan: e,
+                                                        startDate: startDate,
+                                                        endDate: endDate,
+                                                        quantity: quantity,
+                                                      );
+                                                  // ref.read(mainProvider).onMenuTapped(Navigation.cart.index);
+                                                  // Utils.pushAndRemoveUntil(context, const MainScreen());
                                                 },
                                               ),
                                             ),

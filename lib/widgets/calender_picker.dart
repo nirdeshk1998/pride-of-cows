@@ -813,7 +813,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                     padding: const EdgeInsets.all(4),
                     size: 22,
                     color: controlColor,
-                    onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                    onPressed: _isDisplayingFirstMonth || !widget.isVisible ? null : _handlePreviousMonth,
                   ),
                 if (widget.title == null || widget.isVisible)
                   PrimaryIconButton(
@@ -821,7 +821,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                     svg: Assets.assetsIconsChevRight,
                     size: 22,
                     color: controlColor,
-                    onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                    onPressed: _isDisplayingLastMonth || !widget.isVisible ? null : _handleNextMonth,
                   ),
               ],
             ),

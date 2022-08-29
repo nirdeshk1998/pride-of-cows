@@ -1,8 +1,8 @@
 class Endpoint {
   Endpoint._();
 
-  // static const String baseUrl = 'https://stagingpoc.heptawork.com/api';
-  static const String baseUrl = 'https://poc.cgprojects.in/api';
+  static const String baseUrl = 'https://stagingpoc.heptawork.com/api';
+  // static const String baseUrl = 'https://poc.cgprojects.in/api';
   static const int receiveTimeout = 30000;
   static const int connectionTimeout = 30000;
 
