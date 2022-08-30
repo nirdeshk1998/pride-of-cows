@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/network/dio_client.dart';
 import 'package:poc/network/models/city_model.dart';
 import 'package:poc/network/models/pincode_model.dart';
 import 'package:poc/network/models/state_model.dart';
@@ -65,6 +66,7 @@ class RegisterChangeProvider with ChangeNotifier {
   }
 
   void onGenderChanged(gender) => _gender = gender;
+  void onCityChanged(cityId) => _cityId = cityId;
 
   Future<void> onStateChanged(stateId, context) async {
     _stateId = stateId.toString();
@@ -72,8 +74,6 @@ class RegisterChangeProvider with ChangeNotifier {
     await _cityListRequest(context, stateId.toString());
     showLoader(false);
   }
-
-  void onCityChanged(cityId) => _cityId = cityId;
 
   Future<void> onStartShoppingButton(context) async {
     if (_firstNameController.text.isEmpty) {
@@ -138,9 +138,11 @@ class RegisterChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
+
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
       },
     );
   }
@@ -168,9 +170,11 @@ class RegisterChangeProvider with ChangeNotifier {
         showLoader(false);
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
+
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
       },
     );
   }
@@ -188,9 +192,11 @@ class RegisterChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
       },
     );
   }
@@ -209,9 +215,11 @@ class RegisterChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
+
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
       },
     );
   }

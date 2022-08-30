@@ -24,8 +24,8 @@ class PrimaryLoader extends StatelessWidget {
   }
 }
 
-class PrimaryStackedLoader extends StatelessWidget {
-  const PrimaryStackedLoader({Key? key, required this.child, required this.isLoading}) : super(key: key);
+class StackedLoader extends StatelessWidget {
+  const StackedLoader({Key? key, required this.child, required this.isLoading}) : super(key: key);
 
   final Widget child;
   final bool isLoading;

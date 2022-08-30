@@ -1,14 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/search/search_screen.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/base_provider.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class PrimaryAppBar extends StatelessWidget {
+final appbarProvider = ChangeNotifierProvider<AppBarChangeProvider>((ref) {
+  return AppBarChangeProvider();
+});
+
+class AppBarChangeProvider extends BaseChangeNotifier {
+  @override
+  Future<void> postCreateState() async {
+    //
+  }
+
+  // Future<void> _userCartRequest() async {
+  //   await _cartRepo.userCartRepo(_userCartReqModel).then(
+  //     (response) async {
+  //       final result = UserCartResModel.fromJson(response.data);
+
+  //       if (response.statusCode == 200) {
+  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+
+  //         _cartList = result.cartItems;
+  //         _totalPrice = result.totalPrice;
+  //         _totalItems = result.totalItems;
+  //       } else {
+  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+  //       }
+  //     },
+  //   ).onError(
+  //     (DioError error, stackTrace) {
+  //       debugPrint('error: ${error.type}');
+  //       showLoader(false);
+
+  //       Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+  //     },
+  //   );
+  // }
+}
+
+class PrimaryAppBar extends ConsumerWidget {
   const PrimaryAppBar({
     Key? key,
     required this.showSearch,
@@ -19,7 +57,11 @@ class PrimaryAppBar extends StatelessWidget {
   final TextEditingController? controller;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(appbarProvider);
+    final watch = ref.watch(appbarProvider);
+
+    read.initState(context);
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: const BoxDecoration(
@@ -146,12 +188,10 @@ class PrimarySearchAppBar extends StatelessWidget {
     Key? key,
     this.controller,
     this.onClearPressed,
-
   }) : super(key: key);
 
-  final TextEditingController ? controller;
+  final TextEditingController? controller;
   final VoidCallback? onClearPressed;
-
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +259,13 @@ class PrimarySearchAppBar extends StatelessWidget {
                 hintText: 'Enter here',
                 controller: controller,
                 suffix: InkWell(
-                  onTap: (){
+                  onTap: () {
                     controller?.clear();
                   },
-                  child: TextView("Clear",color: Palette.hintColor,),
+                  child: TextView(
+                    "Clear",
+                    color: Palette.hintColor,
+                  ),
                 ),
               ),
             ),
@@ -280,7 +323,6 @@ class SecondaryAppBar extends StatelessWidget {
                   constraints: const BoxConstraints(),
                 ),
               const SizedBox.square(dimension: 9.5),
-
             ],
           ),
         ),
@@ -302,8 +344,8 @@ class NotificationAppBar extends StatelessWidget {
   final VoidCallback? sOnPressed;
   final String? sIcon;
   final Color? color;
-  final String ? sIcon2;
-  final String ? sicon3;
+  final String? sIcon2;
+  final String? sicon3;
 
   @override
   Widget build(BuildContext context) {
@@ -369,4 +411,3 @@ class NotificationAppBar extends StatelessWidget {
     );
   }
 }
-

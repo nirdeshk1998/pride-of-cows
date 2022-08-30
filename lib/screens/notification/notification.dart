@@ -3,19 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/contact_us/contact_us.dart';
-import 'package:poc/screens/faq_&_links/faq_&_links.dart';
-import 'package:poc/screens/gift_card/gift_card_screen.dart';
-import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
-import 'package:poc/screens/address/my_address_book.dart';
-import 'package:poc/screens/profile/my_profile.dart';
 
-import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
 import 'package:poc/screens/notification/notification_settings.dart';
-import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
-import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
@@ -32,15 +22,14 @@ class Notifications extends ConsumerWidget {
         child: Container(
           child: Column(
             children: [
-               NotificationAppBar(
-                 sIcon: Assets.assetsIconsSearch,
-                 sIcon2: Assets.assetsIconsCalendar,
-                 sicon3: Assets.assetsIconsBellDot,
-               ),
+              NotificationAppBar(
+                sIcon: Assets.assetsIconsSearch,
+                sIcon2: Assets.assetsIconsCalendar,
+                sicon3: Assets.assetsIconsBellDot,
+              ),
               10.0.height,
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.defaultPadding),
+                padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -49,22 +38,21 @@ class Notifications extends ConsumerWidget {
                       textType: TextType.header,
                     ),
                     InkWell(
-                      onTap: (){
-Navigator.push(context,MaterialPageRoute(builder: (context)=>NotificationsSettings()));
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsSettings()));
                       },
                       child: SvgPicture.asset(Assets.assetsIconsSettings),
                     ),
-
                   ],
                 ),
               ),
               ListView.builder(
-                physics: ScrollPhysics(),
+                  physics: ScrollPhysics(),
                   itemCount: 10,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     return Container(
-                      padding: EdgeInsets.only(left: 20,right: 20),
+                      padding: EdgeInsets.only(left: 20, right: 20),
                       child: Card(
                         child: Column(
                           children: [
@@ -87,45 +75,46 @@ Navigator.push(context,MaterialPageRoute(builder: (context)=>NotificationsSettin
                                       ),
                                       Stack(
                                         children: [
-                                          SvgPicture.asset(
-                                              Assets.assetsIconsSemiRounded),
-                                          Positioned(
-                                              top: 1,
-                                              left: 5,
-                                              child: SvgPicture.asset(
-                                                  Assets.assetsIconsGreenTick))
+                                          SvgPicture.asset(Assets.assetsIconsSemiRounded),
+                                          Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  child:Row(
+                                  child: Row(
                                     children: [
-                                      TextView("Now",size: 16,color: Palette.hintColor),
+                                      TextView("Now", size: 16, color: Palette.hintColor),
                                     ],
                                   ),
-
                                 ),
                               ],
                             ),
                             SizedBox(
                               height: 10,
                             ),
-Row(
-  children: [
-    Container(
-      child:Row(
-        children: [
-          TextView("Your Order",color: Palette.hintColor,size: 16,),
-          PrimaryTextButton(title: "#115 ",size: 16,showUnderline: true,padding: EdgeInsets.only(top: 2)),
-          TextView(" has been delivered.",color: Palette.hintColor,size: 16,),
-        ],
-      ),
-
-    ),
-  ],
-),
+                            Row(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      TextView(
+                                        "Your Order",
+                                        color: Palette.hintColor,
+                                        size: 16,
+                                      ),
+                                      PrimaryTextButton(title: "#115 ", size: 16, showUnderline: true, padding: EdgeInsets.only(top: 2)),
+                                      TextView(
+                                        " has been delivered.",
+                                        color: Palette.hintColor,
+                                        size: 16,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: 10,
                             ),

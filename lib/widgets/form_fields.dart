@@ -125,21 +125,25 @@ class SearchFormField extends StatelessWidget {
 
 class PhoneNumberFormField extends StatelessWidget {
   const PhoneNumberFormField({
-    Key? key,
+    super.key,
     this.label,
     this.controller,
     this.onChanged,
-  }) : super(key: key);
+    this.enabled,
+  });
 
   final String? label;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       onChanged: onChanged,
+      keyboardType: TextInputType.phone,
+      enabled: enabled,
       inputFormatters: [
         LengthLimitingTextInputFormatter(10),
         FilteringTextInputFormatter.digitsOnly,

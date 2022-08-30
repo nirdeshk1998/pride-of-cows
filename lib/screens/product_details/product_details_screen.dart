@@ -41,7 +41,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
     final rProvider = ref.read(productDetailsProvider);
     final wProvider = ref.watch(productDetailsProvider);
     return Scaffold(
-      body: PrimaryStackedLoader(
+      body: StackedLoader(
         isLoading: wProvider.isLoading,
         child: ListView(
           padding: EdgeInsets.zero,

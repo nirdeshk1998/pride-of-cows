@@ -43,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final rProvider = ref.read(homeProvider);
     final wProvider = ref.watch(homeProvider);
 
-    return PrimaryStackedLoader(
+    return StackedLoader(
       isLoading: wProvider.isLoading,
       child: ListView(
         padding: EdgeInsets.zero,

@@ -6,6 +6,7 @@ import 'package:poc/screens/cart/cart_summary.dart';
 import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/counter.dart';
@@ -21,10 +22,10 @@ class CartScreen extends ConsumerWidget {
     final wProvider = ref.watch(cartProvider);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) => rProvider.onCreate(context),
+      (timeStamp) => rProvider.initState(context),
     );
 
-    return PrimaryStackedLoader(
+    return StackedLoader(
       isLoading: wProvider.isLoading,
       child: Column(
         children: [
@@ -34,28 +35,23 @@ class CartScreen extends ConsumerWidget {
               children: [
                 const PrimaryAppBar(showSearch: false),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(Dimensions.defaultPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: 38,
-                            child: Text('Your Cart', style: TextStyles.header),
+                          TextView(
+                            'Your Cart',
+                            textType: TextType.header,
+                            height: 1,
                           ),
                           const SizedBox.square(dimension: 3),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 14.0),
-                            child: Text(
-                              "(17 items)",
-                              style: TextStyle(
-                                color: Palette.textColor,
-                                fontSize: 14,
-                              ),
-                            ),
+                          TextView(
+                            '(${wProvider.totalItems} items)',
+                            height: 1,
                           ),
                         ],
                       ),
@@ -67,6 +63,7 @@ class CartScreen extends ConsumerWidget {
                         padding: EdgeInsets.zero,
                         separatorBuilder: (_, index) => const SizedBox(height: 20),
                         itemBuilder: (context, index) {
+                          final element = wProvider.cartList?[index];
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,28 +97,28 @@ class CartScreen extends ConsumerWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             TextView(
-                                              'Curd',
+                                              '${element?.productName}',
                                               textType: TextType.titleStyled,
                                               color: Palette.textColor,
                                               height: 1,
                                             ),
-                                            const SizedBox(width: 5),
-                                            TextView(
-                                              '(500 grams)',
-                                              textType: TextType.regular,
-                                              color: Palette.textColor,
-                                              height: 1.1,
-                                            ),
+                                            // const SizedBox(width: 5),
+                                            // TextView(
+                                            //   '(500 grams)',
+                                            //   textType: TextType.regular,
+                                            //   color: Palette.textColor,
+                                            //   height: 1.1,
+                                            // ),
                                             const Spacer(),
                                             PrimaryIconButton(
                                               svg: Assets.assetsIconsDelete,
                                               size: 20,
-                                              onPressed: () {},
+                                              onPressed: () => rProvider.onDeleteButton(element?.itemId),
                                             ),
                                           ],
                                         ),
                                         TextView(
-                                          '₹50',
+                                          '₹${element?.itemPrice}',
                                           textType: TextType.regular,
                                           color: Palette.lightTextColor,
                                           height: 1.1,
@@ -141,13 +138,13 @@ class CartScreen extends ConsumerWidget {
                                             ),
                                             const SizedBox(width: 3),
                                             const TextView(
-                                              "Delivery plan:",
+                                              'Delivery plan:',
                                               color: Palette.lightTextColor,
                                               height: 1.1,
                                             ),
                                             const SizedBox(width: 5),
-                                            const TextView(
-                                              "Alternate",
+                                            TextView(
+                                              '${element?.deliveryPlan}',
                                               color: Palette.textColor,
                                               height: 1.1,
                                             ),
@@ -168,65 +165,99 @@ class CartScreen extends ConsumerWidget {
                                             ),
                                             const SizedBox(width: 3),
                                             const TextView(
-                                              "Start:",
+                                              "No. of Days:",
                                               color: Palette.lightTextColor,
                                               height: 1.1,
                                             ),
                                             const SizedBox(width: 5),
-                                            const TextView(
-                                              "08-11-21",
+                                            TextView(
+                                              '${element?.noOfDays}',
                                               color: Palette.textColor,
                                               height: 1.1,
                                             ),
-                                            const SizedBox(width: 10),
-                                            PrimaryIconButton(
-                                              svg: Assets.assetsIconsPencil,
-                                              size: 16,
-                                              onPressed: () {},
-                                            ),
+                                            // const SizedBox(width: 10),
+                                            // PrimaryIconButton(
+                                            //   svg: Assets.assetsIconsPencil,
+                                            //   size: 16,
+                                            //   onPressed: () {},
+                                            // ),
                                           ],
                                         ),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox.square(
-                                              dimension: 16,
-                                              child: SvgPicture.asset(
-                                                Assets.assetsIconsCalender2,
-                                                color: Palette.lightTextColor,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 3),
-                                            const TextView(
-                                              "End:",
-                                              color: Palette.lightTextColor,
-                                              height: 1.1,
-                                            ),
-                                            const SizedBox(width: 5),
-                                            const TextView(
-                                              "07-01-22",
-                                              color: Palette.textColor,
-                                              height: 1.1,
-                                            ),
-                                            const SizedBox(width: 10),
-                                            PrimaryIconButton(
-                                              svg: Assets.assetsIconsPencil,
-                                              size: 16,
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
+                                        // const SizedBox(height: 5),
+                                        // Row(
+                                        //   mainAxisSize: MainAxisSize.min,
+                                        //   mainAxisAlignment: MainAxisAlignment.start,
+                                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                                        //   children: [
+                                        //     SizedBox.square(
+                                        //       dimension: 16,
+                                        //       child: SvgPicture.asset(
+                                        //         Assets.assetsIconsCalender2,
+                                        //         color: Palette.lightTextColor,
+                                        //       ),
+                                        //     ),
+                                        //     const SizedBox(width: 3),
+                                        //     const TextView(
+                                        //       "Start:",
+                                        //       color: Palette.lightTextColor,
+                                        //       height: 1.1,
+                                        //     ),
+                                        //     const SizedBox(width: 5),
+                                        //     TextView(
+                                        //       '${element?.startDate}',
+                                        //       color: Palette.textColor,
+                                        //       height: 1.1,
+                                        //     ),
+                                        //     const SizedBox(width: 10),
+                                        //     PrimaryIconButton(
+                                        //       svg: Assets.assetsIconsPencil,
+                                        //       size: 16,
+                                        //       onPressed: () {},
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // const SizedBox(height: 5),
+                                        // Row(
+                                        //   mainAxisSize: MainAxisSize.min,
+                                        //   mainAxisAlignment: MainAxisAlignment.start,
+                                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                                        //   children: [
+                                        //     SizedBox.square(
+                                        //       dimension: 16,
+                                        //       child: SvgPicture.asset(
+                                        //         Assets.assetsIconsCalender2,
+                                        //         color: Palette.lightTextColor,
+                                        //       ),
+                                        //     ),
+                                        //     const SizedBox(width: 3),
+                                        //     const TextView(
+                                        //       "End:",
+                                        //       color: Palette.lightTextColor,
+                                        //       height: 1.1,
+                                        //     ),
+                                        //     const SizedBox(width: 5),
+                                        //     TextView(
+                                        //       '${element?.endDate}',
+                                        //       color: Palette.textColor,
+                                        //       height: 1.1,
+                                        //     ),
+                                        //     const SizedBox(width: 10),
+                                        //     PrimaryIconButton(
+                                        //       svg: Assets.assetsIconsPencil,
+                                        //       size: 16,
+                                        //       onPressed: () {},
+                                        //     ),
+                                        //   ],
+                                        // ),
                                         const SizedBox.square(dimension: 5),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             PrimaryCounter(
+                                              initialCount: element?.quantity,
                                               onCounterChanged: (i) {},
                                             ),
-                                            const Text("\u{20B9}100")
+                                            Text('₹ ${element?.totalPrice}')
                                           ],
                                         ),
                                       ],
@@ -264,7 +295,7 @@ class CartScreen extends ConsumerWidget {
                       color: Palette.textColor,
                     ),
                     TextView(
-                      '₹1800',
+                      '₹${wProvider.totalPrice ?? 0}',
                       textType: TextType.header2,
                       color: Palette.textColor,
                     ),
@@ -275,7 +306,10 @@ class CartScreen extends ConsumerWidget {
                   title: 'checkout',
                   isExpanded: true,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CartSummary()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CartSummary()),
+                    );
                   },
                 ),
               ],

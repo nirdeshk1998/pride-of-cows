@@ -8,9 +8,11 @@ class PrimaryCounter extends StatefulWidget {
   const PrimaryCounter({
     Key? key,
     required this.onCounterChanged,
+    this.initialCount,
   }) : super(key: key);
 
   final void Function(int i) onCounterChanged;
+  final int? initialCount;
 
   @override
   State<PrimaryCounter> createState() => _PrimaryCounterState();
@@ -18,6 +20,12 @@ class PrimaryCounter extends StatefulWidget {
 
 class _PrimaryCounterState extends State<PrimaryCounter> {
   int _itemCount = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _itemCount = widget.initialCount ?? 1;
+  }
 
   @override
   Widget build(BuildContext context) {

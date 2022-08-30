@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 
 abstract class BaseChangeNotifier extends ChangeNotifier {
   @protected
-  late BuildContext context;
-  bool isLoading = false;
-
+  late BuildContext _context;
+  bool _isLoading = false;
   bool _isCreated = false;
 
-  onCreate(BuildContext context) async {
-    this.context = context;
+  BuildContext get context => _context;
+  bool get isLoading => _isLoading;
+
+  void initState(BuildContext context) async {
+    _context = context;
     if (!_isCreated) {
       _isCreated = true;
 
       showLoader(true);
-      await postCreate();
+      await postCreateState();
       showLoader(false);
     }
   }
 
-  Future<void> postCreate();
+  Future<void> postCreateState();
 
   void showLoader(bool value) {
-    isLoading = value;
+    _isLoading = value;
     notifyListeners();
   }
 }

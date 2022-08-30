@@ -36,3 +36,8 @@ enum UserType {
   user,
   guest,
 }
+
+enum AddressType {
+  add,
+  edit,
+}

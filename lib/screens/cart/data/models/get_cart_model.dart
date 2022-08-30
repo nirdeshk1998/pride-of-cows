@@ -67,13 +67,13 @@ class UserCartResModel {
 
 class CartItemsData {
   int? itemId;
-  String? productId;
-  int? giftId;
+  int? productId;
+  String? giftId;
   String? productName;
   String? thumbImg;
   int? quantity;
-  String? itemPrice;
-  String? totalPrice;
+  int? itemPrice;
+  int? totalPrice;
   String? deliveryPlan;
   String? cartType;
   String? giftType;
@@ -81,7 +81,8 @@ class CartItemsData {
   int? discount;
   String? startDate;
   String? endDate;
-  String? repeatMonthly;
+  int? repeatMonthly;
+  int? noOfDays;
   String? createdAt;
   String? updatedAt;
   bool? productAvailable;
@@ -103,6 +104,7 @@ class CartItemsData {
       this.discount,
       this.startDate,
       this.endDate,
+      this.noOfDays,
       this.repeatMonthly,
       this.createdAt,
       this.updatedAt,
@@ -113,6 +115,7 @@ class CartItemsData {
     itemId = json['item_id'];
     productId = json['product_id'];
     giftId = json['gift_id'];
+    noOfDays = json['noOfDays'];
     productName = json['product_name'];
     thumbImg = json['thumb_img'];
     quantity = json['quantity'];
@@ -137,6 +140,7 @@ class CartItemsData {
     data['item_id'] = itemId;
     data['product_id'] = productId;
     data['gift_id'] = giftId;
+    data['noOfDays'] = noOfDays;
     data['product_name'] = productName;
     data['thumb_img'] = thumbImg;
     data['quantity'] = quantity;

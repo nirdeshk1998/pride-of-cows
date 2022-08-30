@@ -17,6 +17,7 @@ class Endpoint {
   static const String stateList = '/customer/statelist';
   static const String cityList = '/customer/citylist';
   static const String pincodeList = '/customer/pincodelist';
+  static const String availablePincodeList = '/customer/availpincodelist';
 
   // Home
   static const String categoryList = '/customer/categorylist';
@@ -38,4 +39,9 @@ class Endpoint {
   static const String removeFromCart = '/cart/removecart';
   static const String updateProductQuantity = '/customer/productdetail';
   static const String userCartList = '/cart/items';
+
+  // Address Book
+  static const String addressBookList = '/customer/addressbooklist';
+  static const String saveAddress = '/customer/saveaddress';
+  static const String updateAddress = '/customer/updateaddress';
 }
