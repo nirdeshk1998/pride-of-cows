@@ -1,20 +1,15 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/address/my_address_book_screen.dart';
+import 'package:poc/screens/address/data/models/addressbook_model.dart';
 import 'package:poc/screens/address/provider/create_update_address_provider.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/styles/text_styles.dart';
-import 'package:poc/styles/widget_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/checkbox.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
@@ -22,16 +17,27 @@ import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class CreateUpdateAddressScreen extends ConsumerWidget {
-  const CreateUpdateAddressScreen({Key? key, required this.addressType}) : super(key: key);
+  const CreateUpdateAddressScreen({
+    Key? key,
+    required this.addressType,
+    this.addressData,
+  }) : super(key: key);
 
   final AddressType addressType;
+  final AddressBookData? addressData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final read = ref.read(createUpdateAddressProvider);
     final watch = ref.watch(createUpdateAddressProvider);
 
-    read.initState(context);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(
+        context,
+        addressType == AddressType.edit ? addressData : null,
+      ),
+    );
+
     return Scaffold(
       body: StackedLoader(
         isLoading: watch.isLoading,
@@ -39,9 +45,8 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
           padding: EdgeInsets.zero,
           children: [
             const SecondaryAppBar(),
-            Dimensions.defaultPadding.height,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+              padding: const EdgeInsets.all(Dimensions.defaultPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,12 +65,13 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                     textType: TextType.titleStyled,
                     height: 1,
                   ),
+                  10.0.height,
                   const ImageView(
                     Assets.assetsImagesMaps,
                     height: 170,
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,23 +80,17 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                         label: 'Full name (first name and last name)*',
                         controller: read.fullNameController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       PhoneNumberFormField(
                         label: 'Phone Number',
                         controller: read.phoneNumberController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       PhoneNumberFormField(
                         label: 'Alternate phone number',
                         controller: read.altNumberController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       // PrimaryTextFormField(
                       //   label: 'Pincode*',
                       //   controller: read.pincodeController,
@@ -102,23 +102,17 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                         label: 'Address*',
                         controller: read.addressController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       PrimaryTextFormField(
                         label: 'Locality*',
                         controller: read.localityController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       PrimaryTextFormField(
                         label: 'Landmark',
                         controller: read.landmarkController,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      20.0.height,
                       PrimaryTextFormField(
                         label: 'Pincode*',
                         isNumber: true,
@@ -126,7 +120,7 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                         onChanged: (i) => read.onPincodeChanged(i),
                         controller: read.pincodeController,
                       ),
-                      26.0.height,
+                      20.0.height,
                       PrimaryDropdownFormField(
                         label: 'State*',
                         value: watch.stateDropdownValue,
@@ -154,143 +148,104 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                             .toList(),
                         onChanged: (i) => read.onCityChanged(i),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TextView(
+                      20.0.height,
+                      TextView(
                         "Save Address as",
+                        textType: TextType.subtitle,
                         color: Palette.hintColor,
                       ),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Radio(
-                                value: watch.home,
-                                groupValue: true,
-                                onChanged: read.onChangeHomeFun,
+                      RadioTheme(
+                        data: const RadioThemeData(
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        child: Row(
+                          children: [
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Radio<AddressGroupValue>(
+                                value: AddressGroupValue.home,
+                                groupValue: watch.groupValue,
+                                onChanged: read.onGroupValueChanged,
                               ),
-                              const Text("Home"),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Row(
-                            children: [
-                              Radio(
-                                value: watch.work,
-                                groupValue: true,
-                                onChanged: read.onChangeWorkFun,
-                              ),
-                              const Text("Work"),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: watch.others,
-                                  groupValue: true,
-                                  onChanged: read.onChangeOthersFun,
-                                ),
-                                const Text("Other"),
-                              ],
                             ),
-                          ),
-                        ],
+                            const TextView(
+                              "Home",
+                              size: TextSize.regularLarge,
+                            ),
+                            Dimensions.defaultPadding.width,
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Radio<AddressGroupValue>(
+                                value: AddressGroupValue.work,
+                                groupValue: watch.groupValue,
+                                onChanged: read.onGroupValueChanged,
+                              ),
+                            ),
+                            const TextView(
+                              "Work",
+                              size: TextSize.regularLarge,
+                            ),
+                            Dimensions.defaultPadding.width,
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Radio<AddressGroupValue>(
+                                value: AddressGroupValue.other,
+                                groupValue: watch.groupValue,
+                                onChanged: read.onGroupValueChanged,
+                              ),
+                            ),
+                            const TextView(
+                              "Other",
+                              size: TextSize.regularLarge,
+                            ),
+                          ],
+                        ),
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(hintText: "Address"),
-                      ),
+                      if (watch.groupValue == AddressGroupValue.other) 10.0.height,
+                      if (watch.groupValue == AddressGroupValue.other)
+                        SecondaryFormField(
+                          hint: 'e.g. Mom\'s house',
+                          controller: read.otherAddressController,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.only(bottom: 6.0),
+                          constraints: const BoxConstraints(maxHeight: 50, minHeight: 0),
+                        ),
+                      10.0.height,
                       Row(
                         children: [
-                          Checkbox(
-                            value: watch.defaultAddress,
-                            onChanged: read.onChangeDefaultAddressFun,
-                            activeColor: Colors.white,
-                            checkColor: Colors.black,
+                          PrimaryCheckbox(
+                            initialValue: watch.isDefaultAddress,
+                            onChanged: read.onDefaultAddressChanged,
                           ),
+                          5.0.width,
                           const TextView(
-                            "Use as my default",
-                            color: Palette.hintColor,
+                            'Use as my default address',
+                            color: Palette.lightTextColor,
+                            height: 1,
                           ),
                         ],
                       ),
+                      30.0.height,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           PrimaryButton(
-                            title: "SAVE & REQUEST CHANGE",
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext index) {
-                                    // return AlertDialog(
-                                    //   title: Text("Request for updating address sent!",style: TextStyles.header,),
-                                    // );
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Request for updating address sent!",
-                                        style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 24, fontWeight: FontWeight.w400, height: 1),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      content: Container(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Divider(
-                                              thickness: 1,
-                                            ),
-                                            Container(
-                                              child: const TextView(
-                                                "We will review your request and update the address after verification.The verification process will take upto 24 hours.",
-                                                size: 16,
-                                                maxLines: 10,
-                                                height: 1.4,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                PrimaryButton(
-                                                  title: "OKAY, I UNDERSTAND",
-                                                  isFilled: true,
-                                                  onPressed: () {
-                                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyAddressBook()));
-                                                  },
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            },
+                            title: 'SAVE & REQUEST CHANGE',
+                            onPressed: read.onSaveButton,
                           ),
                         ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      const Text(
+                      const TextView(
                         "Pride of Cows team will review your request to change this address and implement it at the earliest.",
-                        style: TextStyle(fontSize: 17),
+                        maxLines: 3,
+                        height: 1.5,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      30.0.height,
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -301,9 +256,7 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      30.0.height,
                     ],
                   ),
                 ],

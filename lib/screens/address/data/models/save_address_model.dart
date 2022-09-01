@@ -1,8 +1,9 @@
-class SaveAddressReqModel {
+class CreateUpdateAddressReqModel {
+  String? addressId;
   String? name;
-  String? address1;
-  String? address2;
-  String? address3;
+  String? address;
+  String? locality;
+  String? landmark;
   int? pincode;
   int? state;
   int? city;
@@ -12,11 +13,12 @@ class SaveAddressReqModel {
   String? defaultAddress;
   String? othername;
 
-  SaveAddressReqModel({
+  CreateUpdateAddressReqModel({
+    this.addressId,
     this.name,
-    this.address1,
-    this.address2,
-    this.address3,
+    this.address,
+    this.locality,
+    this.landmark,
     this.pincode,
     this.state,
     this.city,
@@ -27,11 +29,12 @@ class SaveAddressReqModel {
     this.othername,
   });
 
-  SaveAddressReqModel.fromJson(Map<String, dynamic> json) {
+  CreateUpdateAddressReqModel.fromJson(Map<String, dynamic> json) {
+    addressId = json['addressid'];
     name = json['name'];
-    address1 = json['address1'];
-    address2 = json['address2'];
-    address3 = json['address3'];
+    address = json['address1'];
+    locality = json['address2'];
+    landmark = json['address3'];
     pincode = json['pincode'];
     state = json['state'];
     city = json['city'];
@@ -44,10 +47,11 @@ class SaveAddressReqModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['addressid'] = addressId;
     data['name'] = name;
-    data['address1'] = address1;
-    data['address2'] = address2;
-    data['address3'] = address3;
+    data['address1'] = address;
+    data['address2'] = locality;
+    data['address3'] = landmark;
     data['pincode'] = pincode;
     data['state'] = state;
     data['city'] = city;

@@ -33,9 +33,9 @@ class AddressBookResModel {
 class AddressBookData {
   String? id;
   String? name;
-  String? address1;
-  String? address2;
-  String? address3;
+  String? address;
+  String? locality;
+  String? landmark;
   String? addressType;
   String? pincode;
   String? state;
@@ -55,9 +55,9 @@ class AddressBookData {
   AddressBookData(
       {this.id,
       this.name,
-      this.address1,
-      this.address2,
-      this.address3,
+      this.address,
+      this.locality,
+      this.landmark,
       this.addressType,
       this.pincode,
       this.state,
@@ -77,9 +77,9 @@ class AddressBookData {
   AddressBookData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    address1 = json['address1'];
-    address2 = json['address2'];
-    address3 = json['address3'];
+    address = json['address1'];
+    locality = json['address2'];
+    landmark = json['address3'];
     addressType = json['addressType'];
     pincode = json['pincode'];
     state = json['state'];
@@ -101,9 +101,9 @@ class AddressBookData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['address1'] = address1;
-    data['address2'] = address2;
-    data['address3'] = address3;
+    data['address1'] = address;
+    data['address2'] = locality;
+    data['address3'] = landmark;
     data['addressType'] = addressType;
     data['pincode'] = pincode;
     data['state'] = state;

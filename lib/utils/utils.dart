@@ -17,19 +17,19 @@ enum SnackType {
 }
 
 class Utils {
-  static Future<void> push(context, widget) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
+  static Future<Object?> push(BuildContext context, widget) async {
+    return await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
   }
 
-  static void pop(context) {
-    Navigator.pop(context);
+  static void pop(BuildContext context, [result]) {
+    return Navigator.pop(context, result);
   }
 
-  static Future<void> pushReplacement(context, widget) async {
+  static Future<void> pushReplacement(BuildContext context, widget) async {
     await Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder) => widget));
   }
 
-  static Future<void> pushAndRemoveUntil(context, widget) async {
+  static Future<void> pushAndRemoveUntil(BuildContext context, widget) async {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 

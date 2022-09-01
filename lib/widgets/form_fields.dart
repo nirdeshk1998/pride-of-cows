@@ -206,24 +206,33 @@ class SecondaryFormField extends StatelessWidget {
     this.hint,
     this.controller,
     this.onChanged,
+    this.constraints,
+    this.contentPadding,
+    this.isDense,
   }) : super(key: key);
 
   final String? hint;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
+  final BoxConstraints? constraints;
+  final EdgeInsets? contentPadding;
+  final bool? isDense;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       onChanged: onChanged,
+      textCapitalization: TextCapitalization.sentences,
+      style: TextType.hint.apply(color: Palette.textColor),
       decoration: InputDecoration(
+        isDense: isDense ?? false,
         hintText: hint ?? 'Type your message here...',
         hintStyle: TextType.hint.apply(color: Palette.hintColor),
         border: const UnderlineInputBorder(borderSide: BorderSide(color: Palette.surfaceColor, width: 1)),
         enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Palette.surfaceColor, width: 1)),
-        contentPadding: EdgeInsets.zero,
-        constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
+        contentPadding: contentPadding ?? EdgeInsets.zero,
+        constraints: constraints ?? const BoxConstraints(maxHeight: 50, minHeight: 50),
       ),
     );
   }
