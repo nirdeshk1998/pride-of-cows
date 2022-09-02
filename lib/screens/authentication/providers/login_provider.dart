@@ -184,8 +184,10 @@ class LoginChangeProvider with ChangeNotifier {
     await LocalStorage.setString(element?.userID.toString(), StorageField.userId);
     await LocalStorage.setString(element?.mobileNo, StorageField.mobileNumber);
     await LocalStorage.setString(element?.firstName, StorageField.firstName);
+    print(LocalStorage.getString(StorageField.firstName));
     await LocalStorage.setString(element?.lastName, StorageField.lastName);
     await LocalStorage.setString(element?.middleName, StorageField.middleName);
+    await LocalStorage.setString(element?.gender, StorageField.gender);
     await LocalStorage.setString(element?.addressType, StorageField.addressType);
     await LocalStorage.setString(element?.area, StorageField.area);
     await LocalStorage.setString(element?.buildingName, StorageField.buildingName);

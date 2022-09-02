@@ -25,7 +25,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
       ref.read(productProvider).initState(context);
     });
   }
-
+List<Widget> widgetList=<Widget>[];
   @override
   Widget build(BuildContext context) {
     final rProvider = ref.read(productProvider);
@@ -102,13 +102,17 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           ),
         ),
         DefaultTabController(
-          length: 6,
+          length: wProvider.categoryList?.length??0,
           initialIndex: 0,
           child: Column(
             children: [
               SizedBox(
                 height: 50,
                 child: TabBar(
+                  onTap:(index){
+                    rProvider.getSelectedCategoryId(wProvider.categoryList?[index].catId);
+                    rProvider.getSelectedProductList(context);
+                  },
                   isScrollable: true,
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorPadding: EdgeInsets.zero,
@@ -125,7 +129,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                     fontWeight: FontWeight.normal,
                     height: 1.5,
                   ),
-                  tabs:  [Tab(text:wProvider.categoryList.toString())]
+                  tabs:  List.generate(wProvider.categoryList?.length??0, (index) =>Tab(text: wProvider.categoryList?[index].catName.toString(),))
                 ),
               ),
               SizedBox(
@@ -133,7 +137,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: List.generate(
-                    6,
+                    wProvider.categoryList?.length??0,
                     (index) => GridView.builder(
                         shrinkWrap: true,
                         itemCount: wProvider.productList?.length ?? 0,

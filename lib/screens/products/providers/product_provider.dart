@@ -16,13 +16,16 @@ class ProductChangeProvider extends ChangeNotifier {
   List<CategoryData>? get categoryList => _categoryList;
   List<ProductData>? get productList => _productList;
 
+  int? categoryId;
+
   Future<void> initState(BuildContext context) async {
+    print(context);
     await _getCatergory(context);
-    await _getProducts();
+    await _getProducts(context);
   }
 
   ProductReqModel get _productListModel => ProductReqModel(
-        catId: null,
+        catId: categoryId,
         cityId: 329,
         perPage: 2,
         page: 3,
@@ -30,16 +33,24 @@ class ProductChangeProvider extends ChangeNotifier {
         search: "",
       );
 
-  Future<void> _getProducts() async {
+  Future<void> _getProducts(context) async {
     await _productRepo.getProductList(_productListModel).then((response) {
       final result = ProductListResModel.fromJson(response.data);
-
-      if (response.statusCode == 200) {
-        _productList = result.data;
-      } else {
-        //
+      if(result.data!=null){
+        if (response.statusCode == 200) {
+          _productList = result.data;
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+        } else {
+          Utils.showPrimarySnackbar(context, result.message,type:SnackType.error );
+        }
       }
-    });
+      else{
+        Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+      }
+
+    }).onError((error, stackTrace){
+      Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
+    } );
   }
 
   Future<void> _getCatergory(context) async {
@@ -48,7 +59,6 @@ class ProductChangeProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         _categoryList = result.data;
-
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
       } else {
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
@@ -57,4 +67,12 @@ class ProductChangeProvider extends ChangeNotifier {
       Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
     });
   }
+
+  void getSelectedCategoryId(catId)async{
+    categoryId=catId;
+  }
+  void getSelectedProductList(context)async{
+    await _getProducts(context);
+  }
 }
+ 

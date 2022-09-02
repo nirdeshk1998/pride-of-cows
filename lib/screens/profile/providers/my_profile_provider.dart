@@ -1,95 +1,267 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/menu/menu_screen.dart';
+import 'package:poc/screens/profile/data/models/profile_model.dart';
+import 'package:poc/screens/profile/data/profile_repository.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final profileProvider =
     ChangeNotifierProvider.autoDispose((ref) => profileChangeProvider());
 
 class profileChangeProvider with ChangeNotifier {
+  final ProfileUpdateRepository _ProfileRepo = ProfileUpdateRepository();
+
   bool saveButtonState = false;
-  bool fname = false;
-  bool lName = false;
-  bool phNo = false;
-  bool gender = false;
-  bool emailId = false;
-  bool dob = false;
+  bool isFnameEntered = false;
+  bool isLNameEntered = false;
+  bool isPhNoEntered = false;
+  bool isGenderEntered = false;
+  bool isEmailIdEntered = false;
+  bool isDobEntered = false;
+  bool isSubScribeChecked = false;
+  bool _isLoading = false;
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _fNameController = TextEditingController();
+  final TextEditingController _lNameController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _eMailController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
 
-  final TextEditingController numberController = TextEditingController();
-  final TextEditingController fNameController = TextEditingController();
-  final TextEditingController lNameController = TextEditingController();
-  final TextEditingController phoneNoController = TextEditingController();
-  final TextEditingController eMailController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
+  String? fName;
+  String? lName;
+  String? phNo;
+  String? gender;
+  String? emailId;
+  String? dob;
+  String? userId;
+  var pickedDate;
+  String? selectedGender;
+  String subScribeNewLetter = "no";
 
-  void onSendOtpButton(context) {
-    Utils.push(context, const MenuScreen());
+  TextEditingController get numberController => _numberController;
+
+  TextEditingController get fNameController => _fNameController;
+
+  TextEditingController get lNameController => _lNameController;
+
+  TextEditingController get phoneNoController => _phoneNoController;
+
+  TextEditingController get eMailController => _eMailController;
+
+  TextEditingController get dobController => _dobController;
+
+  bool get isLoading => _isLoading;
+
+  Future<void> initState(BuildContext context) async {
+    print(context);
+    await _gettingPrefs(context);
+    await _getMyProfileInfo(context);
   }
 
-  void onChangeFNameFun(String value) {
-    if (value.length == 0) {
-      fname = false;
-    } else {
-      fname = true;
-      onAllChangeFun();
-    }
+  void showLoader(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 
+  void onChangeFNameFun(String value) {
+    if (value.length == 0 || value == fName) {
+      isFnameEntered = false;
+    } else {
+      isFnameEntered = true;
+      // onAllChangeFun();
+    }
+    onAllChangeFun();
+    notifyListeners();
+  }
 
   void onChangeLNameFun(String value) {
-    if (value.length == 0) {
-      lName = false;
+    if (value.length == 0 || value == lName) {
+      isLNameEntered = false;
     } else {
-      lName = true;
-      onAllChangeFun();
+      isLNameEntered = true;
     }
+    onAllChangeFun();
     notifyListeners();
   }
 
   void onChangePhNoFun(String value) {
-    if (value.length < 10) {
-      phNo = false;
+    if (value.length < 10 || value == phNo) {
+      isPhNoEntered = false;
     } else {
-      phNo = true;
-      onAllChangeFun();
+      isPhNoEntered = true;
     }
-    notifyListeners();
-  }
-  void onChangeGenderFun(int ? value) {
-    if (value==null) {
-      gender = false;
-    } else {
-      gender = true;
-      onAllChangeFun();
-    }
-    notifyListeners();
-  }
-  void onChangeEmailFun(String value) {
-    if (value.length == 0) {
-      emailId = false;
-    } else {
-      emailId = true;
-      onAllChangeFun();
-    }
+    onAllChangeFun();
     notifyListeners();
   }
 
-  void onChangeDobFun(String value) {
-    if (value.length == 0) {
-      dob = false;
+  void onChangeGenderFun(value) {
+    if (value == null || value == gender) {
+      isGenderEntered = false;
     } else {
-      dob = true;
-      onAllChangeFun();
+      isGenderEntered = true;
     }
+    gender = value;
+    onAllChangeFun();
     notifyListeners();
   }
-  void onAllChangeFun(){
-    if(fname&&lName&&phNo&&gender&&emailId){
-      saveButtonState=true;
+
+  void onChangeEmailFun(String value) {
+    if (value.length == 0 || value == emailId) {
+      isEmailIdEntered = false;
+    } else {
+      isEmailIdEntered = true;
     }
-    else{
-      saveButtonState=false;
+    onAllChangeFun();
+    notifyListeners();
+  }
+
+  void onDateSelected(DateTime date) async {
+    _dobController.text = DateFormat("dd/MM/yyy").format(date);
+    isDobEntered = true;
+    onAllChangeFun();
+    notifyListeners();
+  }
+
+  // void onChangeDobFun(String value) {
+  //   if (value.length == 0 || value == dob) {
+  //     isDobEntered = false;
+  //   } else {
+  //     isDobEntered = true;
+  //   }
+  //   print("hello");
+  //   onAllChangeFun();
+  //   notifyListeners();
+  // }
+
+  void onAllChangeFun() {
+    if (isFnameEntered ||
+        isLNameEntered ||
+        isPhNoEntered ||
+        isGenderEntered ||
+        isEmailIdEntered ||
+        isDobEntered) {
+      saveButtonState = true;
+    } else {
+      saveButtonState = false;
     }
+  }
+
+  void onSubScribeChecked(bool? value) {
+    if (value == true) {
+      subScribeNewLetter = "yes";
+    } else {
+      subScribeNewLetter = "no";
+    }
+  }
+
+  Future<void> _gettingPrefs(context) async {
+    userId = await LocalStorage.getString(StorageField.userId);
+    fName = await LocalStorage.getString(StorageField.firstName);
+    lName = await LocalStorage.getString(StorageField.lastName);
+    phNo = await LocalStorage.getString(StorageField.mobileNumber);
+    gender = await LocalStorage.getString(StorageField.gender);
+    emailId = await LocalStorage.getString(StorageField.email);
+    notifyListeners();
+  }
+
+  Future<void> _getMyProfileInfo(context) async {
+    _fNameController.text = fName.toString();
+    _lNameController.text = lName.toString();
+    _phoneNoController.text = phNo.toString();
+    _eMailController.text = emailId.toString();
+    String caps(String s)=>s[0].toUpperCase()+s.substring(1);
+    gender=caps(gender.toString());
+    notifyListeners();
+
+  }
+
+  ProfileUpdateReqModel get _profileUpdateList => ProfileUpdateReqModel(
+        userId: userId,
+        firstName: _fNameController.text,
+        lastName: _lNameController.text,
+        mobileNo: _phoneNoController.text,
+        email: _eMailController.text,
+        gender: gender,
+        dob: _dobController.text,
+        subsScribeNewsLetter: subScribeNewLetter,
+      );
+
+  Future<void> onEditButtonPressed(context) async {
+    if (_fNameController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'First name is required',
+          type: SnackType.invalidated);
+      return;
+    } else if (_lNameController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Last name is required',
+          type: SnackType.invalidated);
+      return;
+    } else if (_eMailController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Email id is required',
+          type: SnackType.invalidated);
+      return;
+    } else if (gender == null) {
+      Utils.showPrimarySnackbar(context, 'Gender is required',
+          type: SnackType.invalidated);
+      return;
+    } else if (_phoneNoController.text.isEmpty) {
+      Utils.showPrimarySnackbar(context, 'Phone Number is required',
+          type: SnackType.invalidated);
+      return;
+    } else if (_phoneNoController.text.length < 10) {
+      Utils.showPrimarySnackbar(context, 'Invalid Phone Number',
+          type: SnackType.invalidated);
+      return;
+    } else if (_phoneNoController.text.length < 10) {
+      Utils.showPrimarySnackbar(context, 'Invalid Phone Number',
+          type: SnackType.invalidated);
+      return;
+    } else if (_eMailController.text.isNotEmpty) {
+      bool emailValid = RegExp(
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(_eMailController.text);
+      print(emailValid);
+      if (!emailValid) {
+        Utils.showPrimarySnackbar(context, 'Invalid Email',
+            type: SnackType.invalidated);
+        return;
+      } else {}
+    }
+
+    showLoader(true);
+    await _updateProfileRequest(context);
+    showLoader(false);
+  }
+
+  Future<void> _updateProfileRequest(context) async {
+    await _ProfileRepo.sendNewProfileDetails(_profileUpdateList)
+        .then((response) {
+      final result = ProfileUpdateResModel.fromJson(response.data);
+      print(response.data);
+      if (response.statusCode == 200) {
+        Utils.showPrimarySnackbar(context, result.message,
+            type: SnackType.success);
+        _settingPrefs(context);
+      } else {
+        Utils.showPrimarySnackbar(context, result.message,
+            type: SnackType.error);
+      }
+    }).onError((error, stackTrace) {
+      Utils.showPrimarySnackbar(context, error.toString(),
+          type: SnackType.debug);
+    });
+  }
+
+  Future<void> _settingPrefs(context) async {
+    await LocalStorage.setString(
+        _phoneNoController.text, StorageField.mobileNumber);
+    await LocalStorage.setString(_fNameController.text, StorageField.firstName);
+    await LocalStorage.setString(_lNameController.text, StorageField.lastName);
+    await LocalStorage.setString(gender, StorageField.gender);
+    await LocalStorage.setString(_eMailController.text, StorageField.email);
+    await LocalStorage.setString(_dobController.text, StorageField.dob);
   }
 }

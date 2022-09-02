@@ -79,10 +79,12 @@ class LoginData {
   String? addressType;
   String? customerType;
   String? deliveryOption;
+  String? gender;
 
   LoginData(
       {this.token,
       this.userID,
+        this.gender,
       this.mobileNo,
       this.email,
       this.firstName,
@@ -98,7 +100,8 @@ class LoginData {
       this.pincode,
       this.addressType,
       this.customerType,
-      this.deliveryOption});
+      this.deliveryOption
+      });
 
   LoginData.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -108,6 +111,7 @@ class LoginData {
     firstName = json['FirstName'];
     middleName = json['MiddleName'];
     lastName = json['LastName'];
+    gender=json["gender"];
     city = json['City'];
     cityId = json['city_id'];
     flatPlotNo = json['flat_plot_no'];

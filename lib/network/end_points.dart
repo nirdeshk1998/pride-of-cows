@@ -1,7 +1,7 @@
 class Endpoint {
   Endpoint._();
 
-  static const String baseUrl = 'https://stagingpoc.heptawork.com/api';
+  static const String baseUrl = 'https://stagingpoc.heptawork.com/api/';
   static const int receiveTimeout = 30000;
   static const int connectionTimeout = 30000;
 
@@ -28,5 +28,8 @@ class Endpoint {
   // Products
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
+
+  //My Profile Update
+static const String profileUpdate='customer/profileupdate';
 
 }
