@@ -12,7 +12,7 @@ class ProductRepository {
     }
   }
 
-  Future<Response> getCategoryList() async {
+  Future<Response>getCategoryList() async {
     try {
       return await BaseDio.getInstance().post(Endpoint.categoryList);
     } catch (e) {

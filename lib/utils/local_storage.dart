@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StorageField {
+ enum StorageField {
   token,
   userId,
   mobileNumber,
@@ -19,6 +19,8 @@ enum StorageField {
   addressType,
   customerType,
   deliveryOption,
+   gender,
+   dob,
 }
 
 class LocalStorage {
