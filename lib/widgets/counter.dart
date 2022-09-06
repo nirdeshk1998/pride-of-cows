@@ -9,10 +9,14 @@ class PrimaryCounter extends StatefulWidget {
     Key? key,
     required this.onCounterChanged,
     this.initialCount,
+    this.padding,
+    this.isDisabled = false,
   }) : super(key: key);
 
   final void Function(int i) onCounterChanged;
   final int? initialCount;
+  final EdgeInsets? padding;
+  final bool isDisabled;
 
   @override
   State<PrimaryCounter> createState() => _PrimaryCounterState();
@@ -35,8 +39,8 @@ class _PrimaryCounterState extends State<PrimaryCounter> {
         PrimaryIconButton(
           svg: Assets.assetsIconsMinus,
           size: 16,
-          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
-          onPressed: onSubtract,
+          padding: widget.padding ?? const EdgeInsets.fromLTRB(0, 8, 8, 8),
+          onPressed: widget.isDisabled ? null : onSubtract,
         ),
         Container(
           height: 25,
@@ -60,8 +64,8 @@ class _PrimaryCounterState extends State<PrimaryCounter> {
         PrimaryIconButton(
           svg: Assets.assetsIconsPlus,
           size: 16,
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-          onPressed: onAdd,
+          padding: widget.padding ?? const EdgeInsets.fromLTRB(8, 8, 0, 8),
+          onPressed: widget.isDisabled ? null : onAdd,
         ),
       ],
     );
@@ -83,3 +87,4 @@ class _PrimaryCounterState extends State<PrimaryCounter> {
     }
   }
 }
+ 

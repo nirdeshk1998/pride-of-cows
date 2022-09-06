@@ -84,9 +84,16 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
     if (val.length == 6) {
       showLoader(true);
       await _pincodeDataRequest(int.parse(val));
+
+      if (_stateId == null)return showLoader(false);
       _stateDropdownValue = int.parse(_stateId ?? '0');
+
       await _cityListRequest(_stateId ?? '0');
+
+      if (_cityId == null) return showLoader(false);
+      debugPrint('_cityId: $_cityId');
       _cityDropdownValue = _cityId ?? '0';
+
       showLoader(false);
     }
   }

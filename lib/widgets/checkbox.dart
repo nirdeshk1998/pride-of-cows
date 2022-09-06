@@ -6,12 +6,12 @@ class PrimaryCheckbox extends StatefulWidget {
   const PrimaryCheckbox({
     Key? key,
     this.size,
-    this.initialValue,
+    this.value,
     required this.onChanged,
   }) : super(key: key);
 
   final Function(bool value) onChanged;
-  final bool? initialValue;
+  final bool? value;
   final double? size;
 
   @override
@@ -23,7 +23,9 @@ class _PrimaryCheckboxState extends State<PrimaryCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    _isChecked = widget.initialValue ?? false;
+    if (widget.value != null) {
+      _isChecked = widget.value ?? false;
+    }
 
     return PrimaryIconButton(
       svg: _isChecked ? Assets.assetsIconsCheckboxChecked : Assets.assetsIconsCheckboxUnchecked,
@@ -37,3 +39,4 @@ class _PrimaryCheckboxState extends State<PrimaryCheckbox> {
         widget.onChanged(_isChecked);
       });
 }
+

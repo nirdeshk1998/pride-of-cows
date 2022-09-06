@@ -43,6 +43,16 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
         'Custom',
       ];
 
+  List<String> get customDayList => [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Satrurday',
+      ];
+
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 

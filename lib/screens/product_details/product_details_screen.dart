@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/main/main_screen.dart';
-import 'package:poc/screens/main/providers/main_provider.dart';
 import 'package:poc/screens/product_details/providers/product_details_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -13,6 +11,7 @@ import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/calender_picker.dart';
+import 'package:poc/widgets/checkbox.dart';
 import 'package:poc/widgets/counter.dart';
 import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
@@ -39,10 +38,10 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final rProvider = ref.read(productDetailsProvider);
-    final wProvider = ref.watch(productDetailsProvider);
+    final watch = ref.watch(productDetailsProvider);
     return Scaffold(
       body: StackedLoader(
-        isLoading: wProvider.isLoading,
+        isLoading: watch.isLoading,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -53,14 +52,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               children: [
                 Dimensions.defaultPadding.width,
                 TextView(
-                  wProvider.productDetailsData?.name ?? 'N/A',
+                  watch.productDetailsData?.name ?? 'N/A',
                   color: Palette.textColor,
                   textType: TextType.header,
                   boxHeight: TextSize.header,
                 ),
                 const Spacer(),
                 TextView(
-                  '${wProvider.productDetailsData?.minimumQuantity} ${wProvider.productDetailsData?.productUnit} - ₹ ${wProvider.productDetailsData?.price}',
+                  '${watch.productDetailsData?.minimumQuantity} ${watch.productDetailsData?.productUnit} - ₹ ${watch.productDetailsData?.price}',
                   color: Palette.textColor,
                   textType: TextType.header2,
                   size: TextSize.title,
@@ -81,7 +80,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               ),
               itemBuilder: (_, index, idx) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: ImageView('${wProvider.productDetailsData?.mainImg}'),
+                child: ImageView('${watch.productDetailsData?.gallery?[index].imagePath}'),
               ),
             ),
             const SizedBox.square(dimension: 20),
@@ -116,16 +115,16 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: wProvider.productDetailsData?.description?.substring(
+                          text: watch.productDetailsData?.description?.substring(
                             0,
-                            wProvider.foldAboutProduct ? null : 160,
+                            watch.foldAboutProduct ? null : 160,
                           ),
                         ),
                         TextSpan(
                           text: rProvider.foldAboutProduct ? ' ' : '... ',
                         ),
                         TextSpan(
-                          text: wProvider.foldAboutProduct ? 'Read less' : 'Read more',
+                          text: watch.foldAboutProduct ? 'Read less' : 'Read more',
                           recognizer: TapGestureRecognizer()..onTap = () => rProvider.onReadMoreButton(),
                           style: const TextStyle(
                             color: Palette.primaryColor,
@@ -135,39 +134,17 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox.square(dimension: 16),
+                  20.0.height,
+
                   TextView(
                     'Delivery plan:',
                     textType: TextType.subtitle,
                     color: Palette.hintColor,
                   ),
-                  // SizedBox(
-                  //   height: 250,
-                  //   child: PrimaryCalendarDatePicker(
-                  //     label: 'Select start date',
-                  //     initialCalendarMode: DatePickerMode.day,
-                  //     initialDate: DateTime.now(),
-                  //     firstDate: DateTime.now(),
-                  //     lastDate: DateTime(DateTime.now().year + 1),
-                  //     onDateChanged: (i) {},
-                  //   ),
-                  // ),
-                  const SizedBox.square(dimension: 5),
-                  // PrimaryCalendarDatePicker(
-                  //   label: 'Select start date',
-                  //   onMonthPressed: () => rProvider.onStartMonthPressed(),
-                  //   onDateTapped: () => rProvider.onStartDateSelect(),
-                  //   isVisible: wProvider.startDateVisibilty,
-                  //   initialCalendarMode: DatePickerMode.day,
-                  //   initialDate: DateTime.now(),
-                  //   firstDate: DateTime.now(),
-                  //   lastDate: DateTime(DateTime.now().year + 1),
-                  //   onDateChanged: (i) => wProvider.onStartDateChanged(i),
-                  // ),
-
+                  5.0.height,
                   Wrap(
                     direction: Axis.horizontal,
-                    children: wProvider.deliveryPlans
+                    children: watch.deliveryPlans
                         .map(
                           (e) => Padding(
                             padding: const EdgeInsets.only(right: 15.0),
@@ -183,9 +160,11 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                   ),
                                   builder: (builder) {
                                     int quantity = 1;
-                                    String? startDate, endDate;
+                                    String? startDate, endDate, deliverOnDate;
                                     bool endDateVisibilty = false;
                                     bool startDateVisibilty = false;
+                                    bool deliverOnVisibilty = false;
+                                    List<bool> isSelectedDay = List.filled(7, false, growable: false);
 
                                     return StatefulBuilder(
                                       builder: (context, setState) {
@@ -193,6 +172,8 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                           children: [
                                             Expanded(
                                               child: ListView(
+                                                physics: const BouncingScrollPhysics(),
+                                                shrinkWrap: true,
                                                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                                                 children: [
                                                   Dimensions.defaultPadding.height,
@@ -238,73 +219,142 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                                         textType: TextType.subtitle,
                                                         color: Palette.textColor,
                                                       ),
-                                                      const SizedBox.square(dimension: 10),
-                                                      PrimaryIconButton(
-                                                        svg: Assets.assetsIconsEditPencil,
-                                                        size: 22,
-                                                        onPressed: () {},
-                                                      ),
                                                     ],
                                                   ),
-                                                  const SizedBox.square(dimension: 8),
-                                                  PrimaryCalendarDatePicker(
-                                                    label: 'Select start date',
-                                                    title: startDate,
-                                                    isVisible: startDateVisibilty,
-                                                    initialCalendarMode: DatePickerMode.day,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(DateTime.now().year + 1),
-                                                    onPressed: () => setState(() {
-                                                      startDateVisibilty = !startDateVisibilty;
-                                                      endDateVisibilty = false;
-                                                    }),
-                                                    onDateChanged: (i) => setState(() {
-                                                      startDate = Utils.dateFormatDMY(i);
-                                                      startDateVisibilty = false;
-                                                    }),
-                                                  ),
-                                                  PrimaryCalendarDatePicker(
-                                                    label: 'Select end date',
-                                                    title: endDate,
-                                                    isVisible: endDateVisibilty,
-                                                    initialCalendarMode: DatePickerMode.day,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(DateTime.now().year + 1),
-                                                    onPressed: () => setState(() {
-                                                      endDateVisibilty = !endDateVisibilty;
-                                                      startDateVisibilty = false;
-                                                    }),
-                                                    onDateChanged: (i) => setState(() {
-                                                      endDate = Utils.dateFormatDMY(i);
-                                                      endDateVisibilty = false;
-                                                    }),
-                                                  ),
-                                                  const SizedBox.square(dimension: 6),
-                                                  Row(
-                                                    children: [
-                                                      TextView(
-                                                        'Quantity of items/day:',
-                                                        textType: TextType.subtitle,
-                                                        color: Palette.hintColor,
-                                                      ),
-                                                      const Spacer(),
-                                                      PrimaryCounter(
-                                                        onCounterChanged: (i) {
-                                                          setState(() {
-                                                            quantity = i;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  const SizedBox.square(dimension: 10),
+
+                                                  // True when delivery plan is not once
+                                                  if (!e.toLowerCase().contains('once'))
+                                                    PrimaryCalendarDatePicker(
+                                                      label: 'Select start date',
+                                                      title: startDate,
+                                                      isVisible: startDateVisibilty,
+                                                      initialCalendarMode: DatePickerMode.day,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime.now(),
+                                                      lastDate: DateTime(DateTime.now().year + 1),
+                                                      onPressed: () => setState(() {
+                                                        startDateVisibilty = !startDateVisibilty;
+                                                        endDateVisibilty = false;
+                                                      }),
+                                                      onDateChanged: (i) => setState(() {
+                                                        startDate = Utils.dateFormatDMY(i);
+                                                        startDateVisibilty = false;
+                                                      }),
+                                                    )
+                                                  else // True when delivery plan is once
+                                                    PrimaryCalendarDatePicker(
+                                                      label: 'Deliver on:',
+                                                      title: deliverOnDate,
+                                                      isVisible: deliverOnVisibilty,
+                                                      initialCalendarMode: DatePickerMode.day,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime.now(),
+                                                      lastDate: DateTime(DateTime.now().year + 1),
+                                                      onPressed: () => setState(() {
+                                                        deliverOnVisibilty = !deliverOnVisibilty;
+                                                      }),
+                                                      onDateChanged: (i) => setState(() {
+                                                        deliverOnDate = Utils.dateFormatDMY(i);
+                                                        deliverOnVisibilty = false;
+                                                      }),
+                                                    ),
+                                                  if (!e.toLowerCase().contains('once'))
+                                                    PrimaryCalendarDatePicker(
+                                                      label: 'Select end date',
+                                                      title: endDate,
+                                                      isVisible: endDateVisibilty,
+                                                      initialCalendarMode: DatePickerMode.day,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime.now(),
+                                                      lastDate: DateTime(DateTime.now().year + 1),
+                                                      onPressed: () => setState(() {
+                                                        endDateVisibilty = !endDateVisibilty;
+                                                        startDateVisibilty = false;
+                                                      }),
+                                                      onDateChanged: (i) => setState(() {
+                                                        endDate = Utils.dateFormatDMY(i);
+                                                        endDateVisibilty = false;
+                                                      }),
+                                                    ),
+                                                  5.0.height,
+                                                  // True when delivery plan is custom
+                                                  if (e.toLowerCase().contains('custom'))
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                      children: [
+                                                        5.0.height,
+                                                        TextView(
+                                                          'Select days:',
+                                                          textType: TextType.subtitle,
+                                                          color: Palette.hintColor,
+                                                        ),
+                                                        5.0.height,
+                                                        ListView.separated(
+                                                          shrinkWrap: true,
+                                                          physics: const NeverScrollableScrollPhysics(),
+                                                          itemCount: watch.customDayList.length,
+                                                          separatorBuilder: (context, index) => const Divider(height: 5),
+                                                          itemBuilder: (context, index) {
+                                                            final element = watch.customDayList[index];
+                                                            return Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: CupertinoButton(
+                                                                    onPressed: () => setState(() => isSelectedDay[index] = !isSelectedDay[index]),
+                                                                    minSize: 0,
+                                                                    padding: EdgeInsets.zero,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        PrimaryCheckbox(
+                                                                          value: isSelectedDay[index],
+                                                                          onChanged: (i) => setState(() => isSelectedDay[index] = i),
+                                                                        ),
+                                                                        10.0.width,
+                                                                        TextView(
+                                                                          element,
+                                                                          textType: TextType.titleStyled,
+                                                                          height: 2.2,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                PrimaryCounter(
+                                                                  isDisabled: !isSelectedDay[index],
+                                                                  onCounterChanged: (i) => setState(
+                                                                    () => quantity = i,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            );
+                                                          },
+                                                        ),
+                                                      ],
+                                                    )
+                                                  else // True when delivery plan is not custom
+                                                    Row(
+                                                      children: [
+                                                        TextView(
+                                                          'Quantity of items/day:',
+                                                          textType: TextType.subtitle,
+                                                          color: Palette.hintColor,
+                                                        ),
+                                                        const Spacer(),
+                                                        PrimaryCounter(
+                                                          // padding: const EdgeInsets.all(8),
+                                                          onCounterChanged: (i) => setState(() => quantity = i),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   const SizedBox(height: 20),
                                                 ],
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                              padding: const EdgeInsets.symmetric(horizontal: 20.0).copyWith(top: 10),
                                               child: Row(
                                                 children: [
                                                   TextView(

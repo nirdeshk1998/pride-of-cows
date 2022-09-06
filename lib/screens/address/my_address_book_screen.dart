@@ -124,7 +124,19 @@ class MyAddressBook extends ConsumerWidget {
                                     PrimaryIconButton(
                                       svg: Assets.assetsIconsDelete,
                                       color: Palette.lightIconColor,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Utils.showPrimaryDialog(
+                                          context,
+                                          headerTitle: 'Are you sure you want to delete it?',
+                                          direction: Axis.horizontal,
+                                          bTitle: 'Delete',
+                                          onDone: () async {
+                                            read.onDeleteAddressButton(element?.id).whenComplete(() {
+                                            ref.refresh(myAddressbookProvider);
+                                            });
+                                          },
+                                        );
+                                      },
                                       size: 20.0,
                                     ),
                                   ],

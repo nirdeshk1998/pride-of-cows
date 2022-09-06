@@ -100,10 +100,11 @@ class Utils {
     BuildContext context, {
     required final String headerTitle,
     final String? subheaderTitle,
-    final String? title,
-    required final Widget child,
-    final VoidCallback? onDone,
+    final String? bTitle,
+    final Widget? child,
+    final Future<void> Function()? onDone,
     final VoidCallback? onCancel,
+    final Axis? direction,
   }) {
     return showDialog<Widget>(
       context: context,
@@ -142,25 +143,37 @@ class Utils {
                               ],
                             ),
                             10.0.height,
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: Palette.surfaceColor,
-                            ),
+                            if (child != null)
+                              const Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: Palette.surfaceColor,
+                              ),
                             Dimensions.defaultPadding.height,
-                            child,
-                            30.0.height,
-                            PrimaryButton(
-                              title: title ?? 'done',
-                              onPressed: onDone,
-                              width: 130,
-                            ),
-                            Dimensions.defaultPadding.height,
-                            PrimaryButton(
-                              title: 'cancel',
-                              onPressed: onCancel ?? () => Utils.pop(context),
-                              width: 130,
-                              isFilled: false,
+                            if (child != null) child,
+                            if (child != null) 30.0.height,
+                            Flex(
+                              direction: direction ?? Axis.vertical,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PrimaryButton(
+                                  title: bTitle ?? 'done',
+                                  onPressed: () async{
+                                    Utils.pop(context);
+                                    await onDone?.call();
+                                  },
+                                  width: 130,
+                                ),
+                                Dimensions.defaultPadding.height,
+                                Dimensions.defaultPadding.width,
+                                PrimaryButton(
+                                  title: 'cancel',
+                                  onPressed: onCancel ?? () => Utils.pop(context),
+                                  width: 130,
+                                  isFilled: false,
+                                ),
+                              ],
                             ),
                           ],
                         ),

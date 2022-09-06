@@ -64,7 +64,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery plan',
-                  onDone: () {},
+                  onDone: () async {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -109,7 +109,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery date',
-                  onDone: () {},
+                  onDone: () async {},
                   child: PrimaryCalendarDatePicker(
                     isVisible: true,
                     initialDate: DateTime.now(),
@@ -130,7 +130,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery date',
-                  onDone: () {},
+                  onDone: () async {},
                   child: PrimaryCalendarDatePicker(
                     isVisible: true,
                     initialDate: DateTime.now(),

@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/network/dio_client.dart';
+import 'package:poc/network/models/available_pincode_model.dart';
+import 'package:poc/network/repository.dart';
 import 'package:poc/screens/search/search_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/base_provider.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
@@ -15,35 +19,52 @@ final appbarProvider = ChangeNotifierProvider<AppBarChangeProvider>((ref) {
 });
 
 class AppBarChangeProvider extends BaseChangeNotifier {
+  final ListDataRepository _listDataRepo = ListDataRepository();
+
+  String? _userId;
+  List<AvailablePincodeData>? _availablePincodeList;
+  AvailablePincodeData? _selectedValue;
+
+  List<AvailablePincodeData>? get availablePincodeList => _availablePincodeList;
+  AvailablePincodeData? get selectedValue => _selectedValue;
+
   @override
   Future<void> postCreateState() async {
-    //
+    await _gettingPrefs();
+    await _userCartRequest();
   }
 
-  // Future<void> _userCartRequest() async {
-  //   await _cartRepo.userCartRepo(_userCartReqModel).then(
-  //     (response) async {
-  //       final result = UserCartResModel.fromJson(response.data);
+  Future<void> _userCartRequest() async {
+    await _listDataRepo.availablePincodeRepo(_userId ?? '').then(
+      (response) async {
+        final result = AvailablePincodeResModel.fromJson(response.data);
+        debugPrint('result: $result');
 
-  //       if (response.statusCode == 200) {
-  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+        if (response.statusCode == 200) {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+          _availablePincodeList = result.data;
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+      },
+    ).onError(
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
+        showLoader(false);
 
-  //         _cartList = result.cartItems;
-  //         _totalPrice = result.totalPrice;
-  //         _totalItems = result.totalItems;
-  //       } else {
-  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-  //       }
-  //     },
-  //   ).onError(
-  //     (DioError error, stackTrace) {
-  //       debugPrint('error: ${error.type}');
-  //       showLoader(false);
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+      },
+    );
+  }
 
-  //       Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
-  //     },
-  //   );
-  // }
+  Future<void> _gettingPrefs() async {
+    _userId = await LocalStorage.getString(StorageField.userId);
+  }
+
+  void onSelected(AvailablePincodeData value) {
+    _selectedValue = value;
+    notifyListeners();
+  }
 }
 
 class PrimaryAppBar extends ConsumerWidget {
@@ -84,17 +105,31 @@ class PrimaryAppBar extends ConsumerWidget {
                   const SizedBox.square(dimension: 20),
                   SvgPicture.asset(Assets.assetsIconsPin),
                   const SizedBox.square(dimension: 3),
-                  Theme(
-                    data: ThemeData(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<int>(
-                        value: 0,
-                        icon: Padding(
+                  PopupMenuButton<AvailablePincodeData>(
+                    offset: const Offset(0,20),
+                    child: Row(
+                      children: [
+                        Text(
+                          watch.selectedValue?.cityName ?? 'N/A',
+                          style: TextStyle(
+                            color: Palette.primaryColor,
+                            fontFamily: GoogleFonts.lato().fontFamily,
+                            fontSize: 14,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        Text(
+                          ' (${watch.selectedValue?.pincode ?? 'N/A'})',
+                          style: TextStyle(
+                            color: const Color(0xFF658395),
+                            fontFamily: GoogleFonts.lato().fontFamily,
+                            fontSize: 14,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        Padding(
                           padding: const EdgeInsets.only(left: 6.0),
                           child: SvgPicture.asset(
                             Assets.assetsIconsChevronDown,
@@ -103,41 +138,115 @@ class PrimaryAppBar extends ConsumerWidget {
                             width: 12,
                           ),
                         ),
-                        items: [
-                          DropdownMenuItem(
-                            value: 0,
-                            child: RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Mumbai ',
-                                    style: TextStyle(
-                                      color: Palette.primaryColor,
-                                      fontFamily: GoogleFonts.lato().fontFamily,
-                                      fontSize: 14,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '(654321)',
-                                    style: TextStyle(
-                                      color: const Color(0xFF658395),
-                                      fontFamily: GoogleFonts.lato().fontFamily,
-                                      fontSize: 14,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                        onChanged: (i) {},
-                      ),
+                      ],
+                    ),
+                    onSelected: (value) => read.onSelected(value),
+                    itemBuilder: (context) => List.generate(
+                      watch.availablePincodeList?.length ?? 0,
+                      (index) {
+                        final element = watch.availablePincodeList?[index];
+                        return PopupMenuItem(
+                          value: element,
+                          child: Text('${element?.cityName} (${element?.pincode})'),
+                        );
+                      },
                     ),
                   ),
+                  // ButtonTheme(
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: Dimensions.radius20,
+                  //   ),
+
+                  //   // data: ThemeData(
+                  //   //   splashColor: Colors.transparent,
+                  //   //   // highlightColor: Colors.transparent,
+                  //   //   hoverColor: Colors.transparent,
+                  //   //   splashFactory: NoSplash.splashFactory,
+
+                  //   // ),
+                  //   child: DropdownButtonHideUnderline(
+                  //     child: DropdownButton<String>(
+                  //       // value: 0,
+                  //       value: watch.selectedValue,
+                  //       isDense: true,
+                  //       isExpanded: false,
+                  //       alignment: Alignment.centerLeft,
+                  //       // selectedItemBuilder: (context) => [
+                  //       //   Text(
+                  //       //     watch.selectedValue ?? 'N/A',
+                  //       //     style: TextStyle(
+                  //       //       color: Palette.primaryColor,
+                  //       //       fontFamily: GoogleFonts.lato().fontFamily,
+                  //       //       fontSize: 14,
+                  //       //       letterSpacing: 0,
+                  //       //       fontWeight: FontWeight.normal,
+                  //       //     ),
+                  //       //   ),
+                  //       //   Text(
+                  //       //     ' (${watch.selectedValue ?? 'N/A'})',
+                  //       //     style: TextStyle(
+                  //       //       color: const Color(0xFF658395),
+                  //       //       fontFamily: GoogleFonts.lato().fontFamily,
+                  //       //       fontSize: 14,
+                  //       //       letterSpacing: 0,
+                  //       //       fontWeight: FontWeight.normal,
+                  //       //     ),
+                  //       //   ),
+                  //       // ],
+                  //       hint: Text(
+                  //         'Select Pincode',
+                  //         style: TextStyle(
+                  //           color: Palette.primaryColor,
+                  //           fontFamily: GoogleFonts.lato().fontFamily,
+                  //           fontSize: 14,
+                  //           letterSpacing: 0,
+                  //           fontWeight: FontWeight.normal,
+                  //         ),
+                  //       ),
+                  //       icon: Padding(
+                  //         padding: const EdgeInsets.only(left: 6.0),
+                  //         child: SvgPicture.asset(
+                  //           Assets.assetsIconsChevronDown,
+                  //           color: const Color(0xFF9DBACA),
+                  //           height: 6,
+                  //           width: 12,
+                  //         ),
+                  //       ),
+                  //       onChanged: (i) => read.onSelected(i),
+
+                  //       items: watch.availablePincodeList
+                  //           ?.map((e) => DropdownMenuItem(
+                  //                 value: e.id,
+                  //                 child: Row(
+                  //                   mainAxisSize: MainAxisSize.min,
+                  //                   children: [
+                  //                     Text(
+                  //                       e.cityName ?? 'N/A',
+                  //                       style: TextStyle(
+                  //                         color: Palette.primaryColor,
+                  //                         fontFamily: GoogleFonts.lato().fontFamily,
+                  //                         fontSize: 14,
+                  //                         letterSpacing: 0,
+                  //                         fontWeight: FontWeight.normal,
+                  //                       ),
+                  //                     ),
+                  //                     Text(
+                  //                       ' (${e.pincode ?? 'N/A'})',
+                  //                       style: TextStyle(
+                  //                         color: const Color(0xFF658395),
+                  //                         fontFamily: GoogleFonts.lato().fontFamily,
+                  //                         fontSize: 14,
+                  //                         letterSpacing: 0,
+                  //                         fontWeight: FontWeight.normal,
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ))
+                  //           .toList(),
+                  //     ),
+                  //   ),
+                  // ),
                   const Spacer(),
                   IconButton(
                     onPressed: () {
@@ -262,7 +371,7 @@ class PrimarySearchAppBar extends StatelessWidget {
                   onTap: () {
                     controller?.clear();
                   },
-                  child: TextView(
+                  child: const TextView(
                     "Clear",
                     color: Palette.hintColor,
                   ),
@@ -343,7 +452,7 @@ class NotificationAppBar extends StatelessWidget {
 
   final VoidCallback? sOnPressed;
   final String? sIcon;
-  final Color? color;
+  final Color? color; 
   final String? sIcon2;
   final String? sicon3;
 

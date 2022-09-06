@@ -26,4 +26,12 @@ class AddressBookRepository {
       throw Exception(e);
     }
   }
+
+  Future<Response> deleteAddressRepo(String? addressId) async {
+    try {
+      return await BaseDio.getInstance().post(Endpoint.deleteAddress, data: {FieldConstant.id: addressId});
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

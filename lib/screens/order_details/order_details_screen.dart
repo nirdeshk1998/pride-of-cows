@@ -281,8 +281,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                                   _orderStatusWidget(
                                     icon: orderStatus == OrderStatus.processing ? Assets.assetsIconsProcessing : null,
                                     title: 'Processing',
-                                    color:
-                                        orderStatus == OrderStatus.processing ? Palette.orangeIconColor : Palette.lightTextColor,
+                                    color: orderStatus == OrderStatus.processing ? Palette.orangeIconColor : Palette.lightTextColor,
                                   ),
                                   5.0.width,
                                   const SizedBox(
@@ -399,8 +398,8 @@ class OrderDetailsScreen extends ConsumerWidget {
                           onPressed: () => Utils.showPrimaryDialog(
                             context,
                             headerTitle: 'Your Pride of Cows Experience',
-                            title: 'Submit',
-                            onDone: () {
+                            bTitle: 'Submit',
+                            onDone: () async {
                               Utils.pushAndRemoveUntil(
                                 context,
                                 const OrderStatusScreen(status: EditOrderStatus.rated),

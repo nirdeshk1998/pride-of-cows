@@ -30,6 +30,9 @@ class Endpoint {
   static const String applyCoupon = '/promocode/applycoupon';
   static const String removeCoupon = '/promocode/removecoupon';
 
+  //My Profile Update
+  static const String profileUpdate = 'customer/profileupdate';
+
   // Products
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
@@ -44,4 +47,5 @@ class Endpoint {
   static const String addressBookList = '/customer/addressbooklist';
   static const String saveAddress = '/customer/saveaddress';
   static const String updateAddress = '/customer/updateaddress';
+  static const String deleteAddress = '/customer/deleteaddress';
 }

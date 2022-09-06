@@ -60,6 +60,7 @@ class ProductDetailsData {
   int? finalprice;
   int? minimumQuantity;
   int? isMinimum;
+  List<Gallery>? gallery;
 
   ProductDetailsData(
       {this.id,
@@ -81,7 +82,8 @@ class ProductDetailsData {
       this.discountprice,
       this.finalprice,
       this.minimumQuantity,
-      this.isMinimum});
+      this.isMinimum,
+      this.gallery});
 
   ProductDetailsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -104,6 +106,12 @@ class ProductDetailsData {
     finalprice = json['finalprice'];
     minimumQuantity = json['minimum_quantity'];
     isMinimum = json['is_minimum'];
+    if (json['gallery'] != null) {
+      gallery = <Gallery>[];
+      json['gallery'].forEach((v) {
+        gallery!.add(Gallery.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -128,6 +136,46 @@ class ProductDetailsData {
     data['finalprice'] = finalprice;
     data['minimum_quantity'] = minimumQuantity;
     data['is_minimum'] = isMinimum;
+    if (gallery != null) {
+      data['gallery'] = gallery!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Gallery {
+  String? productgalleryId;
+  String? productId;
+  String? image;
+  String? sortOrder;
+  String? status;
+  String? ondate;
+  String? updatedDate;
+  String? imagePath;
+
+  Gallery({this.productgalleryId, this.productId, this.image, this.sortOrder, this.status, this.ondate, this.updatedDate, this.imagePath,});
+
+  Gallery.fromJson(Map<String, dynamic> json) {
+    productgalleryId = json['productgallery_id'];
+    productId = json['product_id'];
+    image = json['image'];
+    sortOrder = json['sort_order'];
+    status = json['status'];
+    ondate = json['ondate'];
+    updatedDate = json['updated_date'];
+    imagePath = json['imagePath'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productgallery_id'] = productgalleryId;
+    data['product_id'] = productId;
+    data['image'] = image;
+    data['sort_order'] = sortOrder;
+    data['status'] = status;
+    data['ondate'] = ondate;
+    data['updated_date'] = updatedDate;
+    data['imagePath'] = imagePath;
     return data;
   }
 }

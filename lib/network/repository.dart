@@ -26,9 +26,9 @@ class ListDataRepository {
     }
   }
 
-  Future<Response> appbarRepo(int pincode) async {
+  Future<Response> availablePincodeRepo(String userId) async {
     try {
-      return await BaseDio.getInstance().post(Endpoint.pincodeList, data: {FieldConstant.pincode: pincode});
+      return await BaseDio.getInstance().post(Endpoint.availablePincodeList, data: {FieldConstant.userID: userId});
     } catch (e) {
       throw Exception(e);
     }

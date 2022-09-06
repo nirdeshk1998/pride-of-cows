@@ -684,7 +684,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const SizedBox.square(
                                   dimension: 100,
-                                  child: const ImageView(
+                                  child: ImageView(
                                     'https://i.pinimg.com/564x/6f/e5/00/6fe50068243ce3b57b127d8aff26a3e1.jpg',
                                   ),
                                 ),

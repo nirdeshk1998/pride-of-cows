@@ -215,7 +215,7 @@ class CreateUpdateAddressScreen extends ConsumerWidget {
                       Row(
                         children: [
                           PrimaryCheckbox(
-                            initialValue: watch.isDefaultAddress,
+                            value: watch.isDefaultAddress,
                             onChanged: read.onDefaultAddressChanged,
                           ),
                           5.0.width,
