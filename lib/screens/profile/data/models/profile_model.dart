@@ -1,5 +1,5 @@
 class ProfileUpdateReqModel{
-  String? userId;
+  int? userId;
   String? firstName;
   String? lastName;
   String? email;
@@ -19,7 +19,7 @@ class ProfileUpdateReqModel{
   });
 Map<String, dynamic> toJson(){
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['UserId'] = userId;
+  data['UserID'] = userId;
   data['firstname'] = firstName;
   data['lastname'] = lastName;
   data["mobileno"]=mobileNo;
