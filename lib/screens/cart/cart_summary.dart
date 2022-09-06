@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/cart/cart_screen.dart';
-import 'package:poc/screens/cart/offers.dart';
+import 'package:poc/screens/offers/offers.dart';
 import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/styles/colors.dart';
@@ -217,8 +217,9 @@ class CartSummary extends ConsumerWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        rProvider.appliedOffer == ""
-                            ? Row(
+                        // rProvider.appliedOffer == ""
+                        //     ?
+                      Row(
                                 children: [
                                   Container(
                                     child: Row(
@@ -248,45 +249,45 @@ class CartSummary extends ConsumerWidget {
                                   ),
                                 ],
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(Assets.assetsIconsGreenTick),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        TextView(
-                                          "${rProvider.appliedOffer} applied!",
-                                          size: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        PrimaryTextButton(
-                                          title: "(Remove)",
-                                          isUpperCase: false,
-                                          showUnderline: true,
-                                          onPressed: () {
-                                            rProvider.onRemoveOffer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: const [
-                                        TextView("-\u{20B9}${"350"}"),
-                                      ],
-                                    ),
-                                  ),
-                                ],
                               ),
-                        const SizedBox(
+                            // : Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Container(
+                            //         child: Row(
+                            //           children: [
+                            //             SvgPicture.asset(Assets.assetsIconsGreenTick),
+                            //             const SizedBox(
+                            //               width: 5,
+                            //             ),
+                            //             TextView(
+                            //               "${rProvider.appliedOffer} applied!",
+                            //               size: 16,
+                            //             ),
+                            //             const SizedBox(
+                            //               width: 5,
+                            //             ),
+                            //             PrimaryTextButton(
+                            //               title: "(Remove)",
+                            //               isUpperCase: false,
+                            //               showUnderline: true,
+                            //               onPressed: () {
+                            //                 rProvider.onRemoveOffer();
+                            //               },
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //       Container(
+                            //         child: Row(
+                            //           children: const [
+                            //             TextView("-\u{20B9}${"350"}"),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                         SizedBox(
                           height: 10,
                         ),
                       ],

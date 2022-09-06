@@ -57,7 +57,6 @@ class profileChangeProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> initState(BuildContext context) async {
-    print(context);
     await _gettingPrefs(context);
     await _getMyProfileInfo(context);
   }
@@ -165,6 +164,7 @@ class profileChangeProvider with ChangeNotifier {
     phNo = await LocalStorage.getString(StorageField.mobileNumber);
     gender = await LocalStorage.getString(StorageField.gender);
     emailId = await LocalStorage.getString(StorageField.email);
+    dob=await LocalStorage.getString(StorageField.dob);
     notifyListeners();
   }
 
@@ -175,12 +175,15 @@ class profileChangeProvider with ChangeNotifier {
     _eMailController.text = emailId.toString();
     String caps(String s)=>s[0].toUpperCase()+s.substring(1);
     gender=caps(gender.toString());
+    if(dob!=null){
+      _dobController.text=dob.toString();
+    }
     notifyListeners();
 
   }
 
   ProfileUpdateReqModel get _profileUpdateList => ProfileUpdateReqModel(
-        userId: userId,
+        userId: int.parse(userId.toString()),
         firstName: _fNameController.text,
         lastName: _lNameController.text,
         mobileNo: _phoneNoController.text,
