@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/network/dio_client.dart';
-import 'package:poc/screens/cart/cart_summary.dart';
+import 'package:poc/screens/cart/cart_summary_screen.dart';
 import 'package:poc/screens/cart/data/cart_repository.dart';
 import 'package:poc/screens/cart/data/models/get_cart_model.dart';
 import 'package:poc/screens/cart/data/models/remove_from_cart_model.dart';
@@ -114,7 +114,7 @@ class CartChangeProvider extends BaseChangeNotifier {
 
   void onApplyOffer(String value, context) {
     appliedOffer = value;
-    Utils.push(context, const CartSummary());
+    Utils.push(context, const CartSummaryScreen());
     notifyListeners();
   }
 
