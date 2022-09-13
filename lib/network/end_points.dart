@@ -37,8 +37,11 @@ class Endpoint {
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
 
-  //My Profile Update
-  static const String profileUpdate = 'customer/profileupdate';
+  // Cart
+  static const String addToCart = '/cart/addtocart';
+  static const String removeFromCart = '/cart/removecart';
+  static const String updateProductQuantity = '/customer/productdetail';
+  static const String userCartList = '/cart/items';
 
 // Gift Card
   static const String addGiftCard = "customer/addgiftcard";
