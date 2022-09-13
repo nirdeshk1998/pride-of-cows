@@ -14,12 +14,23 @@ import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class GiftCardScreen extends ConsumerWidget {
+class GiftCardScreen extends ConsumerStatefulWidget {
   const GiftCardScreen({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<GiftCardScreen> createState() => _GiftCardScreenState();
+}
+class _GiftCardScreenState extends ConsumerState<GiftCardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(giftCardProvider).initState(context);
+    });
 
-  Widget build(BuildContext context, WidgetRef ref) {
+  }
+  @override
+  Widget build(BuildContext context) {
     final rProvider = ref.read(giftCardProvider);
     final wProvider = ref.watch(giftCardProvider);
     return Scaffold(
@@ -60,14 +71,10 @@ class GiftCardScreen extends ConsumerWidget {
                     3,
                     (index) {
                       return PrimaryOutlineButton(
-                        title: [
-                          'e-gift card',
-                          'physical gift card',
-                          'gift a subscription',
-                        ][index],
+                        title: wProvider.giftTypeList[index],
                         letterSpacing: 1,
                         isFilled: rProvider.selectedGiftCard == index,
-                        onPressed: () => rProvider.onGiftCardChangeFun(index),
+                        onPressed: () => rProvider.onGiftCardChangeFun(index,wProvider.giftTypeList[index]),
                       );
                     },
                   ),
@@ -98,6 +105,7 @@ class GiftCardScreen extends ConsumerWidget {
       ),
     );
   }
+
 Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
   final rProvider = ref.read(giftCardProvider);
   final wProvider = ref.watch(giftCardProvider);
@@ -127,16 +135,12 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
             bool isSelected = index == 0;
 
             return PrimaryOutlineButton(
-              title: [
-                '₹500',
-                '₹1000',
-                '₹2000',
-                '₹2500',
-                '₹5000',
-              ][index],
+              title: wProvider.giftAmountList[index],
               letterSpacing: 1,
-              isFilled: isSelected,
-              onPressed: () {},
+              isFilled: wProvider.giftAmpuntSelectedIndex!=null&&wProvider.giftAmpuntSelectedIndex==index?true:false,
+              onPressed: () {
+                rProvider.onSelectAmount(index,wProvider.giftAmountList[index]);
+              },
             );
           },
         ),
@@ -151,11 +155,13 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
       5.0.height,
       PrimaryTextFormField(
         onChanged: rProvider.onChangeRNameFun,
+        controller: wProvider.recipientNameController,
         label: 'Recipient full name*',
       ),
       Dimensions.defaultPadding.height,
        PhoneNumberFormField(
         onChanged: rProvider.onChangeRPhNoFun,
+        controller: wProvider.recipientPhController,
         label: 'Recipient  phone number*',
       ),
       Dimensions.defaultPadding.height,
@@ -173,6 +179,7 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
       // Dimensions.defaultPadding.height,
        PrimaryTextFormField(
          onChanged: rProvider.onChangeREmailFun,
+        controller: wProvider.recipientEmailController,
         label: 'Recipient email ID*',
       ),
       30.0.height,
@@ -185,16 +192,19 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
       5.0.height,
        PrimaryTextFormField(
         onChanged: rProvider.onChangeSNameFun,
+         controller: wProvider.sendersNameController,
         label: 'Sender full name*',
       ),
       Dimensions.defaultPadding.height,
        PhoneNumberFormField(
          onChanged: rProvider.onChangeSPhNoFun,
         label: 'Sender phone number*',
+         controller: wProvider.sendersPhController,
       ),
       Dimensions.defaultPadding.height,
        PrimaryTextFormField(
          onChanged: rProvider.onChangeSEmailFun,
+         controller: wProvider.sendersEmailIdController,
         label: 'Sender email ID*',
       ),
       Dimensions.defaultPadding.height,
@@ -202,7 +212,9 @@ Widget _eGiftCardPage (BuildContext context, WidgetRef ref ) {
       30.0.height,
       wProvider.saveButtonState? Center(
         child: PrimaryButton(
-          onPressed: (){},
+          onPressed: (){
+            rProvider.addGiftCard(context);
+          },
           title: 'add to cart',
         ),
       ):Center(

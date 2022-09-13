@@ -19,7 +19,7 @@ class Endpoint {
   static const String pincodeList = '/customer/pincodelist';
   static const String availablePincodeList = '/customer/availpincodelist';
 
-  // Home
+  // Category
   static const String categoryList = '/customer/categorylist';
 
   // Category
@@ -37,11 +37,12 @@ class Endpoint {
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
 
-  // Cart
-  static const String addToCart = '/cart/addtocart';
-  static const String removeFromCart = '/cart/removecart';
-  static const String updateProductQuantity = '/customer/productdetail';
-  static const String userCartList = '/cart/items';
+  //My Profile Update
+  static const String profileUpdate = 'customer/profileupdate';
+
+// Gift Card
+  static const String addGiftCard = "customer/addgiftcard";
+  static const String editGiftCard = "customer/editgiftcard";
 
   // Address Book
   static const String addressBookList = '/customer/addressbooklist';
