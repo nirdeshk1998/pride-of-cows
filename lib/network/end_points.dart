@@ -32,6 +32,10 @@ class Endpoint {
   //My Profile Update
 static const String profileUpdate='customer/profileupdate';
 
+// Gift Card
+static const String addGiftCard="customer/addgiftcard";
+static const String editGiftCard="customer/editgiftcard";
+
 
 
 

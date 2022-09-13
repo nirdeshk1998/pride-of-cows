@@ -17,16 +17,13 @@ class CartChangeProvider extends ChangeNotifier {
 
   bool showItems=false;
 
-
-
   String? userId;
-
-
 
   // Future<void> _gettingPrefs(context)async{
   //   userId=await LocalStorage.getString(StorageField.userId);
   //   notifyListeners();
   // }
+
 
 
 
