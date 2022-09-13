@@ -22,7 +22,7 @@ class Notifications extends ConsumerWidget {
         child: Container(
           child: Column(
             children: [
-              NotificationAppBar(
+              const NotificationAppBar(
                 sIcon: Assets.assetsIconsSearch,
                 sIcon2: Assets.assetsIconsCalendar,
                 sicon3: Assets.assetsIconsBellDot,
@@ -39,7 +39,7 @@ class Notifications extends ConsumerWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsSettings()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsSettings()));
                       },
                       child: SvgPicture.asset(Assets.assetsIconsSettings),
                     ),
@@ -47,58 +47,54 @@ class Notifications extends ConsumerWidget {
                 ),
               ),
               ListView.builder(
-                  physics: ScrollPhysics(),
+                  physics: const ScrollPhysics(),
                   itemCount: 10,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     return Container(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Card(
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      TextView(
-                                        "Order Delivered",
-                                        color: Palette.textColor,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Stack(
-                                        children: [
-                                          SvgPicture.asset(Assets.assetsIconsSemiRounded),
-                                          Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    const TextView(
+                                      "Order Delivered",
+                                      color: Palette.textColor,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Stack(
+                                      children: [
+                                        SvgPicture.asset(Assets.assetsIconsSemiRounded),
+                                        Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick)),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      TextView("Now", size: 16, color: Palette.hintColor),
-                                    ],
-                                  ),
+                                Row(
+                                  children: const [
+                                    TextView("Now", size: 16, color: Palette.hintColor),
+                                  ],
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               children: [
                                 Container(
                                   child: Row(
-                                    children: [
+                                    children: const [
                                       TextView(
                                         "Your Order",
                                         color: Palette.hintColor,
@@ -115,7 +111,7 @@ class Notifications extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],

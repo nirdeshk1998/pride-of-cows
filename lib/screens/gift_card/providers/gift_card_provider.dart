@@ -33,7 +33,7 @@ class GiftCardChangeProvider extends ChangeNotifier {
   }
 
   void onChangeRNameFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       rName = false;
     } else {
       rName = true;
@@ -53,7 +53,7 @@ class GiftCardChangeProvider extends ChangeNotifier {
   }
 
   void onChangeREmailFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       rEmailId = false;
     } else {
       rEmailId = true;
@@ -63,7 +63,7 @@ class GiftCardChangeProvider extends ChangeNotifier {
   }
 
   void onChangeSNameFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       sName = false;
     } else {
       sName = true;
@@ -83,7 +83,7 @@ class GiftCardChangeProvider extends ChangeNotifier {
   }
 
   void onChangeSEmailFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       sEmailId = false;
     } else {
       sEmailId = true;

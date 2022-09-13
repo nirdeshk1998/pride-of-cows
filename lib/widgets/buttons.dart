@@ -53,7 +53,7 @@ class PrimaryButton extends StatelessWidget {
   final bool? isFilled;
   final bool? isRounded;
   final EdgeInsets? padding;
-  final Color? strokeColor;
+  final Color strokeColor, color;
 
   const PrimaryButton({
     Key? key,
@@ -67,7 +67,8 @@ class PrimaryButton extends StatelessWidget {
     this.isRounded,
     this.padding,
     this.height,
-    this.strokeColor,
+    this.strokeColor = Palette.primaryColor,
+    this.color = Palette.primaryColor,
   }) : super(key: key);
 
   @override
@@ -78,14 +79,14 @@ class PrimaryButton extends StatelessWidget {
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))
           : StadiumBorder(
               side: BorderSide(
-                color: isFilled == false ? strokeColor ?? Palette.primaryColor : Palette.onPrimaryColor,
+                color: isFilled == false ? strokeColor : Palette.onPrimaryColor,
                 width: isFilled == false ? 1 : 0,
               ),
             ),
       elevation: 0,
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 40),
       height: height ?? 50,
-      color: isFilled == false ? null : Palette.primaryColor,
+      color: isFilled == false ? null : color,
       textColor: isFilled == false ? Palette.primaryColor : Palette.onPrimaryColor,
       disabledColor: Palette.disabledColor,
       disabledTextColor: Palette.onDisabledColor,
@@ -163,7 +164,7 @@ class PrimaryTextButton extends StatelessWidget {
   final String title;
   final bool? isUpperCase, showUnderline;
   final Color? color;
-  final double? size, height;
+  final double? size, height, letterSpacing;
   final FontWeight? weight;
   final EdgeInsets? padding;
 
@@ -178,6 +179,7 @@ class PrimaryTextButton extends StatelessWidget {
     this.weight,
     this.padding,
     this.height,
+    this.letterSpacing,
   }) : super(key: key);
 
   @override
@@ -190,6 +192,7 @@ class PrimaryTextButton extends StatelessWidget {
         isUpperCase == false ? title : title.toUpperCase(),
         color: color ?? const Color(0xff193b61),
         size: size,
+        letterSpacing: letterSpacing,
         height: height,
         decoration: showUnderline == true ? TextDecoration.underline : null,
         textType: TextType.primaryTextButton,
@@ -247,7 +250,7 @@ class _ToogleButtonState extends State<ToogleButton> {
       decoration: BoxDecoration(
         border: Border.all(color: widget.toggleBorderColor),
         color: widget.toggleBackgroundColor,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(50.0),
         ),
       ),
@@ -255,13 +258,13 @@ class _ToogleButtonState extends State<ToogleButton> {
         children: [
           AnimatedAlign(
             alignment: Alignment(_toggleXAlign, 0),
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             child: Container(
               width: widget.width * 0.5,
               height: widget.height,
               decoration: BoxDecoration(
                 color: widget.toggleColor,
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(50.0),
                 ),
               ),
@@ -277,14 +280,14 @@ class _ToogleButtonState extends State<ToogleButton> {
               widget.onRightToggleActive();
             },
             child: Align(
-              alignment: Alignment(-1, 0),
+              alignment: const Alignment(-1, 0),
               child: Container(
                 width: widget.width * 0.5,
                 color: Colors.transparent,
                 alignment: Alignment.center,
                 child: Text(
                   widget.leftDescription,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
                 ),
               ),
             ),
@@ -300,14 +303,14 @@ class _ToogleButtonState extends State<ToogleButton> {
               widget.onLeftToggleActive();
             },
             child: Align(
-              alignment: Alignment(1, 0),
+              alignment: const Alignment(1, 0),
               child: Container(
                 width: widget.width * 0.5,
                 color: Colors.transparent,
                 alignment: Alignment.center,
                 child: Text(
                   widget.rightDescription,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xff193B61)),
                 ),
               ),
             ),

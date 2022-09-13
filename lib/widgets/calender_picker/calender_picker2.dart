@@ -598,9 +598,11 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
                     textStyle = widget.markedDateCustomTextStyle;
                   }
                   bool isSelectable = true;
-                  if (now.millisecondsSinceEpoch < minDate.millisecondsSinceEpoch)
+                  if (now.millisecondsSinceEpoch < minDate.millisecondsSinceEpoch) {
                     isSelectable = false;
-                  else if (now.millisecondsSinceEpoch > maxDate.millisecondsSinceEpoch) isSelectable = false;
+                  } else if (now.millisecondsSinceEpoch > maxDate.millisecondsSinceEpoch) {
+                    isSelectable = false;
+                  }
                   return renderDay(
                       isSelectable, index, isSelectedDay, isToday, isPrevMonthDay, textStyle, defaultTextStyle, isNextMonthDay, isThisMonthDay, now);
                 }),
@@ -681,9 +683,11 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
                       return Container();
                     }
                     bool isSelectable = true;
-                    if (now.millisecondsSinceEpoch < minDate.millisecondsSinceEpoch)
+                    if (now.millisecondsSinceEpoch < minDate.millisecondsSinceEpoch) {
                       isSelectable = false;
-                    else if (now.millisecondsSinceEpoch > maxDate.millisecondsSinceEpoch) isSelectable = false;
+                    } else if (now.millisecondsSinceEpoch > maxDate.millisecondsSinceEpoch) {
+                      isSelectable = false;
+                    }
                     return renderDay(
                         isSelectable, index, isSelectedDay, isToday, isPrevMonthDay, textStyle, defaultTextStyle, isNextMonthDay, isThisMonthDay, now);
                   }),
@@ -695,7 +699,7 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
   }
 
   List<DateTime> _getDaysInWeek([DateTime? selectedDate]) {
-    if (selectedDate == null) selectedDate = new DateTime.now();
+    selectedDate ??= new DateTime.now();
 
     var firstDayOfCurrentWeek = _firstDayOfWeek(selectedDate);
     var lastDayOfCurrentWeek = _lastDayOfWeek(selectedDate);
@@ -705,17 +709,17 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
 
   DateTime _firstDayOfWeek(DateTime date) {
     var day = _createUTCMiddayDateTime(date);
-    return day.subtract(new Duration(days: date.weekday % 7));
+    return day.subtract(Duration(days: date.weekday % 7));
   }
 
   DateTime _lastDayOfWeek(DateTime date) {
     var day = _createUTCMiddayDateTime(date);
-    return day.add(new Duration(days: 7 - day.weekday % 7));
+    return day.add(Duration(days: 7 - day.weekday % 7));
   }
 
   DateTime _createUTCMiddayDateTime(DateTime date) {
     // Magic const: 12 is to maintain compatibility with date_utils
-    return new DateTime.utc(date.year, date.month, date.day, 12, 0, 0);
+    return DateTime.utc(date.year, date.month, date.day, 12, 0, 0);
   }
 
   Iterable<DateTime> _daysInRange(DateTime start, DateTime end) {
@@ -727,7 +731,7 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
       var timeZoneDiff = d.timeZoneOffset - offset;
       if (timeZoneDiff.inSeconds != 0) {
         offset = d.timeZoneOffset;
-        d = d.subtract(new Duration(seconds: timeZoneDiff.inSeconds));
+        d = d.subtract(Duration(seconds: timeZoneDiff.inSeconds));
       }
       return d;
     });
@@ -747,7 +751,7 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
     widget.onDayPressed?.call(picked, widget.markedDatesMap?.getEvents(picked) ?? const []);
   }
 
-  Future<Null> _selectDateFromPicker() async {
+  Future<void> _selectDateFromPicker() async {
     DateTime? selected = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -768,17 +772,17 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
     /// Setup default calendar format
     List<DateTime> date = [];
     int currentDateIndex = 0;
-    for (int _cnt = 0; 0 >= DateTime(minDate.year, minDate.month + _cnt).difference(DateTime(maxDate.year, maxDate.month)).inDays; _cnt++) {
-      date.add(DateTime(minDate.year, minDate.month + _cnt, 1));
+    for (int cnt = 0; 0 >= DateTime(minDate.year, minDate.month + cnt).difference(DateTime(maxDate.year, maxDate.month)).inDays; cnt++) {
+      date.add(DateTime(minDate.year, minDate.month + cnt, 1));
       if (0 == date.last.difference(DateTime(_targetDate.year, _targetDate.month)).inDays) {
-        currentDateIndex = _cnt;
+        currentDateIndex = cnt;
       }
     }
 
     /// Setup week-only format
     List<List<DateTime>> week = [];
-    for (int _cnt = 0; 0 >= minDate.add(Duration(days: 7 * _cnt)).difference(maxDate.add(const Duration(days: 7))).inDays; _cnt++) {
-      week.add(_getDaysInWeek(minDate.add(new Duration(days: 7 * _cnt))));
+    for (int cnt = 0; 0 >= minDate.add(Duration(days: 7 * cnt)).difference(maxDate.add(const Duration(days: 7))).inDays; cnt++) {
+      week.add(_getDaysInWeek(minDate.add(Duration(days: 7 * cnt))));
     }
 
     _startWeekday = date[currentDateIndex].weekday - firstDayOfWeek;
@@ -866,14 +870,14 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
       int eventIndex = 0;
       double offset = 0.0;
       double padding = markedDateIconMargin;
-      markedEvents.forEach((T event) {
+      for (var event in markedEvents) {
         if (markedDateShowIcon) {
           if (tmp.isNotEmpty && tmp.length < markedDateIconMaxShown) {
             offset += markedDateIconOffset;
           }
           if (tmp.length < markedDateIconMaxShown && markedDateIconBuilder != null) {
             tmp.add(Center(
-                child: new Container(
+                child: Container(
               padding: EdgeInsets.only(
                 top: padding + offset,
                 left: padding + offset,
@@ -937,7 +941,7 @@ class CalendarState<T extends EventInterface> extends State<PrimaryCalendar<T>> 
         }
 
         eventIndex++;
-      });
+      }
       return tmp;
     }
     return [];

@@ -17,7 +17,6 @@ import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/primary_dropdown_form_field.dart';
 import 'package:poc/widgets/text_view.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class MyProfile extends ConsumerStatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -133,7 +132,7 @@ class _MyProfileState extends ConsumerState<MyProfile> {
                     PrimaryDropdownFormField(
                       value:rProvider.gender,
                       onChanged: rProvider.onChangeGenderFun,
-                      list: ["Male", "Female","Others"],
+                      list: const ["Male", "Female","Others"],
                       label: 'Gender*',
 
                     ),

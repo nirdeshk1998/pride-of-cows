@@ -13,7 +13,6 @@ class SplashChangeProvider with ChangeNotifier {
   Future<void> splashTimer(context) async {
     await Future.delayed(const Duration(seconds: 3), () async {
       final tok = await LocalStorage.getString(StorageField.token);
-        print(tok);
       Utils.pushReplacement(
         context,
         (tok == null || tok.isEmpty) ? const OnBoardingScreen() : const MainScreen(),

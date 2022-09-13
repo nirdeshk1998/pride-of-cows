@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final addressInformationProvider= ChangeNotifierProvider.autoDispose<addressInformationChange>((ref)=>addressInformationChange());
+final addressInformationProvider= ChangeNotifierProvider.autoDispose<AddressInformationChange>((ref)=>AddressInformationChange());
 
-class addressInformationChange extends ChangeNotifier{
+class AddressInformationChange extends ChangeNotifier{
   bool delInGroupVal=true;
   bool addInGroupVal=true;
   bool doorDelivery=true;
@@ -12,7 +12,6 @@ class addressInformationChange extends ChangeNotifier{
   bool ringBell=true;
   bool notRingBell=false;
   void onChangeDoorDeliveryFun(bool ? value){
-    print(value);
     doorDelivery=true;
     handMeOrder=false;
     contactLess=false;

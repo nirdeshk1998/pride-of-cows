@@ -28,7 +28,7 @@ class ListDataRepository {
 
   Future<Response> availablePincodeRepo(String userId) async {
     try {
-      return await BaseDio.getInstance().post(Endpoint.availablePincodeList, data: {FieldConstant.userID: userId});
+      return await BaseDio.getInstance().post(Endpoint.availablePincodeList, data: {FieldConstant.userID2: userId});
     } catch (e) {
       throw Exception(e);
     }

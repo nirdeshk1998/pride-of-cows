@@ -8,8 +8,6 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/authentication/providers/login_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
-import 'package:poc/styles/widget_styles.dart';
-import 'package:poc/utils/country_code_picker.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';

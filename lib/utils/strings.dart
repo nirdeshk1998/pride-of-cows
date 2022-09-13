@@ -1,4 +1,6 @@
 class LocalString {
+  static const String howItWorks = 'How it works';
+
   static const String howItWorksWallet1 =
       'Simply add cash into your Pride of Cows Wallet using any of the available payment methods. You can also redeem Pride of Cows Cash Vouchers to add cash into your wallet.';
   static const String howItWorksWallet2 = 'Pride of Cows Cash will be auto-applied on the checkout page.';
@@ -16,12 +18,9 @@ class LocalString {
 
   static const String editOrderSubtitle = 'Edit delivery dates or quantity of items';
 
-  static const String orderUpdatedSubtitle =
-      'Your order has been successfully updated. The changes will be reflected in your Pride of Cows Calendar and Pride of Cows Wallet in 24 hours.';
-  static const String orderCancelledSubtitle =
-      'The selected items have been successfully cancelled. The amount will be refunded to your Pride of Cows Wallet in 24 hours.';
-  static const String orderCancellationRequestSubtitle =
-      'Within the next 24 hours, our Customer Care team will get in touch with you to fix the issue and make the experience better for you.';
+  static const String orderUpdatedSubtitle = 'Your order has been successfully updated. The changes will be reflected in your Pride of Cows Calendar and Pride of Cows Wallet in 24 hours.';
+  static const String orderCancelledSubtitle = 'The selected items have been successfully cancelled. The amount will be refunded to your Pride of Cows Wallet in 24 hours.';
+  static const String orderCancellationRequestSubtitle = 'Within the next 24 hours, our Customer Care team will get in touch with you to fix the issue and make the experience better for you.';
   static const String orderUpdationRateSubtitle = 'Please rate your editing experience';
   static const String orderCancellationRateSubtitle = 'Please rate your cancellation experience';
   static const String subscriptionCancellationRateSubtitle = 'Were we helpful? Please rate your experience';
@@ -33,8 +32,7 @@ class LocalString {
   static const String howItWorksBottomReferLine = 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ';
 
   static const String addressUpdateReqTitle = 'Request for updating address sent!';
-  static const String addressUpdateReqSubtitle =
-      'We will review your request and update the address after verification. The verification process will take upto 24 hours.';
+  static const String addressUpdateReqSubtitle = 'We will review your request and update the address after verification. The verification process will take upto 24 hours.';
 
   // Validations
   static const String tcNotValidated = 'Please accept Terms & Conditons to continue';

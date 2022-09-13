@@ -251,9 +251,7 @@ class RegisterChangeProvider with ChangeNotifier {
     await LocalStorage.setString(element?.lastName, StorageField.lastName);
     await LocalStorage.setString(element?.middleName, StorageField.middleName);
     await LocalStorage.setString(element?.gender, StorageField.gender);
-    print("##########################################");
     print(await LocalStorage.getString(StorageField.gender));
-    print("##########################################");
     await LocalStorage.setString(element?.addressType, StorageField.addressType);
     await LocalStorage.setString(element?.area, StorageField.area);
     await LocalStorage.setString(element?.buildingName, StorageField.buildingName);

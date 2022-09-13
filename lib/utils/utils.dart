@@ -87,6 +87,9 @@ class Utils {
     return showModalBottomSheet<Widget>(
       context: context,
       isScrollControlled: true,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
+      ),
       builder: (_) => child,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -159,7 +162,7 @@ class Utils {
                               children: [
                                 PrimaryButton(
                                   title: bTitle ?? 'done',
-                                  onPressed: () async{
+                                  onPressed: () async {
                                     Utils.pop(context);
                                     await onDone?.call();
                                   },

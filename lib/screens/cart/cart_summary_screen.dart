@@ -226,31 +226,27 @@ class CartSummaryScreen extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              child: Row(
-                                children: const [
-                                  Image(image: AssetImage(Assets.assetsIconsDiscount)),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text("Select a promo code"),
-                                ],
-                              ),
+                            Row(
+                              children: const [
+                                Image(image: AssetImage(Assets.assetsIconsDiscount)),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text("Select a promo code"),
+                              ],
                             ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      scaffoldKey.currentState!.openEndDrawer();
-                                    },
-                                    child: const Text(
-                                      "VIEW OFFERS",
-                                      style: TextStyle(fontSize: 12, color: Color(0xff193B61), fontWeight: FontWeight.w700),
-                                    ),
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    scaffoldKey.currentState!.openEndDrawer();
+                                  },
+                                  child: const Text(
+                                    "VIEW OFFERS",
+                                    style: TextStyle(fontSize: 12, color: Color(0xff193B61), fontWeight: FontWeight.w700),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -417,11 +413,10 @@ class CartSummaryScreen extends ConsumerWidget {
                               Row(
                                 children: [
                                   Radio(
-                                      value: false,
-                                      groupValue: addressSelect,
-                                      onChanged: (value) {
-                                        print(value);
-                                      }),
+                                    value: false,
+                                    groupValue: addressSelect,
+                                    onChanged: (value) {},
+                                  ),
                                   const TextView(
                                     "Parent’s",
                                     size: 18,

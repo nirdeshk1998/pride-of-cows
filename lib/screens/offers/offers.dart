@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:poc/constants/assets.dart';
 
 import 'package:poc/screens/offers/provider/offer_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
 
 import 'package:poc/widgets/text_view.dart';
@@ -31,69 +33,53 @@ class _CartOffersState extends ConsumerState<CartOffersDrawer> {
     );
 
     return Drawer(
-      width: MediaQuery.of(context).size.width / 1.1,
+      width: MediaQuery.of(context).size.width / 1.09,
       child: StackedLoader(
         isLoading: read.isLoading,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Apply Coupan",
-                        style: TextStyles.drawerHeader,
+                      TextView(
+                        "Apply Coupon",
+                        textType: TextType.header,
+                        height: 1,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.clear),
+                      PrimaryIconButton(
+                        onPressed: () => Navigator.pop(context),
+                        svg: Assets.assetsIconsClose,
+                        size: 24,
                       ),
                     ],
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
-                    width: 305,
-                    height: 46,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        suffixIcon: SizedBox(
-                          height: 55.5,
-                          width: 130,
-                          child: TextButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(30), side: const BorderSide(color: Colors.transparent))),
-                                backgroundColor: MaterialStateProperty.all(const Color(0xFFF2F2F2))),
-                            child: const Text(
-                              "APPLY",
-                              style: TextStyle(color: Color(0xffA6A6A6)),
-                            ),
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 20, bottom: 37),
-                        labelText: "Enter Promo Code",
-                        labelStyle: const TextStyle(color: Color(0xff808080)),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Color(0xffE5E5E5), width: 1),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Color(0xffE5E5E5), width: 1),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                      constraints: const BoxConstraints(maxHeight: 46, minHeight: 46),
+                      suffixIcon: const PrimaryButton(
+                        title: 'apply',
+                        onPressed: null,
+                      ),
+                      labelText: "Enter Promo Code",
+                      labelStyle: const TextStyle(color: Color(0xff808080)),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xffE5E5E5), width: 1),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xffE5E5E5), width: 1),
+                        borderRadius: BorderRadius.circular(40),
                       ),
                     ),
                   ),
@@ -112,84 +98,81 @@ class _CartOffersState extends ConsumerState<CartOffersDrawer> {
                       itemBuilder: (_, index) {
                         final element = watch.offerList?[index];
                         debugPrint('element: $element');
-                        return Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(left: 15, right: 15),
-                              color: const Color(0xfff8f6f6),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                        return Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(color: const Color(0xfff8f6f6), borderRadius: BorderRadius.circular(10.0)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(element?.promocodeName.toString().toUpperCase() ?? 'N/A',
-                                          style: TextStyle(color: const Color(0xff193B61), fontSize: 16, fontFamily: GoogleFonts.suranna().fontFamily, letterSpacing: 1)),
-                                      InkWell(
-                                        onTap: () {
-                                          read.applyOffer(element?.promocodeName.toString().toUpperCase() ?? 'N/A', context);
-                                        },
-                                        child: const TextView(
-                                          "APPLY OFFERS",
-                                          color: Color(0xff193B61),
-                                          size: 12,
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 1,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox.square(
-                                        dimension: 100,
-                                        child: Image.network(element?.thumbnailImage ?? ''),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width - 218,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '\u{20B9}${element?.promocodeDiscountValue} Discount',
-                                              style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 20),
-                                            ),
-                                            TextView(
-                                              element?.description,
-                                              size: 14,
-                                              maxLines: 3,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
                                   TextView(
-                                    element?.description,
-                                    size: 14,
-                                    color: Palette.hintColor,
+                                    element?.promocodeName.toString().toUpperCase() ?? 'N/A',
+                                    size: 16,
+                                    height: 1,
+                                    color: Palette.primaryColor,
+                                    textType: TextType.titleStyled,
                                   ),
-                                  const SizedBox(
-                                    height: 20,
+                                  PrimaryTextButton(
+                                    title: 'APPLY OFFERS',
+                                    letterSpacing: 1.6,
+                                    weight: FontWeight.bold,
+                                    onPressed: () {
+                                      read.applyOffer(element?.promocodeName.toString().toUpperCase() ?? 'N/A', context);
+                                    },
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                              const Divider(
+                                thickness: 1,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ImageView(
+                                    element?.thumbnailImage,
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                  // SizedBox.square(
+                                  //   dimension: 100,
+                                  //   child: Image.network(element?.thumbnailImage ?? ''),
+                                  // ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        TextView(
+                                          element?.promocodeName?.toUpperCase() ?? 'N/A',
+                                          height: 1.5,
+                                          textType: TextType.titleStyled,
+                                        ),
+                                        TextView(
+                                          element?.description,
+                                          size: 14,
+                                          maxLines: 5,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              TextView(
+                                'Maximum discount up to ₹${element?.maxValue?.split('.').first} '
+                                'on orders above ₹${element?.minimumCartValue?.split('.').first ?? 'N/A'}.',
+                                size: 14,
+                                height: 1,
+                                color: Palette.hintColor,
+                              ),
+                            ],
+                          ),
                         );
                       }),
                 ],

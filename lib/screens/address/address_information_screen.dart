@@ -133,8 +133,8 @@ class AddressInfromation extends ConsumerWidget {
                     ],
                   ),
                   Row(
-                    children: [
-                      const TextView(
+                    children: const [
+                      TextView(
                         "Special Instruction:",
                         size: 16,
                       ),
@@ -148,8 +148,8 @@ class AddressInfromation extends ConsumerWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const PrimaryButton(title: "SAVE"),
+                    children: const [
+                      PrimaryButton(title: "SAVE"),
                     ],
                   ),
                   const SizedBox(

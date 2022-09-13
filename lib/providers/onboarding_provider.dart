@@ -22,16 +22,18 @@ class OnBoardingChangeProvider with ChangeNotifier {
   void onSkipButton(context) {
     Utils.pushReplacement(context, const LoginScreen());
   }
-  VoidCallback ? onSwipe(int ? index){
-if(index==0){
-  selectedDot=0;
-}
-if(index==1){
-  selectedDot=1;
-}
-if(index==2){
-  selectedDot=2;
-}
-notifyListeners();
+
+  VoidCallback? onSwipe(int? index) {
+    if (index == 0) {
+      selectedDot = 0;
+    }
+    if (index == 1) {
+      selectedDot = 1;
+    }
+    if (index == 2) {
+      selectedDot = 2;
+    }
+    notifyListeners();
+    return null;
   }
 }

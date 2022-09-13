@@ -9,7 +9,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/extensions.dart';

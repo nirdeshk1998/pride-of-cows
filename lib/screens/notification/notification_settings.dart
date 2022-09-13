@@ -41,17 +41,17 @@ class NotificationsSettings extends ConsumerWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Card(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
                         Container(
-                          child: TextView(
+                          child: const TextView(
                             "Push Notification",
                             color: Palette.textColor,
                             size: 16,
@@ -59,14 +59,14 @@ class NotificationsSettings extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
                         Container(
                           child: Row(
-                            children: [
+                            children: const [
                               TextView(
                                 "To enable notifications, go to ",
                                 color: Palette.hintColor,
@@ -84,7 +84,7 @@ class NotificationsSettings extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
@@ -92,18 +92,18 @@ class NotificationsSettings extends ConsumerWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Card(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          child: TextView(
+                          child: const TextView(
                             "Enable All",
                             color: Palette.textColor,
                             size: 16,
@@ -116,25 +116,23 @@ class NotificationsSettings extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Row(
                       children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              TextView(
-                                "Turn on to receive all notifications.",
-                                color: Palette.hintColor,
-                                size: 16,
-                              ),
-                            ],
-                          ),
+                        Row(
+                          children: const [
+                            TextView(
+                              "Turn on to receive all notifications.",
+                              color: Palette.hintColor,
+                              size: 16,
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
@@ -142,18 +140,18 @@ class NotificationsSettings extends ConsumerWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Card(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          child: TextView(
+                          child: const TextView(
                             "Order and Purchases",
                             color: Palette.textColor,
                             size: 16,
@@ -166,18 +164,18 @@ class NotificationsSettings extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Container(
-                      child: TextView(
+                      child: const TextView(
                         "Receive updates related to your orders and subscriptions",
                         color: Palette.hintColor,
                         size: 16,
                         maxLines: 2,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
@@ -185,18 +183,18 @@ class NotificationsSettings extends ConsumerWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Card(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          child: TextView(
+                          child: const TextView(
                             "Promos and offers",
                             color: Palette.textColor,
                             size: 16,
@@ -209,18 +207,18 @@ class NotificationsSettings extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Container(
-                      child: TextView(
+                      child: const TextView(
                         "Receive notifications for coupons, promotions and offers.",
                         color: Palette.hintColor,
                         size: 16,
                         maxLines: 2,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
