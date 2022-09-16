@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/cart/cart_summary_screen.dart';
 import 'package:poc/screens/offers/data/models/offer_model.dart';
 import 'package:poc/screens/offers/data/offer_repository.dart';
@@ -77,5 +76,11 @@ class OfferChangeProvider extends BaseChangeNotifier {
   void onRemoveOffer() {
     appliedOffer = "";
     notifyListeners();
+  }
+
+  void onPress (){
+    showLoader(true);
+
+    showLoader(false);
   }
 }

@@ -355,12 +355,7 @@ class CartSummaryScreen extends ConsumerWidget {
                             children: [
                               Row(
                                 children: [
-                                  Radio(
-                                      value: true,
-                                      groupValue: addressSelect,
-                                      onChanged: (value) {
-                                        print(value);
-                                      }),
+                                  Radio(value: true, groupValue: addressSelect, onChanged: (value) {}),
                                   const TextView(
                                     "Home",
                                     size: 18,

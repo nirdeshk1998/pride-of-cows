@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 abstract class BaseChangeNotifier extends ChangeNotifier {
   @protected
   late BuildContext _context;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/order_status/order_status_screen.dart';
+import 'package:poc/screens/orders/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -211,9 +211,7 @@ class OrderCancelScreen extends ConsumerWidget {
                             onPressed: () => Utils.push(
                               context,
                               OrderStatusScreen(
-                                status: orderType == OrderType.oneTime
-                                    ? EditOrderStatus.cancelled
-                                    : EditOrderStatus.cancellationRequest,
+                                status: orderType == OrderType.oneTime ? EditOrderStatus.cancelled : EditOrderStatus.cancellationRequest,
                               ),
                             ),
                             padding: EdgeInsets.zero,

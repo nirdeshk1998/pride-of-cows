@@ -11,31 +11,22 @@ import 'package:poc/widgets/loader.dart';
 
 import 'package:poc/widgets/text_view.dart';
 
-class CartOffersDrawer extends ConsumerStatefulWidget {
+class CartOffersDrawer extends ConsumerWidget {
   const CartOffersDrawer({Key? key}) : super(key: key);
-  @override
-  ConsumerState<CartOffersDrawer> createState() => _CartOffersState();
-}
-
-class _CartOffersState extends ConsumerState<CartOffersDrawer> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final read = ref.read(offerProvider);
     final watch = ref.watch(offerProvider);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) => ref.read(offerProvider).initState(context),
+      (timeStamp) => read.initState(context, 'ahsfka'),
     );
 
     return Drawer(
       width: MediaQuery.of(context).size.width / 1.09,
       child: StackedLoader(
-        isLoading: read.isLoading,
+        isLoading: watch.isLoading,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [

@@ -31,7 +31,7 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
   int? _quantity;
 
   CustomDays _cDays = CustomDays(empty: 0, mon: 0, tue: 0, wed: 0, thur: 0, fri: 0, sat: 0, sun: 0);
-  set cDays(CustomDays cD) => _cDays = cD;
+  set cDays(CustomDays cD   ) => _cDays = cD;
 
   ProductDetailsData? get productDetailsData => _productDetailsData;
   bool get foldProductDes => _foldProductDes;

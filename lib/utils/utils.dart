@@ -13,7 +13,9 @@ enum SnackType {
   success,
   invalidated,
   info,
+  /// only works in debug mode
   debug,
+  /// only works in debug mode
   debugError,
 }
 
