@@ -153,7 +153,7 @@ class Gallery {
   String? updatedDate;
   String? imagePath;
 
-  Gallery({this.productgalleryId, this.productId, this.image, this.sortOrder, this.status, this.ondate, this.updatedDate, this.imagePath,});
+  Gallery({this.productgalleryId, this.productId, this.image, this.sortOrder, this.status, this.ondate, this.updatedDate, this.imagePath});
 
   Gallery.fromJson(Map<String, dynamic> json) {
     productgalleryId = json['productgallery_id'];

@@ -40,11 +40,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final rProvider = ref.read(homeProvider);
-    final wProvider = ref.watch(homeProvider);
+    final read = ref.read(homeProvider);
+    final watch = ref.watch(homeProvider);
 
     return StackedLoader(
-      isLoading: wProvider.isLoading,
+      isLoading: watch.isLoading,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   children: List.generate(
                     7,
                     (index) {
-                      bool today = wProvider.currentDate.day.toString() == wProvider.getCurrentWeek()[index];
+                      bool today = watch.currentDate.day.toString() == watch.getCurrentWeek()[index];
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -98,14 +98,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 TextView(
-                                  wProvider.weekNameList[index],
+                                  watch.weekNameList[index],
                                   textAlign: TextAlign.center,
                                   color: today ? Palette.altTextColor : Palette.hintColor,
                                   size: TextSize.regularSmall,
                                 ),
                                 2.0.height,
                                 Text(
-                                  wProvider.getCurrentWeek()[index],
+                                  watch.getCurrentWeek()[index],
                                   style: TextStyle(
                                     color: today ? Palette.altTextColor : Palette.textColor,
                                     fontSize: 12,
@@ -164,7 +164,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               15.0.height,
               CarouselSlider.builder(
-                itemCount: wProvider.dealsOffersList?.length ?? 0,
+                itemCount: watch.dealsOffersList?.length ?? 0,
                 options: CarouselOptions(
                   height: 170,
                   pageSnapping: true,
@@ -173,7 +173,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   viewportFraction: 0.8,
                 ),
                 itemBuilder: (_, index, idx) {
-                  final element = wProvider.dealsOffersList?[index];
+                  final element = watch.dealsOffersList?[index];
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -228,13 +228,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SizedBox(
                 height: 105,
                 child: ListView.separated(
-                  itemCount: wProvider.categoryList?.length ?? 0,
+                  itemCount: watch.categoryList?.length ?? 0,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
                   separatorBuilder: (context, index) => const SizedBox.square(dimension: 25),
                   itemBuilder: (context, index) {
-                    final element = wProvider.categoryList?[index];
+                    final element = watch.categoryList?[index];
 
                     return Column(
                       children: [
@@ -299,7 +299,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Row(
                             children: [
                               Text(
-                                wProvider.myCrownsData?.rewardPointsBalance.toString() ?? 'N/A',
+                                watch.myCrownsData?.rewardPointsBalance.toString() ?? 'N/A',
                                 style: TextStyle(
                                   color: const Color(0xff323232),
                                   fontSize: 32,
@@ -329,7 +329,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                       RewardProgressBar(
-                        value: wProvider.myCrownsData?.rewardPointsBalance?.toInt() ?? 0,
+                        value: watch.myCrownsData?.rewardPointsBalance?.toInt() ?? 0,
                       ),
                     ],
                   ),
@@ -539,7 +539,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 const SizedBox.square(dimension: 10),
                 GridView.builder(
                   shrinkWrap: true,
-                  itemCount: wProvider.topPicksList?.length ?? 0,
+                  itemCount: watch.topPicksList?.length ?? 0,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -549,7 +549,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     mainAxisSpacing: 20,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    final element = wProvider.topPicksList?[index];
+                    final element = watch.topPicksList?[index];
 
                     return Container(
                       padding: const EdgeInsets.all(15),
@@ -586,37 +586,48 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                           const SizedBox.square(dimension: 10),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                '₹${element?.price}',
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  color: Palette.textColor,
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Wrap(
+                                  children: [
+                                    TextView(
+                                      '₹${element?.price?.split('.').first}',
+                                      height: 1,
+                                      textAlign: TextAlign.left,
+                                      textType: const TextStyle(
+                                        fontSize: 16,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox.square(dimension: 5),
+                                    const TextView(
+                                      '₹150',
+                                      textAlign: TextAlign.left,
+                                      color: Palette.surfaceColor,
+                                      height: 1.2,
+                                      textType: TextStyle(
+                                        fontSize: 14,
+                                        decoration: TextDecoration.lineThrough,
+                                        decorationThickness: 2,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox.square(dimension: 5),
-                              const Text(
-                                '₹150',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Palette.surfaceColor,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.lineThrough,
-                                  decorationThickness: 2,
-                                  letterSpacing: 0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              const Spacer(),
                               Material(
                                 color: Palette.disabledColor,
                                 borderRadius: BorderRadius.circular(5),
                                 clipBehavior: Clip.antiAlias,
                                 child: InkWell(
-                                  onTap: () => Utils.push(context, ProductDetailsScreen(productId: element?.id)),
+                                  onTap: () => Utils.push(
+                                    context,
+                                    ProductDetailsScreen(productId: element?.id),
+                                  ),
                                   child: Container(
                                     height: 24,
                                     width: 24,
@@ -669,7 +680,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   separatorBuilder: (_, index) => const SizedBox(width: 20),
                   itemBuilder: (context, index) => SizedBox(
-                    width: 325,
+                    width: 330,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -733,7 +744,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       SizedBox.square(
                                         dimension: 16,
@@ -743,20 +754,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 3),
-                                      const Text(
+                                      const TextView(
                                         "Ordered on:",
-                                        style: TextStyle(
-                                          color: Palette.hintColor,
-                                          fontSize: 16,
-                                        ),
+                                        color: Palette.hintColor,
+                                        size: 16,
                                       ),
                                       const SizedBox(width: 5),
-                                      const Text(
+                                      const TextView(
                                         "30-10-21",
-                                        style: TextStyle(
-                                          color: Palette.textColor,
-                                          fontSize: 16,
-                                        ),
+                                        size: 16,
                                       ),
                                     ],
                                   )

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+export 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
 abstract class BaseChangeNotifier extends ChangeNotifier {
   @protected
   late BuildContext _context;
@@ -14,8 +17,8 @@ abstract class BaseChangeNotifier extends ChangeNotifier {
   dynamic get data => _data;
   bool get isLoading => _isLoading;
 
-  void initState(BuildContext ctx, [data]) async {
-    _context = ctx;
+  void initState(BuildContext context, [data]) async {
+    _context = context;
     _data = data;
     if (!_isCreated) {
       _isCreated = true;

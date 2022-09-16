@@ -29,39 +29,44 @@ class ImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: borderRadius ?? Dimensions.radius10,
-      child: Image(
-        image: _image,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-            ),
-          );
-        },
-        // frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        //   if (wasSynchronouslyLoaded) {
-        //     return child;
-        //   }
-        //   return AnimatedOpacity(
-        //     child: child,
-        //     opacity: wasSynchronouslyLoaded ? 0 : 1,
-        //     duration: const Duration(seconds: 3),
-        //     curve: Curves.easeOut,
-        //   );
-        // },
-        errorBuilder: (context, error, stackTrace) => Image.asset(
-          errorHolder ?? Assets.assetsImagesSplashBg,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Image(
+          image: _image,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return child;
+            } else {
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                ),
+              );
+            }
+          },
+          // frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          //   if (wasSynchronouslyLoaded) {
+          //     return child;
+          //   }
+          //   return AnimatedOpacity(
+          //     opacity: wasSynchronouslyLoaded ? 0 : 1,
+          //     duration: const Duration(seconds: 3),
+          //     curve: Curves.easeOut,
+          //     child: child,
+          //   );
+          // },
+          errorBuilder: (context, error, stackTrace) => Image.asset(
+            errorHolder ?? Assets.assetsImagesSplashBg,
+            fit: BoxFit.cover,
+            height: double.maxFinite,
+            width: double.maxFinite,
+            alignment: Alignment.bottomCenter,
+          ),
+          height: height ?? double.maxFinite,
+          width: width ?? double.maxFinite,
           fit: BoxFit.cover,
-          height: double.maxFinite,
-          width: double.maxFinite,
-          alignment: Alignment.bottomCenter,
         ),
-        height: height ?? double.maxFinite,
-        width: width ?? double.maxFinite,
-        fit: BoxFit.cover,
       ),
     );
   }

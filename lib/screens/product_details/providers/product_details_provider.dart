@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/cart/data/cart_repository.dart';
 import 'package:poc/screens/cart/data/models/cart_add_model.dart';
+import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/product_details/data/models/product_details_model.dart';
 import 'package:poc/screens/product_details/data/product_details_repository.dart';
+import 'package:poc/utils/base_provider.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 
@@ -12,29 +15,26 @@ final productDetailsProvider = ChangeNotifierProvider.autoDispose<ProductDetails
   (ref) => ProductDetailsChangeProvider(),
 );
 
-class ProductDetailsChangeProvider extends ChangeNotifier {
+class ProductDetailsChangeProvider extends BaseChangeNotifier {
   final ProductDetailsRepository _productDetailsRepo = ProductDetailsRepository();
   final CartRepository _cartRepo = CartRepository();
-  late BuildContext _context;
 
   String? _cityId;
   String? _userId;
   String? _productId;
   ProductDetailsData? _productDetailsData;
-  bool _minimizeAboutProduct = false;
+  bool _foldProductDes = false;
   String? _deliveryPlans;
+  String? _deliverOnDate;
   String? _startDate;
   String? _endDate;
   int? _quantity;
 
-  ProductDetailsData? get productDetailsData => _productDetailsData;
-  bool get foldAboutProduct => _minimizeAboutProduct;
+  CustomDays _cDays = CustomDays(empty: 0, mon: 0, tue: 0, wed: 0, thur: 0, fri: 0, sat: 0, sun: 0);
+  set cDays(CustomDays cD) => _cDays = cD;
 
-  List<String> get imageList => [
-        'https://i.pinimg.com/564x/41/54/46/415446f55e53b7d3ba09d3c3dc848d59.jpg',
-        'https://i.pinimg.com/564x/03/8e/3f/038e3f67c94e85238182b45f5f1345f1.jpg',
-        'https://i.pinimg.com/564x/92/5c/0b/925c0b7635ed386fe940736d3726297d.jpg',
-      ];
+  ProductDetailsData? get productDetailsData => _productDetailsData;
+  bool get foldProductDes => _foldProductDes;
 
   List<String> get deliveryPlans => [
         'Daily',
@@ -53,28 +53,16 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
         'Satrurday',
       ];
 
-  bool _isLoading = true;
-  bool get isLoading => _isLoading;
-
-  void showLoader(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  Future<void> initState(BuildContext context, String? productId) async {
-    _context = context;
-    _productId = productId;
-
-    showLoader(true);
+  @override
+  Future<void> postCreateState() async {
+    _productId = data;
 
     await _gettingPrefs();
     await _productDetailsRequest();
-
-    showLoader(false);
   }
 
   void onReadMoreButton() {
-    _minimizeAboutProduct = !_minimizeAboutProduct;
+    _foldProductDes = !_foldProductDes;
     notifyListeners();
   }
 
@@ -84,20 +72,21 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
         final result = ProductDetailsResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.debug);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
           _productDetailsData = result.data;
         } else {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.error);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(_context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    );
+    ).catchError((Object e) {
+      showLoader(false);
+      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+    });
   }
 
   Future<void> _addToCartRequest() async {
@@ -106,29 +95,40 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
         final result = ProductDetailsResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.debug);
+          if (result.status == ResultStatus.success.index) {
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+            Utils.pushAndRemoveUntil(
+              context,
+              const MainScreen(navigate: NavigationMenu.cart),
+            );
+          } else {
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+          }
           _productDetailsData = result.data;
         } else {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.error);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(_context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    );
+    ).catchError((Object e) {
+      showLoader(false);
+      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+    });
   }
 
   AddCartReqModel get _addToCartReqModel => AddCartReqModel(
         deliveryPlan: _deliveryPlans,
         quantity: _quantity.toString(),
-        startDate: _startDate,
+        startDate: _startDate ?? _deliverOnDate,
         endDate: _endDate,
         productId: _productId,
         userID: _userId,
+        cityId: _cityId,
+        customDays: _cDays,
       );
 
   ProductDetailsReqModel get _productDetailsReqModel => ProductDetailsReqModel(
@@ -137,15 +137,48 @@ class ProductDetailsChangeProvider extends ChangeNotifier {
       );
 
   Future<void> _gettingPrefs() async {
-    _cityId = await LocalStorage.getString(StorageField.cityId);
     _userId = await LocalStorage.getString(StorageField.userId);
+    _cityId = await LocalStorage.getString(StorageField.cityId);
   }
 
-  Future<void> onAddCartButton({required String deliveryPlan, required int quantity, String? endDate, String? startDate}) async {
-    _deliveryPlans = deliveryPlan;
+  Future<void> onAddCartButton({
+    required DeliveryPlan deliveryPlan,
+    required int quantity,
+    String? deliverOnDate,
+    String? endDate,
+    String? startDate,
+  }) async {
+    _deliveryPlans = deliveryPlan.name;
     _quantity = quantity;
+    _deliverOnDate = deliverOnDate;
     _startDate = startDate;
     _endDate = endDate;
+
+    switch (deliveryPlan) {
+      case DeliveryPlan.once:
+        debugPrint('aagasgasg: once');
+        if (_deliverOnDate == null) {
+          Utils.showPrimarySnackbar(context, 'Please select a delivery date', type: SnackType.invalidated);
+          return;
+        }
+        break;
+      default:
+        if (startDate == null) {
+          Utils.showPrimarySnackbar(context, 'Please select a start date', type: SnackType.invalidated);
+          return;
+        } else if (_endDate == null) {
+          Utils.showPrimarySnackbar(context, 'Please select an end date', type: SnackType.invalidated);
+          return;
+        }
+        break;
+    }
+
+    final minQuantity = _productDetailsData?.minimumQuantity ?? 0;
+
+    if (quantity < minQuantity) {
+      Utils.showPrimarySnackbar(context, 'Item Quantity should be minimum $minQuantity!', type: SnackType.invalidated);
+      return;
+    }
 
     showLoader(true);
     await _addToCartRequest();

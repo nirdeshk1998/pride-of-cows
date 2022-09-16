@@ -148,7 +148,7 @@ class TextView extends StatelessWidget {
       child: DefaultTextStyle(
         style: textType ?? TextType.regular,
         child: Text(
-          '$text',
+          text ?? 'N/A',
           textAlign: textAlign,
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,

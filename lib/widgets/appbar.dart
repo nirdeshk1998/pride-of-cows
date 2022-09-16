@@ -59,6 +59,7 @@ class AppBarChangeProvider extends BaseChangeNotifier {
 
   Future<void> _gettingPrefs() async {
     _userId = await LocalStorage.getString(StorageField.userId);
+    _userId = await LocalStorage.getString(StorageField.pincode);
   }
 
   void onSelected(AvailablePincodeData value) {
@@ -82,7 +83,10 @@ class PrimaryAppBar extends ConsumerWidget {
     final read = ref.read(appbarProvider);
     final watch = ref.watch(appbarProvider);
 
-    read.initState(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      read.initState(context);
+    });
+
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: const BoxDecoration(
@@ -104,41 +108,44 @@ class PrimaryAppBar extends ConsumerWidget {
                 children: [
                   const SizedBox.square(dimension: 20),
                   SvgPicture.asset(Assets.assetsIconsPin),
-                  const SizedBox.square(dimension: 3),
+                  // const SizedBox.square(dimension: 3),
                   PopupMenuButton<AvailablePincodeData>(
-                    offset: const Offset(0,20),
-                    child: Row(
-                      children: [
-                        Text(
-                          watch.selectedValue?.cityName ?? 'N/A',
-                          style: TextStyle(
-                            color: Palette.primaryColor,
-                            fontFamily: GoogleFonts.lato().fontFamily,
-                            fontSize: 14,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
+                    offset: const Offset(0, 36),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            watch.selectedValue?.cityName ?? 'Select Location',
+                            style: TextStyle(
+                              color: Palette.primaryColor,
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        Text(
-                          ' (${watch.selectedValue?.pincode ?? 'N/A'})',
-                          style: TextStyle(
-                            color: const Color(0xFF658395),
-                            fontFamily: GoogleFonts.lato().fontFamily,
-                            fontSize: 14,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
+                          Text(
+                            watch.selectedValue?.pincode != null ? ' (${watch.selectedValue?.pincode})' : '',
+                            style: TextStyle(
+                              color: const Color(0xFF658395),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 6.0),
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsChevronDown,
-                            color: const Color(0xFF9DBACA),
-                            height: 6,
-                            width: 12,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: SvgPicture.asset(
+                              Assets.assetsIconsChevronDown,
+                              color: const Color(0xFF9DBACA),
+                              height: 6,
+                              width: 12,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     onSelected: (value) => read.onSelected(value),
                     itemBuilder: (context) => List.generate(
@@ -452,7 +459,7 @@ class NotificationAppBar extends StatelessWidget {
 
   final VoidCallback? sOnPressed;
   final String? sIcon;
-  final Color? color; 
+  final Color? color;
   final String? sIcon2;
   final String? sicon3;
 

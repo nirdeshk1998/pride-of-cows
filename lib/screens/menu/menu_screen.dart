@@ -9,6 +9,7 @@ import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
 import 'package:poc/screens/address/my_address_book_screen.dart';
+import 'package:poc/screens/menu/providers/menu_provider.dart';
 import 'package:poc/screens/profile/my_profile.dart';
 
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
@@ -29,6 +30,13 @@ class MenuScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(menuProvider);
+    final watch = ref.watch(menuProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
+
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -55,13 +63,13 @@ class MenuScreen extends ConsumerWidget {
                   ),
                 ),
                 title: TextView(
-                  'Hi, John!',
+                  'Hi, ${watch.fName}!',
                   textType: TextType.header2,
                   color: Palette.textColor,
                   height: 1,
                 ),
                 subtitle: TextView(
-                  '9876543210',
+                  '${watch.mNumber}',
                   textType: TextType.regular,
                   color: Palette.textColor,
                   size: TextSize.subHeader,

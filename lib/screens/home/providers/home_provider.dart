@@ -1,19 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/home/data/home_repo.dart';
 import 'package:poc/screens/home/data/models/category_model.dart';
 import 'package:poc/screens/home/data/models/home_model.dart';
 import 'package:poc/screens/products/data/models/products_model.dart';
+import 'package:poc/utils/base_provider.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 
-final homeProvider = ChangeNotifierProvider.autoDispose((ref) => HomeChangeProvider());
+final homeProvider = ChangeNotifierProvider((ref) => HomeChangeProvider());
 
-class HomeChangeProvider with ChangeNotifier {
+class HomeChangeProvider extends BaseChangeNotifier {
   final HomeRepository _homeRepo = HomeRepository();
-
-  late BuildContext _context;
 
   String? _userId;
   List<CategoryData>? _categoryList;
@@ -43,22 +41,10 @@ class HomeChangeProvider with ChangeNotifier {
     return List.generate(7, (i) => '${startFrom.add(Duration(days: i)).day}');
   }
 
-  bool _isLoading = true;
-  bool get isLoading => _isLoading;
-  void showLoader(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  Future<void> initState(BuildContext context) async {
-    _context = context;
-
-    showLoader(true);
-
+  @override
+  Future<void> postCreateState() async {
     await _gettingPrefs();
     await _homeDataRequest();
-
-    showLoader(false);
   }
 
   Future<void> _homeDataRequest() async {
@@ -75,19 +61,20 @@ class HomeChangeProvider with ChangeNotifier {
           _dealsOffersList = result.dealsOfferData;
           _myCrownsData = result.earnedCrownResModel;
 
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.debug);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
         } else {
-          Utils.showPrimarySnackbar(_context, result.message, type: SnackType.error);
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
         }
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(_context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    );
+    ).catchError((Object e) {
+      showLoader(false);
+      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+    });
   }
 
   Future<void> _gettingPrefs() async {

@@ -14,6 +14,7 @@ enum SnackType {
   invalidated,
   info,
   debug,
+  debugError,
 }
 
 class Utils {
@@ -41,7 +42,7 @@ class Utils {
     }
   }
 
-  static ScaffoldFeatureController? showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
+  static ScaffoldFeatureController showPrimarySnackbar(BuildContext context, text, {SnackType? type}) {
     ScaffoldMessenger.of(context).clearSnackBars();
 
     Color? color, textColor;
@@ -62,9 +63,18 @@ class Utils {
         color = Colors.grey;
         break;
       case SnackType.debug:
-        if (kReleaseMode) return null;
+        if (kReleaseMode) break;
+        debugPrint('\x1B[33mDebug: $text\x1B[0m');
         color = const Color(0xFFFFC107);
         textColor = const Color(0xFF343A40);
+        text = 'Debug: $text';
+        break;
+      case SnackType.debugError:
+        if (kReleaseMode) break;
+        debugPrint('\x1B[31mDebugError: $text\x1B[0m');
+        color = const Color.fromARGB(255, 255, 94, 7);
+        textColor = Colors.white;
+        text = 'Debug Error: $text';
         break;
       default:
         color = Colors.grey;
@@ -73,10 +83,13 @@ class Utils {
 
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        // margin: isOverSheet ? EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 1.6) : null,
         behavior: SnackBarBehavior.floating,
         content: TextView(
           text ?? '',
           color: textColor,
+          size: 16,
+          maxLines: 4,
         ),
         backgroundColor: color,
       ),
@@ -89,6 +102,7 @@ class Utils {
       isScrollControlled: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
+        minHeight: 0,
       ),
       builder: (_) => child,
       shape: const RoundedRectangleBorder(
@@ -129,12 +143,15 @@ class Utils {
                           children: [
                             Row(
                               children: [
-                                TextView(
-                                  headerTitle,
-                                  color: Palette.textColor,
-                                  textType: TextType.header2,
-                                  maxLines: 2,
-                                  height: 1,
+                                Expanded(
+                                  child: TextView(
+                                    headerTitle,
+                                    textAlign: TextAlign.center,
+                                    color: Palette.textColor,
+                                    textType: TextType.header2,
+                                    maxLines: 2,
+                                    height: 1,
+                                  ),
                                 ),
                                 if (subheaderTitle != null)
                                   TextView(

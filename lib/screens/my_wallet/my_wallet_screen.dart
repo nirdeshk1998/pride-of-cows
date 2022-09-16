@@ -117,9 +117,9 @@ class MyWalletScreen extends ConsumerWidget {
               thickness: 1,
               color: Palette.surfaceColor,
             ),
-            Expanded(
+            Flexible (
               child: ListView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 primary: false,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
@@ -138,7 +138,7 @@ class MyWalletScreen extends ConsumerWidget {
                   _sheetPoints(
                     point: '3',
                     text: LocalString.howItWorksWallet3,
-                  ),
+                  ), 
                   30.0.height,
                   const Divider(
                     height: 1,

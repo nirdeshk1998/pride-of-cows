@@ -85,8 +85,8 @@ class CartItemsData {
   int? noOfDays;
   String? createdAt;
   String? updatedAt;
-  bool? productAvailable;
-  bool? pincodeServiceable;
+  int? productAvailable;
+  int? pincodeServiceable;
 
   CartItemsData(
       {this.itemId,

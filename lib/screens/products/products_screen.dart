@@ -6,6 +6,7 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/product_details_screen.dart';
 import 'package:poc/screens/products/providers/product_provider.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/indicators.dart';
@@ -201,41 +202,46 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                               const SizedBox.square(dimension: 10),
                               Row(
                                 children: [
-                                  Text(
-                                    '₹${element?.finalprice.toString() ?? 'N/A'}',
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      color: Palette.textColor,
-                                      fontSize: 16,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Wrap(
+                                      spacing: 5,
+                                      runSpacing: 2,
+                                      children: [
+                                        TextView(
+                                          '₹${element?.finalprice.toString().split('.').first ?? 'N/A'}',
+                                          textAlign: TextAlign.left,
+                                          height: 1,
+                                          color: Palette.textColor,
+                                          textType: const TextStyle(
+                                            fontSize: 16,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextView(
+                                          '₹${element?.price?.split('.').first ?? 'N/A'}',
+                                          textAlign: TextAlign.left,
+                                          color: Palette.lightIconColor,
+                                          textType: const TextStyle(
+                                            fontSize: 14,
+                                            decoration: TextDecoration.lineThrough,
+                                            decorationThickness: 2,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox.square(dimension: 5),
-                                  Text(
-                                    '₹${element?.price ?? 'N/A'}',
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      color: Palette.lightIconColor,
-                                      fontSize: 14,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationThickness: 2,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  const Spacer(),
                                   Material(
                                     color: Palette.disabledColor,
                                     borderRadius: BorderRadius.circular(5),
                                     clipBehavior: Clip.antiAlias,
                                     child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (builder) => const ProductDetailsScreen()),
-                                        );
-                                      },
+                                      onTap: () => Utils.push(
+                                        context,
+                                        ProductDetailsScreen(productId: element?.id),
+                                      ),
                                       child: Container(
                                         height: 24,
                                         width: 24,
