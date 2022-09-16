@@ -13,7 +13,7 @@ import 'package:poc/screens/menu/providers/menu_provider.dart';
 import 'package:poc/screens/profile/my_profile.dart';
 
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
-import 'package:poc/screens/orders/orders_screen.dart';
+import 'package:poc/screens/orders/order_screen.dart';
 import 'package:poc/screens/notification/notification.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/rewards/rewards.dart';

@@ -19,7 +19,7 @@ enum NavigationMenu {
   menu,
 }
 
-enum ResultStatus {
+enum ResponseStatus {
   error,
   success,
 }

@@ -43,7 +43,7 @@ class Endpoint {
   static const String updateProductQuantity = '/customer/productdetail';
   static const String userCartList = '/cart/items';
 
-// Gift Card
+  // Gift Card
   static const String addGiftCard = "customer/addgiftcard";
   static const String editGiftCard = "customer/editgiftcard";
 
@@ -52,4 +52,10 @@ class Endpoint {
   static const String saveAddress = '/customer/saveaddress';
   static const String updateAddress = '/customer/updateaddress';
   static const String deleteAddress = '/customer/deleteaddress';
+
+  // Orders
+  static const String getOrder = '/order/myorder';
+  static const String getOrderDetails = '/order/orderdtls';
+  static const String editOrder = '/order/orderdtls';
+
 }

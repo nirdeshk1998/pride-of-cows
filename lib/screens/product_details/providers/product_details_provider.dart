@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/cart/data/cart_repository.dart';
 import 'package:poc/screens/cart/data/models/cart_add_model.dart';
 import 'package:poc/screens/main/main_screen.dart';
@@ -95,7 +94,7 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
         final result = ProductDetailsResModel.fromJson(response.data);
 
         if (response.statusCode == 200) {
-          if (result.status == ResultStatus.success.index) {
+          if (result.status == ResponseStatus.success.index) {
             Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
             Utils.pushAndRemoveUntil(
               context,
