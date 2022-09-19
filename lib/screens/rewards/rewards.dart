@@ -12,7 +12,6 @@ import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
-import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class Rewards extends ConsumerWidget {
@@ -95,7 +94,7 @@ class Rewards extends ConsumerWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        _RewardTab(context),
+                        _rewardTab(context),
                         _HistoryTab(context),
                       ],
                     ),
@@ -302,9 +301,7 @@ class Rewards extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            decoration: index != 9
-                                ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0)))
-                                : const BoxDecoration(),
+                            decoration: index != 9 ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0))) : const BoxDecoration(),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -324,38 +321,36 @@ class Rewards extends ConsumerWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            Assets.assetsIconsCrown,
-                                            height: 30,
-                                            width: 30,
-                                          ),
-                                          5.width,
-                                          const TextView(
-                                            "50",
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            size: 18,
-                                          ),
-                                          const SizedBox(
-                                            width: 15,
-                                          ),
-                                          const TextView(
-                                            "NEW",
-                                            size: 18,
-                                          ),
-                                          const SizedBox(
-                                            width: 3,
-                                          ),
-                                          const TextView(
-                                            "redeemed",
-                                            size: 18,
-                                            color: Colors.black,
-                                          ),
-                                        ],
-                                      ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          Assets.assetsIconsCrown,
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        5.width,
+                                        const TextView(
+                                          "50",
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          size: 18,
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        const TextView(
+                                          "NEW",
+                                          size: 18,
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        const TextView(
+                                          "redeemed",
+                                          size: 18,
+                                          color: Colors.black,
+                                        ),
+                                      ],
                                     ),
                                     const TextView(
                                       "+100",
@@ -377,77 +372,75 @@ class Rewards extends ConsumerWidget {
                       ),
                     );
                   }),
-              Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          child: SvgPicture.asset(Assets.assetsIconsArrowLeft),
-                        ),
-                        const InkWell(child: TextView("1")),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        const InkWell(child: TextView("2")),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        const InkWell(child: const TextView("3")),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        InkWell(
-                          child: SvgPicture.asset(Assets.assetsIconsArrowRight),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                      color: const Color(0xffD9D9D9),
-                    ),
-                    InkWell(
-                      onTap: () => _howItWorksBottomSheet(context),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 30.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
-                              border: Border.all(
-                                color: const Color(0xffD2AB68),
-                                width: 1.0,
-                              ),
-                            ),
-                            child: const Center(
-                              child: const TextView(
-                                "i",
-                                color: Color(0xffD2AB68),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          const TextView("How it works?", size: 16, decoration: TextDecoration.underline),
-                        ],
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        child: SvgPicture.asset(Assets.assetsIconsArrowLeft),
                       ),
+                      const InkWell(child: TextView("1")),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      const InkWell(child: TextView("2")),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      const InkWell(child: TextView("3")),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      InkWell(
+                        child: SvgPicture.asset(Assets.assetsIconsArrowRight),
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    color: Color(0xffD9D9D9),
+                  ),
+                  InkWell(
+                    onTap: () => _howItWorksBottomSheet(context),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: const Color(0xffD2AB68),
+                              width: 1.0,
+                            ),
+                          ),
+                          child: const Center(
+                            child: TextView(
+                              "i",
+                              color: Color(0xffD2AB68),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        const TextView("How it works?", size: 16, decoration: TextDecoration.underline),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
             ],
           ),
         ),
       );
 
-  Widget _RewardTab(BuildContext context) => SingleChildScrollView(
+  Widget _rewardTab(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
@@ -473,25 +466,23 @@ class Rewards extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          Assets.assetsIconsCrown,
-                          height: 30,
-                          width: 30,
-                        ),
-                        const TextView(
-                          "60",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        Assets.assetsIconsCrown,
+                        height: 30,
+                        width: 30,
+                      ),
+                      const TextView(
+                        "60",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        size: 18,
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -508,10 +499,10 @@ class Rewards extends ConsumerWidget {
                       children: [
                         Container(
                           decoration: const BoxDecoration(
-                              gradient: const LinearGradient(
+                              gradient: LinearGradient(
                             colors: [
                               Color(0xffF6F3FB),
-                              const Color(0xffEFF3FB),
+                              Color(0xffEFF3FB),
                             ],
                             begin: Alignment.bottomRight,
                             end: Alignment.topLeft,
@@ -529,25 +520,23 @@ class Rewards extends ConsumerWidget {
                                     size: 17,
                                     color: Colors.black,
                                   ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          Assets.assetsIconsCrown,
-                                          height: 25,
-                                          width: 25,
-                                        ),
-                                        const TextView(
-                                          "50",
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          size: 18,
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                      ],
-                                    ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        Assets.assetsIconsCrown,
+                                        height: 25,
+                                        width: 25,
+                                      ),
+                                      const TextView(
+                                        "50",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -656,7 +645,7 @@ class Rewards extends ConsumerWidget {
                           height: 30.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: const Color(0xffD2AB68),
                               width: 1.0,
@@ -665,7 +654,7 @@ class Rewards extends ConsumerWidget {
                           child: const Center(
                             child: TextView(
                               "i",
-                              color: const Color(0xffD2AB68),
+                              color: Color(0xffD2AB68),
                             ),
                           ),
                         ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/order_status/order_status_screen.dart';
+import 'package:poc/screens/orders/order_status_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -47,7 +47,7 @@ class EditOrderScreen extends ConsumerWidget {
                     lastDate: DateTime(2060),
                     onDateChanged: (i) {},
                     label: '',
-                    onMonthPressed: () {},
+                    onPressed: () {},
                   ),
                 ),
               ),
@@ -64,7 +64,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery plan',
-                  onDone: () {},
+                  onDone: () async {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -109,7 +109,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery date',
-                  onDone: () {},
+                  onDone: () async {},
                   child: PrimaryCalendarDatePicker(
                     isVisible: true,
                     initialDate: DateTime.now(),
@@ -117,7 +117,7 @@ class EditOrderScreen extends ConsumerWidget {
                     lastDate: DateTime(2060),
                     onDateChanged: (i) {},
                     label: '',
-                    onMonthPressed: () {},
+                    onPressed: () {},
                   ),
                 ),
               ),
@@ -130,7 +130,7 @@ class EditOrderScreen extends ConsumerWidget {
                   context,
                   headerTitle: 'Edit Order',
                   subheaderTitle: 'Select new delivery date',
-                  onDone: () {},
+                  onDone: () async {},
                   child: PrimaryCalendarDatePicker(
                     isVisible: true,
                     initialDate: DateTime.now(),
@@ -138,7 +138,7 @@ class EditOrderScreen extends ConsumerWidget {
                     lastDate: DateTime(2060),
                     onDateChanged: (i) {},
                     label: '',
-                    onMonthPressed: () {},
+                    onPressed: () {},
                   ),
                 ),
               ),

@@ -194,7 +194,10 @@ class OrderStatusScreen extends ConsumerWidget {
             Center(
               child: PrimaryButton(
                 title: 'continue shopping',
-                onPressed: () => Utils.pushAndRemoveUntil(context, const MainScreen()),
+                onPressed: () => Utils.pushAndRemoveUntil(
+                  context,
+                  const MainScreen(navigate: NavigationMenu.products),
+                ),
                 width: 220,
                 padding: EdgeInsets.zero,
               ),
@@ -203,7 +206,10 @@ class OrderStatusScreen extends ConsumerWidget {
             Center(
               child: PrimaryButton(
                 title: 'go back to home',
-                onPressed: () => Utils.pushAndRemoveUntil(context, const MainScreen()),
+                onPressed: () => Utils.pushAndRemoveUntil(
+                  context,
+                  const MainScreen(),
+                ),
                 width: 220,
                 padding: EdgeInsets.zero,
                 isFilled: false,

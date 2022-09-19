@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -11,27 +13,38 @@ enum SnackType {
   success,
   invalidated,
   info,
+  /// only works in debug mode
   debug,
+  /// only works in debug mode
+  debugError,
 }
 
 class Utils {
-  static Future<void> push(context, widget) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
+  static Future<Object?> push(BuildContext context, widget) async {
+    return await Navigator.push(context, MaterialPageRoute(builder: (builder) => widget));
   }
 
-  static void pop(context) {
-    Navigator.pop(context);
+  static void pop(BuildContext context, [result]) {
+    return Navigator.pop(context, result);
   }
 
-  static Future<void> pushReplacement(context, widget) async {
+  static Future<void> pushReplacement(BuildContext context, widget) async {
     await Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder) => widget));
   }
 
-  static Future<void> pushAndRemoveUntil(context, widget) async {
+  static Future<void> pushAndRemoveUntil(BuildContext context, widget) async {
     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => widget), (route) => false);
   }
 
-  static ScaffoldFeatureController showPrimarySnackbar(BuildContext context, String? text, {SnackType? type}) {
+  static String? dateFormatDMY(DateTime? date) {
+    if (date != null) {
+      return DateFormat('dd-MM-yyyy').format(date);
+    } else {
+      return null;
+    }
+  }
+
+  static ScaffoldFeatureController showPrimarySnackbar(BuildContext context, text, {SnackType? type}) {
     ScaffoldMessenger.of(context).clearSnackBars();
 
     Color? color, textColor;
@@ -52,8 +65,18 @@ class Utils {
         color = Colors.grey;
         break;
       case SnackType.debug:
+        if (kReleaseMode) break;
+        debugPrint('\x1B[33mDebug: $text\x1B[0m');
         color = const Color(0xFFFFC107);
         textColor = const Color(0xFF343A40);
+        text = 'Debug: $text';
+        break;
+      case SnackType.debugError:
+        if (kReleaseMode) break;
+        debugPrint('\x1B[31mDebugError: $text\x1B[0m');
+        color = const Color.fromARGB(255, 255, 94, 7);
+        textColor = Colors.white;
+        text = 'Debug Error: $text';
         break;
       default:
         color = Colors.grey;
@@ -62,10 +85,13 @@ class Utils {
 
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        // margin: isOverSheet ? EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 1.6) : null,
         behavior: SnackBarBehavior.floating,
         content: TextView(
           text ?? '',
           color: textColor,
+          size: 16,
+          maxLines: 4,
         ),
         backgroundColor: color,
       ),
@@ -76,6 +102,10 @@ class Utils {
     return showModalBottomSheet<Widget>(
       context: context,
       isScrollControlled: true,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
+        minHeight: 0,
+      ),
       builder: (_) => child,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -89,10 +119,11 @@ class Utils {
     BuildContext context, {
     required final String headerTitle,
     final String? subheaderTitle,
-    final String? title,
-    required final Widget child,
-    final VoidCallback? onDone,
+    final String? bTitle,
+    final Widget? child,
+    final Future<void> Function()? onDone,
     final VoidCallback? onCancel,
+    final Axis? direction,
   }) {
     return showDialog<Widget>(
       context: context,
@@ -114,12 +145,15 @@ class Utils {
                           children: [
                             Row(
                               children: [
-                                TextView(
-                                  headerTitle,
-                                  color: Palette.textColor,
-                                  textType: TextType.header2,
-                                  maxLines: 2,
-                                  height: 1,
+                                Expanded(
+                                  child: TextView(
+                                    headerTitle,
+                                    textAlign: TextAlign.center,
+                                    color: Palette.textColor,
+                                    textType: TextType.header2,
+                                    maxLines: 2,
+                                    height: 1,
+                                  ),
                                 ),
                                 if (subheaderTitle != null)
                                   TextView(
@@ -131,25 +165,37 @@ class Utils {
                               ],
                             ),
                             10.0.height,
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: Palette.surfaceColor,
-                            ),
+                            if (child != null)
+                              const Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: Palette.surfaceColor,
+                              ),
                             Dimensions.defaultPadding.height,
-                            child,
-                            30.0.height,
-                            PrimaryButton(
-                              title: title ?? 'done',
-                              onPressed: onDone,
-                              width: 130,
-                            ),
-                            Dimensions.defaultPadding.height,
-                            PrimaryButton(
-                              title: 'cancel',
-                              onPressed: onCancel ?? () => Utils.pop(context),
-                              width: 130,
-                              isFilled: false,
+                            if (child != null) child,
+                            if (child != null) 30.0.height,
+                            Flex(
+                              direction: direction ?? Axis.vertical,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                PrimaryButton(
+                                  title: bTitle ?? 'done',
+                                  onPressed: () async {
+                                    Utils.pop(context);
+                                    await onDone?.call();
+                                  },
+                                  width: 130,
+                                ),
+                                Dimensions.defaultPadding.height,
+                                Dimensions.defaultPadding.width,
+                                PrimaryButton(
+                                  title: 'cancel',
+                                  onPressed: onCancel ?? () => Utils.pop(context),
+                                  width: 130,
+                                  isFilled: false,
+                                ),
+                              ],
                             ),
                           ],
                         ),

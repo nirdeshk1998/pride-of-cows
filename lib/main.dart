@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.latoTextTheme(),
         fontFamily: GoogleFonts.lato().fontFamily,
         primaryTextTheme: GoogleFonts.latoTextTheme(),
+        dividerTheme: const DividerThemeData(thickness: 1, color: Palette.surfaceColor),
       ),
       localizationsDelegates: const [CountryLocalizations.delegate],
       home: const SplashScreen(),

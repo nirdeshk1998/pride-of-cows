@@ -1,20 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/styles/colors.dart';
-import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
-import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class ReferAndEarn extends ConsumerWidget {
@@ -70,8 +67,8 @@ class ReferAndEarn extends ConsumerWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        _InviteTab(context),
-                        _ReferralsTab(context),
+                        _inviteTab(context),
+                        _referralsTab(context),
                       ],
                     ),
                   ),
@@ -259,7 +256,7 @@ class ReferAndEarn extends ConsumerWidget {
     );
   }
 
-  Widget _ReferralsTab(BuildContext context) => Container(
+  Widget _referralsTab(BuildContext context) => Container(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(
@@ -291,36 +288,30 @@ class ReferAndEarn extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            decoration: index != 10
-                                ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0)))
-                                : const BoxDecoration(),
+                            decoration: index != 10 ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0))) : const BoxDecoration(),
                             child: Column(
                               children: [
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              SvgPicture.asset(Assets.assetsIconsSemiRounded),
-                                              Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          const TextView(
-                                            "Jane Cooper",
-                                            color: Colors.black,
-                                            size: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ],
-                                      ),
+                                    Row(
+                                      children: [
+                                        Stack(
+                                          children: [SvgPicture.asset(Assets.assetsIconsSemiRounded), Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))],
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        const TextView(
+                                          "Jane Cooper",
+                                          color: Colors.black,
+                                          size: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ],
                                     ),
                                     InkWell(
                                       child: Row(
@@ -340,7 +331,6 @@ class ReferAndEarn extends ConsumerWidget {
                                       ),
                                     ),
                                   ],
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -423,7 +413,7 @@ class ReferAndEarn extends ConsumerWidget {
                               ),
                             ),
                             child: const Center(
-                              child: const TextView(
+                              child: TextView(
                                 "i",
                                 color: Color(0xffD2AB68),
                               ),
@@ -447,7 +437,7 @@ class ReferAndEarn extends ConsumerWidget {
         ),
       );
 
-  Widget _InviteTab(BuildContext context) => SingleChildScrollView(
+  Widget _inviteTab(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
@@ -456,28 +446,29 @@ class ReferAndEarn extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  child: Image.asset("assets/images/milkbottleoffer.png"),
-                ),
+                Image.asset ("assets/images/milkbottleoffer.png"),
               ],
             ),
             const SizedBox(
               height: 10,
             ),
-       Padding(padding:EdgeInsets.only(left: 40,right: 40),child:    RichText(
-         textAlign: TextAlign.center,
-         text: TextSpan(
-             children: [
-               TextSpan(
-                   text: "Refer a friend to Pride of Cows and you’ll both get ",
-                   style: TextStyle(color:Palette.hintColor,fontSize: 16)
-               ),
-               TextSpan(
-                   text: "5 litres milk free!",
-                   style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black,fontFamily:GoogleFonts.suranna().fontFamily, fontSize: 20,)
-               ),
-             ]
-         ),),),
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(children: [
+                  const TextSpan(text: "Refer a friend to Pride of Cows and you’ll both get ", style: TextStyle(color: Palette.hintColor, fontSize: 16)),
+                  TextSpan(
+                      text: "5 litres milk free!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontFamily: GoogleFonts.suranna().fontFamily,
+                        fontSize: 20,
+                      )),
+                ]),
+              ),
+            ),
 
             // SizedBox(
             //   width: 250,
@@ -520,7 +511,7 @@ class ReferAndEarn extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text("Share your code", style: TextStyle(fontSize: 24,fontFamily:GoogleFonts.suranna().fontFamily)),
+                  Text("Share your code", style: TextStyle(fontSize: 24, fontFamily: GoogleFonts.suranna().fontFamily)),
                   const SizedBox(
                     height: 10,
                   ),
@@ -565,7 +556,6 @@ class ReferAndEarn extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 children: [
-
                   const SizedBox(
                     height: 10,
                   ),
@@ -578,14 +568,14 @@ class ReferAndEarn extends ConsumerWidget {
                           height: 20.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: const BorderRadius.all(const Radius.circular(50.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: const Color(0xffD2AB68),
                               width: 1.0,
                             ),
                           ),
                           child: const Center(
-                            child: const TextView(
+                            child: TextView(
                               "i",
                               color: Color(0xffD2AB68),
                             ),
@@ -594,7 +584,12 @@ class ReferAndEarn extends ConsumerWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        const PrimaryTextButton(title:"How it works?", size: 16,isUpperCase: false, showUnderline: true,),
+                        const PrimaryTextButton(
+                          title: "How it works?",
+                          size: 16,
+                          isUpperCase: false,
+                          showUnderline: true,
+                        ),
                       ],
                     ),
                   ),

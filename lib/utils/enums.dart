@@ -1,7 +1,7 @@
 enum DeliveryPlan {
-  once,
-  alternate,
   daily,
+  alternate,
+  once,
   custom,
 }
 
@@ -10,6 +10,18 @@ enum EditOrderStatus {
   cancelled,
   cancellationRequest,
   rated,
+}
+
+enum NavigationMenu {
+  home,
+  products,
+  cart,
+  menu,
+}
+
+enum ResponseStatus {
+  error,
+  success,
 }
 
 enum OrderStatus {
@@ -35,4 +47,9 @@ enum WeekdayFormat {
 enum UserType {
   user,
   guest,
+}
+
+enum AddressType {
+  add,
+  edit,
 }

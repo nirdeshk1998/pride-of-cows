@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/network/models/state_model.dart';
 import 'package:poc/screens/authentication/providers/register_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';

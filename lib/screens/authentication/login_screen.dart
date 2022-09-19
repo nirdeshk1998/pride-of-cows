@@ -8,10 +8,9 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/authentication/providers/login_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
-import 'package:poc/styles/widget_styles.dart';
-import 'package:poc/utils/country_code_picker.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/terms_condition.dart';
 import 'package:poc/widgets/text_view.dart';
@@ -108,57 +107,64 @@ class LoginScreen extends ConsumerWidget {
               color: Palette.surfaceColor,
             ),
             const SizedBox.square(dimension: 40),
-            TextFormField(
+            PhoneNumberFormField(
               controller: wProvider.numberController,
               onChanged: rProvider.onNumberChangedFun,
-              keyboardType: TextInputType.phone,
               enabled: !wProvider.isOtpSent,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(10),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.zero,
-                constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
-                labelText: 'Phone number*',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5),
-                  child: CountryCodePicker(
-                    initialSelection: 'in',
-                    textStyle: TextStyle(
-                      color: Palette.textColor,
-                      fontFamily: GoogleFonts.lato().fontFamily,
-                      fontSize: 16,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    flagWidth: 20,
-                    showDropDownButton: true,
-                    flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
-                  ),
-                ),
-                prefixIconConstraints: const BoxConstraints(),
-                labelStyle: TextStyle(
-                  color: Palette.hintColor,
-                  fontFamily: GoogleFonts.lato().fontFamily,
-                  fontSize: 16,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1.5,
-                ),
-                floatingLabelStyle: TextStyle(
-                  color: Palette.hintColor,
-                  fontFamily: GoogleFonts.lato().fontFamily,
-                  fontSize: 18,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1.5,
-                ),
-                border: WidgetStyle.inputBorder,
-                enabledBorder: WidgetStyle.inputBorder,
-                focusedBorder: WidgetStyle.activeInputBorder,
-              ),
+              label: 'Phone number*',
             ),
+            // TextFormField(
+            //   controller: wProvider.numberController,
+            //   onChanged: rProvider.onNumberChangedFun,
+            //   enabled: !wProvider.isOtpSent,
+            //   keyboardType: TextInputType.phone,
+            //   inputFormatters: [
+            //     LengthLimitingTextInputFormatter(10),
+            //     FilteringTextInputFormatter.digitsOnly,
+            //   ],
+            //   decoration: InputDecoration(
+            //     contentPadding: EdgeInsets.zero,
+            //     constraints: const BoxConstraints(maxHeight: 50, minWidth: 50),
+            //     labelText: 'Phone number*',
+            //     prefixIcon: Padding(
+            //       padding: const EdgeInsets.only(left: 15, right: 5),
+            //       child: CountryCodePicker(
+            //         padding: EdgeInsets.zero,
+            //         initialSelection: 'in',
+            //         textStyle: TextStyle(
+            //           color: Palette.textColor,
+            //           fontFamily: GoogleFonts.lato().fontFamily,
+            //           fontSize: 16,
+            //           letterSpacing: 0,
+            //           fontWeight: FontWeight.normal,
+            //         ),
+            //         flagWidth: 20,
+            //         showDropDownButton: true,
+            //         flagDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
+            //       ),
+            //     ),
+            //     prefixIconConstraints: const BoxConstraints(),
+            //     labelStyle: TextStyle(
+            //       color: Palette.hintColor,
+            //       fontFamily: GoogleFonts.lato().fontFamily,
+            //       fontSize: 16,
+            //       letterSpacing: 0,
+            //       fontWeight: FontWeight.normal,
+            //       height: 1.5,
+            //     ),
+            //     floatingLabelStyle: TextStyle(
+            //       color: Palette.hintColor,
+            //       fontFamily: GoogleFonts.lato().fontFamily,
+            //       fontSize: 18,
+            //       letterSpacing: 0,
+            //       fontWeight: FontWeight.normal,
+            //       height: 1.5,
+            //     ),
+            //     border: WidgetStyle.inputBorder,
+            //     enabledBorder: WidgetStyle.inputBorder,
+            //     focusedBorder: WidgetStyle.activeInputBorder,
+            //   ),
+            // ),
             30.0.height,
             if (wProvider.isOtpSent)
               Column(

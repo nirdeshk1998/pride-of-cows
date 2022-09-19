@@ -24,7 +24,6 @@ class _PrimaryLabelContainerState extends State<PrimaryLabelContainer> {
         setState(() {
           _isFocused = value;
         });
-        print(value);
       },
       child: Stack(
         alignment: Alignment.topLeft,

@@ -107,7 +107,7 @@ String? countryCode;
   }
 
   void onChangeRNameFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       rName = false;
     }
     else{
@@ -128,7 +128,7 @@ String? countryCode;
   }
 
   void onChangeREmailFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       rEmailId = false;
     } else {
       rEmailId = true;
@@ -138,7 +138,7 @@ String? countryCode;
   }
 
   void onChangeSNameFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       sName = false;
     } else {
       sName = true;
@@ -158,7 +158,7 @@ String? countryCode;
   }
 
   void onChangeSEmailFun(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       sEmailId = false;
     } else {
       sEmailId = true;

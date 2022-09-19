@@ -1,14 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/network/dio_client.dart';
+import 'package:poc/network/models/available_pincode_model.dart';
+import 'package:poc/network/repository.dart';
 import 'package:poc/screens/search/search_screen.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/base_provider.dart';
+import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class PrimaryAppBar extends StatelessWidget {
+final appbarProvider = ChangeNotifierProvider<AppBarChangeProvider>((ref) {
+  return AppBarChangeProvider();
+});
+
+class AppBarChangeProvider extends BaseChangeNotifier {
+  final ListDataRepository _listDataRepo = ListDataRepository();
+
+  String? _userId;
+  List<AvailablePincodeData>? _availablePincodeList;
+  AvailablePincodeData? _selectedValue;
+
+  List<AvailablePincodeData>? get availablePincodeList => _availablePincodeList;
+  AvailablePincodeData? get selectedValue => _selectedValue;
+
+  @override
+  Future<void> postCreateState() async {
+    await _gettingPrefs();
+    await _userCartRequest();
+  }
+
+  Future<void> _userCartRequest() async {
+    await _listDataRepo.availablePincodeRepo(_userId ?? '').then(
+      (response) async {
+        final result = AvailablePincodeResModel.fromJson(response.data);
+        debugPrint('result: $result');
+
+        if (response.statusCode == 200) {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+          _availablePincodeList = result.data;
+        } else {
+          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+        }
+      },
+    ).onError(
+      (DioError error, stackTrace) {
+        debugPrint('error: ${error.type}');
+        showLoader(false);
+
+        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+      },
+    );
+  }
+
+  Future<void> _gettingPrefs() async {
+    _userId = await LocalStorage.getString(StorageField.userId);
+    _userId = await LocalStorage.getString(StorageField.pincode);
+  }
+
+  void onSelected(AvailablePincodeData value) {
+    _selectedValue = value;
+    notifyListeners();
+  }
+}
+
+class PrimaryAppBar extends ConsumerWidget {
   const PrimaryAppBar({
     Key? key,
     required this.showSearch,
@@ -19,7 +79,14 @@ class PrimaryAppBar extends StatelessWidget {
   final TextEditingController? controller;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(appbarProvider);
+    final watch = ref.watch(appbarProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      read.initState(context);
+    });
+
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: const BoxDecoration(
@@ -41,61 +108,152 @@ class PrimaryAppBar extends StatelessWidget {
                 children: [
                   const SizedBox.square(dimension: 20),
                   SvgPicture.asset(Assets.assetsIconsPin),
-                  const SizedBox.square(dimension: 3),
-                  Theme(
-                    data: ThemeData(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<int>(
-                        value: 0,
-                        icon: Padding(
-                          padding: const EdgeInsets.only(left: 6.0),
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsChevronDown,
-                            color: const Color(0xFF9DBACA),
-                            height: 6,
-                            width: 12,
+                  // const SizedBox.square(dimension: 3),
+                  PopupMenuButton<AvailablePincodeData>(
+                    offset: const Offset(0, 36),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            watch.selectedValue?.cityName ?? 'Select Location',
+                            style: TextStyle(
+                              color: Palette.primaryColor,
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        items: [
-                          DropdownMenuItem(
-                            value: 0,
-                            child: RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Mumbai ',
-                                    style: TextStyle(
-                                      color: Palette.primaryColor,
-                                      fontFamily: GoogleFonts.lato().fontFamily,
-                                      fontSize: 14,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '(654321)',
-                                    style: TextStyle(
-                                      color: const Color(0xFF658395),
-                                      fontFamily: GoogleFonts.lato().fontFamily,
-                                      fontSize: 14,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          Text(
+                            watch.selectedValue?.pincode != null ? ' (${watch.selectedValue?.pincode})' : '',
+                            style: TextStyle(
+                              color: const Color(0xFF658395),
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                              fontSize: 14,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: SvgPicture.asset(
+                              Assets.assetsIconsChevronDown,
+                              color: const Color(0xFF9DBACA),
+                              height: 6,
+                              width: 12,
                             ),
                           ),
                         ],
-                        onChanged: (i) {},
                       ),
                     ),
+                    onSelected: (value) => read.onSelected(value),
+                    itemBuilder: (context) => List.generate(
+                      watch.availablePincodeList?.length ?? 0,
+                      (index) {
+                        final element = watch.availablePincodeList?[index];
+                        return PopupMenuItem(
+                          value: element,
+                          child: Text('${element?.cityName} (${element?.pincode})'),
+                        );
+                      },
+                    ),
                   ),
+                  // ButtonTheme(
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: Dimensions.radius20,
+                  //   ),
+
+                  //   // data: ThemeData(
+                  //   //   splashColor: Colors.transparent,
+                  //   //   // highlightColor: Colors.transparent,
+                  //   //   hoverColor: Colors.transparent,
+                  //   //   splashFactory: NoSplash.splashFactory,
+
+                  //   // ),
+                  //   child: DropdownButtonHideUnderline(
+                  //     child: DropdownButton<String>(
+                  //       // value: 0,
+                  //       value: watch.selectedValue,
+                  //       isDense: true,
+                  //       isExpanded: false,
+                  //       alignment: Alignment.centerLeft,
+                  //       // selectedItemBuilder: (context) => [
+                  //       //   Text(
+                  //       //     watch.selectedValue ?? 'N/A',
+                  //       //     style: TextStyle(
+                  //       //       color: Palette.primaryColor,
+                  //       //       fontFamily: GoogleFonts.lato().fontFamily,
+                  //       //       fontSize: 14,
+                  //       //       letterSpacing: 0,
+                  //       //       fontWeight: FontWeight.normal,
+                  //       //     ),
+                  //       //   ),
+                  //       //   Text(
+                  //       //     ' (${watch.selectedValue ?? 'N/A'})',
+                  //       //     style: TextStyle(
+                  //       //       color: const Color(0xFF658395),
+                  //       //       fontFamily: GoogleFonts.lato().fontFamily,
+                  //       //       fontSize: 14,
+                  //       //       letterSpacing: 0,
+                  //       //       fontWeight: FontWeight.normal,
+                  //       //     ),
+                  //       //   ),
+                  //       // ],
+                  //       hint: Text(
+                  //         'Select Pincode',
+                  //         style: TextStyle(
+                  //           color: Palette.primaryColor,
+                  //           fontFamily: GoogleFonts.lato().fontFamily,
+                  //           fontSize: 14,
+                  //           letterSpacing: 0,
+                  //           fontWeight: FontWeight.normal,
+                  //         ),
+                  //       ),
+                  //       icon: Padding(
+                  //         padding: const EdgeInsets.only(left: 6.0),
+                  //         child: SvgPicture.asset(
+                  //           Assets.assetsIconsChevronDown,
+                  //           color: const Color(0xFF9DBACA),
+                  //           height: 6,
+                  //           width: 12,
+                  //         ),
+                  //       ),
+                  //       onChanged: (i) => read.onSelected(i),
+
+                  //       items: watch.availablePincodeList
+                  //           ?.map((e) => DropdownMenuItem(
+                  //                 value: e.id,
+                  //                 child: Row(
+                  //                   mainAxisSize: MainAxisSize.min,
+                  //                   children: [
+                  //                     Text(
+                  //                       e.cityName ?? 'N/A',
+                  //                       style: TextStyle(
+                  //                         color: Palette.primaryColor,
+                  //                         fontFamily: GoogleFonts.lato().fontFamily,
+                  //                         fontSize: 14,
+                  //                         letterSpacing: 0,
+                  //                         fontWeight: FontWeight.normal,
+                  //                       ),
+                  //                     ),
+                  //                     Text(
+                  //                       ' (${e.pincode ?? 'N/A'})',
+                  //                       style: TextStyle(
+                  //                         color: const Color(0xFF658395),
+                  //                         fontFamily: GoogleFonts.lato().fontFamily,
+                  //                         fontSize: 14,
+                  //                         letterSpacing: 0,
+                  //                         fontWeight: FontWeight.normal,
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ))
+                  //           .toList(),
+                  //     ),
+                  //   ),
+                  // ),
                   const Spacer(),
                   IconButton(
                     onPressed: () {
@@ -146,12 +304,10 @@ class PrimarySearchAppBar extends StatelessWidget {
     Key? key,
     this.controller,
     this.onClearPressed,
-
   }) : super(key: key);
 
-  final TextEditingController ? controller;
+  final TextEditingController? controller;
   final VoidCallback? onClearPressed;
-
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +375,13 @@ class PrimarySearchAppBar extends StatelessWidget {
                 hintText: 'Enter here',
                 controller: controller,
                 suffix: InkWell(
-                  onTap: (){
+                  onTap: () {
                     controller?.clear();
                   },
-                  child: TextView("Clear",color: Palette.hintColor,),
+                  child: const TextView(
+                    "Clear",
+                    color: Palette.hintColor,
+                  ),
                 ),
               ),
             ),
@@ -280,7 +439,6 @@ class SecondaryAppBar extends StatelessWidget {
                   constraints: const BoxConstraints(),
                 ),
               const SizedBox.square(dimension: 9.5),
-
             ],
           ),
         ),
@@ -302,8 +460,8 @@ class NotificationAppBar extends StatelessWidget {
   final VoidCallback? sOnPressed;
   final String? sIcon;
   final Color? color;
-  final String ? sIcon2;
-  final String ? sicon3;
+  final String? sIcon2;
+  final String? sicon3;
 
   @override
   Widget build(BuildContext context) {
@@ -369,4 +527,3 @@ class NotificationAppBar extends StatelessWidget {
     );
   }
 }
-

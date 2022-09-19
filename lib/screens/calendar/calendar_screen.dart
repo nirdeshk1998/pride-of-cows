@@ -39,13 +39,16 @@ class CalendarScreen extends ConsumerWidget {
                   upcomingDate: [
                     DateTime(2022, 08, 08),
                     DateTime(2022, 08, 31),
+                    DateTime(2022, 08, 24),
                   ],
                   vacationDate: [
+                    DateTime(2022, 08, 31),
                     DateTime(2022, 08, 24),
                     DateTime(2022, 08, 25),
                     DateTime(2022, 08, 26),
                   ],
                   cancelledDate: [
+                    DateTime(2022, 08, 31),
                     DateTime(2022, 08, 13),
                   ],
                   firstDate: DateTime(

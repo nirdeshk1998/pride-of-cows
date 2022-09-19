@@ -121,6 +121,7 @@ class TextView extends StatelessWidget {
   final TextAlign? textAlign;
   final TextDecoration? decoration;
   final int? maxLines;
+  final TextBaseline? textBaseline;
 
   const TextView(
     this.text, {
@@ -136,6 +137,7 @@ class TextView extends StatelessWidget {
     this.bgColor,
     this.decoration,
     this.maxLines,
+    this.textBaseline,
   }) : super(key: key);
 
   @override
@@ -146,7 +148,7 @@ class TextView extends StatelessWidget {
       child: DefaultTextStyle(
         style: textType ?? TextType.regular,
         child: Text(
-          '$text',
+          text ?? 'N/A',
           textAlign: textAlign,
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
@@ -154,6 +156,7 @@ class TextView extends StatelessWidget {
             fontSize: size,
             color: color ?? Palette.textColor,
             fontWeight: fontWeight,
+            textBaseline: textBaseline,
             letterSpacing: letterSpacing,
             height: height,
             decoration: decoration,

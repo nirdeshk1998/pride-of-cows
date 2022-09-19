@@ -101,7 +101,7 @@ class MyWalletScreen extends ConsumerWidget {
               ],
             ),
             _menuListTileButton(
-              title: 'How it Works',
+              title: LocalString.howItWorks,
               icon: Assets.assetsIconsInfoRound,
               vertical: 0,
               iconSize: 18,
@@ -117,62 +117,72 @@ class MyWalletScreen extends ConsumerWidget {
               thickness: 1,
               color: Palette.surfaceColor,
             ),
-            Dimensions.defaultPadding.height,
-            _sheetPoints(
-              point: '1',
-              text: LocalString.howItWorksWallet1,
-            ),
-            30.0.height,
-            _sheetPoints(
-              point: '2',
-              text: LocalString.howItWorksWallet2,
-            ),
-            30.0.height,
-            _sheetPoints(
-              point: '3',
-              text: LocalString.howItWorksWallet3,
-            ),
-            30.0.height,
-            const Divider(
-              height: 1,
-              thickness: 1,
-              color: Palette.surfaceColor,
-            ),
-            30.0.height,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                TextView(
-                  '\u2022  ',
-                  color: Palette.hintColor,
-                ),
-                Expanded(
-                  child: TextView(
-                    LocalString.pocCashRbiGuidelines,
-                    color: Palette.hintColor,
-                    maxLines: 3,
+            Flexible (
+              child: ListView(
+                physics: const ClampingScrollPhysics(),
+                primary: false,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: [
+                  Dimensions.defaultPadding.height,
+                  _sheetPoints(
+                    point: '1',
+                    text: LocalString.howItWorksWallet1,
                   ),
-                ),
-              ],
-            ),
-            Dimensions.defaultPadding.height,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                TextView(
-                  '\u2022  ',
-                  color: Palette.hintColor,
-                ),
-                Expanded(
-                  child: TextView(
-                    LocalString.pocCashUsage,
-                    color: Palette.hintColor,
-                    maxLines: 3,
+                  30.0.height,
+                  _sheetPoints(
+                    point: '2',
+                    text: LocalString.howItWorksWallet2,
                   ),
-                ),
-              ],
+                  30.0.height,
+                  _sheetPoints(
+                    point: '3',
+                    text: LocalString.howItWorksWallet3,
+                  ), 
+                  30.0.height,
+                  const Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Palette.surfaceColor,
+                  ),
+                  30.0.height,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      TextView(
+                        '\u2022  ',
+                        color: Palette.hintColor,
+                      ),
+                      Expanded(
+                        child: TextView(
+                          LocalString.pocCashRbiGuidelines,
+                          color: Palette.hintColor,
+                          maxLines: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Dimensions.defaultPadding.height,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      TextView(
+                        '\u2022  ',
+                        color: Palette.hintColor,
+                      ),
+                      Expanded(
+                        child: TextView(
+                          LocalString.pocCashUsage,
+                          color: Palette.hintColor,
+                          maxLines: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  30.0.height,
+                ],
+              ),
             ),
-            30.0.height,
           ],
         ),
       ),
@@ -194,13 +204,12 @@ class MyWalletScreen extends ConsumerWidget {
             color: Palette.onPrimaryColor,
           ),
           child: Center(
-            child:   TextView(
+            child: TextView(
               point,
               textType: TextType.header,
               textAlign: TextAlign.center,
             ),
           ),
-
         ),
         5.0.height,
         TextView(
@@ -339,7 +348,7 @@ class MyWalletScreen extends ConsumerWidget {
           ),
           5.0.height,
           _menuListTileButton(
-            title: 'How it works',
+            title: LocalString.howItWorks,
             horizontal: Dimensions.defaultPadding,
             icon: Assets.assetsIconsInfoRound,
             onPressed: () => _howItWorksbottomSheet(context),

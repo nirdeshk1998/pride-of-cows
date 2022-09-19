@@ -1,19 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:poc/screens/authentication/data/models/login_model.dart';
-import 'package:poc/screens/menu/menu_screen.dart';
 import 'package:poc/screens/profile/data/models/profile_model.dart';
 import 'package:poc/screens/profile/data/profile_repository.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final profileProvider =
-    ChangeNotifierProvider.autoDispose((ref) => profileChangeProvider());
+    ChangeNotifierProvider.autoDispose((ref) => ProfileChangeProvider());
 
-class profileChangeProvider with ChangeNotifier {
-  final ProfileUpdateRepository _ProfileRepo = ProfileUpdateRepository();
+class ProfileChangeProvider with ChangeNotifier {
+  final ProfileUpdateRepository _profileRepo = ProfileUpdateRepository();
 
   bool saveButtonState = false;
   bool isFnameEntered = false;
@@ -67,7 +64,7 @@ class profileChangeProvider with ChangeNotifier {
   }
 
   void onChangeFNameFun(String value) {
-    if (value.length == 0 || value == fName) {
+    if (value.isEmpty || value == fName) {
       isFnameEntered = false;
     } else {
       isFnameEntered = true;
@@ -78,7 +75,7 @@ class profileChangeProvider with ChangeNotifier {
   }
 
   void onChangeLNameFun(String value) {
-    if (value.length == 0 || value == lName) {
+    if (value.isEmpty || value == lName) {
       isLNameEntered = false;
     } else {
       isLNameEntered = true;
@@ -109,7 +106,7 @@ class profileChangeProvider with ChangeNotifier {
   }
 
   void onChangeEmailFun(String value) {
-    if (value.length == 0 || value == emailId) {
+    if (value.isEmpty || value == emailId) {
       isEmailIdEntered = false;
     } else {
       isEmailIdEntered = true;
@@ -240,7 +237,7 @@ class profileChangeProvider with ChangeNotifier {
   }
 
   Future<void> _updateProfileRequest(context) async {
-    await _ProfileRepo.sendNewProfileDetails(_profileUpdateList)
+    await _profileRepo.sendNewProfileDetails(_profileUpdateList)
         .then((response) {
       final result = ProfileUpdateResModel.fromJson(response.data);
       print(response.data);

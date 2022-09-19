@@ -5,10 +5,14 @@ import 'package:poc/widgets/buttons.dart';
 class PrimaryCheckbox extends StatefulWidget {
   const PrimaryCheckbox({
     Key? key,
+    this.size,
+    this.value,
     required this.onChanged,
   }) : super(key: key);
 
   final Function(bool value) onChanged;
+  final bool? value;
+  final double? size;
 
   @override
   State<PrimaryCheckbox> createState() => _PrimaryCheckboxState();
@@ -19,10 +23,14 @@ class _PrimaryCheckboxState extends State<PrimaryCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null) {
+      _isChecked = widget.value ?? false;
+    }
+
     return PrimaryIconButton(
       svg: _isChecked ? Assets.assetsIconsCheckboxChecked : Assets.assetsIconsCheckboxUnchecked,
       onPressed: onPressed,
-      size: 20.0,
+      size: widget.size ?? 20.0,
     );
   }
 
@@ -31,3 +39,4 @@ class _PrimaryCheckboxState extends State<PrimaryCheckbox> {
         widget.onChanged(_isChecked);
       });
 }
+

@@ -1,31 +1,28 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/cart/cart_screen.dart';
 import 'package:poc/screens/offers/offers.dart';
 import 'package:poc/screens/cart/providers/cart_provider.dart';
 import 'package:poc/screens/cart/rating_page.dart';
-import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class CartSummary extends ConsumerWidget {
-  const CartSummary({Key? key}) : super(key: key);
+class CartSummaryScreen extends ConsumerWidget {
+  const CartSummaryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool addressSelect = true;
-    final rProvider = ref.read(cartProvider);
-    final wProvider = ref.watch(cartProvider);
-    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+    final read = ref.read(cartProvider);
+    final watch = ref.watch(cartProvider);
+
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: _scaffoldKey,
-      endDrawer: const CartOffers(),
+      key: scaffoldKey,
+      endDrawer: const CartOffersDrawer(),
       body: Column(
         children: [
           Expanded(
@@ -80,16 +77,14 @@ class CartSummary extends ConsumerWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                rProvider.showAndHideItems();
+                                read.showAndHideItems();
                               },
-                              child: wProvider.showItems
-                                  ? const Icon(Icons.keyboard_arrow_up)
-                                  : const Icon(Icons.keyboard_arrow_down),
+                              child: watch.showItems ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
                             ),
                           ],
                         ),
                         Visibility(
-                          visible: wProvider.showItems,
+                          visible: watch.showItems,
                           child: ListView.builder(
                             itemCount: 3,
                             shrinkWrap: true,
@@ -111,13 +106,12 @@ class CartSummary extends ConsumerWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             TextView(
                                               "Ghee (250 grams)",
                                               textType: TextStyles.subheader,
-
                                             ),
                                             Text('\u{20B9}${"50"}', style: TextStyles.hint),
                                             Row(
@@ -171,8 +165,18 @@ class CartSummary extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
-                            TextView("Subtotal",color: Color(0xff2B2B2B),fontWeight: FontWeight.w500,size: 14,),
-                            TextView('\u{20B9}${"1800"}',color: Color(0xff2B2B2B),fontWeight: FontWeight.w500,size: 14,),
+                            TextView(
+                              "Subtotal",
+                              color: Color(0xff2B2B2B),
+                              fontWeight: FontWeight.w500,
+                              size: 14,
+                            ),
+                            TextView(
+                              '\u{20B9}${"1800"}',
+                              color: Color(0xff2B2B2B),
+                              fontWeight: FontWeight.w500,
+                              size: 14,
+                            ),
                           ],
                         ),
                         Row(
@@ -210,8 +214,8 @@ class CartSummary extends ConsumerWidget {
                           height: 10,
                         ),
                         Row(
-                          children:  [
-                            Text("Offers",style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily,fontSize: 16)),
+                          children: [
+                            Text("Offers", style: TextStyle(fontFamily: GoogleFonts.suranna().fontFamily, fontSize: 16)),
                           ],
                         ),
                         const SizedBox(
@@ -219,82 +223,78 @@ class CartSummary extends ConsumerWidget {
                         ),
                         // rProvider.appliedOffer == ""
                         //     ?
-                      Row(
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: const [
-                                        Image(image: AssetImage(Assets.assetsIconsDiscount)),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text("Select a promo code"),
-                                      ],
-                                    ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: const [
+                                Image(image: AssetImage(Assets.assetsIconsDiscount)),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text("Select a promo code"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    scaffoldKey.currentState!.openEndDrawer();
+                                  },
+                                  child: const Text(
+                                    "VIEW OFFERS",
+                                    style: TextStyle(fontSize: 12, color: Color(0xff193B61), fontWeight: FontWeight.w700),
                                   ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            _scaffoldKey.currentState!.openEndDrawer();
-                                          },
-                                          child: const Text(
-                                            "VIEW OFFERS",
-                                            style: TextStyle(fontSize: 12, color: Color(0xff193B61),fontWeight: FontWeight.w700),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              ),
-                            // : Row(
-                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //     children: [
-                            //       Container(
-                            //         child: Row(
-                            //           children: [
-                            //             SvgPicture.asset(Assets.assetsIconsGreenTick),
-                            //             const SizedBox(
-                            //               width: 5,
-                            //             ),
-                            //             TextView(
-                            //               "${rProvider.appliedOffer} applied!",
-                            //               size: 16,
-                            //             ),
-                            //             const SizedBox(
-                            //               width: 5,
-                            //             ),
-                            //             PrimaryTextButton(
-                            //               title: "(Remove)",
-                            //               isUpperCase: false,
-                            //               showUnderline: true,
-                            //               onPressed: () {
-                            //                 rProvider.onRemoveOffer();
-                            //               },
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //       Container(
-                            //         child: Row(
-                            //           children: const [
-                            //             TextView("-\u{20B9}${"350"}"),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                         SizedBox(
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        // : Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Container(
+                        //         child: Row(
+                        //           children: [
+                        //             SvgPicture.asset(Assets.assetsIconsGreenTick),
+                        //             const SizedBox(
+                        //               width: 5,
+                        //             ),
+                        //             TextView(
+                        //               "${rProvider.appliedOffer} applied!",
+                        //               size: 16,
+                        //             ),
+                        //             const SizedBox(
+                        //               width: 5,
+                        //             ),
+                        //             PrimaryTextButton(
+                        //               title: "(Remove)",
+                        //               isUpperCase: false,
+                        //               showUnderline: true,
+                        //               onPressed: () {
+                        //                 rProvider.onRemoveOffer();
+                        //               },
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         child: Row(
+                        //           children: const [
+                        //             TextView("-\u{20B9}${"350"}"),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    color: const Color(0xfafafa),
+                    color: const Color(0x00fafafa),
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,11 +304,7 @@ class CartSummary extends ConsumerWidget {
                           children: [
                             Text(
                               "Total:",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontFamily: GoogleFonts.suranna().fontFamily,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
+                              style: TextStyle(fontSize: 22, fontFamily: GoogleFonts.suranna().fontFamily, fontWeight: FontWeight.bold, letterSpacing: 1),
                             ),
                             const Text('\u{20B9}${"1850"}', style: TextStyle(fontSize: 20)),
                           ],
@@ -321,7 +317,8 @@ class CartSummary extends ConsumerWidget {
                           children: const [
                             TextView(
                               "CHOOSE ADDRESS",
-                              color: Color(0xff193B61), size: 12,
+                              color: Color(0xff193B61),
+                              size: 12,
                               fontWeight: FontWeight.w700,
                             ),
                             Text(
@@ -352,18 +349,13 @@ class CartSummary extends ConsumerWidget {
                           ],
                         ),
                         Container(
-                          color:  Color(0xfff8f6f6),
+                          color: const Color(0xfff8f6f6),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Radio(
-                                      value: true,
-                                      groupValue: addressSelect,
-                                      onChanged: (value) {
-                                        print(value);
-                                      }),
+                                  Radio(value: true, groupValue: addressSelect, onChanged: (value) {}),
                                   const TextView(
                                     "Home",
                                     size: 18,
@@ -409,18 +401,17 @@ class CartSummary extends ConsumerWidget {
                           height: 20,
                         ),
                         Container(
-                          color: Color(0xfff8f6f6),
+                          color: const Color(0xfff8f6f6),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
                                   Radio(
-                                      value: false,
-                                      groupValue: addressSelect,
-                                      onChanged: (value) {
-                                        print(value);
-                                      }),
+                                    value: false,
+                                    groupValue: addressSelect,
+                                    onChanged: (value) {},
+                                  ),
                                   const TextView(
                                     "Parent’s",
                                     size: 18,

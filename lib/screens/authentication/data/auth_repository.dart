@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:poc/network/dio_client.dart';
-import 'package:poc/network/end_points.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/authentication/data/models/otp_model.dart';
 import 'package:poc/screens/authentication/data/models/user_register_model.dart';

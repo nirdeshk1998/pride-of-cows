@@ -23,3 +23,21 @@ class PrimaryLoader extends StatelessWidget {
     );
   }
 }
+
+class StackedLoader extends StatelessWidget {
+  const StackedLoader({Key? key, required this.child, required this.isLoading}) : super(key: key);
+
+  final Widget child;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        child,
+        if (isLoading) const PrimaryLoader(),
+      ],
+    );
+  }
+}
