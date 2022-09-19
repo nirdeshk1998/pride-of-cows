@@ -107,6 +107,17 @@ class RegisterChangeProvider with ChangeNotifier {
       Utils.showPrimarySnackbar(context, LocalString.tcNotValidated, type: SnackType.invalidated);
       return;
     }
+    else if (_emailController.text.isNotEmpty) {
+      bool emailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(_emailController.text);
+      print(emailValid);
+      if (!emailValid) {
+        Utils.showPrimarySnackbar(context, 'Invalid Email',
+            type: SnackType.invalidated);
+        return;
+      } else {}
+    }
 
     showLoader(true);
     await _gettingPrefs();
