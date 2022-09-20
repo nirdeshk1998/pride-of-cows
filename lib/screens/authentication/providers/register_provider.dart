@@ -139,10 +139,18 @@ class RegisterChangeProvider with ChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -171,10 +179,18 @@ class RegisterChangeProvider with ChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -193,10 +209,18 @@ class RegisterChangeProvider with ChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }

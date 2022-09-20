@@ -58,7 +58,7 @@ class OrderDetailsData {
   DeliveryAddress? deliveryAddress;
   String? nextDeliveryDate;
   String? todaysDelivery;
-  String? deliveryStatus;
+  String? orderStatus;
   List<OrderDetls>? orderDetails;
 
   OrderDetailsData(
@@ -97,7 +97,7 @@ class OrderDetailsData {
       this.deliveryAddress,
       this.nextDeliveryDate,
       this.todaysDelivery,
-      this.deliveryStatus,
+      this.orderStatus,
       this.orderDetails});
 
   OrderDetailsData.fromJson(Map<String, dynamic> json) {
@@ -138,7 +138,7 @@ class OrderDetailsData {
         : null;
     nextDeliveryDate = json['next_delivery_date'];
     todaysDelivery = json['todays_delivery'];
-    deliveryStatus = json['deliveryStatus'];
+    orderStatus = json['deliveryStatus'];
     if (json['orderDetls'] != null) {
       orderDetails = <OrderDetls>[];
       json['orderDetls'].forEach((v) {
@@ -186,7 +186,7 @@ class OrderDetailsData {
     }
     data['next_delivery_date'] = nextDeliveryDate;
     data['todays_delivery'] = todaysDelivery;
-    data['deliveryStatus'] = deliveryStatus;
+    data['deliveryStatus'] = orderStatus;
     if (orderDetails != null) {
       data['orderDetls'] = orderDetails!.map((v) => v.toJson()).toList();
     }
@@ -331,8 +331,8 @@ class OrderDetls {
   String? thumbImg;
   String? productId;
   String? deliveryStatus;
-  bool? todaysDelivery;
-  String? nextDeliveryDate;
+  String? todaysDelivery;
+  bool? nextDeliveryDate;
   String? thumbImgUrl;
 
   OrderDetls(

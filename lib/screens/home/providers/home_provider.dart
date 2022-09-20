@@ -1,5 +1,5 @@
+
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/screens/home/data/home_repo.dart';
 import 'package:poc/screens/home/data/models/category_model.dart';
 import 'package:poc/screens/home/data/models/home_model.dart';
@@ -45,6 +45,8 @@ class HomeChangeProvider extends BaseChangeNotifier {
   Future<void> postCreateState() async {
     await _gettingPrefs();
     await _homeDataRequest();
+
+
   }
 
   Future<void> _homeDataRequest() async {
@@ -71,10 +73,17 @@ class HomeChangeProvider extends BaseChangeNotifier {
         showLoader(false);
         Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    ).catchError((Object e) {
-      showLoader(false);
-      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-    });
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
+      },
+    );
   }
 
   Future<void> _gettingPrefs() async {

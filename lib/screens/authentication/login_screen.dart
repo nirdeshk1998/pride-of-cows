@@ -22,8 +22,12 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rProvider = ref.read(loginProvider);
-    final wProvider = ref.watch(loginProvider);
+    final read = ref.read(loginProvider);
+    final watch = ref.watch(loginProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
 
     return WillPopScope(
       onWillPop: () async {
@@ -56,8 +60,8 @@ class LoginScreen extends ConsumerWidget {
       child: Scaffold(
         body: Stack(
           children: [
-            _buildBody(wProvider, rProvider, context),
-            if (rProvider.isLoading) const PrimaryLoader(),
+            _buildBody(watch, read, context),
+            if (read.isLoading) const PrimaryLoader(),
           ],
         ),
       ),

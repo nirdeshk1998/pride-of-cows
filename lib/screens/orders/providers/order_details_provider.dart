@@ -47,10 +47,17 @@ class OrderDetailsChangeProvider extends BaseChangeNotifier {
         showLoader(false);
         Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    ).catchError((Object e) {
-      showLoader(false);
-      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-    });
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
+      },
+    );
   }
 
   Future<void> _getPrefs() async {

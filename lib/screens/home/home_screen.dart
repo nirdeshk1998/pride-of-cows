@@ -5,43 +5,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
-import 'package:poc/screens/home/providers/home_provider.dart';
 import 'package:poc/screens/calendar/calendar_screen.dart';
+import 'package:poc/screens/home/providers/home_provider.dart';
 import 'package:poc/screens/product_details/product_details_screen.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/widgets/image_view.dart';
-import 'package:poc/widgets/loader.dart';
-import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/image_view.dart';
+import 'package:poc/widgets/loader.dart';
+import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/widgets/text_view.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(homeProvider).initState(context);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final read = ref.read(homeProvider);
     final watch = ref.watch(homeProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      read.initState(context);
+    });
 
     return StackedLoader(
       isLoading: watch.isLoading,

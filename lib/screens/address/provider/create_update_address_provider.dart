@@ -85,7 +85,7 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
       showLoader(true);
       await _pincodeDataRequest(int.parse(val));
 
-      if (_stateId == null)return showLoader(false);
+      if (_stateId == null) return showLoader(false);
       _stateDropdownValue = int.parse(_stateId ?? '0');
 
       await _cityListRequest(_stateId ?? '0');
@@ -173,10 +173,18 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -195,10 +203,18 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -217,10 +233,18 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }

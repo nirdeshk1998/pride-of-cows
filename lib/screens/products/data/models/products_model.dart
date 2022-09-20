@@ -96,7 +96,7 @@ class ProductData {
   int? discountprice;
   String? finalprice;
   String? minimumQuantity;
-  String? isOrdered;
+  int? isOrdered;
 
   ProductData(
       {this.id,

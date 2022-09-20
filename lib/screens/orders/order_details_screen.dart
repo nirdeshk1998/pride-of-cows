@@ -181,28 +181,6 @@ class OrderDetailsScreen extends ConsumerWidget {
           );
   }
 
-  Row _orderStatusWidget({required Color color, String? icon, required String title}) {
-    return Row(
-      children: [
-        if (icon != null)
-          SizedBox.square(
-            dimension: 16,
-            child: SvgPicture.asset(
-              icon,
-              color: color,
-            ),
-          ),
-        5.0.width,
-        TextView(
-          title,
-          textType: TextType.regular,
-          color: color,
-          height: 1,
-        ),
-      ],
-    );
-  }
-
   Widget get _dateSection {
     return orderType == OrderType.oneTime
         ? _textTile(
@@ -253,7 +231,13 @@ class OrderDetailsScreen extends ConsumerWidget {
     );
   }
 
-  Row _textTile({final String? icon, final double? fontSize, required final String title, final String? subtitle, final VoidCallback? onPressed, final Color? color}) {
+  Row _textTile(
+      {final String? icon,
+      final double? fontSize,
+      required final String title,
+      final String? subtitle,
+      final VoidCallback? onPressed,
+      final Color? color}) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -439,151 +423,110 @@ class OrderDetailsScreen extends ConsumerWidget {
                         padding: EdgeInsets.zero,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-
                           final elementDetails = element?.orderDetails?[index];
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Column(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: Dimensions.radius10,
-                                        clipBehavior: Clip.antiAlias,
-                                        child: SizedBox.square(
-                                          dimension: 105,
-                                          child: Image.asset(
-                                            Assets.assetsImagesMilkProd,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                  ClipRRect(
+                                    borderRadius: Dimensions.radius10,
+                                    clipBehavior: Clip.antiAlias,
+                                    child: SizedBox.square(
+                                      dimension: 105,
+                                      child: Image.asset(
+                                        Assets.assetsImagesMilkProd,
+                                        fit: BoxFit.cover,
                                       ),
-                                      10.0.width,
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                    ),
+                                  ),
+                                  10.0.width,
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        4.0.height,
+                                        Row(
                                           children: [
-                                            4.0.height,
-                                            Row(
-                                              children: [
-                                                TextView(
-                                                  elementDetails?.productName,
-                                                  textType: TextType.header,
-                                                  size: TextSize.title,
-                                                  height: 1,
-                                                  color: Palette.textColor,
-                                                ),
-                                                5.0.width,
-                                                TextView(
-                                                  '(500 grams)',
-                                                  textType: TextType.regular,
-                                                  height: 0.5,
-                                                  color: Palette.textColor,
-                                                ),
-                                              ],
+                                            TextView(
+                                              elementDetails?.productName,
+                                              textType: TextType.header,
+                                              size: TextSize.title,
+                                              height: 1,
+                                              color: Palette.textColor,
                                             ),
+                                            5.0.width,
+                                            TextView(
+                                              '(500 grams)',
+                                              textType: TextType.regular,
+                                              height: 0.5,
+                                              color: Palette.textColor,
+                                            ),
+                                          ],
+                                        ),
+                                        TextView(
+
+                                          '₹50',
+                                          textType: TextType.regular,
+                                          height: 1,
+                                          color: Palette.lightTextColor,
+                                        ),
+                                        5.0.height,
+                                        _textTile(
+                                          icon: Assets.assetsIconsClock,
+                                          title: 'Delivery Plan:',
+                                          subtitle: 'Daily',
+                                          fontSize: TextSize.regular,
+                                        ),
+                                        5.0.height,
+                                        _textTile(
+                                          icon: Assets.assetsIconsCalender2,
+                                          title: orderType == OrderType.oneTime ? 'Delivery:' : 'Next delivery:',
+                                          subtitle: '31-12-21',
+                                          fontSize: TextSize.regular,
+                                        ),
+                                        5.0.height,
+                                        Row(
+                                          children: [
+                                            _textTile(
+                                              title: 'Quantity:',
+                                              subtitle: '1',
+                                              fontSize: TextSize.regular,
+                                            ),
+                                            const Spacer(),
                                             TextView(
                                               '₹50',
                                               textType: TextType.regular,
-                                              height: 1,
-                                              color: Palette.lightTextColor,
+                                              height: 1.5,
+                                              color: Palette.textColor,
                                             ),
-                                            5.0.height,
-                                            _textTile(
-                                              icon: Assets.assetsIconsClock,
-                                              title: 'Delivery Plan:',
-                                              subtitle: 'Daily',
-                                              fontSize: TextSize.regular,
-                                            ),
-                                            5.0.height,
-                                            _textTile(
-                                              icon: Assets.assetsIconsCalender2,
-                                              title: orderType == OrderType.oneTime ? 'Delivery:' : 'Next delivery:',
-                                              subtitle: '31-12-21',
-                                              fontSize: TextSize.regular,
-                                            ),
-                                            5.0.height,
-                                            Row(
-                                              children: [
-                                                _textTile(
-                                                  title: 'Quantity:',
-                                                  subtitle: '1',
-                                                  fontSize: TextSize.regular,
-                                                ),
-                                                const Spacer(),
-                                                TextView(
-                                                  '₹50',
-                                                  textType: TextType.regular,
-                                                  height: 1.5,
-                                                  color: Palette.textColor,
-                                                ),
-                                              ],
-                                            ),
-                                            5.0.height,
-                                            if (orderType == OrderType.subscription)
-                                              _textTile(
-                                                title: 'Quantity of items delivered:',
-                                                subtitle: '10',
-                                                fontSize: TextSize.regular,
-                                              ),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                        5.0.height,
+                                        if (orderType == OrderType.subscription)
+                                          _textTile(
+                                            title: 'Quantity of items delivered:',
+                                            subtitle: '10',
+                                            fontSize: TextSize.regular,
+                                          ),
+                                      ],
+                                    ),
                                   ),
-                                  10.0.height,
-                                  _textTile(
-                                    icon: Assets.assetsIconsShippingBox,
-                                    title: 'Status:',
-                                    fontSize: TextSize.regular,
-                                  ),
-                                  5.0.height,
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      _orderStatusWidget(
-                                        icon: orderStatus == OrderStatus.placed ? Assets.assetsIconsProcessing : null,
-                                        title: 'Order placed',
-                                        color: orderStatus == OrderStatus.placed ? Palette.orangeIconColor : Palette.lightTextColor,
-                                      ),
-                                      5.0.width,
-                                      const SizedBox(
-                                        height: 1,
-                                        width: 5,
-                                        child: ColoredBox(color: Palette.lightIconColor),
-                                      ),
-                                      5.0.width,
-                                      _orderStatusWidget(
-                                        icon: orderStatus == OrderStatus.processing ? Assets.assetsIconsProcessing : null,
-                                        title: 'Processing',
-                                        color: orderStatus == OrderStatus.processing ? Palette.orangeIconColor : Palette.lightTextColor,
-                                      ),
-                                      5.0.width,
-                                      const SizedBox(
-                                        height: 1,
-                                        width: 5,
-                                        child: ColoredBox(color: Palette.lightIconColor),
-                                      ),
-                                      5.0.width,
-                                      _orderStatusWidget(
-                                        icon: orderStatus == OrderStatus.delivered ? Assets.assetsIconsTickRound : null,
-                                        title: 'Delivered',
-                                        color: orderStatus == OrderStatus.delivered ? Palette.success2Color : Palette.lightTextColor,
-                                      ),
-                                    ],
-                                  )
                                 ],
                               ),
+                              10.0.height,
+                              _textTile(
+                                icon: Assets.assetsIconsShippingBox,
+                                title: 'Status:',
+                                fontSize: TextSize.regular,
+                              ),
+                              5.0.height,
+                              _OrderStatusWidget(orderStatus: element?.orderStatus ?? ''),
                             ],
                           );
                         },
@@ -654,6 +597,78 @@ class OrderDetailsScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _OrderStatusWidget extends StatelessWidget {
+  const _OrderStatusWidget({required this.orderStatus});
+
+  final String orderStatus;
+
+  Row _orderStatusWidget({
+    String? icon,
+    required String title,
+    required bool isActive,
+  }) {
+    return Row(
+      children: [
+        if (icon != null)
+          SizedBox.square(
+            dimension: 16,
+            child: SvgPicture.asset(
+              icon,
+              color: isActive ? Palette.orangeIconColor : Palette.lightTextColor,
+            ),
+          ),
+        5.0.width,
+        TextView(
+          title,
+          textType: TextType.regular,
+          color: isActive ? Palette.orangeIconColor : Palette.lightTextColor,
+          height: 1,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _orderStatusWidget(
+          title: 'Order placed',
+          isActive: orderStatus.toLowerCase().contains('placed'),
+          icon: orderStatus.toLowerCase().contains('placed') ? Assets.assetsIconsProcessing : null,
+        ),
+        5.0.width,
+        const SizedBox(
+          height: 1,
+          width: 5,
+          child: ColoredBox(color: Palette.lightIconColor),
+        ),
+        5.0.width,
+        _orderStatusWidget(
+          title: 'Processing',
+          isActive: orderStatus.toLowerCase().contains('processing'),
+          icon: orderStatus.toLowerCase().contains('processing') ? Assets.assetsIconsProcessing : null,
+        ),
+        5.0.width,
+        const SizedBox(
+          width: 5,
+          height: 1,
+          child: ColoredBox(color: Palette.lightIconColor),
+        ),
+        5.0.width,
+        _orderStatusWidget(
+          title: 'Delivered',
+          isActive: orderStatus.toLowerCase().contains('delivered'),
+          icon: orderStatus.toLowerCase().contains('delivered') ? Assets.assetsIconsTickRound : null,
+        ),
+      ],
     );
   }
 }

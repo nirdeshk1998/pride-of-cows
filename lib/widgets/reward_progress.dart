@@ -33,10 +33,12 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
   //   // debugPrint('Position: ${(offset.dx + size.width) / 2}, ${(offset.dy + size.height) / 2}');
   // }
 
+  int get val => widget.value > 50 ? 50 : widget.value;
+
   @override
   Widget build(BuildContext context) {
     final double progressWidth = MediaQuery.of(context).size.width - 80;
-    final double progressValue = ((widget.value) * 100) / 50;
+    final double progressValue = (val * 100) / 50;
     final double progress = ((progressWidth) * progressValue) / 100;
 
     return Stack(
@@ -97,7 +99,7 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
                           color: const Color(0xFFEEF9FF),
                           width: 2,
                         ),
-                        color: (index * 10) <= widget.value ? Palette.primaryColor : const Color(0xff8AD6FF),
+                        color: (index * 10) <= val ? Palette.primaryColor : const Color(0xff8AD6FF),
                       ),
                     ),
                   ),
@@ -108,7 +110,7 @@ class _RewardProgressBarState extends State<RewardProgressBar> {
                     textType: TextType.regular,
                     size: TextSize.regularSmall,
                     height: 1,
-                    color: (index * 10) <= widget.value ? Palette.primaryColor : const Color(0xff658395),
+                    color: (index * 10) <= val ? Palette.primaryColor : const Color(0xff658395),
                   ),
                 ],
               ),

@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poc/network/dio_client.dart';
 import 'package:poc/screens/authentication/data/auth_repository.dart';
 import 'package:poc/screens/authentication/data/models/login_model.dart';
 import 'package:poc/screens/authentication/data/models/otp_model.dart';
 import 'package:poc/screens/authentication/register_screen.dart';
 import 'package:poc/screens/main/main_screen.dart';
+import 'package:poc/utils/base_provider.dart';
 import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/strings.dart';
@@ -15,7 +16,7 @@ import 'package:poc/utils/utils.dart';
 
 final loginProvider = ChangeNotifierProvider.autoDispose((ref) => LoginChangeProvider());
 
-class LoginChangeProvider with ChangeNotifier {
+class LoginChangeProvider extends BaseChangeNotifier {
   final AuthenticationRepository _authRepo = AuthenticationRepository();
 
   final TextEditingController _numberController = TextEditingController();
@@ -25,7 +26,6 @@ class LoginChangeProvider with ChangeNotifier {
   bool _isNumberValid = false;
   bool _isOtpValid = false;
   bool _isOTPSent = false;
-  bool _isLoading = false;
 
   String? _deviceName;
   String? _deviceOs;
@@ -39,11 +39,10 @@ class LoginChangeProvider with ChangeNotifier {
   bool get isNumberValid => _isNumberValid;
   bool get isOtpValid => _isOtpValid;
   bool get isOtpSent => _isOTPSent;
-  bool get isLoading => _isLoading;
 
-  void showLoader(bool value) {
-    _isLoading = value;
-    notifyListeners();
+  @override
+  Future<void> postCreateState() async {
+    await _getDeviceInfoFun();
   }
 
   void onSendOtpButton(context) async {
@@ -53,7 +52,6 @@ class LoginChangeProvider with ChangeNotifier {
     }
 
     showLoader(true);
-    await _getDeviceInfoFun();
     await loginOtpRequest(context);
     _isOTPSent = true;
     showLoader(false);
@@ -71,9 +69,10 @@ class LoginChangeProvider with ChangeNotifier {
     showLoader(true);
     await otpVerificationRequest(context);
     showLoader(false);
-    (_isNewUser == UserType.guest.index)
-        ? await Utils.push(context, const RegisterScreen())
-        : await Utils.pushAndRemoveUntil(context, const MainScreen());
+    await Utils.pushAndRemoveUntil(
+      context,
+      (_isNewUser == UserType.guest.index) ? const RegisterScreen() : const MainScreen(),
+    );
   }
 
   void onResendSmsButton(context) async {
@@ -99,25 +98,78 @@ class LoginChangeProvider with ChangeNotifier {
   }
 
   Future<void> loginOtpRequest(context) async {
-    await _authRepo.sendOtpRepo(_loginReqModel).then(
-      (response) {
-        final result = OtpResModel.fromJson(response.data);
-
-        if (response.statusCode == 200) {
-          _receivedOtp = result.otp.toString();
-          _isNewUser = result.isNew;
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
+    _authRepo.sendOtpRepo(_loginReqModel).responseHandler(
+      context,
+      onSuccess: (response) {
+        final result = OtpResModel.fromJson(response);
+        _receivedOtp = result.otp.toString();
+        _isNewUser = result.isNew;
       },
-    ).onError(
-      (error, stackTrace) {
+      onException: (e, st) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
       },
     );
+
+    // .then(
+    //   (response) {
+    //     final result = OtpResModel.fromJson(response.data);
+
+    //     if (response.statusCode == 200) {
+    //       _receivedOtp = result.otp.toString();
+    //       _isNewUser = result.isNew;
+    //       Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+    //     } else {
+    //       Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+    //     }
+    //   },
+    // ).onError(
+    //   (DioError error, stackTrace) {
+    //     showLoader(false);
+    //     Utils.showPrimarySnackbar(context, error.message, type: SnackType.debugError);
+    //   },
+    // ).catchError(
+    //   (Object e) {
+    //     showLoader(false);
+    //     Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+    //   },
+    //   test: (Object e) {
+    //     showLoader(false);
+    //     Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+    //     return false;
+    //   },
+    // );
   }
+
+  // Future<void> loginOtpRequest(context) async {
+  //   await _authRepo.sendOtpRepo(_loginReqModel).then(
+  //     (response) {
+  //       final result = OtpResModel.fromJson(response.data);
+
+  //       if (response.statusCode == 200) {
+  //         _receivedOtp = result.otp.toString();
+  //         _isNewUser = result.isNew;
+  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+  //       } else {
+  //         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+  //       }
+  //     },
+  //     ).onError(
+  //       (DioError error, stackTrace) {
+  //         showLoader(false);
+  //         Utils.showPrimarySnackbar(context, error.message, type: SnackType.debugError);
+  //       },
+  //     ).catchError(
+  //       (Object e) {
+  //         showLoader(false);
+  //         Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+  //       },
+  //       test: (Object e) {
+  //         showLoader(false);
+  //         Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+  //         return false;
+  //       },
+  //   );
+  // }
 
   Future<void> otpVerificationRequest(context) async {
     await _authRepo.verifyOtpRepo(_otpReqModel).then(
@@ -133,9 +185,19 @@ class LoginChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -152,9 +214,19 @@ class LoginChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -172,9 +244,19 @@ class LoginChangeProvider with ChangeNotifier {
         }
       },
     ).onError(
-      (error, stackTrace) {
+      (DioError error, stackTrace) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, stackTrace.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
@@ -184,7 +266,6 @@ class LoginChangeProvider with ChangeNotifier {
     await LocalStorage.setString(element?.userID.toString(), StorageField.userId);
     await LocalStorage.setString(element?.mobileNo, StorageField.mobileNumber);
     await LocalStorage.setString(element?.firstName, StorageField.firstName);
-    print(LocalStorage.getString(StorageField.firstName));
     await LocalStorage.setString(element?.lastName, StorageField.lastName);
     await LocalStorage.setString(element?.middleName, StorageField.middleName);
     await LocalStorage.setString(element?.gender, StorageField.gender);

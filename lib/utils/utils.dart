@@ -74,7 +74,7 @@ class Utils {
       case SnackType.debugError:
         if (kReleaseMode) break;
         debugPrint('\x1B[31mDebugError: $text\x1B[0m');
-        color = const Color.fromARGB(255, 255, 94, 7);
+        color = const Color.fromARGB(255, 7, 110, 255);
         textColor = Colors.white;
         text = 'Debug Error: $text';
         break;

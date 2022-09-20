@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
@@ -21,7 +20,7 @@ final appbarProvider = ChangeNotifierProvider<AppBarChangeProvider>((ref) {
 class AppBarChangeProvider extends BaseChangeNotifier {
   final ListDataRepository _listDataRepo = ListDataRepository();
 
-  String? _userId;
+  String? _userId, _pincode;
   List<AvailablePincodeData>? _availablePincodeList;
   AvailablePincodeData? _selectedValue;
 
@@ -38,7 +37,6 @@ class AppBarChangeProvider extends BaseChangeNotifier {
     await _listDataRepo.availablePincodeRepo(_userId ?? '').then(
       (response) async {
         final result = AvailablePincodeResModel.fromJson(response.data);
-        debugPrint('result: $result');
 
         if (response.statusCode == 200) {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
@@ -49,17 +47,25 @@ class AppBarChangeProvider extends BaseChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
+        showLoader(false);   
+        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
+      },
+    ).catchError(
+      (Object e) {
         showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+      },
+      test: (Object e) {
+        showLoader(false);
+        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
+        return false;
       },
     );
   }
 
   Future<void> _gettingPrefs() async {
     _userId = await LocalStorage.getString(StorageField.userId);
-    _userId = await LocalStorage.getString(StorageField.pincode);
+    _pincode = await LocalStorage.getString(StorageField.pincode);
   }
 
   void onSelected(AvailablePincodeData value) {

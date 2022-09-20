@@ -32,227 +32,232 @@ class OrdersScreen extends ConsumerWidget {
     return Scaffold(
       body: StackedLoader(
         isLoading: watch.isLoading,
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
+          // padding: EdgeInsets.zero,
           children: [
             const SecondaryAppBar(),
-            10.0.height,
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.defaultPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextView(
-                    'Orders',
-                    textType: TextType.header,
-                  ),
-                  10.0.height,
-                  const SearchFormField(
-                    hintText: 'Search by products, order no., date, etc.',
-                  ),
-                  30.0.height,
-                  ListView.separated(
-                    itemCount: watch.orderData?.length ?? 0,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (BuildContext context, int index) => 30.0.height,
-                    itemBuilder: (context, index) {
-                      final element = watch.orderData?[index];
-                      final elementDetails = element?.orderDetails?.first;
+            Dimensions.defaultPadding.height,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextView(
+                      'Orders',
+                      textType: TextType.header,
+                      height: 1,
+                    ),
+                    10.0.height,
+                    const SearchFormField(
+                      hintText: 'Search by products, order no., date, etc.',
+                    ),
+                    30.0.height,
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: watch.orderData?.length ?? 0,
+                        shrinkWrap: false,
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (BuildContext context, int index) => 30.0.height,
+                        itemBuilder: (context, index) {
+                          final element = watch.orderData?[index];
+                          final elementDetails = element?.orderDetails?.first;
 
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Palette.backgroundColor,
-                        ),
-                        padding: const EdgeInsets.only(
-                          left: 5,
-                          right: 15,
-                          top: 5,
-                          bottom: 10,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Row(
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Palette.backgroundColor,
+                            ),
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              right: 15,
+                              top: 5,
+                              bottom: 10,
+                            ),
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Container(
-                                  height: 34.0,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: Dimensions.radius5,
-                                    color: Colors.white,
-                                  ),
-                                  child: TextView(
-                                    index.isEven ? 'One-time order' : "Subscription",
-                                    textType: TextType.regularBold,
-                                    color: Palette.primaryColor,
-                                  ),
-                                ),
-                                const Spacer(),
-                                CupertinoButton(
-                                  padding: EdgeInsets.zero,
-                                  minSize: 0,
-                                  onPressed: () => Utils.push(
-                                    context,
-                                    OrderDetailsScreen(
-                                      orderId: element?.orderId,
-                                      orderType: index.isEven ? OrderType.oneTime : OrderType.subscription,
-                                      orderStatus: index.isEven ? OrderStatus.processing : OrderStatus.processing,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      TextView(
-                                        "VIEW DETAILS",
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 34.0,
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: Dimensions.radius5,
+                                        color: Colors.white,
+                                      ),
+                                      child: TextView(
+                                        index.isEven ? 'One-time order' : "Subscription",
                                         textType: TextType.regularBold,
-                                        size: TextSize.regularSmall,
                                         color: Palette.primaryColor,
                                       ),
-                                      5.0.width,
-                                      SizedBox.square(
-                                        dimension: 10.0,
-                                        child: SvgPicture.asset(
-                                          Assets.assetsIconsArrowRight2,
-                                          color: Palette.primaryColor,
+                                    ),
+                                    const Spacer(),
+                                    CupertinoButton(
+                                      padding: EdgeInsets.zero,
+                                      minSize: 0,
+                                      onPressed: () => Utils.push(
+                                        context,
+                                        OrderDetailsScreen(
+                                          orderId: element?.orderId,
+                                          orderType: index.isEven ? OrderType.oneTime : OrderType.subscription,
+                                          orderStatus: index.isEven ? OrderStatus.processing : OrderStatus.processing,
                                         ),
-                                      )
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          TextView(
+                                            "VIEW DETAILS",
+                                            textType: TextType.regularBold,
+                                            size: TextSize.regularSmall,
+                                            color: Palette.primaryColor,
+                                          ),
+                                          5.0.width,
+                                          SizedBox.square(
+                                            dimension: 10.0,
+                                            child: SvgPicture.asset(
+                                              Assets.assetsIconsArrowRight2,
+                                              color: Palette.primaryColor,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                10.0.height,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      _textTile(
+                                        icon: Assets.assetsIconsCalender2,
+                                        title: 'Start:',
+                                        subtitle: elementDetails?.fromDate,
+                                      ),
+                                      5.0.height,
+                                      _textTile(
+                                        icon: Assets.assetsIconsCalender2,
+                                        title: 'End:',
+                                        subtitle: elementDetails?.toDate,
+                                      ),
+                                      5.0.height,
+                                      _textTile(icon: Assets.assetsIconsClock, title: 'Delivery Plan:', subtitle: 'Daily'),
+                                      5.0.height,
+                                      _textTile(icon: Assets.assetsIconsWallet, title: 'Total:', subtitle: '₹${element?.totalAmount}'),
+                                      5.0.height,
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: ImageView(
+                                          elementDetails?.thumbImgUrl,
+                                          height: 55,
+                                          width: 55,
+                                        ),
+                                      ),
+                                      10.0.height,
+                                      const Divider(
+                                        height: 1,
+                                        thickness: 1,
+                                        color: Palette.surfaceColor,
+                                      ),
+                                      10.0.height,
+                                      Row(
+                                        children: [
+                                          TextView(
+                                            'Order no.:',
+                                            textType: TextType.subtitle,
+                                            color: Palette.lightTextColor,
+                                          ),
+                                          5.0.width,
+                                          TextView(
+                                            element?.pocOrderId,
+                                            textType: TextType.subtitle,
+                                            color: Palette.textColor,
+                                          ),
+                                        ],
+                                      ),
+                                      5.0.height,
+                                      Row(
+                                        children: [
+                                          SizedBox.square(
+                                            dimension: 16,
+                                            child: SvgPicture.asset(
+                                              index.isEven ? Assets.assetsIconsOngoing : Assets.assetsIconsOngoing,
+                                              color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
+                                            ),
+                                          ),
+                                          5.0.width,
+                                          TextView(
+                                            index.isEven ? 'Ongoing' : 'Ongoing',
+                                            textType: TextType.subtitle,
+                                            color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                            10.0.height,
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  _textTile(
-                                    icon: Assets.assetsIconsCalender2,
-                                    title: 'Start:',
-                                    subtitle: elementDetails?.fromDate,
-                                  ),
-                                  5.0.height,
-                                  _textTile(
-                                    icon: Assets.assetsIconsCalender2,
-                                    title: 'End:',
-                                    subtitle: elementDetails?.toDate,
-                                  ),
-                                  5.0.height,
-                                  _textTile(icon: Assets.assetsIconsClock, title: 'Delivery Plan:', subtitle: 'Daily'),
-                                  5.0.height,
-                                  _textTile(icon: Assets.assetsIconsWallet, title: 'Total:', subtitle: '₹${element?.totalAmount}'),
-                                  5.0.height,
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: ImageView(
-                                      elementDetails?.thumbImgUrl,
-                                      height: 55,
-                                      width: 55,
-                                    ),
-                                  ),
-                                  10.0.height,
-                                  const Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                    color: Palette.surfaceColor,
-                                  ),
-                                  10.0.height,
-                                  Row(
-                                    children: [
-                                      TextView(
-                                        'Order no.:',
-                                        textType: TextType.subtitle,
-                                        color: Palette.lightTextColor,
-                                      ),
-                                      5.0.width,
-                                      TextView(
-                                        element?.pocOrderId,
-                                        textType: TextType.subtitle,
-                                        color: Palette.textColor,
-                                      ),
-                                    ],
-                                  ),
-                                  5.0.height,
-                                  Row(
-                                    children: [
-                                      SizedBox.square(
-                                        dimension: 16,
-                                        child: SvgPicture.asset(
-                                          index.isEven ? Assets.assetsIconsOngoing : Assets.assetsIconsOngoing,
-                                          color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
-                                        ),
-                                      ),
-                                      5.0.width,
-                                      TextView(
-                                        index.isEven ? 'Ongoing' : 'Ongoing',
-                                        textType: TextType.subtitle,
-                                        color: index.isEven ? Palette.goldenIconColor : Palette.goldenIconColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                          );
+                        },
+                      ),
+                    ),
+                    Dimensions.defaultPadding.height,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PrimaryIconButton(
+                          svg: Assets.assetsIconsArrowLeftLong,
+                          padding: const EdgeInsets.all(10.0),
+                          onPressed: () {},
                         ),
-                      );
-                    },
-                  ),
-                  Dimensions.defaultPadding.height,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PrimaryIconButton(
-                        svg: Assets.assetsIconsArrowLeftLong,
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () {},
-                      ),
-                      PrimaryTextButton(
-                        title: '1',
-                        size: TextSize.regular,
-                        weight: FontWeight.bold,
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () {},
-                      ),
-                      PrimaryTextButton(
-                        title: '2',
-                        size: TextSize.regular,
-                        color: Palette.lightTextColor,
-                        weight: FontWeight.bold,
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () {},
-                      ),
-                      PrimaryTextButton(
-                        title: '3',
-                        size: TextSize.regular,
-                        color: Palette.lightTextColor,
-                        weight: FontWeight.bold,
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () {},
-                      ),
-                      PrimaryIconButton(
-                        svg: Assets.assetsIconsArrowRightLong,
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  Dimensions.defaultPadding.height,
-                ],
+                        PrimaryTextButton(
+                          title: '1',
+                          size: TextSize.regular,
+                          weight: FontWeight.bold,
+                          padding: const EdgeInsets.all(10.0),
+                          onPressed: () {},
+                        ),
+                        PrimaryTextButton(
+                          title: '2',
+                          size: TextSize.regular,
+                          color: Palette.lightTextColor,
+                          weight: FontWeight.bold,
+                          padding: const EdgeInsets.all(10.0),
+                          onPressed: () {},
+                        ),
+                        PrimaryTextButton(
+                          title: '3',
+                          size: TextSize.regular,
+                          color: Palette.lightTextColor,
+                          weight: FontWeight.bold,
+                          padding: const EdgeInsets.all(10.0),
+                          onPressed: () {},
+                        ),
+                        PrimaryIconButton(
+                          svg: Assets.assetsIconsArrowRightLong,
+                          padding: const EdgeInsets.all(10.0),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                    Dimensions.defaultPadding.height,
+                  ],
+                ),
               ),
             ),
           ],

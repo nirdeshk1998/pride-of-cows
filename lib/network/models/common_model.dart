@@ -20,6 +20,20 @@ class CommonResModel {
   }
 }
 
+class CommonRessModel<T> {
+  int? status;
+  String? message;
+  T? data;
+
+  CommonRessModel({this.data, this.status, this.message});
+
+  CommonRessModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'];
+    status = json['status'];
+    message = json['message'];
+  }
+}
+
 class CommonReqModel {
   String? userId;
   String? orderId;
