@@ -112,7 +112,7 @@ class LoginChangeProvider extends BaseChangeNotifier {
 
     // .then(
     //   (response) {
-    //     final result = OtpResModel.fromJson(response.data);
+    //     final result = OtpResModel.fr   mJson(response.data);
 
     //     if (response.statusCode == 200) {
     //       _receivedOtp = result.otp.toString();

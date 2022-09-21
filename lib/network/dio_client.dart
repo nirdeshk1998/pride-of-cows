@@ -113,7 +113,7 @@ class BaseDio {
         onReceiveProgress: onReceiveProgress,
       );
       return response;
-    } on DioError {
+    } catch (e) {
       rethrow;
     }
   }

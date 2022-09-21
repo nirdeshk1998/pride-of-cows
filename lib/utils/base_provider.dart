@@ -62,14 +62,14 @@ extension ResponseHandling on Future<Response> {
   //   );
   // }
 
-  void responseHandler(
+  Future<void> responseHandler(
     BuildContext context, {
     required void Function(dynamic response) onSuccess,
     // required void Function(CommonResModel response) onError,
     required void Function(dynamic e, StackTrace? st) onException,
   }) async =>
       await then(
-        (i) => onSuccess(i.data),
+        (i) => onSuccess(i),
       ).onError(
         (DioError error, stackTrace) {
           final res = CommonResModel.fromJson(error.response?.data);
@@ -86,7 +86,6 @@ extension ResponseHandling on Future<Response> {
               break;
           }
 
-          Utils.showPrimarySnackbar(context, error.response?.data, type: SnackType.debugError);
           onException(error, stackTrace);
         },
       ).catchError(

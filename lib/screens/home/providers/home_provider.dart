@@ -1,5 +1,3 @@
-
-import 'package:dio/dio.dart';
 import 'package:poc/screens/home/data/home_repo.dart';
 import 'package:poc/screens/home/data/models/category_model.dart';
 import 'package:poc/screens/home/data/models/home_model.dart';
@@ -45,45 +43,47 @@ class HomeChangeProvider extends BaseChangeNotifier {
   Future<void> postCreateState() async {
     await _gettingPrefs();
     await _homeDataRequest();
-
-
   }
 
   Future<void> _homeDataRequest() async {
-    await _homeRepo.homeDataRepo(_userId ?? '').then(
-      (response) async {
+    await _homeRepo.homeDataRepo(_userId ?? '').responseHandler(
+      context,
+      onSuccess: (response) {
         final result = HomeResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          _categoryList = result.categoryListResModel?.data;
-          _topPicksList = result.topPicksData;
-          // _orderAgainList = result.orderAgainData;
-          _aboutVideoData = result.aboutVideoResModel?.data;
-          _referAndEarnData = result.referEarnResModel?.data;
-          _dealsOffersList = result.dealsOfferData;
-          _myCrownsData = result.earnedCrownResModel;
+        _categoryList = result.categoryListResModel?.data;
+        _topPicksList = result.topPicksData;
+        // _orderAgainList = result.orderAgainData;
+        _aboutVideoData = result.aboutVideoResModel?.data;
+        _referAndEarnData = result.referEarnResModel?.data;
+        _dealsOffersList = result.dealsOfferData;
+        _myCrownsData = result.earnedCrownResModel;
 
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
+        Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
       },
-    ).onError(
-      (DioError error, stackTrace) {
+      onException: (e, st) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
-      },
-    ).catchError(
-      (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-      },
-      test: (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-        return false;
       },
     );
+    // then(
+    //   (response) async {
+    //     final result = HomeResModel.fromJson(response.data);
+
+    //     if (response.statusCode == 200) {
+    //       _categoryList = result.categoryListResModel?.data;
+    //       _topPicksList = result.topPicksData;
+    //       // _orderAgainList = result.orderAgainData;
+    //       _aboutVideoData = result.aboutVideoResModel?.data;
+    //       _referAndEarnData = result.referEarnResModel?.data;
+    //       _dealsOffersList = result.dealsOfferData;
+    //       _myCrownsData = result.earnedCrownResModel;
+
+    //       Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+    //     } else {
+    //       Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
+    //     }
+    //   },
+    // );
   }
 
   Future<void> _gettingPrefs() async {
