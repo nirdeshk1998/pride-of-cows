@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:poc/screens/cart/cart_summary_screen.dart';
 import 'package:poc/screens/checkout/checkout_screen.dart';
 import 'package:poc/screens/offers/data/models/offer_model.dart';
 import 'package:poc/screens/offers/data/offer_repository.dart';
@@ -27,20 +25,16 @@ class OfferChangeProvider extends BaseChangeNotifier {
   }
 
   Future<void> _getOfferRequest() async {
-    await _offerRepo.getOfferList(_userId).then((response) {
-      debugPrint('result: ${response.data}');
-      final result = DealsOffersResModel.fromJson(response.data);
+    await _offerRepo.getOfferList(_userId).responseHandler(
+      context,
+      onSuccess: (response) {
+        final result = DealsOffersResModel.fromJson(response.data);
 
-      if (response.statusCode == 200) {
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
         _offerList = result.data;
-      } else {
-        Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-      }
-    }).onError(
-      (error, stackTrace) {
+      },
+      onException: (e, st) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.toString(), type: SnackType.debug);
       },
     );
   }
@@ -79,7 +73,7 @@ class OfferChangeProvider extends BaseChangeNotifier {
     notifyListeners();
   }
 
-  void onPress (){
+  void onPress() {
     showLoader(true);
 
     showLoader(false);

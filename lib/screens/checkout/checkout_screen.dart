@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/checkout/providers/checkout_provider.dart';
+import 'package:poc/screens/feedback/rating_page.dart';
 import 'package:poc/screens/offers/offers.dart';
-import 'package:poc/screens/cart/providers/cart_provider.dart';
-import 'package:poc/screens/cart/rating_page.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';
@@ -22,7 +21,7 @@ class CheckoutScreen extends ConsumerWidget {
     final watch = ref.watch(checkoutProvider);
 
     WidgetsBinding.instance.addPostFrameCallback(
-          (timeStamp) => read.initState(context),
+      (timeStamp) => read.initState(context),
     );
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,7 +30,7 @@ class CheckoutScreen extends ConsumerWidget {
       endDrawer: const CartOffersDrawer(),
       body: StackedLoader(
         isLoading: watch.isLoading,
-        child:   Column(
+        child: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(
@@ -77,9 +76,9 @@ class CheckoutScreen extends ConsumerWidget {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                   Text(
+                                  Text(
                                     "(${watch.cartItemData?.length})",
-                                    style: TextStyle(fontSize: 17),
+                                    style: const TextStyle(fontSize: 17),
                                   ),
                                 ],
                               ),
@@ -172,7 +171,7 @@ class CheckoutScreen extends ConsumerWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children:  [
+                            children: const [
                               TextView(
                                 "Subtotal",
                                 color: Color(0xff2B2B2B),
@@ -314,7 +313,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 "Total:",
                                 style: TextStyle(fontSize: 22, fontFamily: GoogleFonts.suranna().fontFamily, fontWeight: FontWeight.bold, letterSpacing: 1),
                               ),
-                               Text('\u{20B9}${'250'}', style: TextStyle(fontSize: 20)),
+                              const Text('\u{20B9}${'250'}', style: TextStyle(fontSize: 20)),
                             ],
                           ),
                           const SizedBox(
@@ -530,7 +529,6 @@ class CheckoutScreen extends ConsumerWidget {
           ],
         ),
       ),
-
     );
   }
 }
