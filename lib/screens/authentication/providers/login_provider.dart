@@ -101,7 +101,7 @@ class LoginChangeProvider extends BaseChangeNotifier {
     _authRepo.sendOtpRepo(_loginReqModel).responseHandler(
       context,
       onSuccess: (response) {
-        final result = OtpResModel.fromJson(response);
+        final result = OtpResModel.fromJson(response.data);
         _receivedOtp = result.otp.toString();
         _isNewUser = result.isNew;
       },

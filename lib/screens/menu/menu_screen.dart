@@ -3,22 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/address/my_address_book_screen.dart';
 import 'package:poc/screens/authentication/login_screen.dart';
 import 'package:poc/screens/contact_us/contact_us.dart';
 import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
-import 'package:poc/screens/address/my_address_book_screen.dart';
 import 'package:poc/screens/menu/providers/menu_provider.dart';
-import 'package:poc/screens/profile/my_profile.dart';
-
 import 'package:poc/screens/my_wallet/my_wallet_screen.dart';
-import 'package:poc/screens/orders/order_screen.dart';
 import 'package:poc/screens/notification/notification.dart';
+import 'package:poc/screens/orders/order_details_screen.dart';
+import 'package:poc/screens/orders/order_screen.dart';
+import 'package:poc/screens/profile/my_profile.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/rewards/rewards.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
@@ -228,7 +229,15 @@ class MenuScreen extends ConsumerWidget {
             ),
             menuListTile(
               title: 'Raise a Ticket',
-              onTap: () {},
+              onTap: () {
+                Utils.push(
+                    context,
+                    const OrderDetailsScreen(
+                      orderId: '',
+                      orderStatus: OrderStatus.delivered,
+                      orderType: OrderType.oneTime,
+                    ));
+              },
               icon: Assets.assetsIconsTicketRound,
             ),
             menuListTile(

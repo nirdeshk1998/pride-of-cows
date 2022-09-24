@@ -17,6 +17,7 @@ import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/form_fields.dart';
 import 'package:poc/widgets/loader.dart';
+import 'package:poc/widgets/rating_bar.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class OrderDetailsScreen extends ConsumerWidget {
@@ -30,6 +31,79 @@ class OrderDetailsScreen extends ConsumerWidget {
   final String? orderId;
   final OrderStatus orderStatus;
   final OrderType orderType;
+
+  void _ratingDialog(BuildContext context) {
+    Utils.showPrimaryDialog(
+      context,
+      headerTitle: 'Your Pride of Cows Experience',
+      bTitle: 'Submit',
+      onDone: () async {
+        Utils.pushAndRemoveUntil(
+          context,
+          const OrderStatusScreen(status: EditOrderStatus.rated),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextView(
+                'Rate delivery experience:',
+                textType: TextType.subtitle,
+                color: Palette.textColor,
+                height: 1,
+              ),
+              5.0.height,
+              const RatingBar()
+            ],
+          ),
+          30.0.height,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextView(
+                'Rate product experience:',
+                textType: TextType.subtitle,
+                color: Palette.textColor,
+                height: 1,
+              ),
+              5.0.height,
+              const RatingBar(),
+            ],
+          ),
+          30.0.height,
+          TextView(
+            'What went well?',
+            textType: TextType.subtitle,
+            color: Palette.textColor,
+            height: 1,
+          ),
+          5.0.height,
+          Wrap(
+            spacing: 15.0,
+            runSpacing: 10.0,
+            children: List.generate(
+              4,
+              (index) => PrimaryButton(
+                onPressed: () {},
+                title: ['Packaging', 'Product Quality', 'Delivery associate', 'Other'][index],
+                isFilled: index == 3,
+                strokeColor: Palette.outlineColor,
+                height: 46,
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              ),
+            ),
+          ),
+          5.0.height,
+          const SecondaryFormField(
+            hint: 'Type your reason here...',
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _actionButtons(BuildContext context) {
     return orderStatus == OrderStatus.delivered
@@ -49,104 +123,96 @@ class OrderDetailsScreen extends ConsumerWidget {
                       height: 1.3,
                     ),
                     const Spacer(),
-                    Row(
-                      children: List.generate(
-                        5,
-                        (index) => PrimaryIconButton(
-                          svg: Assets.assetsIconsStar,
-                          size: 20.0,
-                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
-                          onPressed: () => Utils.showPrimaryDialog(
-                            context,
-                            headerTitle: 'Your Pride of Cows Experience',
-                            bTitle: 'Submit',
-                            onDone: () async {
-                              Utils.pushAndRemoveUntil(
-                                context,
-                                const OrderStatusScreen(status: EditOrderStatus.rated),
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    TextView(
-                                      'Rate delivery experience:',
-                                      textType: TextType.subtitle,
-                                      color: Palette.textColor,
-                                      height: 1,
-                                    ),
-                                    5.0.height,
-                                    Row(
-                                      children: List.generate(
-                                        5,
-                                        (index) => PrimaryIconButton(
-                                          svg: Assets.assetsIconsStar,
-                                          size: 20.0,
-                                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                30.0.height,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    TextView(
-                                      'Rate product experience:',
-                                      textType: TextType.subtitle,
-                                      color: Palette.textColor,
-                                      height: 1,
-                                    ),
-                                    5.0.height,
-                                    Row(
-                                      children: List.generate(
-                                        5,
-                                        (index) => PrimaryIconButton(
-                                          svg: Assets.assetsIconsStar,
-                                          size: 20.0,
-                                          padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                30.0.height,
-                                TextView(
-                                  'What went well?',
-                                  textType: TextType.subtitle,
-                                  color: Palette.textColor,
-                                  height: 1,
-                                ),
-                                5.0.height,
-                                Wrap(
-                                  spacing: 15.0,
-                                  runSpacing: 10.0,
-                                  children: List.generate(
-                                    4,
-                                    (index) => PrimaryButton(
-                                      onPressed: () {},
-                                      title: ['Packaging', 'Product Quality', 'Delivery associate', 'Other'][index],
-                                      isFilled: index == 3,
-                                      strokeColor: Palette.outlineColor,
-                                      height: 46,
-                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                    ),
-                                  ),
-                                ),
-                                5.0.height,
-                                const SecondaryFormField(
-                                  hint: 'Type your reason here...',
-                                ),
-                              ],
-                            ),
-                          ),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      minSize: 0,
+                      onPressed: () => _ratingDialog(context),
+                      child: const AbsorbPointer(
+                        child: RatingBar(
+                          initialValue: 2,
                         ),
                       ),
                     ),
+                    // Row(
+                    //   children: List.generate(
+                    //     5,
+                    //     (index) => PrimaryIconButton(
+                    //       svg: Assets.assetsIconsStar,
+                    //       size: 20.0,
+                    //       padding: EdgeInsets.only(right: index < 4 ? 5.0 : 0.0),
+                    //       onPressed: () => Utils.showPrimaryDialog(
+                    //         context,
+                    //         headerTitle: 'Your Pride of Cows Experience',
+                    //         bTitle: 'Submit',
+                    //         onDone: () async {
+                    //           Utils.pushAndRemoveUntil(
+                    //             context,
+                    //             const OrderStatusScreen(status: EditOrderStatus.rated),
+                    //           );
+                    //         },
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //           children: [
+                    //             Column(
+                    //               crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //               children: [
+                    //                 TextView(
+                    //                   'Rate delivery experience:',
+                    //                   textType: TextType.subtitle,
+                    //                   color: Palette.textColor,
+                    //                   height: 1,
+                    //                 ),
+                    //                 5.0.height,
+                    //                 const RatingBar()
+                    //               ],
+                    //             ),
+                    //             30.0.height,
+                    //             Column(
+                    //               crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //               children: [
+                    //                 TextView(
+                    //                   'Rate product experience:',
+                    //                   textType: TextType.subtitle,
+                    //                   color: Palette.textColor,
+                    //                   height: 1,
+                    //                 ),
+                    //                 5.0.height,
+                    //                 const RatingBar(),
+                    //               ],
+                    //             ),
+                    //             30.0.height,
+                    //             TextView(
+                    //               'What went well?',
+                    //               textType: TextType.subtitle,
+                    //               color: Palette.textColor,
+                    //               height: 1,
+                    //             ),
+                    //             5.0.height,
+                    //             Wrap(
+                    //               spacing: 15.0,
+                    //               runSpacing: 10.0,
+                    //               children: List.generate(
+                    //                 4,
+                    //                 (index) => PrimaryButton(
+                    //                   onPressed: () {},
+                    //                   title: ['Packaging', 'Product Quality', 'Delivery associate', 'Other'][index],
+                    //                   isFilled: index == 3,
+                    //                   strokeColor: Palette.outlineColor,
+                    //                   height: 46,
+                    //                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             5.0.height,
+                    //             const SecondaryFormField(
+                    //               hint: 'Type your reason here...',
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Dimensions.defaultPadding.height,
@@ -231,13 +297,7 @@ class OrderDetailsScreen extends ConsumerWidget {
     );
   }
 
-  Row _textTile(
-      {final String? icon,
-      final double? fontSize,
-      required final String title,
-      final String? subtitle,
-      final VoidCallback? onPressed,
-      final Color? color}) {
+  Row _textTile({final String? icon, final double? fontSize, required final String title, final String? subtitle, final VoidCallback? onPressed, final Color? color}) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -470,7 +530,6 @@ class OrderDetailsScreen extends ConsumerWidget {
                                           ],
                                         ),
                                         TextView(
-
                                           '₹50',
                                           textType: TextType.regular,
                                           height: 1,

@@ -58,4 +58,9 @@ class Endpoint {
   static const String getOrderDetails = '/order/orderdtls';
   static const String editOrder = '/order/orderdtls';
 
+  // Vacation Mode
+  static const String cancelVacation = '/vacation/cancelvacation';
+  static const String setVacation = '/vacation/setvacation';
+
+
 }

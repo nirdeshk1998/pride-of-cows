@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/offers/offers.dart';
 import 'package:poc/screens/cart/providers/cart_provider.dart';
-import 'package:poc/screens/cart/rating_page.dart';
+import 'package:poc/screens/feedback/rating_page.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/buttons.dart';

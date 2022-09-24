@@ -64,7 +64,7 @@ extension ResponseHandling on Future<Response> {
 
   Future<void> responseHandler(
     BuildContext context, {
-    required void Function(dynamic response) onSuccess,
+    required void Function(Response response) onSuccess,
     // required void Function(CommonResModel response) onError,
     required void Function(dynamic e, StackTrace? st) onException,
   }) async =>

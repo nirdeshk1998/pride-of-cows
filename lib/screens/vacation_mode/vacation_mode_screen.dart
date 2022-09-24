@@ -10,7 +10,6 @@ import 'package:poc/utils/extensions.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
-import 'package:poc/widgets/label_container.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class VacationModeScreen extends ConsumerWidget {
@@ -18,8 +17,12 @@ class VacationModeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wProvider = ref.watch(vacationModeProvider);
-    final rProvider = ref.read(vacationModeProvider);
+    final watch = ref.watch(vacationModeProvider);
+    final read = ref.read(vacationModeProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
 
     return Scaffold(
       body: Column(
@@ -56,8 +59,8 @@ class VacationModeScreen extends ConsumerWidget {
                     const Spacer(),
                     CupertinoSwitch(
                       activeColor: Palette.successColor,
-                      value: wProvider.vacationMode,
-                      onChanged: (i) => rProvider.vacationModeFun(i),
+                      value: watch.vacationMode,
+                      onChanged: (i) => read.vacationModeFun(i),
                     ),
                   ],
                 ),
@@ -65,21 +68,40 @@ class VacationModeScreen extends ConsumerWidget {
                 _labelField(
                   label: 'Starts*',
                   hint: 'Select start date',
-                  value: '31-01-01',
-                  onPressed: () {},
+                  value: watch.startDate?.toddMMyyyy(),
+                  onPressed: () async {
+                    final startDate = await showDatePicker(
+                      context: context,
+                      initialDate: watch.startDate ?? watch.today,
+                      firstDate: watch.today,
+                      lastDate: DateTime(watch.today.year + 1),
+                    );
+
+                    read.onSelectStartDate(startDate);
+                  },
                 ),
                 30.0.height,
                 _labelField(
                   label: 'Ends',
                   hint: 'Select end date (optional)',
-                  onPressed: () {},
+                  value: watch.endDate?.toddMMyyyy(),
+                  onPressed: () async {
+                    final endDate = await showDatePicker(
+                      context: context,
+                      initialDate: watch.startDate ?? watch.today,
+                      firstDate: watch.today,
+                      lastDate: DateTime(watch.today.year + 1),
+                    );
+
+                    read.onSelectEndDate(endDate);
+                  },
                 ),
                 30.0.height,
                 Center(
                   child: PrimaryButton(
                     title: 'save changes',
                     width: 180,
-                    onPressed: () {},
+                    onPressed: () => read.onSaveChangesButton(),
                     padding: EdgeInsets.zero,
                   ),
                 ),
