@@ -335,3 +335,4 @@ class LoginChangeProvider extends BaseChangeNotifier {
     notifyListeners();
   }
 }
+

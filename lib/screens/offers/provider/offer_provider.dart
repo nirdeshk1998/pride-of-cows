@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:poc/screens/cart/cart_summary_screen.dart';
+import 'package:poc/screens/checkout/checkout_screen.dart';
 import 'package:poc/screens/offers/data/models/offer_model.dart';
 import 'package:poc/screens/offers/data/offer_repository.dart';
 import 'package:poc/utils/base_provider.dart';
@@ -55,7 +56,7 @@ class OfferChangeProvider extends BaseChangeNotifier {
       if (response.statusCode == 200) {
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
         appliedOffer = value;
-        Utils.push(context, const CartSummaryScreen());
+        Utils.push(context, const CheckoutScreen());
         notifyListeners();
       } else {
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);

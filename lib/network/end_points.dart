@@ -57,7 +57,8 @@ class Endpoint {
   static const String getOrder = '/order/myorder';
   static const String getOrderDetails = '/order/orderdtls';
   static const String editOrder = '/order/orderdtls';
-
+//checkout
+static const String checkout='/cart/checkoutitems';
   // Vacation Mode
   static const String cancelVacation = '/vacation/cancelvacation';
   static const String setVacation = '/vacation/setvacation';
