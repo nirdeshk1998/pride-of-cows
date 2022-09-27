@@ -130,7 +130,7 @@ class _MyProfileState extends ConsumerState<MyProfile> {
                       height: 20,
                     ),
                     PrimaryDropdownFormField(
-                      value:rProvider.gender,
+                      value:wProvider.gender,
                       onChanged: rProvider.onChangeGenderFun,
                       list: const ["Male", "Female","Others"],
                       label: 'Gender*',

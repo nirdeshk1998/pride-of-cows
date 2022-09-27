@@ -6,8 +6,11 @@ import 'package:poc/screens/checkout/providers/checkout_provider.dart';
 import 'package:poc/screens/feedback/rating_page.dart';
 import 'package:poc/screens/offers/offers.dart';
 import 'package:poc/styles/text_styles.dart';
+import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
+import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
 
@@ -77,7 +80,7 @@ class CheckoutScreen extends ConsumerWidget {
                                     width: 5,
                                   ),
                                   Text(
-                                    "(${watch.cartItemData?.length})",
+                                    "(${watch.totalItems})",
                                     style: const TextStyle(fontSize: 17),
                                   ),
                                 ],
@@ -93,19 +96,20 @@ class CheckoutScreen extends ConsumerWidget {
                           Visibility(
                             visible: watch.showItems,
                             child: ListView.builder(
-                              itemCount: 3,
+                              itemCount: watch.cartItemData?.length??0,
                               shrinkWrap: true,
                               physics: const ScrollPhysics(),
                               itemBuilder: (context, index) {
+                                final element=watch.cartItemData?[index];
                                 return Column(
                                   children: [
                                     Row(
                                       children: [
-                                        const SizedBox.square(
+                                         SizedBox.square(
                                           dimension: 100,
-                                          child: Image(
-                                            image: AssetImage(Assets.assetsImagesMilkProd),
-                                            fit: BoxFit.cover,
+                                          child: ImageView(
+                                      '${element?.thumbImg}',
+
                                           ),
                                         ),
                                         10.0.width,
@@ -117,34 +121,34 @@ class CheckoutScreen extends ConsumerWidget {
                                                 height: 20,
                                               ),
                                               TextView(
-                                                "Ghee (250 grams)",
+                                                element?.productName,
                                                 textType: TextStyles.subheader,
                                               ),
-                                              Text('\u{20B9}${"50"}', style: TextStyles.hint),
+                                              Text('\u{20B9}${element?.itemPrice}', style: TextStyles.hint),
                                               Row(
-                                                children: const [
+                                                children: [
                                                   Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
-                                                  Text("Alternate"),
+                                                  Text("${element?.deliveryPlan}"),
                                                 ],
                                               ),
                                               const SizedBox(
                                                 height: 2,
                                               ),
                                               Row(
-                                                children: const [
+                                                children: [
                                                   Text("Delivery: ", style: TextStyle(color: Colors.grey)),
-                                                  Text("10-09-2022"),
+                                                  Text('${element?.endDate}'),
                                                 ],
                                               ),
                                               const SizedBox(
                                                 height: 2,
                                               ),
                                               Row(
-                                                children: const [
+                                                children:  [
                                                   Text("Quantity: ", style: TextStyle(color: Colors.grey)),
-                                                  Text("1"),
+                                                  Text("${element?.quantity}"),
                                                   Spacer(),
-                                                  Text("\u{20B9}100"),
+                                                  Text("\u{20B9}${element?.totalPrice}"),
                                                 ],
                                               ),
                                               const SizedBox(
@@ -179,7 +183,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 size: 14,
                               ),
                               TextView(
-                                '\u{20B9}${'200'}',
+                                '\u{20B9}${watch.checkoutData?.totalPrice}',
                                 color: Color(0xff2B2B2B),
                                 fontWeight: FontWeight.w500,
                                 size: 14,
@@ -193,7 +197,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 "Taxes",
                                 style: TextStyles.hint,
                               ),
-                              Text('\u{20B9}${'50'}', style: TextStyles.hint),
+                              Text('\u{20B9}${watch.checkoutData?.totalTaxes}', style: TextStyles.hint),
                             ],
                           ),
                           Row(
@@ -203,7 +207,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 "Discount",
                                 style: TextStyles.hint,
                               ),
-                              Text('-\u{20B9}${'0'}', style: TextStyles.hint),
+                              Text('-\u{20B9}${watch.checkoutData?.discountValue}', style: TextStyles.hint),
                             ],
                           ),
                         ],
@@ -313,7 +317,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 "Total:",
                                 style: TextStyle(fontSize: 22, fontFamily: GoogleFonts.suranna().fontFamily, fontWeight: FontWeight.bold, letterSpacing: 1),
                               ),
-                              const Text('\u{20B9}${'250'}', style: TextStyle(fontSize: 20)),
+                               Text('\u{20B9}${watch.totalPrice}', style: TextStyle(fontSize: 20)),
                             ],
                           ),
                           const SizedBox(
@@ -355,110 +359,113 @@ class CheckoutScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          Container(
-                            color: const Color(0xfff8f6f6),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio(value: true, groupValue: addressSelect, onChanged: (value) {}),
-                                    const TextView(
-                                      "Home",
-                                      size: 18,
+                          ListView.separated(
+                            itemCount: watch.addressBookData?.length ?? 0,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            separatorBuilder: (BuildContext context, int index) => Dimensions.defaultPadding.height,
+                            itemBuilder: (BuildContext context, int index) {
+                              final element = watch.addressBookData?[index];
+                              return Material(
+                                color: Palette.backgroundColor,
+                                borderRadius: Dimensions.radius10,
+                                clipBehavior: Clip.antiAlias,
+                                child: InkWell(
+
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 0,right: 20),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        10.0.height,
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Radio(
+                                              value: watch.selectedAddress==index?true:false,
+                                              groupValue: addressSelect,
+                                              onChanged:(value){
+                                                read.onAddressRadioButtonClicked(index);
+                                              },
+                                            ),
+                                            Padding(padding: const EdgeInsets.only(top: 5),
+                                            child:TextView(
+                                              element?.selectType?.contains('other') == true
+                                                  ? element?.othername?.isEmpty == true
+                                                  ? element?.selectType?.capitalize
+                                                  : element?.othername
+                                                  : element?.selectType?.capitalize ?? 'N/A',
+                                              textType: TextType.titleStyled,
+                                              height: 1,
+                                            ),
+                                            ),
+
+                                            const Spacer(),
+                                            15.0.width,
+                                            // PrimaryIconButton(
+                                            //   svg: Assets.assetsIconsDelete,
+                                            //   color: Palette.lightIconColor,
+                                            //   onPressed: () {
+                                            //     Utils.showPrimaryDialog(
+                                            //       context,
+                                            //       headerTitle: 'Are you sure you want to delete it?',
+                                            //       direction: Axis.horizontal,
+                                            //       bTitle: 'Delete',
+                                            //       onDone: () async {
+                                            //         read.onDeleteAddressButton(element?.id).whenComplete(() {
+                                            //           ref.refresh(myAddressbookProvider);
+                                            //         });
+                                            //       },
+                                            //     );
+                                            //   },
+                                            //   size: 20.0,
+                                            // ),
+                                          ],
+                                        ),
+                                        5.0.height,
+                                        Padding(padding: EdgeInsets.only(left: 45,right: 20),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+
+
+                                        const Divider(height: 1),
+                                        10.0.height,
+                                        TextView(
+                                          element?.name ?? 'N/A',
+                                          size: TextSize.regularLarge,
+                                          height: 1,
+                                        ),
+                                        5.0.height,
+                                        TextView(
+                                          '${element?.address} ${element?.locality} ${element?.landmark} - ${element?.pincode}'
+                                              '\n'
+                                              '${element?.stateName}, ${element?.cityName}',
+                                          size: TextSize.regularLarge,
+                                          height: 1.5,
+                                          maxLines: 3,
+                                        ),
+                                        10.0.height,
+                                        TextView(
+                                          'Phone number: ${element?.mobileNo}'
+                                              '${element?.alternativeNo == null || element?.alternativeNo == '' ? '' : ', '}'
+                                              '${element?.alternativeNo}',
+                                          size: TextSize.regularLarge,
+                                          maxLines: 2,
+                                        ),
+                                        10.0.height,
+
+                                          ],
+                                        ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 44),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: const [
-                                      Divider(
-                                        thickness: 1,
-                                      ),
-                                      TextView(
-                                        "Akansha Das",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextView(
-                                        "2118,Thornidge Syracuse,Opposite Starbucks,Bandra East,Mumbai-356241,Maharasthra",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextView(
-                                        "Phone Number: 9876432134",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            color: const Color(0xfff8f6f6),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio(
-                                      value: false,
-                                      groupValue: addressSelect,
-                                      onChanged: (value) {},
-                                    ),
-                                    const TextView(
-                                      "Parent’s",
-                                      size: 18,
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 44),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: const [
-                                      Divider(
-                                        thickness: 1,
-                                      ),
-                                      TextView(
-                                        "Akshay Das",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextView(
-                                        "B-35,  Sector-36, Near Cambridge Intl School, Noida - 201301, Uttar Pradesh",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextView(
-                                        "Phone Number: 9876432134",
-                                        size: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
                         ],
                       ),

@@ -19,7 +19,6 @@ class CheckoutReqModel {
     data["pincode"] = pincode;
     // print(data);
     return data;
-
   }
 }
 
@@ -27,27 +26,42 @@ class CheckoutResModel {
   int? status;
   String? message;
   List<CartItemsData>? cartItems;
-  // CheckoutData? checkOut;
-  // List<PromocodeData>? promoCode;
+  int? totalPrice;
+  int? totalItems;
+  CheckoutData? checkOut;
+
+  PromocodeData? promoCode;
 
   CheckoutResModel({
     this.status,
     this.message,
     this.cartItems,
-    // this.checkOut,
-    // this.promoCode,
+    this.totalPrice,
+    this.totalItems,
+    this.checkOut,
+    this.promoCode,
   });
 
   CheckoutResModel.fromJson(Map<String, dynamic> json) {
     status = json["status"];
     message = json["message"];
-    if(json["cartItems"]!=null){
-      cartItems=<CartItemsData>[];
+    if (json["cartItems"] != null) {
+      cartItems = <CartItemsData>[];
       json['cartItems'].forEach((v) {
         cartItems!.add(CartItemsData.fromJson(v));
       });
     }
-    // checkOut = json["checkout"];
+    totalItems = json["total_items"];
+    totalPrice = json["total_price"];
+    // if(json["checkout"]!=null){
+    //   checkOut = json["checkout"];
+    // }
+    checkOut = json['checkout'] != null
+        ? CheckoutData.fromJson(json['checkout'])
+        : null;
+    promoCode = json['promocode'] != null
+        ? PromocodeData.fromJson(json['promocode'])
+        : null;
     // promoCode=json["promocode"];
   }
 }
@@ -151,11 +165,13 @@ class CheckoutData {
   String? walletDiscount;
   int? rewardId;
   String? rewardDiscount;
-  String? tax;
+
+  // String? tax;
   String? deliveryFee;
   String? deliveryInstruction;
   String? cartPrice;
   int? totalPrice;
+  String? totalTaxes;
   String? status;
   String? createdAt;
   String? upDatedAt;
@@ -179,7 +195,8 @@ class CheckoutData {
     this.promocodeId,
     this.rewardDiscount,
     this.rewardId,
-    this.tax,
+    this.totalTaxes,
+    // this.tax,
     this.userDeliveryAddressId,
     this.walletDiscount,
   });
@@ -190,7 +207,7 @@ class CheckoutData {
     walletDiscount = json["walletDiscount"];
     rewardId = json["rewardId"];
     rewardDiscount = json["rewardDiscount"];
-    tax = json["tax"];
+    // tax = json["tax"];
     deliveryFee = json["deliveryFee"];
     deliveryInstruction = json["deliveryInstruction"];
     cartPrice = json["cartPrice"];
@@ -202,29 +219,30 @@ class CheckoutData {
     promocodeId = json["promocodeId"];
     userDeliveryAddressId = json["userDeliveryAddressId"];
     paymentMethod = json["payment_method"];
+    totalTaxes = json["taxPriceTotal"];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data["id"] = id;
-    data["discountValue"] = discountValue;
-    data["walletDiscount"] = walletDiscount;
-    data["rewardId"] = rewardId;
-    data["rewardDiscount"] = rewardDiscount;
-    data["tax"] = tax;
-    data["deliveryFee"] = deliveryFee;
-    data["deliveryInstruction"] = deliveryInstruction;
-    data["cartPrice"] = cartPrice;
-    data["totalPrice"] = totalPrice;
-    data["status"] = status;
-    data["createdAt"] = createdAt;
-    data["updatedAt"] = upDatedAt;
-    data["userId"] = userId;
-    data["promocodeId"] = promocodeId;
-    data["userDeliveryAddressId"] = userDeliveryAddressId;
-    data["payment_method"] = paymentMethod;
-    return data;
-  }
+// Map<String, dynamic> toJson() {
+//   final Map<String, dynamic> data = {};
+//   data["id"] = id;
+//   data["discountValue"] = discountValue;
+//   data["walletDiscount"] = walletDiscount;
+//   data["rewardId"] = rewardId;
+//   data["rewardDiscount"] = rewardDiscount;
+//   data["tax"] = tax;
+//   data["deliveryFee"] = deliveryFee;
+//   data["deliveryInstruction"] = deliveryInstruction;
+//   data["cartPrice"] = cartPrice;
+//   data["totalPrice"] = totalPrice;
+//   data["status"] = status;
+//   data["createdAt"] = createdAt;
+//   data["updatedAt"] = upDatedAt;
+//   data["userId"] = userId;
+//   data["promocodeId"] = promocodeId;
+//   data["userDeliveryAddressId"] = userDeliveryAddressId;
+//   data["payment_method"] = paymentMethod;
+//   return data;
+// }
 }
 
 class PromocodeData {
@@ -246,78 +264,89 @@ class PromocodeData {
   String? customerType;
   String? status;
   String? promoCodeFor;
+  int? numUsed;
+  String? userType;
   String? createdAt;
   String? upDatedAt;
   String? createdBy;
 
-  PromocodeData(
-      {this.status,
-      this.createdAt,
-      this.upDatedAt,
-      this.promoCodeId,
-      this.description,
-      this.promoCodeDiscountValue,
-      this.promoCodeName,
-      this.promoCode,
-      this.minCartValue,
-      this.maxValue,
-      this.validityStart,
-      this.validityEnd,
-      this.promoCodeType,
-      this.customerType,
-      this.category,
-      this.createdBy,
-      this.product,
-      this.promoCodeFor,
-      this.thumbnailImage,
-      this.usesLimit,
-      this.usesNumber});
-  PromocodeData.fromJson(Map<String,dynamic>json){
-    promoCodeId=json["promocode_id"];
-    promoCodeName=json["promocode_name"];
-    promoCode=json["promo_code"];
-    description=json["description"];
-    thumbnailImage=json["thumbnail_image"];
-    promoCodeType=json["promocode_type"];
-    promoCodeDiscountValue=json["promocode_discount_value"];
-    maxValue=json["max_value"];
-    minCartValue=json["minimum_cart_value"];
-    category=json["category"];
-    product=json["product"];
-    usesLimit=json["uses_limit"];
-    usesNumber=json["uses_number"];
-    validityStart=json["validity_start"];
-    validityEnd=json["validity_end"];
-    customerType=json["customer_type"];
-    status=json["status"];
-    promoCodeFor=json["promocode_for"];
-    createdAt=json["created_at"];
-    upDatedAt=json["updated_at"];
-    createdBy=json["created_by"];
+  PromocodeData({
+    this.status,
+    this.createdAt,
+    this.upDatedAt,
+    this.promoCodeId,
+    this.description,
+    this.promoCodeDiscountValue,
+    this.promoCodeName,
+    this.promoCode,
+    this.minCartValue,
+    this.maxValue,
+    this.validityStart,
+    this.validityEnd,
+    this.promoCodeType,
+    this.customerType,
+    this.category,
+    this.createdBy,
+    this.product,
+    this.promoCodeFor,
+    this.thumbnailImage,
+    this.usesLimit,
+    this.usesNumber,
+    this.numUsed,
+    this.userType,
+  });
+
+  PromocodeData.fromJson(Map<String, dynamic> json) {
+    promoCodeId = json["promocode_id"];
+    promoCodeName = json["promocode_name"];
+    promoCode = json["promo_code"];
+    description = json["description"];
+    thumbnailImage = json["thumbnail_image"];
+    promoCodeType = json["promocode_type"];
+    promoCodeDiscountValue = json["promocode_discount_value"];
+    maxValue = json["max_value"];
+    minCartValue = json["minimum_cart_value"];
+    category = json["category"];
+    product = json["product"];
+    usesLimit = json["uses_limit"];
+    usesNumber = json["uses_number"];
+    validityStart = json["validity_start"];
+    validityEnd = json["validity_end"];
+    customerType = json["customer_type"];
+    status = json["status"];
+    promoCodeFor = json["promocode_for"];
+    numUsed = json["num_used"];
+    userType = json["user_type"];
+    createdAt = json["created_at"];
+    upDatedAt = json["updated_at"];
+    createdBy = json["created_by"];
   }
-  Map<String,dynamic> toJson(){
-    final Map<String,dynamic> data={};
-    data["promocode_id"]=promoCodeId;
-    data["promocode_name"]=promoCodeName;
-    data["promo_code"]=promoCode;
-    data["description"]=description;
-    data["thumbnail_image"]=thumbnailImage;
-    data["promocode_type"]=promoCodeType;
-    data["promocode_discount_value"]=promoCodeDiscountValue;
-    data["max_value"]=maxValue;
-    data["minimum_cart_value"]=minCartValue;
-    data["category"]=category;
-    data["product"]=product;
-    data["uses_limit"]=usesLimit;
-    data["uses_number"]=usesNumber;
-    data["validity_start"]=validityStart;
-    data["validity_end"]=validityEnd;
-    data["customer_type"]=customerType;
-    data["status"]=status;
-    data["promoCodeFor"]=promoCodeFor;
-    data["createdAt"]=createdAt;
-    data["upDatedAt"]=upDatedAt;
-    data["created_by"]=createdBy;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data["promocode_id"] = promoCodeId;
+    data["promocode_name"] = promoCodeName;
+    data["promo_code"] = promoCode;
+    data["description"] = description;
+    data["thumbnail_image"] = thumbnailImage;
+    data["promocode_type"] = promoCodeType;
+    data["promocode_discount_value"] = promoCodeDiscountValue;
+    data["max_value"] = maxValue;
+    data["minimum_cart_value"] = minCartValue;
+    data["category"] = category;
+    data["product"] = product;
+    data["uses_limit"] = usesLimit;
+    data["uses_number"] = usesNumber;
+    data["validity_start"] = validityStart;
+    data["validity_end"] = validityEnd;
+    data["customer_type"] = customerType;
+    data["status"] = status;
+    data["promoCodeFor"] = promoCodeFor;
+    data["num_used"] = numUsed;
+    data["user_type"] = userType;
+    data["createdAt"] = createdAt;
+    data["upDatedAt"] = upDatedAt;
+    data["created_by"] = createdBy;
     return data;
   }
 }

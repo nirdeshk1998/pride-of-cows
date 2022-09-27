@@ -160,6 +160,9 @@ class ProfileChangeProvider with ChangeNotifier {
     lName = await LocalStorage.getString(StorageField.lastName);
     phNo = await LocalStorage.getString(StorageField.mobileNumber);
     gender = await LocalStorage.getString(StorageField.gender);
+    print("*********");
+    print(gender);
+    print("*********");
     emailId = await LocalStorage.getString(StorageField.email);
     dob=await LocalStorage.getString(StorageField.dob);
     notifyListeners();
@@ -170,8 +173,16 @@ class ProfileChangeProvider with ChangeNotifier {
     _lNameController.text = lName.toString();
     _phoneNoController.text = phNo.toString();
     _eMailController.text = emailId.toString();
-    String caps(String s)=>s[0].toUpperCase()+s.substring(1);
-    gender=caps(gender.toString());
+    if(gender!=""){
+      String caps(String s)=>s[0].toUpperCase()+s.substring(1);
+      gender=caps(gender.toString());
+      print("*********");
+      print(gender);
+      print("*********");
+    }
+    else{
+      gender="Male";
+    }
     if(dob!=null){
       _dobController.text=dob.toString();
     }
