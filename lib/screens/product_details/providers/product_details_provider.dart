@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:poc/screens/cart/data/cart_repository.dart';
 import 'package:poc/screens/cart/data/models/cart_add_model.dart';
-import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/product_details/data/models/product_details_model.dart';
 import 'package:poc/screens/product_details/data/product_details_repository.dart';
 import 'package:poc/utils/base_provider.dart';
@@ -30,7 +28,7 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
   int? _quantity;
 
   CustomDays _cDays = CustomDays(empty: 0, mon: 0, tue: 0, wed: 0, thur: 0, fri: 0, sat: 0, sun: 0);
-  set cDays(CustomDays cD   ) => _cDays = cD;
+  set cDays(CustomDays cD) => _cDays = cD;
 
   ProductDetailsData? get productDetailsData => _productDetailsData;
   bool get foldProductDes => _foldProductDes;
@@ -66,57 +64,26 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
   }
 
   Future<void> _productDetailsRequest() async {
-    await _productDetailsRepo.productDetailsRepo(_productDetailsReqModel).then(
-      (response) async {
+    await _productDetailsRepo.productDetailsRepo(_productDetailsReqModel).responseHandler(
+      context,
+      onSuccess: (response) {
         final result = ProductDetailsResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-          _productDetailsData = result.data;
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
+        Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+        _productDetailsData = result.data;
       },
-    ).onError(
-      (DioError error, stackTrace) {
+      onException: (e, st) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
-    ).catchError((Object e) {
-      showLoader(false);
-      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-    });
+    );
   }
 
   Future<void> _addToCartRequest() async {
-    await _cartRepo.addToCartRepo(_addToCartReqModel).then(
-      (response) async {
-        final result = ProductDetailsResModel.fromJson(response.data);
-
-        if (response.statusCode == 200) {
-          if (result.status == ResponseStatus.success.index) {
-            Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
-            Utils.pushAndRemoveUntil(
-              context,
-              const MainScreen(navigate: NavigationMenu.cart),
-            );
-          } else {
-            Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-          }
-          _productDetailsData = result.data;
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
-      },
-    ).catchError((Object e) {
-      showLoader(false);
-      Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-    });
+    await _cartRepo.addToCartRepo(_addToCartReqModel).responseHandler(
+          context,
+          onSuccess: (response) {},
+          onException: (e, st) {},
+        );
   }
 
   AddCartReqModel get _addToCartReqModel => AddCartReqModel(

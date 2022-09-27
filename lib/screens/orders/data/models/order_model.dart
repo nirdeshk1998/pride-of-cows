@@ -1,4 +1,3 @@
-
 class OrderResModel {
   int? status;
   String? message;
@@ -15,16 +14,6 @@ class OrderResModel {
         data!.add(OrderData.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -149,50 +138,6 @@ class OrderData {
       });
     }
     rating = json['rating'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['ord_id'] = orderId;
-    data['poc_order_id'] = pocOrderId;
-    data['product_id'] = productId;
-    data['cust_id'] = custId;
-    data['customer_type'] = customerType;
-    data['customer_plan'] = customerPlan;
-    data['route_id'] = routeId;
-    data['batch_no'] = batchNo;
-    data['order_date'] = orderDate;
-    data['end_date'] = endDate;
-    data['delivery_boy'] = deliveryBoy;
-    data['order_type'] = orderType;
-    data['view_plan'] = viewPlan;
-    data['location_id'] = locationId;
-    data['depo_id'] = depoId;
-    data['cartTotal'] = cartTotal;
-    data['taxPriceTotal'] = taxPriceTotal;
-    data['total_amount'] = totalAmount;
-    data['package_name'] = packageName;
-    data['is_cancel'] = isCancel;
-    data['cancel_reason'] = cancelReason;
-    data['cancel_date'] = cancelDate;
-    data['remarks'] = remarks;
-    data['created_date'] = createdDate;
-    data['payment_method'] = paymentMethod;
-    data['walletTransactionId'] = walletTransactionId;
-    data['walletDiscount'] = walletDiscount;
-    data['userDeliveryAddressId'] = userDeliveryAddressId;
-    data['promocodeDiscount'] = promocodeDiscount;
-    data['rewardDiscount'] = rewardDiscount;
-    data['rewardId'] = rewardId;
-    data['checkoutData'] = checkoutData;
-    data['next_delivery_date'] = nextDeliveryDate;
-    data['todays_delivery'] = todaysDelivery;
-    data['deliveryStatus'] = deliveryStatus;
-    if (orderDetails != null) {
-      data['orderDetls'] = orderDetails!.map((v) => v.toJson()).toList();
-    }
-    data['rating'] = rating;
-    return data;
   }
 }
 

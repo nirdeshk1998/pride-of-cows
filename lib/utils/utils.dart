@@ -54,10 +54,14 @@ class Utils {
     Color? color, textColor;
     switch (type) {
       case SnackType.error:
+        debugPrint('\x1B[35mError: $text\x1B[0m');
+
         color = const Color(0xFFDC3545);
         textColor = Colors.white;
         break;
       case SnackType.invalidated:
+        debugPrint('\x1B[35mInvalidated: $text\x1B[0m');
+
         color = const Color(0xFFDC3545);
         textColor = Colors.white;
         break;
@@ -91,6 +95,13 @@ class Utils {
       SnackBar(
         // margin: isOverSheet ? EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 1.6) : null,
         behavior: SnackBarBehavior.floating,
+        action: SnackBarAction(
+          label: 'Dismiss',
+          textColor: textColor,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
         content: TextView(
           text ?? '',
           color: textColor,

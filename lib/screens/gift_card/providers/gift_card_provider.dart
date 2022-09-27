@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +13,7 @@ final giftCardProvider = ChangeNotifierProvider.autoDispose<GiftCardChangeProvid
 class GiftCardChangeProvider extends ChangeNotifier {
   final GiftCardRepository _giftCardRepo=GiftCardRepository();
 
-  double _widgetHeight = 0.0;
+  final double _widgetHeight = 0.0;
   double get widgetHight => _widgetHeight;
 
   int _selectedGiftCard = 0;

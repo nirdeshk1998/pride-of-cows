@@ -1,4 +1,3 @@
-import 'package:poc/network/dio_client.dart';
 import 'package:poc/network/models/common_model.dart';
 import 'package:poc/screens/orders/data/models/order_model.dart';
 import 'package:poc/screens/orders/data/orders_repo.dart';
@@ -30,31 +29,16 @@ class OrderChangeProvider extends BaseChangeNotifier {
   }
 
   Future<void> _getOrderRequest() async {
-    await _orderRepo.getOrder(_getOrderReqModel).then(
-      (response) async {
+    await _orderRepo.getOrder(_getOrderReqModel).responseHandler(
+      context,
+      onSuccess: (response) {
         final result = OrderResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
-          _orderData = result.data;
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
+        Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
+        _orderData = result.data;
       },
-    ).onError(
-      (DioError error, stackTrace) {
+      onException: (e, st) {
         showLoader(false);
-        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
-      },
-    ).catchError(
-      (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-      },
-      test: (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-        return false;
       },
     );
   }

@@ -6,9 +6,11 @@ class RatingBar extends StatefulWidget {
   const RatingBar({
     Key? key,
     this.initialValue = 0,
+    this.onChanged,
   }) : super(key: key);
 
   final int initialValue;
+  final void Function(int val)? onChanged;
 
   @override
   State<RatingBar> createState() => _RatingBarState();
@@ -53,6 +55,10 @@ class _RatingBarState extends State<RatingBar> {
 
                 _selectedIndex = index;
               });
+
+              if (widget.onChanged != null) {
+                widget.onChanged!(index + 1);
+              }
             },
           );
         },
