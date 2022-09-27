@@ -184,5 +184,6 @@ class MoreProducts {
     data['thumb_img'] = thumbImg;
     data['price'] = price;
     return data;
+
   }
 }
