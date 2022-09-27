@@ -5,10 +5,10 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/checkout/providers/checkout_provider.dart';
 import 'package:poc/screens/feedback/rating_page.dart';
 import 'package:poc/screens/offers/offers.dart';
+import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/text_styles.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/loader.dart';
@@ -96,20 +96,19 @@ class CheckoutScreen extends ConsumerWidget {
                           Visibility(
                             visible: watch.showItems,
                             child: ListView.builder(
-                              itemCount: watch.cartItemData?.length??0,
+                              itemCount: watch.cartItemData?.length ?? 0,
                               shrinkWrap: true,
                               physics: const ScrollPhysics(),
                               itemBuilder: (context, index) {
-                                final element=watch.cartItemData?[index];
+                                final element = watch.cartItemData?[index];
                                 return Column(
                                   children: [
                                     Row(
                                       children: [
-                                         SizedBox.square(
+                                        SizedBox.square(
                                           dimension: 100,
                                           child: ImageView(
-                                      '${element?.thumbImg}',
-
+                                            '${element?.thumbImg}',
                                           ),
                                         ),
                                         10.0.width,
@@ -127,7 +126,7 @@ class CheckoutScreen extends ConsumerWidget {
                                               Text('\u{20B9}${element?.itemPrice}', style: TextStyles.hint),
                                               Row(
                                                 children: [
-                                                  Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
+                                                  const Text("Delivery Plan: ", style: TextStyle(color: Colors.grey)),
                                                   Text("${element?.deliveryPlan}"),
                                                 ],
                                               ),
@@ -136,7 +135,7 @@ class CheckoutScreen extends ConsumerWidget {
                                               ),
                                               Row(
                                                 children: [
-                                                  Text("Delivery: ", style: TextStyle(color: Colors.grey)),
+                                                  const Text("Delivery: ", style: TextStyle(color: Colors.grey)),
                                                   Text('${element?.endDate}'),
                                                 ],
                                               ),
@@ -144,10 +143,10 @@ class CheckoutScreen extends ConsumerWidget {
                                                 height: 2,
                                               ),
                                               Row(
-                                                children:  [
-                                                  Text("Quantity: ", style: TextStyle(color: Colors.grey)),
+                                                children: [
+                                                  const Text("Quantity: ", style: TextStyle(color: Colors.grey)),
                                                   Text("${element?.quantity}"),
-                                                  Spacer(),
+                                                  const Spacer(),
                                                   Text("\u{20B9}${element?.totalPrice}"),
                                                 ],
                                               ),
@@ -175,8 +174,8 @@ class CheckoutScreen extends ConsumerWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              TextView(
+                            children: [
+                              const TextView(
                                 "Subtotal",
                                 color: Color(0xff2B2B2B),
                                 fontWeight: FontWeight.w500,
@@ -184,7 +183,7 @@ class CheckoutScreen extends ConsumerWidget {
                               ),
                               TextView(
                                 '\u{20B9}${watch.checkoutData?.totalPrice}',
-                                color: Color(0xff2B2B2B),
+                                color: const Color(0xff2B2B2B),
                                 fontWeight: FontWeight.w500,
                                 size: 14,
                               ),
@@ -317,7 +316,7 @@ class CheckoutScreen extends ConsumerWidget {
                                 "Total:",
                                 style: TextStyle(fontSize: 22, fontFamily: GoogleFonts.suranna().fontFamily, fontWeight: FontWeight.bold, letterSpacing: 1),
                               ),
-                               Text('\u{20B9}${watch.totalPrice}', style: TextStyle(fontSize: 20)),
+                              const Text('\u{20B9}${'250'}', style: TextStyle(fontSize: 20)),
                             ],
                           ),
                           const SizedBox(
@@ -372,9 +371,8 @@ class CheckoutScreen extends ConsumerWidget {
                                 borderRadius: Dimensions.radius10,
                                 clipBehavior: Clip.antiAlias,
                                 child: InkWell(
-
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 0,right: 20),
+                                    padding: const EdgeInsets.only(left: 0, right: 20),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
@@ -384,22 +382,23 @@ class CheckoutScreen extends ConsumerWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Radio(
-                                              value: watch.selectedAddress==index?true:false,
+                                              value: watch.selectedAddress == index ? true : false,
                                               groupValue: addressSelect,
-                                              onChanged:(value){
+                                              onChanged: (value) {
                                                 read.onAddressRadioButtonClicked(index);
                                               },
                                             ),
-                                            Padding(padding: const EdgeInsets.only(top: 5),
-                                            child:TextView(
-                                              element?.selectType?.contains('other') == true
-                                                  ? element?.othername?.isEmpty == true
-                                                  ? element?.selectType?.capitalize
-                                                  : element?.othername
-                                                  : element?.selectType?.capitalize ?? 'N/A',
-                                              textType: TextType.titleStyled,
-                                              height: 1,
-                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 5),
+                                              child: TextView(
+                                                element?.selectType?.contains('other') == true
+                                                    ? element?.othername?.isEmpty == true
+                                                        ? element?.selectType?.capitalize
+                                                        : element?.othername
+                                                    : element?.selectType?.capitalize ?? 'N/A',
+                                                textType: TextType.titleStyled,
+                                                height: 1,
+                                              ),
                                             ),
 
                                             const Spacer(),
@@ -425,40 +424,38 @@ class CheckoutScreen extends ConsumerWidget {
                                           ],
                                         ),
                                         5.0.height,
-                                        Padding(padding: EdgeInsets.only(left: 45,right: 20),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-
-
-                                        const Divider(height: 1),
-                                        10.0.height,
-                                        TextView(
-                                          element?.name ?? 'N/A',
-                                          size: TextSize.regularLarge,
-                                          height: 1,
-                                        ),
-                                        5.0.height,
-                                        TextView(
-                                          '${element?.address} ${element?.locality} ${element?.landmark} - ${element?.pincode}'
-                                              '\n'
-                                              '${element?.stateName}, ${element?.cityName}',
-                                          size: TextSize.regularLarge,
-                                          height: 1.5,
-                                          maxLines: 3,
-                                        ),
-                                        10.0.height,
-                                        TextView(
-                                          'Phone number: ${element?.mobileNo}'
-                                              '${element?.alternativeNo == null || element?.alternativeNo == '' ? '' : ', '}'
-                                              '${element?.alternativeNo}',
-                                          size: TextSize.regularLarge,
-                                          maxLines: 2,
-                                        ),
-                                        10.0.height,
-
-                                          ],
-                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 45, right: 20),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Divider(height: 1),
+                                              10.0.height,
+                                              TextView(
+                                                element?.name ?? 'N/A',
+                                                size: TextSize.regularLarge,
+                                                height: 1,
+                                              ),
+                                              5.0.height,
+                                              TextView(
+                                                '${element?.address} ${element?.locality} ${element?.landmark} - ${element?.pincode}'
+                                                '\n'
+                                                '${element?.stateName}, ${element?.cityName}',
+                                                size: TextSize.regularLarge,
+                                                height: 1.5,
+                                                maxLines: 3,
+                                              ),
+                                              10.0.height,
+                                              TextView(
+                                                'Phone number: ${element?.mobileNo}'
+                                                '${element?.alternativeNo == null || element?.alternativeNo == '' ? '' : ', '}'
+                                                '${element?.alternativeNo}',
+                                                size: TextSize.regularLarge,
+                                                maxLines: 2,
+                                              ),
+                                              10.0.height,
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
