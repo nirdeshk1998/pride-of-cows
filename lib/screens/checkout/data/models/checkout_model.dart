@@ -25,7 +25,7 @@ class CheckoutResModel {
   int? status;
   String? message;
   List<CartItemsData>? cartItems;
-  int? totalPrice;
+  String? totalPrice;
   int? totalItems;
   CheckoutData? checkOut;
 
@@ -169,8 +169,8 @@ class CheckoutData {
   String? deliveryFee;
   String? deliveryInstruction;
   String? cartPrice;
-  int? totalPrice;
   String? totalTaxes;
+  int? totalPrice;
   String? status;
   String? createdAt;
   String? upDatedAt;
@@ -267,7 +267,7 @@ class PromocodeData {
   String? userType;
   String? createdAt;
   String? upDatedAt;
-  String? createdBy;
+  int? createdBy;
 
   PromocodeData({
     this.status,

@@ -31,7 +31,7 @@ class CheckoutChangeProvider extends BaseChangeNotifier {
   List<CartItemsData>? _cartList;
   List<PromocodeData>? _promocodeData;
   String? _subTotal;
-  int ? totalPrice;
+  String ? totalPrice;
   int ?totalItems;
   int selectedAddress=0;
 
