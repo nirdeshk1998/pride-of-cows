@@ -131,6 +131,7 @@ class CheckoutScreen extends ConsumerWidget {
                                                 ],
                                               ),
                                               const SizedBox(
+                                      
                                                 height: 2,
                                               ),
                                               Row(
@@ -314,9 +315,17 @@ class CheckoutScreen extends ConsumerWidget {
                             children: [
                               Text(
                                 "Total:",
-                                style: TextStyle(fontSize: 22, fontFamily: GoogleFonts.suranna().fontFamily, fontWeight: FontWeight.bold, letterSpacing: 1),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontFamily: GoogleFonts.suranna().fontFamily,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                ),
                               ),
-                              const Text('\u{20B9}${'250'}', style: TextStyle(fontSize: 20)),
+                              Text(
+                                '\u{20B9}${watch.totalPrice}',
+                                style: const TextStyle(fontSize: 20),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -371,6 +380,9 @@ class CheckoutScreen extends ConsumerWidget {
                                 borderRadius: Dimensions.radius10,
                                 clipBehavior: Clip.antiAlias,
                                 child: InkWell(
+                                  onTap: () {
+                                    //
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 0, right: 20),
                                     child: Column(
@@ -401,8 +413,8 @@ class CheckoutScreen extends ConsumerWidget {
                                               ),
                                             ),
 
-                                            const Spacer(),
-                                            15.0.width,
+                                            // const Spacer(),
+                                            // 15.0.width,
                                             // PrimaryIconButton(
                                             //   svg: Assets.assetsIconsDelete,
                                             //   color: Palette.lightIconColor,

@@ -1,5 +1,4 @@
 import 'package:poc/screens/cart/data/models/get_cart_model.dart';
-import 'package:poc/utils/base_provider.dart';
 
 class CheckoutReqModel {
   int? userId;
