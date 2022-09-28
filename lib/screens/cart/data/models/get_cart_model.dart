@@ -68,7 +68,7 @@ class UserCartResModel {
 class CartItemsData {
   int? itemId;
   int? productId;
-  String? giftId;
+  // String? giftId;
   String? productName;
   String? thumbImg;
   int? quantity;
@@ -91,7 +91,7 @@ class CartItemsData {
   CartItemsData(
       {this.itemId,
       this.productId,
-      this.giftId,
+      // this.giftId,
       this.productName,
       this.thumbImg,
       this.quantity,
@@ -114,7 +114,7 @@ class CartItemsData {
   CartItemsData.fromJson(Map<String, dynamic> json) {
     itemId = json['item_id'];
     productId = json['product_id'];
-    giftId = json['gift_id'];
+    // giftId = json['gift_id'];
     noOfDays = json['noOfDays'];
     productName = json['product_name'];
     thumbImg = json['thumb_img'];
@@ -139,7 +139,7 @@ class CartItemsData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['item_id'] = itemId;
     data['product_id'] = productId;
-    data['gift_id'] = giftId;
+    // data['gift_id'] = giftId;
     data['noOfDays'] = noOfDays;
     data['product_name'] = productName;
     data['thumb_img'] = thumbImg;
