@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/my_wallet/providers/my_wallet_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -18,6 +19,13 @@ class MyWalletScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(myWalletProvider);
+    final watch = ref.watch(myWalletProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,7 +75,7 @@ class MyWalletScreen extends ConsumerWidget {
                     child: TabBarView(
                       children: [
                         _addMoneyTab(context),
-                        _transactionsTab(context),
+                        _transactionsTab(context, watch),
                       ],
                     ),
                   ),
@@ -117,7 +125,7 @@ class MyWalletScreen extends ConsumerWidget {
               thickness: 1,
               color: Palette.surfaceColor,
             ),
-            Flexible (
+            Flexible(
               child: ListView(
                 physics: const ClampingScrollPhysics(),
                 primary: false,
@@ -138,7 +146,7 @@ class MyWalletScreen extends ConsumerWidget {
                   _sheetPoints(
                     point: '3',
                     text: LocalString.howItWorksWallet3,
-                  ), 
+                  ),
                   30.0.height,
                   const Divider(
                     height: 1,
@@ -224,10 +232,10 @@ class MyWalletScreen extends ConsumerWidget {
     );
   }
 
-  Widget _transactionsTab(BuildContext context) => ListView(
-        padding: const EdgeInsets.symmetric(
-          vertical: 15.0,
-        ),
+  Widget _transactionsTab(BuildContext context, MyWalletChangeProvider watch) => Column(
+        // padding: const EdgeInsets.symmetric(
+        //   vertical: 15.0,
+        // ),
         children: [
           Container(
             height: 60,
@@ -242,58 +250,65 @@ class MyWalletScreen extends ConsumerWidget {
                   textType: TextType.title,
                 ),
                 TextView(
-                  '₹900',
+                  '₹${watch.wallet?.balance}',
                   textType: TextType.header2,
                   height: 1.8,
                 ),
               ],
             ),
           ),
-          ListView.builder(
-            itemCount: 10,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: Dimensions.defaultPadding),
-            itemBuilder: (context, index) => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                15.0.height,
-                TextView(
-                  '25-11-21',
-                  textType: TextType.regular,
-                  color: Palette.hintColor,
-                ),
-                5.0.height,
-                Row(
+          Expanded(
+            child: ListView.separated(
+              itemCount: watch.cWalletTrans?.length ?? 0,
+              // shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.defaultPadding,
+                horizontal: Dimensions.defaultPadding,
+              ),
+              separatorBuilder: (context, index) => const Divider(
+                height: 31,
+                thickness: 1,
+                color: Palette.surfaceColor,
+              ),
+              itemBuilder: (context, index) {
+                final element = watch.cWalletTrans?[index];
+                final isCredit = element?.type?.toLowerCase().contains('credit') ?? false;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextView(
-                      'Paid for order ',
+                      element?.createdDate?.toddMMyy(),
                       textType: TextType.regular,
-                      size: TextSize.regularLarge,
-                      color: Palette.textColor,
+                      color: Palette.hintColor,
                     ),
-                    const TextView(
-                      '#155',
-                      size: TextSize.regularLarge,
-                      color: Palette.primaryColor,
-                      decoration: TextDecoration.underline,
-                    ),
-                    const Spacer(),
-                    TextView(
-                      '+₹100.00',
-                      textType: TextType.title,
-                      color: index.isEven ? Palette.secondaryColor : Palette.textColor,
+                    5.0.height,
+                    Row(
+                      children: [
+                        TextView(
+                          'Paid for ${element?.detail} ',
+                          textType: TextType.regular,
+                          size: TextSize.regularLarge,
+                          color: Palette.textColor,
+                        ),
+                        // const TextView(
+                        //   '#155',
+                        //   size: TextSize.regularLarge,
+                        //   color: Palette.primaryColor,
+                        //   decoration: TextDecoration.underline,
+                        // ),
+                        const Spacer(),
+                        TextView(
+                          '${isCredit ? '+' : '-'}${element?.paymentAmount}',
+                          textType: TextType.title,
+                          color: isCredit ? Palette.secondaryColor : Palette.textColor,
+                        ),
+                      ],
                     ),
                   ],
-                ),
-                15.0.height,
-                if (index < 9)
-                  const Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Palette.surfaceColor,
-                  ),
-              ],
+                );
+              },
             ),
           ),
           Row(
@@ -306,30 +321,43 @@ class MyWalletScreen extends ConsumerWidget {
                 size: 25,
                 onPressed: () {},
               ),
-              PrimaryTextButton(
-                title: '1',
-                color: Palette.primaryColor,
-                size: 14,
-                padding: const EdgeInsets.all(10.0),
-                weight: FontWeight.bold,
-                onPressed: () {},
+              Row(
+                children: List.generate(
+                  watch.numOfPages ?? 0,
+                  (index) => PrimaryTextButton(
+                    size: 14,
+                    title: '${index + 1}',
+                    color: Palette.primaryColor,
+                    padding: const EdgeInsets.all(10.0),
+                    weight: FontWeight.bold,
+                    onPressed: () {},
+                  ),
+                ),
               ),
-              PrimaryTextButton(
-                title: '2',
-                color: Palette.lightTextColor,
-                size: 14,
-                padding: const EdgeInsets.all(10.0),
-                weight: FontWeight.bold,
-                onPressed: () {},
-              ),
-              PrimaryTextButton(
-                title: '3',
-                size: 14,
-                color: Palette.lightTextColor,
-                weight: FontWeight.bold,
-                padding: const EdgeInsets.all(10.0),
-                onPressed: () {},
-              ),
+              // PrimaryTextButton(
+              //   title: '1',
+              //   color: Palette.primaryColor,
+              //   size: 14,
+              //   padding: const EdgeInsets.all(10.0),
+              //   weight: FontWeight.bold,
+              //   onPressed: () {},
+              // ),
+              // PrimaryTextButton(
+              //   title: '2',
+              //   color: Palette.lightTextColor,
+              //   size: 14,
+              //   padding: const EdgeInsets.all(10.0),
+              //   weight: FontWeight.bold,
+              //   onPressed: () {},
+              // ),
+              // PrimaryTextButton(
+              //   title: '3',
+              //   size: 14,
+              //   color: Palette.lightTextColor,
+              //   weight: FontWeight.bold,
+              //   padding: const EdgeInsets.all(10.0),
+              //   onPressed: () {},
+              // ),
               PrimaryIconButton(
                 svg: Assets.assetsIconsArrowRightLong,
                 padding: const EdgeInsets.all(10.0),
@@ -353,6 +381,7 @@ class MyWalletScreen extends ConsumerWidget {
             icon: Assets.assetsIconsInfoRound,
             onPressed: () => _howItWorksbottomSheet(context),
           ),
+          Dimensions.bottomSpace.height,
         ],
       );
 
@@ -364,9 +393,14 @@ class MyWalletScreen extends ConsumerWidget {
         children: [
           SizedBox(
             height: 170,
-            child: Image.asset(
-              Assets.assetsImagesWalletCard,
-              fit: BoxFit.contain,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  Assets.assetsImagesWalletCard,
+                  fit: BoxFit.contain,
+                ),
+              ],
             ),
           ),
           Dimensions.defaultPadding.height,
@@ -444,6 +478,7 @@ class MyWalletScreen extends ConsumerWidget {
             icon: Assets.assetsIconsInfoRound,
             onPressed: () => _howItWorksbottomSheet(context),
           ),
+          Dimensions.bottomSpace.height,
         ],
       );
 

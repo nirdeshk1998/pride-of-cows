@@ -68,4 +68,7 @@ class Endpoint {
   // Rating
   static const String ratingService = '/order/ratingservice';
   static const String rateOrder = '/order/rating';
+
+  // Wallet
+  static const String walletBalance = '/wallet/walletbalance';
 }
