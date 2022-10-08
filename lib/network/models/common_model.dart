@@ -10,42 +10,44 @@ class CommonResModel {
     status = json['status'];
     message = json['message'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['data'] = this.data;
-    data['status'] = status;
-    data['message'] = message;
-    return data;
-  }
 }
 
-class CommonRessModel<T> {
-  int? status;
-  String? message;
-  T? data;
+// class CommonRessModel<T> {
+//   int? status;
+//   String? message;
+//   T? data;
 
-  CommonRessModel({this.data, this.status, this.message});
+//   CommonRessModel({this.data, this.status, this.message});
 
-  CommonRessModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'];
-    status = json['status'];
-    message = json['message'];
-  }
-}
+//   CommonRessModel.fromJson(Map<String, dynamic> json) {
+//     data = json['data'];
+//     status = json['status'];
+//     message = json['message'];
+//   }
+// }
 
 class CommonReqModel {
   String? userId;
   String? orderId;
   int? page;
   int? limit;
+  int? perPage;
 
   CommonReqModel({
     this.page,
     this.limit,
     this.userId,
     this.orderId,
+    this.perPage,
   });
+
+  Map<String, dynamic> toWalletBalanceJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userID'] = userId;
+    data['page'] = page;
+    data['per_page'] = perPage;
+    return data;
+  }
 
   Map<String, dynamic> toGetOrderJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 class Dimensions {
   static const double defaultPadding = 20.0;
 
+  static const double bottomSpace = 40.0;
+
   static BorderRadius maxRadius = BorderRadius.circular(100);
   static BorderRadius radius5 = BorderRadius.circular(5);
   static BorderRadius radius10 = BorderRadius.circular(10);

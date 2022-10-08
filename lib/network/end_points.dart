@@ -53,7 +53,6 @@ class Endpoint {
   static const String updateAddress = '/customer/updateaddress';
   static const String deleteAddress = '/customer/deleteaddress';
 
-
   // Orders
   static const String getOrder = '/order/myorder';
   static const String getOrderDetails = '/order/orderdtls';
@@ -61,7 +60,6 @@ class Endpoint {
 
   //Checkout
   static const String checkout = '/cart/checkoutitems';
-  static const String switchDefaultAddress='/cart/switchdefaultaddress';
 
   // Vacation Mode
   static const String cancelVacation = '/vacation/cancelvacation';
@@ -73,4 +71,7 @@ class Endpoint {
 
   //Validate order and place
 static const String validateOrderPlace='/order/validateorder';
+
+  // Wallet
+  static const String walletBalance = '/wallet/walletbalance';
 }
