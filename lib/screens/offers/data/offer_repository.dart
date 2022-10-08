@@ -11,10 +11,12 @@ class OfferRepository {
   }
 
   Future<Response> applyOffer(ApplyOfferReqModel reqModel) async {
-    try {
+
       return await BaseDio.getInstance().post(Endpoint.applyCoupon, data: reqModel.toJson());
-    } catch (e) {
-      throw Exception(e);
-    }
+
+  }
+
+  Future <Response> removeOffer(RemoveOfferReqModel reqModel)async{
+    return await BaseDio.getInstance().post(Endpoint.removeCoupon,data: reqModel);
   }
 }

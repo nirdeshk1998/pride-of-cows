@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/checkout/providers/checkout_provider.dart';
@@ -232,8 +233,8 @@ class CheckoutScreen extends ConsumerWidget {
                           const SizedBox(
                             height: 6,
                           ),
-                          // rProvider.appliedOffer == ""
-                          //     ?
+                          watch.promocodeData?.promoCode==null
+                              ?
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -260,44 +261,44 @@ class CheckoutScreen extends ConsumerWidget {
                                 ],
                               ),
                             ],
-                          ),
-                          // : Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Container(
-                          //         child: Row(
-                          //           children: [
-                          //             SvgPicture.asset(Assets.assetsIconsGreenTick),
-                          //             const SizedBox(
-                          //               width: 5,
-                          //             ),
-                          //             TextView(
-                          //               "${rProvider.appliedOffer} applied!",
-                          //               size: 16,
-                          //             ),
-                          //             const SizedBox(
-                          //               width: 5,
-                          //             ),
-                          //             PrimaryTextButton(
-                          //               title: "(Remove)",
-                          //               isUpperCase: false,
-                          //               showUnderline: true,
-                          //               onPressed: () {
-                          //                 rProvider.onRemoveOffer();
-                          //               },
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       Container(
-                          //         child: Row(
-                          //           children: const [
-                          //             TextView("-\u{20B9}${"350"}"),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
+                          )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(Assets.assetsIconsGreenTick),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      TextView(
+                                        "${ watch.promocodeData?.promoCodeName} applied!",
+                                        size: 16,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      PrimaryTextButton(
+                                        title: "(Remove)",
+                                        isUpperCase: false,
+                                        showUnderline: true,
+                                        onPressed: () {
+                                         read.removeOfferRequest();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children:  [
+                                      TextView("-\u{20B9}${watch.promocodeData?.promoCodeDiscountValue}"),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -361,8 +362,8 @@ class CheckoutScreen extends ConsumerWidget {
                                   fontFamily: GoogleFonts.suranna().fontFamily,
                                 ),
                               ),
-                              const TextView(
-                                "  (2 saved)",
+                               TextView(
+                                "  (${watch.addressCount??0} saved)",
                                 size: 14,
                               ),
                             ],
@@ -374,7 +375,11 @@ class CheckoutScreen extends ConsumerWidget {
                             padding: EdgeInsets.zero,
                             separatorBuilder: (BuildContext context, int index) => Dimensions.defaultPadding.height,
                             itemBuilder: (BuildContext context, int index) {
+
                               final element = watch.addressBookData?[index];
+                              if(index==0){
+                                read.getDefaultAddress(int.parse(element?.id.toString()??"0"));
+                              }
                               return Material(
                                 color: Palette.backgroundColor,
                                 borderRadius: Dimensions.radius10,
@@ -394,10 +399,10 @@ class CheckoutScreen extends ConsumerWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Radio(
-                                              value: watch.selectedAddress == index ? true : false,
+                                              value: element?.defaultAddress=="yes" ? true : false,
                                               groupValue: addressSelect,
                                               onChanged: (value) {
-                                                read.onAddressRadioButtonClicked(index);
+                                                read.onAddressRadioButtonClicked(int.parse(element?.id.toString()??"0"));
                                               },
                                             ),
                                             Padding(
@@ -486,7 +491,9 @@ class CheckoutScreen extends ConsumerWidget {
                       height: 20,
                     ),
                     PrimaryButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print( watch.promocodeData?.promoCode);
+                      },
                       title: "Request a new address",
                       isRounded: true,
                       width: 20,
@@ -536,7 +543,7 @@ class CheckoutScreen extends ConsumerWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RatingPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  RatingPage()));
               },
               title: "Proceed to Payment",
               isExpanded: true,
