@@ -178,7 +178,10 @@ class LoginChangeProvider extends BaseChangeNotifier {
 
         if (response.statusCode == 200) {
           final element = result.data;
+
           await _settingPrefs(element);
+          await LocalStorage.setString(result.referralCode.toString(), StorageField.referralCode);
+
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
         } else {
           Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
@@ -269,9 +272,6 @@ class LoginChangeProvider extends BaseChangeNotifier {
     await LocalStorage.setString(element?.lastName, StorageField.lastName);
     await LocalStorage.setString(element?.middleName, StorageField.middleName);
     await LocalStorage.setString(element?.gender, StorageField.gender);
-    print("*********");
-    print( await LocalStorage.getString(StorageField.gender));
-    print("*********");
     await LocalStorage.setString(element?.addressType, StorageField.addressType);
     await LocalStorage.setString(element?.area, StorageField.area);
     await LocalStorage.setString(element?.buildingName, StorageField.buildingName);
@@ -338,4 +338,3 @@ class LoginChangeProvider extends BaseChangeNotifier {
     notifyListeners();
   }
 }
-

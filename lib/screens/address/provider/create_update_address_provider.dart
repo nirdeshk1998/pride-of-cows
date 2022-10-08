@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poc/network/dio_client.dart';
 import 'package:poc/network/models/city_model.dart';
 import 'package:poc/network/models/common_model.dart';
@@ -80,6 +79,7 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
     }
   }
 
+
   Future<void> onPincodeChanged(String val) async {
     if (val.length == 6) {
       showLoader(true);
@@ -108,47 +108,29 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
   void onCityChanged(cityId) => _cityId = cityId;
 
   Future<void> _saveAddressRequest() async {
-    await _addressBookRepo.saveAddressRepo(_createUpdateAddressReqModel).then(
-      (response) async {
-        final result = CommonResModel.fromJson(response.data);
+    await _addressBookRepo.saveAddressRepo(_createUpdateAddressReqModel).responseHandler(
+          context,
+          onSuccess: (response) {
+            final result = CommonResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-          Utils.pop(context, true);
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
-        showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
-      },
-    );
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+            Utils.pop(context, true);
+          },
+          onException: (e, st) => showLoader(false),
+        );
   }
 
   Future<void> _updateAddressRequest() async {
-    await _addressBookRepo.updateAddressRepo(_createUpdateAddressReqModel).then(
-      (response) async {
-        final result = CommonResModel.fromJson(response.data);
+    await _addressBookRepo.updateAddressRepo(_createUpdateAddressReqModel).responseHandler(
+          context,
+          onSuccess: (response) {
+            final result = CommonResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-          _onSuccess();
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
-        showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
-      },
-    );
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+            _onSuccess();
+          },
+          onException: (e, st) => showLoader(false),
+        );
   }
 
   Future<void> _pincodeDataRequest(int pincode) async {
@@ -220,46 +202,29 @@ class CreateUpdateAddressChangeProvider extends BaseChangeNotifier {
   }
 
   Future<void> _cityListRequest(String stateId) async {
-    await _listRepo.cityListRepo(stateId).then(
-      (response) {
-        final result = CityListResModel.fromJson(response.data);
+    await _listRepo.cityListRepo(stateId).responseHandler(
+          context,
+          onSuccess: (response) {
+            final result = CityListResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-          _cityList = result.data;
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
-      },
-    ).catchError(
-      (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-      },
-      test: (Object e) {
-        showLoader(false);
-        Utils.showPrimarySnackbar(context, e, type: SnackType.debugError);
-        return false;
-      },
-    );
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+            _cityList = result.data;
+          },
+          onException: (e, st) => showLoader(false),
+        );
   }
 
   CreateUpdateAddressReqModel get _createUpdateAddressReqModel => CreateUpdateAddressReqModel(
         addressId: _addressId,
         name: _fullNameController.text,
-        mobileNo: int.parse(_phoneNumberController.text),
-        alternativeNo: int.parse(_altNumberController.text),
+        mobileNo: int.tryParse(_phoneNumberController.text),
+        alternativeNo: int.tryParse(_altNumberController.text),
         address: _addressController.text,
         locality: _localityController.text,
         landmark: _landmarkController.text,
-        pincode: int.parse(_pincodeController.text),
-        state: int.parse(_stateId ?? ''),
-        city: int.parse(_cityId ?? ''),
+        pincode: int.tryParse(_pincodeController.text),
+        state: int.tryParse(_stateId ?? ''),
+        city: int.tryParse(_cityId ?? ''),
         defaultAddress: _isDefaultAddress ? 'yes' : 'no',
         othername: _otherAddressController.text,
         addressType: _addressGroupValue.name.capitalize,

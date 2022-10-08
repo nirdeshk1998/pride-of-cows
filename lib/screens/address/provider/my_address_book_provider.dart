@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:poc/network/dio_client.dart';
 import 'package:poc/network/models/common_model.dart';
 import 'package:poc/screens/address/data/address_book_repository.dart';
 import 'package:poc/screens/address/data/models/addressbook_model.dart';
@@ -34,46 +31,28 @@ class AddressboookChangeProvider extends BaseChangeNotifier {
   }
 
   Future<void> _addressBookListRequest() async {
-    await _addressBookRepo.addressBookListRepo(_userId).then(
-      (response) async {
-        final result = AddressBookResModel.fromJson(response.data);
+    await _addressBookRepo.addressBookListRepo(_userId).responseHandler(
+          context,
+          onSuccess: (response) {
+            final result = AddressBookResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-          _addressBookData = result.data;
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
-        showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
-      },
-    );
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+            _addressBookData = result.data;
+          },
+          onException: (e, st) => showLoader(false),
+        );
   }
 
   Future<void> _deleteAddressRequest(String? aId) async {
-    await _addressBookRepo.deleteAddressRepo(aId).then(
-      (response) async {
-        final result = CommonResModel.fromJson(response.data);
+    await _addressBookRepo.deleteAddressRepo(aId).responseHandler(
+          context,
+          onSuccess: (response) {
+            final result = CommonResModel.fromJson(response.data);
 
-        if (response.statusCode == 200) {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
-        } else {
-          Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);
-        }
-      },
-    ).onError(
-      (DioError error, stackTrace) {
-        debugPrint('error: ${error.type}');
-        showLoader(false);
-
-        Utils.showPrimarySnackbar(context, error.type.toString(), type: SnackType.debug);
-      },
-    );
+            Utils.showPrimarySnackbar(context, result.message, type: SnackType.debug);
+          },
+          onException: (e, st) => showLoader(false),
+        );
   }
 
   Future<void> _gettingPrefs() async {

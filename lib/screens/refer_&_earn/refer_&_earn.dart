@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/refer_&_earn/providers/refer_earn_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -13,12 +14,20 @@ import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReferAndEarn extends ConsumerWidget {
   const ReferAndEarn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(referEarnProvider);
+    final watch = ref.watch(referEarnProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,7 +76,7 @@ class ReferAndEarn extends ConsumerWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        _inviteTab(context),
+                        _inviteTab(context, watch),
                         _referralsTab(context),
                       ],
                     ),
@@ -437,7 +446,7 @@ class ReferAndEarn extends ConsumerWidget {
         ),
       );
 
-  Widget _inviteTab(BuildContext context) => SingleChildScrollView(
+  Widget _inviteTab(BuildContext context, ReferEarnNotifier watch) => SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
@@ -446,7 +455,7 @@ class ReferAndEarn extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset ("assets/images/milkbottleoffer.png"),
+                Image.asset("assets/images/milkbottleoffer.png"),
               ],
             ),
             const SizedBox(
@@ -518,7 +527,10 @@ class ReferAndEarn extends ConsumerWidget {
                   SizedBox(
                     width: 250,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        print(watch.referralCode);
+                        await Share.share('POC PROMO ${watch.referralCode}');
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shape: const StadiumBorder(),

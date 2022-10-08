@@ -39,6 +39,8 @@ abstract class BaseChangeNotifier extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
+
 }
 
 extension ResponseHandling on Future<Response> {

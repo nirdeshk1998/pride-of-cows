@@ -26,7 +26,6 @@ class LoginReqModel {
     data['Platform'] = platform;
     data['DeviceName'] = devicename;
     data['OsVersion'] = devicename;
-    print("data$data");
     return data;
   }
 }
@@ -36,28 +35,25 @@ class LoginResModel {
   int? status;
   LoginData? data;
   Citydata? citydata;
+  String? referralCode;
 
-  LoginResModel({this.message, this.status, this.data, this.citydata});
+  LoginResModel({
+    this.message,
+    this.status,
+    this.data,
+    this.citydata,
+    this.referralCode,
+  });
 
   LoginResModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
     data = json['data'] != null ? LoginData.fromJson(json['data']) : null;
     citydata = json['citydata'] != null ? Citydata.fromJson(json['citydata']) : null;
+    referralCode = json['referal_code'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    if (citydata != null) {
-      data['citydata'] = citydata!.toJson();
-    }
-    return data;
-  }
+
 }
 
 class LoginData {
@@ -84,7 +80,7 @@ class LoginData {
   LoginData(
       {this.token,
       this.userID,
-        this.gender,
+      this.gender,
       this.mobileNo,
       this.email,
       this.firstName,
@@ -100,8 +96,7 @@ class LoginData {
       this.pincode,
       this.addressType,
       this.customerType,
-      this.deliveryOption
-      });
+      this.deliveryOption});
 
   LoginData.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -111,7 +106,7 @@ class LoginData {
     firstName = json['FirstName'];
     middleName = json['MiddleName'];
     lastName = json['LastName'];
-    gender=json["gender"];
+    gender = json["gender"];
     city = json['City'];
     cityId = json['city_id'];
     flatPlotNo = json['flat_plot_no'];
@@ -125,28 +120,6 @@ class LoginData {
     deliveryOption = json['delivery_option'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['token'] = token;
-    data['UserID'] = userID;
-    data['MobileNo'] = mobileNo;
-    data['Email'] = email;
-    data['FirstName'] = firstName;
-    data['MiddleName'] = middleName;
-    data['LastName'] = lastName;
-    data['City'] = city;
-    data['city_id'] = cityId;
-    data['flat_plot_no'] = flatPlotNo;
-    data['building_name'] = buildingName;
-    data['street_road'] = streetRoad;
-    data['area'] = area;
-    data['landmark'] = landmark;
-    data['pincode'] = pincode;
-    data['address_type'] = addressType;
-    data['customer_type'] = customerType;
-    data['delivery_option'] = deliveryOption;
-    return data;
-  }
 }
 
 class Citydata {
@@ -162,11 +135,5 @@ class Citydata {
     isSubscribe = json['is_subscribe'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['city'] = city;
-    data['cityName'] = cityName;
-    data['is_subscribe'] = isSubscribe;
-    return data;
-  }
+
 }
