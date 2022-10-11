@@ -72,7 +72,7 @@ class HomeChangeProvider extends BaseChangeNotifier {
     //     if (response.statusCode == 200) {
     //       _categoryList = result.categoryListResModel?.data;
     //       _topPicksList = result.topPicksData;
-    //       // _orderAgainList = result.orderAgainData;
+          // _orderAgainList = result.orderAgainData;
     //       _aboutVideoData = result.aboutVideoResModel?.data;
     //       _referAndEarnData = result.referEarnResModel?.data;
     //       _dealsOffersList = result.dealsOfferData;

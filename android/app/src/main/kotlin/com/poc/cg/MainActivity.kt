@@ -1,4 +1,4 @@
-package com.example.poc
+package com.poc.cg
 
 import io.flutter.embedding.android.FlutterActivity
 
