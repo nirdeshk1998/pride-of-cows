@@ -74,4 +74,14 @@ static const String validateOrderPlace='/order/validateorder';
 
   // Wallet
   static const String walletBalance = '/wallet/walletbalance';
+
+
+  // Wallet
+  static const String switchDefaultAddress = '/cart/switchdefaultaddress';
+
+  //Loyality
+static const String earnedCrown='/customer/earnedcrown';
+
+// Contact us
+static const String submitQuery='/lead/savequery';
 }

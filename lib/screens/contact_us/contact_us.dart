@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/contact_us/providers/contact_us_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/styles/widget_styles.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -20,6 +21,8 @@ class ContactUs extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final watch=ref.watch(contactUsProvider);
+    final read=ref.read(contactUsProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -168,13 +171,15 @@ class ContactUs extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryTextFormField(
+                   PrimaryTextFormField(
+                    controller: watch.nameController,
                     label: 'Full Name*',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    controller: watch.phoneNoController,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.digitsOnly,
@@ -224,19 +229,22 @@ class ContactUs extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryTextFormField(
+                   PrimaryTextFormField(
+                  controller: watch.emailIdController,
                     label: 'Email Id*',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const PrimaryTextFormField(
+                   PrimaryTextFormField(
+                     controller: watch.locationController,
                     label: 'Your Location*',
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    controller: watch.messageController,
                     decoration: const InputDecoration(labelText: "Your Message"),
                   ),
                   const SizedBox(
@@ -247,7 +255,9 @@ class ContactUs extends ConsumerWidget {
                     children: [
                       PrimaryButton(
                         title: "Submit",
-                        onPressed: () {},
+                        onPressed: () {
+                          read.onSubmitQuery(context);
+                        },
                         isFilled: true,
                       )
                     ],

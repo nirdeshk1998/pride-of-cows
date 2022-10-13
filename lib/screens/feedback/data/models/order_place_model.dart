@@ -1,14 +1,12 @@
 class OrderPlaceReqModel {
-  int? userId;
+  String? userId;
   String? orderType;
-  int? checkOutAddress;
   String? paymentMethod;
   String? wallet;
 
   OrderPlaceReqModel({
     this.userId,
     this.paymentMethod,
-    this.checkOutAddress,
     this.orderType,
     this.wallet,
   });
@@ -17,7 +15,6 @@ class OrderPlaceReqModel {
     final Map<String, dynamic> data = {};
     data["userID"] = userId;
     data["orderType"] = orderType;
-    data["checkout_address"] = checkOutAddress;
     data["payment_method"] = paymentMethod;
     data["wallet"] = wallet;
     return data;

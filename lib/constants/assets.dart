@@ -203,7 +203,7 @@ class Assets {
 
   /// Assets for assetsIconsLocationGrey
   /// assets/icons/location_grey.svg
-  static const String assetsIconsLocationGrey = "assets/icons/location_grey.svg";
+  static const String assetsIconsLocationGrey = "assets/icons/location_grey.png";
 
   // /// Assets for assetsIconsLocationGrey
   // /// assets/icons/location_grey.png
