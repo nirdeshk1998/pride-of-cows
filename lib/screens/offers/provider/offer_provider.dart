@@ -1,4 +1,5 @@
 import 'package:poc/screens/checkout/checkout_screen.dart';
+import 'package:poc/screens/checkout/providers/checkout_provider.dart';
 import 'package:poc/screens/offers/data/models/offer_model.dart';
 import 'package:poc/screens/offers/data/offer_repository.dart';
 import 'package:poc/utils/base_provider.dart';
@@ -6,11 +7,18 @@ import 'package:poc/utils/local_storage.dart';
 import 'package:poc/utils/utils.dart';
 
 final offerProvider = ChangeNotifierProvider.autoDispose<OfferChangeProvider>(
-  (ref) => OfferChangeProvider(),
+  (ref) => OfferChangeProvider(ref),
 );
 
 class OfferChangeProvider extends BaseChangeNotifier {
+
+  OfferChangeProvider(this.ref);
+
+  final AutoDisposeChangeNotifierProviderRef <OfferChangeProvider> ref;
+
   final OfferRepository _offerRepo = OfferRepository();
+
+
   List<DealsOffersData>? _offerList;
   String appliedOffer = "";
   String? _userId;
@@ -44,13 +52,17 @@ class OfferChangeProvider extends BaseChangeNotifier {
         promoCodeId: promoCodeId,
       );
 
-  void applyOffer(String value, context) async {
-    await _offerRepo.applyOffer(_applyOfferListModel).then((response) {
+  void applyOffer(String value,int id,context) async {
+    promoCodeId=id;
+    await _offerRepo.applyOffer(_applyOfferListModel).then((response) async{
       final result = DealsOffersResModel.fromJson(response.data);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200){
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.success);
-        appliedOffer = value;
-        Utils.push(context, const CheckoutScreen());
+
+       await ref.read(checkoutProvider).checkoutDetailRequest();
+
+       Utils.pop(context);
+
         notifyListeners();
       } else {
         Utils.showPrimarySnackbar(context, result.message, type: SnackType.error);

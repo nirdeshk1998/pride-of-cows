@@ -111,7 +111,7 @@ class CartOffersDrawer extends ConsumerWidget {
                                     letterSpacing: 1.6,
                                     weight: FontWeight.bold,
                                     onPressed: () {
-                                      read.applyOffer(element?.promocodeName.toString().toUpperCase() ?? 'N/A', context);
+                                      read.applyOffer(element?.promocodeName.toString().toUpperCase() ?? 'N/A',element?.promocodeId??0,context);
                                     },
                                   ),
                                 ],

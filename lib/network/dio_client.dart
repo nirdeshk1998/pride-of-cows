@@ -59,7 +59,7 @@ class BaseDio {
             request: false,
             requestHeader: false,
             requestBody: true,
-            responseBody: false,
+            responseBody: true,
             responseHeader: false,
             error: true,
             compact: false,

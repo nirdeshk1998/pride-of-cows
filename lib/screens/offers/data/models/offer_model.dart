@@ -42,20 +42,19 @@ class DealsOffersData {
   List<Products>? products;
   String? productsName;
 
-  DealsOffersData(
-      {this.promocodeId,
-      this.promocodeName,
-      this.promoCode,
-      this.thumbnailImage,
-      this.promocodeType,
-      this.validityEnd,
-      this.validityStart,
-      this.description,
-      this.maxValue,
-      this.minimumCartValue,
-      this.promocodeDiscountValue,
-      this.products,
-      this.productsName});
+  DealsOffersData({this.promocodeId,
+    this.promocodeName,
+    this.promoCode,
+    this.thumbnailImage,
+    this.promocodeType,
+    this.validityEnd,
+    this.validityStart,
+    this.description,
+    this.maxValue,
+    this.minimumCartValue,
+    this.promocodeDiscountValue,
+    this.products,
+    this.productsName});
 
   DealsOffersData.fromJson(Map<String, dynamic> json) {
     promocodeId = json['promocode_id'];
@@ -121,11 +120,62 @@ class Products {
 class ApplyOfferReqModel {
   String? userId;
   int? promoCodeId;
+
   ApplyOfferReqModel({this.userId, this.promoCodeId});
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data["userID"] = userId;
     data["promocode_id"] = promoCodeId;
     return data;
+  }
+}
+
+class ApplyOfferResModel {
+  String? status;
+  String?message;
+  int ? total;
+  String? coupanDiscount;
+  String ? coupanCode;
+
+  ApplyOfferResModel({
+    this.status,
+    this.message,
+    this.total,
+    this.coupanCode,
+    this.coupanDiscount,
+  });
+
+  ApplyOfferResModel.fromJson(Map<String, dynamic>json){
+    status = json["status"];
+    message = json["message"];
+    total = json["cart_total"];
+    coupanCode = json["coupon_discount"];
+    coupanDiscount = json["coupon_code"];
+  }
+}
+
+
+class RemoveOfferReqModel{
+  int ? userId;
+  RemoveOfferReqModel({
+    this.userId,
+});
+  Map<String,dynamic> toJson(){
+    final Map<String,dynamic> data={};
+    data["userID"]=userId;
+    return data;
+  }
+}
+class RemoveOfferResModel{
+  int? status;
+  String? message;
+  RemoveOfferResModel({
+    this.status,
+    this.message,
+});
+  RemoveOfferResModel.fromJson(Map<String,dynamic>json){
+    status=json["status"];
+    message=json["message"];
   }
 }

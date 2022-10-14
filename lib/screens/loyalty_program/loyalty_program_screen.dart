@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
+import 'package:poc/screens/loyalty_program/providers/earn_crown_provider.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/dimensions.dart';
@@ -19,6 +20,13 @@ class LoyaltyProgramScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final read = ref.read(earnCrownProvider);
+    final watch = ref.watch(earnCrownProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
+
     Column yourCrowns = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -89,7 +97,7 @@ class LoyaltyProgramScreen extends ConsumerWidget {
           text: TextSpan(
             children: <TextSpan>[
               TextSpan(
-                text: '5 crowns ',
+                text:'${watch.balanceLeft}',
                 style: TextStyle(
                   color: Palette.primaryColor,
                   fontFamily: GoogleFonts.lato().fontFamily,
@@ -100,7 +108,7 @@ class LoyaltyProgramScreen extends ConsumerWidget {
                 ),
               ),
               TextSpan(
-                text: 'left to win the next reward!',
+                text: ' left to win the next reward!',
                 style: TextStyle(
                   color: const Color(0xFF658395),
                   fontFamily: GoogleFonts.lato().fontFamily,
@@ -126,7 +134,8 @@ class LoyaltyProgramScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.defaultPadding),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -170,120 +179,127 @@ class LoyaltyProgramScreen extends ConsumerWidget {
               ),
               10.0.height,
               SizedBox(
-                height: 185,
+                height: 190,
                 child: ListView.builder(
-                  itemCount: 10,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: false,
-                  padding: const EdgeInsets.only(left: Dimensions.defaultPadding),
-                  itemBuilder: (context, index) => Container(
-                    height: 185,
-                    width: 325,
-                    padding: const EdgeInsets.all(10.0),
-                    margin: const EdgeInsets.only(right: Dimensions.defaultPadding),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [Color(0xfff4fbfc), Color(0xffe9f0fa)],
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: Dimensions.radius10,
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox.square(
-                                dimension: 105,
-                                child: Image.network(
-                                  'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/625203100409379.5f084e5c4430a.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            10.0.width,
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  5.0.height,
-                                  TextView(
-                                    'Subscribe',
-                                    textType: TextType.title,
-                                    color: Palette.textColor,
-                                  ),
-                                  5.0.height,
-                                  TextView(
-                                    'Win every time you complete a monthly subscription of 20 items.',
-                                    maxLines: 4,
-                                    height: 1.5,
-                                    textType: TextType.regular,
-                                    color: Palette.textColor,
-                                  ),
-                                  5.0.height,
-                                ],
-                              ),
-                            ),
-                          ],
+                    itemCount: watch.rewardList?.length,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: false,
+                    padding:
+                        const EdgeInsets.only(left: Dimensions.defaultPadding),
+                    itemBuilder: (context, index) {
+                      final element=watch.rewardList?[index];
+                      return Container(
+                        height: 185,
+                        width: 325,
+                        padding: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.only(
+                            right: Dimensions.defaultPadding),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [Color(0xfff4fbfc), Color(0xffe9f0fa)],
+                          ),
                         ),
-                        const Spacer(),
-                        Row(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextView(
-                                  "Expires",
-                                  textType: TextType.regular,
-                                  color: Palette.lightTextColor2,
+                                ClipRRect(
+                                  borderRadius: Dimensions.radius10,
+                                  clipBehavior: Clip.antiAlias,
+                                  child: SizedBox.square(
+                                    dimension: 105,
+                                    child: Image.network(
+                                      element?.thumbnail??"",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                                5.0.height,
-                                TextView(
-                                  "30-06-22",
-                                  textType: TextType.subtitle,
-                                  color: Palette.textColor,
+                                10.0.width,
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      5.0.height,
+                                      TextView(
+                                        element?.title,
+                                        textType: TextType.title,
+                                        color: Palette.textColor,
+                                      ),
+                                      5.0.height,
+                                      TextView(
+                                       element?.description,
+                                        maxLines: 4,
+                                        height: 1.5,
+                                        textType: TextType.regular,
+                                        color: Palette.textColor,
+                                      ),
+                                      5.0.height,
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                             const Spacer(),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                shape: const StadiumBorder(),
-                                minimumSize: const Size(50, 50),
-                                maximumSize: const Size(500, 50),
-                                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                              ),
-                              icon: SizedBox.square(
-                                dimension: 25,
-                                child: SvgPicture.asset(Assets.assetsIconsCrown),
-                              ),
-                              label: TextView(
-                                '10',
-                                textType: TextType.header2,
-                                size: TextSize.regularLarge,
-                                color: Palette.onPrimaryColor,
-                                height: 1.9,
-                              ),
+                            Row(
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextView(
+                                      "Expires",
+                                      textType: TextType.regular,
+                                      color: Palette.lightTextColor2,
+                                    ),
+                                    5.0.height,
+                                    TextView(
+                                      element?.validity,
+                                      textType: TextType.subtitle,
+                                      color: Palette.textColor,
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                ElevatedButton.icon(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    shape: const StadiumBorder(),
+                                    minimumSize: const Size(50, 50),
+                                    maximumSize: const Size(500, 50),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40.0),
+                                  ),
+                                  icon: SizedBox.square(
+                                    dimension: 25,
+                                    child: SvgPicture.asset(
+                                        Assets.assetsIconsCrown),
+                                  ),
+                                  label: TextView(
+                                    element?.rewardValue,
+                                    textType: TextType.header2,
+                                    size: TextSize.regularLarge,
+                                    color: Palette.onPrimaryColor,
+                                    height: 1.9,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      );
+                    }),
               ),
               40.0.height,
               const Divider(
@@ -311,7 +327,8 @@ class LoyaltyProgramScreen extends ConsumerWidget {
     return Utils.showPrimaryBottomSheet(
       context,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+        padding:
+            const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

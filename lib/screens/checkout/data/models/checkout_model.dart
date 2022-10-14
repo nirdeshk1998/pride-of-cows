@@ -1,4 +1,5 @@
 import 'package:poc/screens/cart/data/models/get_cart_model.dart';
+import 'package:poc/styles/colors.dart';
 
 class CheckoutReqModel {
   int? userId;
@@ -52,16 +53,16 @@ class CheckoutResModel {
     }
     totalItems = json["total_items"];
     totalPrice = json["total_price"];
-    // if(json["checkout"]!=null){
-    //   checkOut = json["checkout"];
-    // }
+
     checkOut = json['checkout'] != null
         ? CheckoutData.fromJson(json['checkout'])
         : null;
-    promoCode = json['promocode'] != null
-        ? PromocodeData.fromJson(json['promocode'])
-        : null;
-    // promoCode=json["promocode"];
+    if(json['promocode']!=null){
+      promoCode=PromocodeData.fromJson(json['promocode']);
+    }
+    else{
+      promoCode==null;
+    }
   }
 }
 
@@ -170,7 +171,7 @@ class CheckoutData {
   String? deliveryInstruction;
   String? cartPrice;
   String? totalTaxes;
-  int? totalPrice;
+  String? totalPrice;
   String? status;
   String? createdAt;
   String? upDatedAt;
@@ -321,31 +322,59 @@ class PromocodeData {
     createdBy = json["created_by"];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data["promocode_id"] = promoCodeId;
-    data["promocode_name"] = promoCodeName;
-    data["promo_code"] = promoCode;
-    data["description"] = description;
-    data["thumbnail_image"] = thumbnailImage;
-    data["promocode_type"] = promoCodeType;
-    data["promocode_discount_value"] = promoCodeDiscountValue;
-    data["max_value"] = maxValue;
-    data["minimum_cart_value"] = minCartValue;
-    data["category"] = category;
-    data["product"] = product;
-    data["uses_limit"] = usesLimit;
-    data["uses_number"] = usesNumber;
-    data["validity_start"] = validityStart;
-    data["validity_end"] = validityEnd;
-    data["customer_type"] = customerType;
-    data["status"] = status;
-    data["promoCodeFor"] = promoCodeFor;
-    data["num_used"] = numUsed;
-    data["user_type"] = userType;
-    data["createdAt"] = createdAt;
-    data["upDatedAt"] = upDatedAt;
-    data["created_by"] = createdBy;
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = {};
+  //   data["promocode_id"] = promoCodeId;
+  //   data["promocode_name"] = promoCodeName;
+  //   data["promo_code"] = promoCode;
+  //   data["description"] = description;
+  //   data["thumbnail_image"] = thumbnailImage;
+  //   data["promocode_type"] = promoCodeType;
+  //   data["promocode_discount_value"] = promoCodeDiscountValue;
+  //   data["max_value"] = maxValue;
+  //   data["minimum_cart_value"] = minCartValue;
+  //   data["category"] = category;
+  //   data["product"] = product;
+  //   data["uses_limit"] = usesLimit;
+  //   data["uses_number"] = usesNumber;
+  //   data["validity_start"] = validityStart;
+  //   data["validity_end"] = validityEnd;
+  //   data["customer_type"] = customerType;
+  //   data["status"] = status;
+  //   data["promoCodeFor"] = promoCodeFor;
+  //   data["num_used"] = numUsed;
+  //   data["user_type"] = userType;
+  //   data["createdAt"] = createdAt;
+  //   data["upDatedAt"] = upDatedAt;
+  //   data["created_by"] = createdBy;
+  //   return data;
+  // }
+}
+
+class SwitchDefaultAddressReqModel{
+  int ? userId;
+  int? addressId;
+  SwitchDefaultAddressReqModel({
+    this.userId,
+    this.addressId,
+});
+  Map<String,dynamic> toJson(){
+    final Map<String,dynamic>data={};
+    data["userID"]=userId;
+    data["address_id"]=addressId;
     return data;
+  }
+}
+
+class SwitchDefaultAddressResModel{
+  int? status;
+  String? message;
+  SwitchDefaultAddressResModel({
+    this.status,
+    this.message,
+});
+  SwitchDefaultAddressResModel.fromJson(Map<String,dynamic> json){
+    status=json["status"];
+    message=json["message"];
   }
 }
