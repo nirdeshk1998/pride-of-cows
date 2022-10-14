@@ -36,6 +36,7 @@ class Endpoint {
   // Products
   static const String productList = '/customer/productlist';
   static const String productDetails = '/customer/productdetail';
+  static const String productSearch = '/customer/productsearch';
 
   // Cart
   static const String addToCart = '/cart/addtocart';

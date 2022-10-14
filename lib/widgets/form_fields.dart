@@ -74,17 +74,21 @@ class SearchFormField extends StatelessWidget {
     Key? key,
     this.controller,
     this.hintText,
-    this.suffix,
+    this.suffix, this.onTap, this.onSubmitted,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final String? hintText;
   final Widget? suffix;
+  final VoidCallback? onTap;
+  final void Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      onTap: onTap,
+      onSubmitted: onSubmitted,
       textCapitalization: TextCapitalization.sentences,
       textInputAction: TextInputAction.search,
       style: TextType.hint.apply(color: Palette.textColor, heightFactor: 1.2),

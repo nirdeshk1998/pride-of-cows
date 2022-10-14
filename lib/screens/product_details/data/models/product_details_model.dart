@@ -1,5 +1,5 @@
 class ProductDetailsReqModel {
-  int? productId;
+  String? productId;
   int? cityId;
 
   ProductDetailsReqModel({

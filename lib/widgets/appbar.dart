@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,7 +48,7 @@ class AppBarChangeProvider extends BaseChangeNotifier {
       },
     ).onError(
       (DioError error, stackTrace) {
-        showLoader(false);   
+        showLoader(false);
         Utils.showPrimarySnackbar(context, error.type, type: SnackType.debug);
       },
     ).catchError(
@@ -169,13 +170,11 @@ class PrimaryAppBar extends ConsumerWidget {
                   //   shape: RoundedRectangleBorder(
                   //     borderRadius: Dimensions.radius20,
                   //   ),
-
                   //   // data: ThemeData(
                   //   //   splashColor: Colors.transparent,
                   //   //   // highlightColor: Colors.transparent,
                   //   //   hoverColor: Colors.transparent,
                   //   //   splashFactory: NoSplash.splashFactory,
-
                   //   // ),
                   //   child: DropdownButtonHideUnderline(
                   //     child: DropdownButton<String>(
@@ -295,6 +294,10 @@ class PrimaryAppBar extends ConsumerWidget {
                 child: SearchFormField(
                   hintText: 'Search for products',
                   controller: controller,
+                  onSubmitted: (val) async {
+                    await  Utils.push(context,  SearchScreen(keyword: val));
+                    // ref.read(searchProvider).onRecentSearchPressed(true, val);
+                  },
                 ),
               ),
             ),
@@ -309,11 +312,12 @@ class PrimarySearchAppBar extends StatelessWidget {
   const PrimarySearchAppBar({
     Key? key,
     this.controller,
-    this.onClearPressed,
+    this.onClearPressed, this.onSubmitted,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final VoidCallback? onClearPressed;
+  final void Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -380,9 +384,13 @@ class PrimarySearchAppBar extends StatelessWidget {
               child: SearchFormField(
                 hintText: 'Enter here',
                 controller: controller,
-                suffix: InkWell(
-                  onTap: () {
+                onSubmitted:onSubmitted ,
+                suffix: CupertinoButton(
+                  minSize: 0,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
                     controller?.clear();
+                    if(onClearPressed != null) onClearPressed!();
                   },
                   child: const TextView(
                     "Clear",
@@ -475,9 +483,9 @@ class NotificationAppBar extends StatelessWidget {
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: BoxDecoration(color: color ?? Palette.scaffoldBackgroundColor),
       child: SizedBox(
-        height: kToolbarHeight,
+        height: kToolbarHeight,  
         child: Material(
-          color: Colors.transparent,
+          color: Colors.transparent, 
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -499,7 +507,7 @@ class NotificationAppBar extends StatelessWidget {
                   splashRadius: 28,
                   iconSize: 24,
                   color: Palette.primaryColor,
-                  icon: SvgPicture.asset(sIcon ?? ''),
+                  icon: SvgPicture.asset(sIcon ??  ''),
                   padding: const EdgeInsets.all(10.5),
                   constraints: const BoxConstraints(),
                 ),

@@ -32,6 +32,8 @@ class LoginChangeProvider extends BaseChangeNotifier {
   String? _deviceOsVersion;
   String? _receivedOtp;
   int? _isNewUser;
+  
+  String? _fcmToken;
 
   TextEditingController get numberController => _numberController;
   TextEditingController get otpController => _otpController;
@@ -43,6 +45,7 @@ class LoginChangeProvider extends BaseChangeNotifier {
   @override
   Future<void> postCreateState() async {
     await _getDeviceInfoFun();
+    await _gettingPrefs();
   }
 
   void onSendOtpButton(context) async {
@@ -286,6 +289,10 @@ class LoginChangeProvider extends BaseChangeNotifier {
     await LocalStorage.setString(element?.pincode.toString(), StorageField.pincode);
   }
 
+  Future<void> _gettingPrefs()async{
+    _fcmToken = await LocalStorage.getString(StorageField.fcmToken);
+  }
+
   OtpReqModel get _otpReqModel => OtpReqModel(
         mobileNo: _numberController.text,
         otp: _otpController.text,
@@ -297,7 +304,7 @@ class LoginChangeProvider extends BaseChangeNotifier {
 
   LoginReqModel get _loginReqModel => LoginReqModel(
         mobileNo: _numberController.text,
-        fCMToken: '',
+        fCMToken: _fcmToken,
         type: 'Login',
         platform: 'App',
         deviceOs: _deviceOs,

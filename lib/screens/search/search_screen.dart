@@ -10,15 +10,24 @@ import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/dividers.dart';
+import 'package:poc/widgets/image_view.dart';
+import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
 
 class SearchScreen extends ConsumerWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({Key? key, this.keyword}) : super(key: key);
+
+  final String? keyword;
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rProvider = ref.read(searchProvider);
-    final wProvider = ref.watch(searchProvider);
+    final read = ref.read(searchProvider);
+    final watch = ref.watch(searchProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      ref.read(searchProvider).initState(context, keyword);
+    });
 
     Widget searchSuggetions = Expanded(
       child: ListView(
@@ -39,7 +48,7 @@ class SearchScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => searchListTile(
-              onTap: () => rProvider.onRecentSearchPressed(true),
+              onTap: () => read.onSearch(['Milk', 'Curd', 'Offers'][index]),
               title: ['Milk', 'Curd', 'Offers'][index],
               icon: Assets.assetsIconsRecent,
             ),
@@ -60,7 +69,7 @@ class SearchScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => searchListTile(
-              onTap: () => rProvider.onRecentSearchPressed(true),
+              onTap: () => read.onSearch(['Milk', 'Cheese', 'Ghee', 'Curd'][index]),
               title: ['Milk', 'Cheese', 'Ghee', 'Curd'][index],
               icon: Assets.assetsIconsRecent,
             ),
@@ -70,142 +79,158 @@ class SearchScreen extends ConsumerWidget {
     );
 
     Widget result = Expanded(
-      child: ListView(
-        padding: const EdgeInsets.all(Dimensions.defaultPadding),
-        physics: const BouncingScrollPhysics(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextView(
-            '20 search results for “Milk”',
-            textType: TextType.subtitle,
-            color: Palette.lightTextColor,
+          Padding(
+            padding: const EdgeInsets.all(Dimensions.defaultPadding).copyWith(bottom: 0),
+            child: TextView(
+              '${watch.searchData?.length} search results for "${watch.keyword}"',
+              height: 1,
+              textType: TextType.subtitle,
+              color: Palette.lightTextColor,
+            ),
           ),
           10.0.height,
-          GridView.builder(
-            shrinkWrap: true,
-            itemCount: 20,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 157 / 194,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              mainAxisExtent: 200,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xffe1eaf4),
-                    width: 1,
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true,
+              itemCount: watch.searchData?.length ?? 0,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(Dimensions.defaultPadding).copyWith(top: 10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 157 / 194,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                mainAxisExtent: 200,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                final element = watch.searchData?[index];
+
+                return Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color(0xffe1eaf4),
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Image.network(
-                        'https://i.pinimg.com/564x/d8/3c/fc/d83cfc0043cde21c8735110b13f443fe.jpg',
-                        height: double.maxFinite,
-                        width: double.maxFinite,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox.square(dimension: 10),
-                    const Text(
-                      'Milk',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Palette.textColor,
-                        fontSize: 16,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    const Text(
-                      '1 litre',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Palette.hintColor,
-                        fontSize: 14,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    const SizedBox.square(dimension: 10),
-                    Row(
-                      children: [
-                        // Figma Flutter Generator 120Widget - TEXT
-                        const Text(
-                          '₹120',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Palette.textColor,
-                            fontSize: 16,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: ImageView(
+                          element?.thumb ?? '',
+                          height: double.maxFinite,
+                          width: double.maxFinite,
                         ),
-                        const SizedBox.square(dimension: 5),
-                        const Text(
-                          '₹150',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Palette.surfaceColor,
-                            fontSize: 14,
-                            decoration: TextDecoration.lineThrough,
-                            decorationThickness: 2,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.normal,
-                          ),
+                      ),
+                      const SizedBox.square(dimension: 10),
+                      Text(
+                        '${element?.name}',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Palette.textColor,
+                          fontSize: 16,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.normal,
                         ),
-                        const Spacer(),
-                        Material(
-                          color: Palette.disabledColor,
-                          borderRadius: BorderRadius.circular(5),
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (builder) => const ProductDetailsScreen()),
-                              );
-                            },
-                            child: Container(
-                              height: 24,
-                              width: 24,
-                              decoration: const BoxDecoration(),
-                              child: const Icon(
-                                CupertinoIcons.arrow_right,
-                                color: Palette.primaryColor,
-                                size: 16,
+                      ),
+                      Text(
+                        '${element?.minimumQuantity} ${element?.productUnit}',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Palette.hintColor,
+                          fontSize: 14,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox.square(dimension: 10),
+                      Wrap(
+                        spacing: 5,
+                        runSpacing: 5,
+                        children: [
+                          // Figma Flutter Generator 120Widget - TEXT
+                          Text(
+                            '₹${element?.finalprice}',
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              color: Palette.textColor,
+                              fontSize: 16,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '₹${element?.price}',
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              color: Palette.surfaceColor,
+                              fontSize: 14,
+                              height: 1.4,
+                              decoration: TextDecoration.lineThrough,
+                              decorationThickness: 2,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          // const Spacer(),
+                          Material(
+                            color: Palette.disabledColor,
+                            borderRadius: BorderRadius.circular(5),
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (builder) => ProductDetailsScreen(
+                                      productId: element?.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: const BoxDecoration(),
+                                child: const Icon(
+                                  CupertinoIcons.arrow_right,
+                                  color: Palette.primaryColor,
+                                  size: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
     );
 
     return Scaffold(
-      body: Column(
-        children: [
-          PrimarySearchAppBar(
-
-            controller: TextEditingController(),
-            onClearPressed: () => rProvider.onRecentSearchPressed(false),
-          ),
-          wProvider.isSearchResult ? result : searchSuggetions,
-        ],
+      body: StackedLoader(
+        isLoading: watch.isLoading,
+        child: Column(
+          children: [
+            PrimarySearchAppBar(
+              controller: TextEditingController(text: watch.keyword),
+              onSubmitted: (val) => read.onSearch(val),
+              onClearPressed: () => read.onTextClear(),
+            ),
+            watch.isShowResult ? result : searchSuggetions,
+          ],
+        ),
       ),
     );
   }

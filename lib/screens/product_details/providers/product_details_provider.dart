@@ -99,7 +99,7 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
 
   ProductDetailsReqModel get _productDetailsReqModel => ProductDetailsReqModel(
         cityId: int.parse(_cityId ?? ''),
-        productId: int.parse(_productId ?? ''),
+        productId:_productId,
       );
 
   Future<void> _gettingPrefs() async {
@@ -151,3 +151,5 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
     showLoader(false);
   }
 }
+
+

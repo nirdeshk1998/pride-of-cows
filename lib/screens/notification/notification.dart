@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poc/constants/assets.dart';
-
 import 'package:poc/screens/notification/notification_settings.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/dimensions.dart';
+import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
-import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/dimensions.dart';
 
 class Notifications extends ConsumerWidget {
   const Notifications({Key? key}) : super(key: key);
