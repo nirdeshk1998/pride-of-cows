@@ -12,7 +12,7 @@ import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/indicators.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
-
+import 'package:pagination_view/pagination_view.dart';
 class ProductScreen extends ConsumerStatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
 
@@ -21,6 +21,8 @@ class ProductScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
+  int? page;
+  PaginationViewType? paginationViewType;
   List<Widget> widgetList = <Widget>[];
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       read.initState(context);
     });
+
 
     return DefaultTabController(
       length: watch.categoryList?.length ?? 0,
@@ -42,7 +45,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           children: [
             const PrimaryAppBar(showSearch: false),
             const SizedBox.square(dimension: 20),
-            Padding(
+             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -145,7 +148,23 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 children: List.generate(
                   watch.categoryList?.length ?? 0,
                   (index) {
-                    return GridView.builder(
+                    // return PaginationView(itemBuilder:(BuildContext context,user, int index){
+                    //
+                    // },
+                    //   onError: (dynamic error) => Center(
+                    //   child: Text('Some error occured'),
+                    // ),
+                    //   onEmpty: Center(
+                    //     child: Text('Sorry! This is empty'),
+                    //   ),
+                    //   bottomLoader: Center( // optional
+                    //     child: CircularProgressIndicator(),
+                    //   ),
+                    //   initialLoader: Center( // optional
+                    //     child: CircularProgressIndicator(),
+                    //   ),
+                    // );
+                    return  GridView.builder(
                       itemCount: watch.productList?.length ?? 0,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -158,7 +177,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         final element = watch.productList?[index];
-
                         return Container(
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -270,4 +288,5 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
       ),
     );
   }
+
 }
