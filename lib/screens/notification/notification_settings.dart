@@ -2,127 +2,83 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:poc/constants/assets.dart';
-
 import 'package:poc/screens/notification/providers/notification_settings_provider.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/utils/dimensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
-import 'package:poc/utils/extensions.dart';
-import 'package:poc/utils/dimensions.dart';
 
 class NotificationsSettings extends ConsumerWidget {
   const NotificationsSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wProvider = ref.watch(notificationSettingProvider);
-    final rProvider = ref.read(notificationSettingProvider);
+    final read = ref.read(notificationPrefsProvider);
+    final watch = ref.watch(notificationPrefsProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => read.initState(context),
+    );
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: StackedLoader(
+        isLoading: watch.isLoading,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          physics: const ClampingScrollPhysics(),
           children: [
-            const NotificationAppBar(
-              sIcon: Assets.assetsIconsSearch,
-              sIcon2: Assets.assetsIconsCalendar,
-              sicon3: Assets.assetsIconsBellDot,
-            ),
-            10.0.height,
+            const SecondaryAppBar(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
-              child: Row(
+              padding: const EdgeInsets.all(Dimensions.defaultPadding),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextView(
                     'Notification Preferences',
                     textType: TextType.header,
                   ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Card(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: const TextView(
-                            "Push Notification",
-                            color: Palette.textColor,
-                            size: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Row(
-                            children: const [
-                              TextView(
-                                "To enable notifications, go to ",
-                                color: Palette.hintColor,
-                                size: 16,
-                              ),
-                              PrimaryTextButton(
-                                title: "settings",
-                                size: 16,
-                                showUnderline: true,
-                                padding: EdgeInsets.only(top: 2),
-                                isUpperCase: false,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Card(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: const TextView(
-                            "Enable All",
-                            color: Palette.textColor,
-                            size: 16,
-                          ),
-                        ),
-                        CupertinoSwitch(
-                          activeColor: Palette.successColor,
-                          value: wProvider.enableAll,
-                          onChanged: (i) => rProvider.enableAllNotificationSettingFun(i),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Row(
-                      children: [
-                        Row(
+                  const SizedBox(height:  Dimensions.defaultPadding),
+                  const TextView(
+                    "Push Notification",
+                    color: Palette.textColor,
+                    size: 16,
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: const [
+                      TextView(
+                        "To enable notifications, go to ",
+                        color: Palette.hintColor,
+                        size: 16,
+                      ),
+                      PrimaryTextButton(
+                        title: "settings",
+                        size: 16,
+                        showUnderline: true,
+                        padding: EdgeInsets.only(top: 2),
+                        isUpperCase: false,
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 41),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
+                            TextView(
+                              "Enable All",
+                              color: Palette.textColor,
+                              size: 16,
+                            ),
+                            SizedBox(height: 8),
                             TextView(
                               "Turn on to receive all notifications.",
                               color: Palette.hintColor,
@@ -130,99 +86,83 @@ class NotificationsSettings extends ConsumerWidget {
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Card(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: const TextView(
-                            "Order and Purchases",
-                            color: Palette.textColor,
-                            size: 16,
-                          ),
-                        ),
-                        CupertinoSwitch(
-                          activeColor: Palette.successColor,
-                          value: wProvider.order,
-                          onChanged: (i) => rProvider.orderNotificationSettingFun(i),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Container(
-                      child: const TextView(
-                        "Receive updates related to your orders and subscriptions",
-                        color: Palette.hintColor,
-                        size: 16,
-                        maxLines: 2,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Card(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: const TextView(
-                            "Promos and offers",
-                            color: Palette.textColor,
-                            size: 16,
-                          ),
-                        ),
-                        CupertinoSwitch(
-                          activeColor: Palette.successColor,
-                          value: wProvider.promo,
-                          onChanged: (i) => rProvider.promoNotificationSettingFun(i),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Container(
-                      child: const TextView(
-                        "Receive notifications for coupons, promotions and offers.",
-                        color: Palette.hintColor,
-                        size: 16,
-                        maxLines: 2,
+                      const SizedBox(width: Dimensions.defaultPadding),
+                      CupertinoSwitch(
+                        activeColor: Palette.successColor,
+                        value: watch.enableAll,
+                        onChanged: (i) => read.enableAllSwitch(i),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  const Divider(height: 41),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextView(
+                              "Order and Purchases",
+                              color: Palette.textColor,
+                              size: 16,
+                            ),
+                            SizedBox(height: 8),
+                            TextView(
+                              "Receive updates related to your orders and subscriptions",
+                              color: Palette.hintColor,
+                              size: 16,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: Dimensions.defaultPadding),
+                      CupertinoSwitch(
+                        activeColor: Palette.successColor,
+                        value: watch.order,
+                        onChanged: (i) => read.orderPurchaseSwitch(i),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 41),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextView(
+                              "Promos and offers",
+                              color: Palette.textColor,
+                              size: 16,
+                            ),
+                            SizedBox(height: 8),
+                            TextView(
+                              "Receive notifications for coupons, promotions and offers.",
+                              color: Palette.hintColor,
+                              size: 16,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: Dimensions.defaultPadding),
+                      CupertinoSwitch(
+                        activeColor: Palette.successColor,
+                        value: watch.promo,
+                        onChanged: (i) => read.promoOffersSwitch(i),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 41),
+                ],
               ),
             ),
           ],

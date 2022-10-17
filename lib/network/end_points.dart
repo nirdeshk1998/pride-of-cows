@@ -71,18 +71,22 @@ class Endpoint {
   static const String rateOrder = '/order/rating';
 
   //Validate order and place
-static const String validateOrderPlace='/order/validateorder';
+  static const String validateOrderPlace = '/order/validateorder';
 
   // Wallet
   static const String walletBalance = '/wallet/walletbalance';
-
 
   // Wallet
   static const String switchDefaultAddress = '/cart/switchdefaultaddress';
 
   //Loyality
-static const String earnedCrown='/customer/earnedcrown';
+  static const String earnedCrown = '/customer/earnedcrown';
 
-// Contact us
-static const String submitQuery='/lead/savequery';
+  // Contact us
+  static const String submitQuery = '/lead/savequery';
+
+  // Notifications
+  static const String setNotificationPrefs = '/notification/setpreference';
+  static const String getNotificationPrefs = '/notification/getnotificationpreference';
+
 }

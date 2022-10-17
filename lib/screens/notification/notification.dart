@@ -6,7 +6,6 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/notification/notification_settings.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/dimensions.dart';
-import 'package:poc/utils/extensions.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
 import 'package:poc/widgets/text_view.dart';
@@ -18,108 +17,105 @@ class Notifications extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              const NotificationAppBar(
-                sIcon: Assets.assetsIconsSearch,
-                sIcon2: Assets.assetsIconsCalendar,
-                sicon3: Assets.assetsIconsBellDot,
+        child: Column(
+          children: [
+            const SecondaryAppBar(),
+              const SizedBox(
+                            height: Dimensions.defaultPadding
+                          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextView(
+                    'Notifications',
+                    textType: TextType.header,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsSettings()));
+                    },
+                    child: SvgPicture.asset(Assets.assetsIconsSettings),
+                  ),
+                ],
               ),
-              10.0.height,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimensions.defaultPadding),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextView(
-                      'Notifications',
-                      textType: TextType.header,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsSettings()));
-                      },
-                      child: SvgPicture.asset(Assets.assetsIconsSettings),
-                    ),
-                  ],
-                ),
-              ),
-              ListView.builder(
-                  physics: const ScrollPhysics(),
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  itemBuilder: (_, index) {
-                    return Container(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Card(
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    const TextView(
-                                      "Order Delivered",
-                                      color: Palette.textColor,
-                                      size: 16,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Stack(
-                                      children: [
-                                        SvgPicture.asset(Assets.assetsIconsSemiRounded),
-                                        Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: const [
-                                    TextView("Now", size: 16, color: Palette.hintColor),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  child: Row(
-                                    children: const [
-                                      TextView(
-                                        "Your Order",
-                                        color: Palette.hintColor,
-                                        size: 16,
-                                      ),
-                                      PrimaryTextButton(title: "#115 ", size: 16, showUnderline: true, padding: EdgeInsets.only(top: 2)),
-                                      TextView(
-                                        " has been delivered.",
-                                        color: Palette.hintColor,
-                                        size: 16,
-                                      ),
+            ),
+            ListView.builder(
+                physics: const ScrollPhysics(),
+                itemCount: 10,
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  return Container(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Card(
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const TextView(
+                                    "Order Delivered",
+                                    color: Palette.textColor,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Stack(
+                                    children: [
+                                      SvgPicture.asset(Assets.assetsIconsSemiRounded),
+                                      Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick)),
                                     ],
                                   ),
+                                ],
+                              ),
+                              Row(
+                                children: const [
+                                  TextView("Now", size: 16, color: Palette.hintColor),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: const [
+                                    TextView(
+                                      "Your Order",
+                                      color: Palette.hintColor,
+                                      size: 16,
+                                    ),
+                                    PrimaryTextButton(title: "#115 ", size: 16, showUnderline: true, padding: EdgeInsets.only(top: 2)),
+                                    TextView(
+                                      " has been delivered.",
+                                      color: Palette.hintColor,
+                                      size: 16,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                    );
-                  }),
-            ],
-          ),
+                    ),
+                  );
+                }),
+          ],
         ),
       ),
     );

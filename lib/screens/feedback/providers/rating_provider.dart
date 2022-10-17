@@ -28,6 +28,7 @@ int ? balance;
 
    await ref.read(myWalletProvider).gettingPrefs;
    await ref.read(myWalletProvider).getOfferRequest;
+print(await ref.watch(myWalletProvider).balance);
    await _gettingPrefs();
    await _getOrderPlaceData();
   }
@@ -38,7 +39,7 @@ int ? balance;
      userId: _userId.toString(),
     orderType: 'now',
     paymentMethod: '',
-    wallet:ref.watch(myWalletProvider).wallet?.balance.toString(),
+    wallet:ref.read(myWalletProvider).balance.toString(),
       );
   Future<void> _gettingPrefs() async {
     _userId = await LocalStorage.getString(StorageField.userId);

@@ -19,7 +19,7 @@ class MyWalletChangeProvider extends BaseChangeNotifier {
   int? _numOfPages;
   Wallet? _wallet;
   List<CwalletTransactions>? _cWalletTrans;
-
+String? balance;
   int? get numOfPages => _numOfPages;
   Wallet? get wallet => _wallet;
   List<CwalletTransactions>? get cWalletTrans => _cWalletTrans;
@@ -64,8 +64,10 @@ class MyWalletChangeProvider extends BaseChangeNotifier {
        _numOfPages = result.noPages;
        _wallet = result.wallet;
        print("*******");
-       print(_wallet?.balance);
+       print(wallet?.balance);
        print("*******");
+       balance=wallet?.balance.toString();
+       print(balance);
      }
      else{
      }

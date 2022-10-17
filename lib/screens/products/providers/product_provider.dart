@@ -85,9 +85,9 @@ class ProductChangeProvider extends BaseChangeNotifier {
   Future<void> getSelectedProductList(int index) async {
     showLoader(true);
     final catId = _categoryList?[index].catId;
- 
- 
-    final req = ProductReqModel(
+
+
+    ProductReqModel req = ProductReqModel(
       catId: catId,
       cityId: 329,
       perPage: 10,
