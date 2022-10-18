@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:poc/screens/cart/data/cart_repository.dart';
 import 'package:poc/screens/cart/data/models/cart_add_model.dart';
+import 'package:poc/screens/main/main_screen.dart';
 import 'package:poc/screens/product_details/data/models/product_details_model.dart';
 import 'package:poc/screens/product_details/data/product_details_repository.dart';
 import 'package:poc/utils/base_provider.dart';
@@ -81,7 +81,9 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
   Future<void> _addToCartRequest() async {
     await _cartRepo.addToCartRepo(_addToCartReqModel).responseHandler(
           context,
-          onSuccess: (response) {},
+          onSuccess: (response) {
+            Utils.pushAndRemoveUntil(context, const MainScreen(navigate: NavigationMenu.cart));
+          },
           onException: (e, st) {},
         );
   }
@@ -122,7 +124,6 @@ class ProductDetailsChangeProvider extends BaseChangeNotifier {
 
     switch (deliveryPlan) {
       case DeliveryPlan.once:
-        debugPrint('aagasgasg: once');
         if (_deliverOnDate == null) {
           Utils.showPrimarySnackbar(context, 'Please select a delivery date', type: SnackType.invalidated);
           return;

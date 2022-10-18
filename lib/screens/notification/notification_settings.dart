@@ -250,7 +250,7 @@ class NotificationsSettings extends ConsumerWidget {
                 icon,
               ),
             ),
-            const SizedBox.square(dimension: 8),
+            const SizedBox.square(dimension: 8), 
             TextView(
               title,
               color: Palette.textColor,
