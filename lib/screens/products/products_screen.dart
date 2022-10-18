@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pagination_view/pagination_view.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/product_details/product_details_screen.dart';
 import 'package:poc/screens/products/providers/product_provider.dart';
@@ -12,7 +13,6 @@ import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/indicators.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
-import 'package:pagination_view/pagination_view.dart';
 class ProductScreen extends ConsumerStatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
 
@@ -142,6 +142,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -166,8 +167,8 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                     // );
                     return  GridView.builder(
                       itemCount: watch.productList?.length ?? 0,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20).copyWith(top: 10),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 157 / 194,
