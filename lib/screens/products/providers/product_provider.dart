@@ -91,74 +91,50 @@ class ProductChangeProvider extends BaseChangeNotifier {
   //       search: "",
   //     );
 
+
+  Future<void> clearProductList()async{
+    _productList.clear();
+  }
+
   Future<void> getSelectedProductList(int index) async {
     showLoader(true);
+    allLoaded=false;
     final catId = _categoryList?[index].catId;
     categoryId = _categoryList?[index].catId;
 
     ProductReqModel req = ProductReqModel(
       catId: catId,
       cityId: 329,
-      perPage: 6,
+      perPage: 5,
       page: page,
       userId: 143,
       search: "",
     );
+
     scrollController.addListener(() async {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
-        isLoading == true;
+        showLoader(true);
         ProductReqModel req = ProductReqModel(
           catId: catId,
           cityId: 329,
-          perPage: 6,
+          perPage: 5,
           page: page + 1,
           userId: 143,
           search: "",
         );
         await getProductsByCatRequest(req);
-        isLoading == false;
+        showLoader(false);
         return;
+
       }
     });
+    await clearProductList();
 
     await getProductsByCatRequest(req);
+    allLoaded=true;
     showLoader(false);
-  }
 
-  // Future<void> _fetchPage(int pageKey) async {
-  //   try {
-  //     final newItems = await RemoteApi.getCharacterList(pageKey, _pageSize);
-  //     final isLastPage = newItems.length < _pageSize;
-  //     if (isLastPage) {
-  //       paginationController.appendLastPage(newItems);
-  //     } else {
-  //       final nextPageKey = pageKey + newItems.length;
-  //       paginationController.appendPage(newItems, nextPageKey);
-  //     }
-  //   } catch (error) {
-  //     paginationController.error = error;
-  //   }
-  // }
-
-  Future<void> fetchData() async {
-    ProductReqModel req = ProductReqModel(
-      catId: categoryId,
-      cityId: 329,
-      perPage: 6,
-      page: page,
-      userId: 143,
-      search: "",
-    );
-    scrollController.addListener(() async {
-      if (scrollController.position.maxScrollExtent == scrollController.offset) {
-        isLoading == true;
-        page = page + 1;
-        print(page);
-        await getProductsByCatRequest(req);
-        isLoading == false;
-        return;
-      }
-    });
     notifyListeners();
   }
+
 }

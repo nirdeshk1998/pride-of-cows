@@ -13,6 +13,7 @@ import 'package:poc/widgets/image_view.dart';
 import 'package:poc/widgets/indicators.dart';
 import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
+
 class ProductScreen extends ConsumerStatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
 
@@ -24,6 +25,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
   int? page;
   PaginationViewType? paginationViewType;
   List<Widget> widgetList = <Widget>[];
+
   @override
   Widget build(BuildContext context) {
     final read = ref.read(productProvider);
@@ -32,7 +34,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       read.initState(context);
     });
-
 
     return DefaultTabController(
       length: watch.categoryList?.length ?? 0,
@@ -45,7 +46,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           children: [
             const PrimaryAppBar(showSearch: false),
             const SizedBox.square(dimension: 20),
-             Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -121,7 +122,8 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 indicatorPadding: EdgeInsets.zero,
                 labelPadding: const EdgeInsets.symmetric(horizontal: 12.5),
                 padding: const EdgeInsets.symmetric(horizontal: 7.5),
-                indicator: CircleTabIndicator(color: Palette.primaryColor, radius: 2.5),
+                indicator: CircleTabIndicator(
+                    color: Palette.primaryColor, radius: 2.5),
                 // labelStyle: ,
                 labelColor: Palette.primaryColor,
                 unselectedLabelColor: const Color(0xff658395),
@@ -149,151 +151,136 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 children: List.generate(
                   watch.categoryList?.length ?? 0,
                   (catIndex) {
-                    return  GridView.builder(
-                      controller: watch.scrollController,
-                      itemCount: watch.productList?.length ?? 0,
-                      physics: const ScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 157 / 194,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        mainAxisExtent: 200,
-                      ),
-                      itemBuilder: (Build , int index) {
-                          final element = watch.productList?[index];
-                          return Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: const Color(0xffe1eaf4),
-                                width: 1,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  child: ImageView(
-                                    element?.thumb,
-                                    height: double.maxFinite,
-                                    width: double.maxFinite,
+
+                      return GridView.builder(
+                          controller: watch.scrollController,
+                          itemCount:watch.productList!=[]? watch.productList?.length ?? 0:0,
+                          physics: const ScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 157 / 194,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
+                            mainAxisExtent: 200,
+                          ),
+                          itemBuilder: (Build, int index) {
+                            final element;
+                           if(watch.allLoaded){
+                              element=watch.productList?[index];
+                              return Container(
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: const Color(0xffe1eaf4),
+                                    width: 1,
                                   ),
                                 ),
-                                const SizedBox.square(dimension: 10),
-                                Text(
-                                  element?.name ?? 'N/A',
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    color: Palette.textColor,
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  element?.productUnit ?? 'N/A',
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    color: Palette.hintColor,
-                                    fontSize: 14,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                const SizedBox.square(dimension: 10),
-                                Row(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Expanded(
-                                      child: Wrap(
-                                        spacing: 5,
-                                        runSpacing: 2,
-                                        children: [
-                                          TextView(
-                                            '₹${element?.finalprice.toString().split('.').first ?? 'N/A'}',
-                                            textAlign: TextAlign.left,
-                                            height: 1,
-                                            color: Palette.textColor,
-                                            textType: const TextStyle(
-                                              fontSize: 16,
-                                              letterSpacing: 0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextView(
-                                            '₹${element?.price?.split('.').first ?? 'N/A'}',
-                                            textAlign: TextAlign.left,
-                                            color: Palette.lightIconColor,
-                                            textType: const TextStyle(
-                                              fontSize: 14,
-                                              decoration: TextDecoration.lineThrough,
-                                              decorationThickness: 2,
-                                              letterSpacing: 0,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        ],
+                                      child: ImageView(
+                                        element?.thumb,
+                                        height: double.maxFinite,
+                                        width: double.maxFinite,
                                       ),
                                     ),
-                                    Material(
-                                      color: Palette.disabledColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        onTap: () => Utils.push(
-                                          context,
-                                          ProductDetailsScreen(productId: element?.id),
-                                        ),
-                                        child: Container(
-                                          height: 24,
-                                          width: 24,
-                                          decoration: const BoxDecoration(),
-                                          child: const Icon(
-                                            CupertinoIcons.arrow_right,
-                                            color: Palette.primaryColor,
-                                            size: 16,
+                                    const SizedBox.square(dimension: 10),
+                                    Text(
+                                      element?.name ?? 'N/A',
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        color: Palette.textColor,
+                                        fontSize: 16,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      element?.productUnit ?? 'N/A',
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        color: Palette.hintColor,
+                                        fontSize: 14,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    const SizedBox.square(dimension: 10),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Wrap(
+                                            spacing: 5,
+                                            runSpacing: 2,
+                                            children: [
+                                              TextView(
+                                                '₹${element?.finalprice.toString().split('.').first ?? 'N/A'}',
+                                                textAlign: TextAlign.left,
+                                                height: 1,
+                                                color: Palette.textColor,
+                                                textType: const TextStyle(
+                                                  fontSize: 16,
+                                                  letterSpacing: 0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              TextView(
+                                                '₹${element?.price?.split('.').first ?? 'N/A'}',
+                                                textAlign: TextAlign.left,
+                                                color: Palette.lightIconColor,
+                                                textType: const TextStyle(
+                                                  fontSize: 14,
+                                                  decoration:
+                                                  TextDecoration.lineThrough,
+                                                  decorationThickness: 2,
+                                                  letterSpacing: 0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
+                                        Material(
+                                          color: Palette.disabledColor,
+                                          borderRadius: BorderRadius.circular(5),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: InkWell(
+                                            onTap: () => Utils.push(
+                                              context,
+                                              ProductDetailsScreen(
+                                                  productId: element?.id),
+                                            ),
+                                            child: Container(
+                                              height: 24,
+                                              width: 24,
+                                              decoration: const BoxDecoration(),
+                                              child: const Icon(
+                                                CupertinoIcons.arrow_right,
+                                                color: Palette.primaryColor,
+                                                size: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          );
+                              );
+                           }
+                           else{
+                             element=null;
+                             return Container();
+                           }
 
-                        // else{
-                        //   return Container(
-                        //     child: Center(
-                        //       child: CircularProgressIndicator(),
-                        //     ),
-                        //   );
-                        // }
-                      },
-                    );
+                          }
+                      );
 
-                    // return PaginationView(itemBuilder:(BuildContext context,user, int index){
-                    //
-                    // },
-                    //
-                    //   onError: (dynamic error) => Center(
-                    //   child: Text('Some error occured'),
-                    // ),
-                    //   onEmpty: Center(
-                    //     child: Text('Sorry! This is empty'),
-                    //   ),
-                    //   bottomLoader: Center( // optional
-                    //     child: CircularProgressIndicator(),
-                    //   ),
-                    //   initialLoader: Center( // optional
-                    //     child: CircularProgressIndicator(),
-                    //   ),
-                    // );
-                    // return PagedListView(shrinkWrap: true,physics: ScrollPhysics(),pagingController: watch.paginationController, builderDelegate:  PagedChildBuilderDelegate(itemBuilder:(BuildContext,item,index){
-                    //
-                    // }));
 
                   },
                 ),
@@ -304,5 +291,4 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
       ),
     );
   }
-
 }

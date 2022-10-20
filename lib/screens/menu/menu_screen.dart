@@ -6,6 +6,7 @@ import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/address/my_address_book_screen.dart';
 import 'package:poc/screens/authentication/login_screen.dart';
 import 'package:poc/screens/contact_us/contact_us.dart';
+import 'package:poc/screens/faq/faq_webview.dart';
 import 'package:poc/screens/faq_&_links/faq_&_links.dart';
 import 'package:poc/screens/gift_card/gift_card_screen.dart';
 import 'package:poc/screens/loyalty_program/loyalty_program_screen.dart';
@@ -18,6 +19,7 @@ import 'package:poc/screens/profile/my_profile.dart';
 import 'package:poc/screens/refer_&_earn/refer_&_earn.dart';
 import 'package:poc/screens/rewards/rewards.dart';
 import 'package:poc/screens/vacation_mode/vacation_mode_screen.dart';
+import 'package:poc/screens/webview/webview.dart';
 import 'package:poc/styles/colors.dart';
 import 'package:poc/utils/enums.dart';
 import 'package:poc/utils/local_storage.dart';
@@ -223,7 +225,7 @@ class MenuScreen extends ConsumerWidget {
             menuListTile(
               title: "FAQ's and Links",
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FaqAndLinks()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const WebViewScreen(url: "https://dev.heptawork.com/pocstaging/faqs",)));
               },
               icon: Assets.assetsIconsFaqRound,
             ),
