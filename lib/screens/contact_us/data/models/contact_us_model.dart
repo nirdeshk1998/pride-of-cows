@@ -32,3 +32,38 @@ class SubmitQueryResModel{
     message=json["message"];
   }
 }
+class ContactDetailsResModel{
+  int? status;
+  List<ContactUsData>? data;
+  ContactDetailsResModel({
+    this.status,
+    this.data,
+});
+  ContactDetailsResModel.fromJson(Map<String,dynamic>json){
+    status=json["status"];
+    if (json["address"] != null) {
+      data = <ContactUsData>[];
+      json['address'].forEach((v) {
+        data!.add(ContactUsData.fromJson(v));
+      });
+    }
+  }
+}
+class ContactUsData{
+  int? id;
+  String? optionKey;
+  String? optionValue;
+  ContactUsData({
+    this.id,
+    this.optionKey,
+    this.optionValue,
+});
+  ContactUsData.fromJson(Map<String,dynamic>json){
+    id=json["id"];
+    optionKey=json["option_key"];
+    optionValue=json["option_value"];
+  }
+}
+
+
+

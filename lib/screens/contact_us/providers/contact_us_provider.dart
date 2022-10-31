@@ -10,7 +10,7 @@ final contactUsProvider=ChangeNotifierProvider.autoDispose<ContactUsChangeProvid
 
 class ContactUsChangeProvider extends BaseChangeNotifier{
 
-   SubmitQueryRepository _submitQueryRepository=SubmitQueryRepository();
+   ContactUsRepository _contactUsRepository=ContactUsRepository();
 
   final TextEditingController _nameController=TextEditingController();
   final TextEditingController _phoneNoController=TextEditingController();
@@ -24,8 +24,16 @@ class ContactUsChangeProvider extends BaseChangeNotifier{
   TextEditingController? get locationController=>_locationController;
   TextEditingController? get messageController=>_messageController;
 
+  List<ContactUsData>? contactUsData;
+  String? address;
+  String? phone;
+  String? mobile;
+  String? days;
+  String? email;
 
   Future<void> postCreateState()async{
+
+   await _contactDetailsData();
 
   }
 
@@ -75,7 +83,7 @@ class ContactUsChangeProvider extends BaseChangeNotifier{
     location: _locationController.text,
   );
   Future<void> _submitQueryData(context)async{
-    return await _submitQueryRepository.setSubmitQuery(submitQueryReqModel).then((response){
+    return await _contactUsRepository.setSubmitQuery(submitQueryReqModel).then((response){
       final result=SubmitQueryResModel.fromjson(response.data);
       if (response.statusCode == 200) {
         Utils.showPrimarySnackbar(context, result.message,
@@ -89,6 +97,42 @@ class ContactUsChangeProvider extends BaseChangeNotifier{
           type: SnackType.debug);
     });
   }
+
+  Future<void> _contactDetailsData()async{
+    return await _contactUsRepository.contactUsDetails().then((response){
+     final result=ContactDetailsResModel.fromJson(response.data);
+     if (response.statusCode == 200) {
+
+       contactUsData=result.data;
+       int count=contactUsData?.length??0;
+       for(int i=0;i<count;i++){
+        final element=contactUsData?[i];
+        if(element?.id==2){
+          address=element?.optionValue;
+        }
+        if(element?.id==3){
+          phone=element?.optionValue;
+        }
+        if(element?.id==4){
+          mobile=element?.optionValue;
+        }
+        if(element?.id==5){
+          days=element?.optionValue;
+        }
+        if(element?.id==6){
+          email=element?.optionValue;
+        }
+       }
+       notifyListeners();
+     } else {
+
+     }
+    }).onError((error, stackTrace) {
+      Utils.showPrimarySnackbar(context, error.toString(),
+          type: SnackType.debug);
+    });
+    }
+
   void clearTextField(){
     _nameController.clear();
     _phoneNoController.clear();

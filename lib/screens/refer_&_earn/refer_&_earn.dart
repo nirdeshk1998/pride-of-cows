@@ -13,6 +13,7 @@ import 'package:poc/utils/strings.dart';
 import 'package:poc/utils/utils.dart';
 import 'package:poc/widgets/appbar.dart';
 import 'package:poc/widgets/buttons.dart';
+import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/text_view.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -25,7 +26,7 @@ class ReferAndEarn extends ConsumerWidget {
     final watch = ref.watch(referEarnProvider);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) => read.initState(context),
+          (timeStamp) => read.initState(context),
     );
 
     return Scaffold(
@@ -77,7 +78,7 @@ class ReferAndEarn extends ConsumerWidget {
                     child: TabBarView(
                       children: [
                         _inviteTab(context, watch),
-                        _referralsTab(context),
+                        _referralsTab(context,watch),
                       ],
                     ),
                   ),
@@ -265,186 +266,190 @@ class ReferAndEarn extends ConsumerWidget {
     );
   }
 
-  Widget _referralsTab(BuildContext context) => Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Your Referral List", style: TextType.titleStyled),
-                  const TextView(
-                    "11 referrals",
-                    color: Palette.hintColor,
-                    size: 16,
-                  ),
-                ],
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 11,
-                  itemBuilder: (_, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        print(index.toInt());
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: index != 10 ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0))) : const BoxDecoration(),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+  Widget _referralsTab(BuildContext context, ReferEarnNotifier watch){
+    return StackedLoader(isLoading:false,child:  Container(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Your Referral List", style: TextType.titleStyled),
+                 TextView(
+                  "${watch.referalHistoryData?.length} referrals",
+                  color: Palette.hintColor,
+                  size: 16,
+                ),
+              ],
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount:watch.referalHistoryData?.length,
+                itemBuilder: (_, index) {
+                  final element=watch.referalHistoryData?[index];
+                  return GestureDetector(
+                    onTap: () {
+                      print(index.toInt());
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: index+1 != watch.referalHistoryData?.length ? const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0))) : const BoxDecoration(),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Stack(
+                                        children: [SvgPicture.asset(Assets.assetsIconsSemiRounded), Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))],
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                       TextView(
+                                        element?.invitedName,
+                                        color: Colors.black,
+                                        size: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  InkWell(
+                                    child: Row(
                                       children: [
-                                        Stack(
-                                          children: [SvgPicture.asset(Assets.assetsIconsSemiRounded), Positioned(top: 1, left: 5, child: SvgPicture.asset(Assets.assetsIconsGreenTick))],
+                                         TextView(
+                                          element?.redeemStatus?.toUpperCase(),
+                                          color: Color(0xff193B61),
+                                          size: 12,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        const TextView(
-                                          "Jane Cooper",
-                                          color: Colors.black,
-                                          size: 16,
-                                          fontWeight: FontWeight.w600,
+                                        SvgPicture.asset(
+                                          Assets.assetsIconsArrowRight,
+                                          width: 60,
+                                          height: 30,
                                         ),
                                       ],
                                     ),
-                                    InkWell(
-                                      child: Row(
-                                        children: [
-                                          const TextView(
-                                            "REDEEM",
-                                            color: Color(0xff193B61),
-                                            size: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          SvgPicture.asset(
-                                            Assets.assetsIconsArrowRight,
-                                            width: 60,
-                                            height: 30,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            Assets.assetsIconsDoubleTick,
-                                          ),
-                                          const TextView(
-                                            "Invite Accepted",
-                                            color: Colors.black,
-                                            size: 14,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const TextView(
-                                            "-",
-                                            color: Palette.hintColor,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          SvgPicture.asset(Assets.assetsIconsCart),
-                                          const TextView(
-                                            "Purchase Completed",
-                                            size: 14,
-                                          ),
-                                          const SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-              Container(
-                child: Column(
-                  children: [
-                    PrimaryButton(
-                      title: "View More",
-                      isFilled: true,
-                      onPressed: () {},
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    InkWell(
-                      onTap: () => _howItWorksBottomSheet(context),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 30.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-                              border: Border.all(
-                                color: const Color(0xffD2AB68),
-                                width: 1.0,
+                                  ),
+                                ],
                               ),
-                            ),
-                            child: const Center(
-                              child: TextView(
-                                "i",
-                                color: Color(0xffD2AB68),
+                              const SizedBox(
+                                height: 10,
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          Assets.assetsIconsDoubleTick,
+                                        ),
+                                         TextView(
+                                         element?.invitedStatus,
+                                          color: Colors.black,
+                                          size: 14,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const TextView(
+                                          "-",
+                                          color: Palette.hintColor,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        SvgPicture.asset(Assets.assetsIconsCart),
+                                         TextView(
+                                          element?.purchaseStatus,
+                                          size: 14,
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+            Container(
+              child: Column(
+                children: [
+                  PrimaryButton(
+                    title: "View More",
+                    isFilled: true,
+                    onPressed: () {},
+                  ),
+                  const Divider(
+                    thickness: 1,
+                  ),
+                  InkWell(
+                    onTap: () => _howItWorksBottomSheet(context),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: const Color(0xffD2AB68),
+                              width: 1.0,
                             ),
                           ),
-                          const SizedBox(
-                            width: 8,
+                          child: const Center(
+                            child: TextView(
+                              "i",
+                              color: Color(0xffD2AB68),
+                            ),
                           ),
-                          const TextView("How it works?", size: 16, decoration: TextDecoration.underline),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        const TextView("How it works?", size: 16, decoration: TextDecoration.underline),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    ),);
+  }
+
 
   Widget _inviteTab(BuildContext context, ReferEarnNotifier watch) => SingleChildScrollView(
         child: Column(

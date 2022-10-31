@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poc/constants/assets.dart';
 import 'package:poc/screens/loyalty_program/providers/earn_crown_provider.dart';
 import 'package:poc/styles/colors.dart';
+import 'package:poc/widgets/loader.dart';
 import 'package:poc/widgets/reward_progress.dart';
 import 'package:poc/utils/dimensions.dart';
 import 'package:poc/utils/extensions.dart';
@@ -124,202 +125,206 @@ class LoyaltyProgramScreen extends ConsumerWidget {
       ],
     );
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const SecondaryAppBar(),
-          10.0.height,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.defaultPadding),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextView(
-                      'Loyalty',
-                      textType: TextType.header,
-                      color: Palette.textColor,
-                      height: 1,
-                    ),
-                    10.0.height,
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(text: LocalString.loyaltySubtitle),
-                          TextSpan(
-                            text: 'Rewards',
-                            style: TextType.subtitle.apply(
-                              color: Palette.primaryColor,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                          const TextSpan(text: '.'),
-                        ],
-                      ),
-                      style: TextType.subtitle.apply(
+      body: StackedLoader(
+        isLoading:watch.isLoading,
+        child:    ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const SecondaryAppBar(),
+            10.0.height,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.defaultPadding),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TextView(
+                        'Loyalty',
+                        textType: TextType.header,
                         color: Palette.textColor,
-                        heightFactor: 1.5,
+                        height: 1,
                       ),
-                    ),
-                    30.0.height,
-                    yourCrowns,
-                    40.0.height,
-                    TextView(
-                      'Earn More Crowns',
-                      textType: TextType.header2,
-                      color: Palette.textColor,
-                    ),
-                  ],
-                ),
-              ),
-              10.0.height,
-              SizedBox(
-                height: 190,
-                child: ListView.builder(
-                    itemCount: watch.rewardList?.length,
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: false,
-                    padding:
-                        const EdgeInsets.only(left: Dimensions.defaultPadding),
-                    itemBuilder: (context, index) {
-                      final element=watch.rewardList?[index];
-                      return Container(
-                        height: 185,
-                        width: 325,
-                        padding: const EdgeInsets.all(10.0),
-                        margin: const EdgeInsets.only(
-                            right: Dimensions.defaultPadding),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [Color(0xfff4fbfc), Color(0xffe9f0fa)],
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                      10.0.height,
+                      Text.rich(
+                        TextSpan(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: Dimensions.radius10,
-                                  clipBehavior: Clip.antiAlias,
-                                  child: SizedBox.square(
-                                    dimension: 105,
-                                    child: Image.network(
-                                      element?.thumbnail??"",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                10.0.width,
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      5.0.height,
-                                      TextView(
-                                        element?.title,
-                                        textType: TextType.title,
-                                        color: Palette.textColor,
-                                      ),
-                                      5.0.height,
-                                      TextView(
-                                       element?.description,
-                                        maxLines: 4,
-                                        height: 1.5,
-                                        textType: TextType.regular,
-                                        color: Palette.textColor,
-                                      ),
-                                      5.0.height,
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            const TextSpan(text: LocalString.loyaltySubtitle),
+                            TextSpan(
+                              text: 'Rewards',
+                              style: TextType.subtitle.apply(
+                                color: Palette.primaryColor,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextView(
-                                      "Expires",
-                                      textType: TextType.regular,
-                                      color: Palette.lightTextColor2,
-                                    ),
-                                    5.0.height,
-                                    TextView(
-                                      element?.validity,
-                                      textType: TextType.subtitle,
-                                      color: Palette.textColor,
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                ElevatedButton.icon(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    shape: const StadiumBorder(),
-                                    minimumSize: const Size(50, 50),
-                                    maximumSize: const Size(500, 50),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 40.0),
-                                  ),
-                                  icon: SizedBox.square(
-                                    dimension: 25,
-                                    child: SvgPicture.asset(
-                                        Assets.assetsIconsCrown),
-                                  ),
-                                  label: TextView(
-                                    element?.rewardValue,
-                                    textType: TextType.header2,
-                                    size: TextSize.regularLarge,
-                                    color: Palette.onPrimaryColor,
-                                    height: 1.9,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            const TextSpan(text: '.'),
                           ],
                         ),
-                      );
-                    }),
-              ),
-              40.0.height,
-              const Divider(
-                height: 1,
-                thickness: 1,
-                color: Palette.surfaceColor,
-                indent: Dimensions.defaultPadding,
-                endIndent: Dimensions.defaultPadding,
-              ),
-              5.0.height,
-              _menuListTileButton(
-                title: 'How it works',
-                icon: Assets.assetsIconsInfoRound,
-                horizontal: Dimensions.defaultPadding,
-                onPressed: () => _howItWorksBottomSheet(context),
-              ),
-            ],
-          ),
-        ],
+                        style: TextType.subtitle.apply(
+                          color: Palette.textColor,
+                          heightFactor: 1.5,
+                        ),
+                      ),
+                      30.0.height,
+                      yourCrowns,
+                      40.0.height,
+                      TextView(
+                        'Earn More Crowns',
+                        textType: TextType.header2,
+                        color: Palette.textColor,
+                      ),
+                    ],
+                  ),
+                ),
+                10.0.height,
+                SizedBox(
+                  height: 190,
+                  child: ListView.builder(
+                      itemCount: watch.rewardList?.length,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: false,
+                      padding:
+                      const EdgeInsets.only(left: Dimensions.defaultPadding),
+                      itemBuilder: (context, index) {
+                        final element=watch.rewardList?[index];
+                        return Container(
+                          height: 185,
+                          width: 325,
+                          padding: const EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.only(
+                              right: Dimensions.defaultPadding),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [Color(0xfff4fbfc), Color(0xffe9f0fa)],
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: Dimensions.radius10,
+                                    clipBehavior: Clip.antiAlias,
+                                    child: SizedBox.square(
+                                      dimension: 105,
+                                      child: Image.network(
+                                        element?.thumbnail??"",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  10.0.width,
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                      children: [
+                                        5.0.height,
+                                        TextView(
+                                          element?.title,
+                                          textType: TextType.title,
+                                          color: Palette.textColor,
+                                        ),
+                                        5.0.height,
+                                        TextView(
+                                          element?.description,
+                                          maxLines: 4,
+                                          height: 1.5,
+                                          textType: TextType.regular,
+                                          color: Palette.textColor,
+                                        ),
+                                        5.0.height,
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      TextView(
+                                        "Expires",
+                                        textType: TextType.regular,
+                                        color: Palette.lightTextColor2,
+                                      ),
+                                      5.0.height,
+                                      TextView(
+                                        element?.validity,
+                                        textType: TextType.subtitle,
+                                        color: Palette.textColor,
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  ElevatedButton.icon(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      shape: const StadiumBorder(),
+                                      minimumSize: const Size(50, 50),
+                                      maximumSize: const Size(500, 50),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 40.0),
+                                    ),
+                                    icon: SizedBox.square(
+                                      dimension: 25,
+                                      child: SvgPicture.asset(
+                                          Assets.assetsIconsCrown),
+                                    ),
+                                    label: TextView(
+                                      element?.rewardValue,
+                                      textType: TextType.header2,
+                                      size: TextSize.regularLarge,
+                                      color: Palette.onPrimaryColor,
+                                      height: 1.9,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                ),
+                40.0.height,
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: Palette.surfaceColor,
+                  indent: Dimensions.defaultPadding,
+                  endIndent: Dimensions.defaultPadding,
+                ),
+                5.0.height,
+                _menuListTileButton(
+                  title: 'How it works',
+                  icon: Assets.assetsIconsInfoRound,
+                  horizontal: Dimensions.defaultPadding,
+                  onPressed: () => _howItWorksBottomSheet(context),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
+
     );
   }
 

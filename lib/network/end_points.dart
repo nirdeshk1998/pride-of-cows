@@ -84,9 +84,16 @@ class Endpoint {
 
   // Contact us
   static const String submitQuery = '/lead/savequery';
+  static const String contactUs = '/lead/contactdetail';
 
   // Notifications
   static const String setNotificationPrefs = '/notification/setpreference';
   static const String getNotificationPrefs = '/notification/getnotificationpreference';
+
+  //Refer And Earn
+  static const String  refferalHistory= '/refferal/refferalhistory';
+
+  //Rewards
+  static const String  rewards= '/reward/rewards';
 
 }
